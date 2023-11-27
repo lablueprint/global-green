@@ -3,22 +3,18 @@
 This is the Github repository for the web app created for [Global Green](https://www.globalgreenjourneys.info/) by [LA Blueprint](https://lablueprint.org/).
 
 ## Installation
+Make sure your node version is >=18.17.0
 Create a directory named "global-green" and run the following command in your terminal to clone this repository:
 
 ```
 git clone https://github.com/lablueprint/global-green.git .
+npm i
 ```
 
 ## Run the development server:
 
 ```bash
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.

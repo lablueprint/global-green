@@ -1,9 +1,9 @@
-# GLOBAL GREEN
+# Global Green
 
-This is the Github repository for the web app created for [Global Gren](https://www.globalgreenjourneys.info/) by [LA Blueprint](https://lablueprint.org/).
+This is the Github repository for the web app created for [Global Green](https://www.globalgreenjourneys.info/) by [LA Blueprint](https://lablueprint.org/).
 
 ## Installation
-Create a directory/folder named "global-green" and run the following commands in terminal to clone this repository:
+Create a directory named "global-green" and run the following command in your terminal to clone this repository:
 
 ```
 git clone https://github.com/lablueprint/global-green.git .

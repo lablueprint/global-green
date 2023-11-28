@@ -9,6 +9,7 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "mapbox-gl": "^2.15.0",
     "next": "14.0.3",
     "prop-types": "^15.8.1",
     "react": "^18",

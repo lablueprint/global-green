@@ -1,12 +1,22 @@
 .wrapper {
-    text-align: center;
-}
-
-.exampleText {
-    font-size: 50px;
-}
-
-.anotherOne {
+    border: 1px solid #ccc;
+    padding: 20px;
+    margin: 10px;
+  }
+  
+  .exampleText {
+    color: blue;
     font-size: 20px;
+    margin-bottom: 10px;
+  }
+  
+  .anotherOne {
     color: green;
-}
+    font-size: 18px;
+    margin-bottom: 10px;
+  }
+  
+  .mapContainer {
+    height: 400px; /* Adjust the height as needed */
+  }
+  

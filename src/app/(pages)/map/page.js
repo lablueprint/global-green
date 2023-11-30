@@ -1,7 +1,6 @@
 'use client';
 
 import React, { useRef, useEffect } from 'react';
-import Head from 'next/head';
 import mapboxgl from 'mapbox-gl';
 import 'mapbox-gl/dist/mapbox-gl.css';
 import styles from './map.module.css';
@@ -12,6 +11,11 @@ function Map() {
   const mapContainerRef = useRef(null);
 
   useEffect(() => {
+    const mapArray = [
+      { markername: 'marker1', longlat: [-74.5, 40] },
+      { markername: 'marker2', longlat: [-74.6, 40] },
+    ];
+
     const map = new mapboxgl.Map({
       container: mapContainerRef.current,
       style: 'mapbox://styles/mapbox/streets-v11',
@@ -21,23 +25,25 @@ function Map() {
 
     map.addControl(new mapboxgl.NavigationControl());
 
-    const markerpopup = new mapboxgl.Popup().setHTML('Super Secret Cool Location');
-    markerpopup.on('open', () => LogMarkerInfo(marker));
-    const marker = new mapboxgl.Marker({ color: 'black' })
-      .setLngLat([-74.5, 40])
-      .setPopup(markerpopup)
-      .addTo(map)
-      
-    
-   
+    const mapmarkers = mapArray.map((marker) => {
+      const markerpopup = new mapboxgl.Popup().setHTML(marker.markername);
+
+      const newMarker = new mapboxgl.Marker({ color: 'black' })
+        .setLngLat(marker.longlat)
+        .setPopup(markerpopup)
+        .addTo(map);
+
+      markerpopup.on('open', () => LogMarkerInfo(newMarker));
+    });
+
     function LogMarkerInfo(marker) {
-    console.log({
-      name: marker._popup._content.outerText,
-      lat: marker._lngLat.lat,
-      lng: marker._lngLat.lng
-    })
+      console.log({
+        name: marker._popup._content.outerText,
+        lat: marker._lngLat.lat,
+        lng: marker._lngLat.lng,
+      });
     }
-  
+
     // Clean up on unmount
     return () => map.remove();
   }, []);

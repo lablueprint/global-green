@@ -12,8 +12,22 @@ function Map() {
 
   useEffect(() => {
     const mapArray = [
-      { markername: 'marker1', longlat: [-74.5, 40] },
-      { markername: 'marker2', longlat: [-74.6, 40] },
+      { 
+        markername: 'marker1', 
+        longlat: [-74.5, 40],
+        description: 'This was the first ever marker in the world!🌎',
+        tag: 'cool_marker',
+        link: 'https://www.google.com'
+        
+      },
+      { 
+        markername: 'marker2', 
+        longlat: [-74.6, 40],
+        description: 'This was the second ever marker in the world!🌎 Way better than the first.🤨',
+        tag: 'fun_marker',
+        link: 'https://www.google.com'
+        
+      },
     ];
 
     const map = new mapboxgl.Map({
@@ -26,7 +40,14 @@ function Map() {
     map.addControl(new mapboxgl.NavigationControl());
 
     const mapmarkers = mapArray.map((marker) => {
-      const markerpopup = new mapboxgl.Popup().setHTML(marker.markername);
+      const markerpopup = new mapboxgl.Popup().setHTML(
+        `
+        <h3>${marker.markername}</h3>
+        <p>${marker.description}</p>
+        <p>${marker.tag}</p>
+        <a href=${marker.link}>Learn More</a>
+        `,
+      );
 
       const newMarker = new mapboxgl.Marker({ color: 'black' })
         .setLngLat(marker.longlat)

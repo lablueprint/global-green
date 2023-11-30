@@ -89,10 +89,10 @@ function Map() {
     const mapmarkers = mapArray.map((marker) => {
       const markerpopup = new mapboxgl.Popup().setHTML(
         `
-        <div class="marker-popup">
+        <div class=${styles.markerModal}>
           <h3>${marker.markername}</h3>
           <p>${marker.description}</p>
-          <p>${marker.tag}</p>
+          <p class= ${styles.markerModalTag}>${marker.tag}</p>
           <a href=${marker.link}>Learn More</a>
         </div>
         `,

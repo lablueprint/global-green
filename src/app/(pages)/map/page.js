@@ -14,20 +14,26 @@ function Map() {
     // Array of Markers
     const mapArray = [
       {
-        markername: 'marker1',
-        longlat: [-74.5, 40],
-        description: 'This was the first ever marker in the world!🌎',
-        tag: 'cool_marker',
+        markername: 'Fairmont Sirru Fen Fushi',
+        longlat: [73.0083407, 6.2910463],
+        description: 'Lorem ipsum dolor sit🌎',
+        tag: 'Sustainability Lab',
         link: 'https://www.google.com',
 
       },
       {
-        markername: 'marker2',
-        longlat: [-74.6, 40],
-        description: 'This was the second ever marker in the world!🌎 Way better than the first.🤨',
-        tag: 'fun_marker',
+        markername: 'UCLA',
+        longlat: [-118.4677947, 34.0699182],
+        description: 'Lorem ipsum dolor sit 🌎',
+        tag: 'University',
         link: 'https://www.google.com',
-
+      },
+      {
+        markername: 'Global Green USA Office',
+        longlat: [-74.126121, 41.0646971],
+        description: 'Lorem ipsum dolor sit 🌎',
+        tag: 'Office',
+        link: 'https://www.google.com',
       },
     ];
 
@@ -35,7 +41,7 @@ function Map() {
     const map = new mapboxgl.Map({
       container: mapContainerRef.current,
       style: 'mapbox://styles/mapbox/streets-v11',
-      center: [-74.5, 40], // starting position
+      center: [-118.4677947, 34.0699182], // starting position
       zoom: 9, // starting zoom
     });
 

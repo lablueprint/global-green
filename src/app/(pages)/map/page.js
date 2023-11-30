@@ -11,25 +11,27 @@ function Map() {
   const mapContainerRef = useRef(null);
 
   useEffect(() => {
+    // Array of Markers
     const mapArray = [
-      { 
-        markername: 'marker1', 
+      {
+        markername: 'marker1',
         longlat: [-74.5, 40],
         description: 'This was the first ever marker in the world!🌎',
         tag: 'cool_marker',
-        link: 'https://www.google.com'
-        
+        link: 'https://www.google.com',
+
       },
-      { 
-        markername: 'marker2', 
+      {
+        markername: 'marker2',
         longlat: [-74.6, 40],
         description: 'This was the second ever marker in the world!🌎 Way better than the first.🤨',
         tag: 'fun_marker',
-        link: 'https://www.google.com'
-        
+        link: 'https://www.google.com',
+
       },
     ];
 
+    // Display Map
     const map = new mapboxgl.Map({
       container: mapContainerRef.current,
       style: 'mapbox://styles/mapbox/streets-v11',
@@ -37,8 +39,10 @@ function Map() {
       zoom: 9, // starting zoom
     });
 
+    // Navigation Controls
     map.addControl(new mapboxgl.NavigationControl());
 
+    // Display Markers on Map
     const mapmarkers = mapArray.map((marker) => {
       const markerpopup = new mapboxgl.Popup().setHTML(
         `
@@ -57,6 +61,7 @@ function Map() {
       markerpopup.on('open', () => LogMarkerInfo(newMarker));
     });
 
+    // Log Marker Info in JSON Format
     function LogMarkerInfo(marker) {
       console.log({
         name: marker._popup._content.outerText,
@@ -69,6 +74,7 @@ function Map() {
     return () => map.remove();
   }, []);
 
+  // ref = {mapContainerRef} is callback reference for the div that contains the map
   return (
     <>
       <div className={styles.wrapper}>

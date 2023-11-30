@@ -21,11 +21,23 @@ function Map() {
 
     map.addControl(new mapboxgl.NavigationControl());
 
+    const markerpopup = new mapboxgl.Popup().setHTML('Super Secret Cool Location');
+    markerpopup.on('open', () => LogMarkerInfo(marker));
     const marker = new mapboxgl.Marker({ color: 'black' })
       .setLngLat([-74.5, 40])
-      .setPopup(new mapboxgl.Popup().setHTML('Location Name'))
-      .addTo(map);
-
+      .setPopup(markerpopup)
+      .addTo(map)
+      
+    
+   
+    function LogMarkerInfo(marker) {
+    console.log({
+      name: marker._popup._content.outerText,
+      lat: marker._lngLat.lat,
+      lng: marker._lngLat.lng
+    })
+    }
+  
     // Clean up on unmount
     return () => map.remove();
   }, []);

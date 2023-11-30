@@ -47,7 +47,7 @@ function Map() {
     {
       mapRef.current.flyTo({
         center: marker._lngLat,
-        zoom: 10,
+        zoom: 12,
       });
   
       console.log({

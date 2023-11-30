@@ -13,7 +13,8 @@
     "next": "14.0.3",
     "prop-types": "^15.8.1",
     "react": "^18",
-    "react-dom": "^18"
+    "react-dom": "^18",
+    "react-helmet": "^6.1.0"
   },
   "devDependencies": {
     "eslint": "^8.54.0",

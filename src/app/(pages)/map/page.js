@@ -11,45 +11,44 @@ function Map() {
   const mapContainerRef = useRef(null);
   const mapRef = useRef(null);
 
- // Array of Markers
- const mapArray = [
-  {
-    markername: 'Fairmont Sirru Fen Fushi',
-    longlat: [73.0083407, 6.2910463],
-    description: 'Lorem ipsum dolor sit🌎',
-    tag: 'Sustainability Lab',
-    link: 'https://www.google.com',
-    ref: null,
+  // Array of Markers
+  const mapArray = [
+    {
+      markername: 'Fairmont Sirru Fen Fushi',
+      longlat: [73.0083407, 6.2910463],
+      description: 'Lorem ipsum dolor sit🌎',
+      tag: 'Sustainability Lab',
+      link: 'https://www.google.com',
+      ref: null,
 
-  },
-  {
-    markername: 'UCLA',
-    longlat: [-118.4677947, 34.0699182],
-    description: 'Lorem ipsum dolor sit 🌎',
-    tag: 'University',
-    link: 'https://www.google.com',
-    ref: null,
-  },
-  {
-    markername: 'Global Green USA Office',
-    longlat: [-74.126121, 41.0646971],
-    description: 'Lorem ipsum dolor sit 🌎',
-    tag: 'Office',
-    link: 'https://www.google.com',
-    ref: null,
-  },
-];
+    },
+    {
+      markername: 'UCLA',
+      longlat: [-118.4677947, 34.0699182],
+      description: 'Lorem ipsum dolor sit 🌎',
+      tag: 'University',
+      link: 'https://www.google.com',
+      ref: null,
+    },
+    {
+      markername: 'Global Green USA Office',
+      longlat: [-74.126121, 41.0646971],
+      description: 'Lorem ipsum dolor sit 🌎',
+      tag: 'Office',
+      link: 'https://www.google.com',
+      ref: null,
+    },
+  ];
 
   // Function to handle what happens when a marker or sidebar item is clicked
   function HandleMarkerClick(marker) {
     // Center map on marker
-    if (mapRef.current)
-    {
+    if (mapRef.current) {
       mapRef.current.flyTo({
         center: marker._lngLat,
         zoom: 12,
       });
-  
+
       console.log({
         name: marker._popup._content.outerText,
         lat: marker._lngLat.lat,
@@ -60,17 +59,13 @@ function Map() {
 
   function CloseAllPopups() {
     mapArray.map((marker) => {
-      if (marker.ref.getPopup().isOpen())
-      {
+      if (marker.ref.getPopup().isOpen()) {
         marker.ref.togglePopup();
       }
     });
   }
-  
 
   useEffect(() => {
-    
-
     // Display Map
     const map = new mapboxgl.Map({
       container: mapContainerRef.current,
@@ -83,7 +78,7 @@ function Map() {
     mapRef.current = map;
 
     // Navigation Controls
-    map.addControl(new mapboxgl.NavigationControl());
+    map.addControl(new mapboxgl.NavigationControl(), 'bottom-right');
 
     // Display Markers on Map
     const mapmarkers = mapArray.map((marker) => {
@@ -91,9 +86,9 @@ function Map() {
         `
         <div class=${styles.markerModal}>
           <h3>${marker.markername}</h3>
-          <p>${marker.description}</p>
           <p class= ${styles.markerModalTag}>${marker.tag}</p>
-          <a href=${marker.link}>Learn More</a>
+          <p>${marker.description}</p>
+          <a class=${styles.markerModalLink} href=${marker.link}>Learn More &boxbox;</a>
         </div>
         `,
       );
@@ -103,9 +98,7 @@ function Map() {
         .setPopup(markerpopup)
         .addTo(map);
 
-      markerpopup.on('open', () => 
-        HandleMarkerClick(newMarker)
-      );
+      markerpopup.on('open', () => HandleMarkerClick(newMarker));
 
       marker.ref = newMarker;
     });
@@ -123,25 +116,25 @@ function Map() {
         </div>
         <div className={styles.mainBox}>
           <div ref={mapContainerRef} className={styles.mapContainer} />
-            <div className={styles.sideBar}>
-              {
-                mapArray.map((marker) => {
-                  return (
-                    <div className={styles.sideBarItem} key={marker.markername} onClick={() => 
-                    {
+          <div className={styles.sideBar}>
+            {
+                mapArray.map((marker) => (
+                  <div
+                    className={styles.sideBarItem}
+                    key={marker.markername}
+                    onClick={() => {
                       CloseAllPopups();
                       HandleMarkerClick(marker.ref);
                       marker.ref.togglePopup();
-                    }
-                    }>
+                    }}
+                  >
                     <h3>{marker.markername}</h3>
                     <p>{marker.tag}</p>
-                    </div>
-                    );
-                  })
+                  </div>
+                ))
               }
-            </div>
           </div>
+        </div>
       </div>
       <br />
     </>

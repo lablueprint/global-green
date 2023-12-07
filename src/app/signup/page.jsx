@@ -1,8 +1,6 @@
 'use client';
 
-// to do: password hidden and required username, password
 import React, { useState } from 'react';
-// import { bool } from 'prop-types';
 // import styles from './page.module.css';
 
 function Example() {
@@ -45,30 +43,30 @@ function Example() {
     // for email input format validation
     const regex = /^([\w-]+(?:\.[\w-]+)*)@((?:[\w-]+\.)*\w[\w-]{0,66})\.([a-z]{2,6}(?:\.[a-z]{2})?)$/;
     if (fname === '' || lname === '') {
+      // eslint-disable-next-line no-alert
       alert('Name is required!');
       validEntries = false;
     }
     if (!regex.test(email)) {
+      // eslint-disable-next-line no-alert
       alert('Invalid email!');
       validEntries = false;
     }
     if (password === '') {
+      // eslint-disable-next-line no-alert
       alert('Password is required!');
       validEntries = false;
     }
     if (password.length < 8) {
+      // eslint-disable-next-line no-alert
       alert('Password needs to be at least 8 characters');
       validEntries = false;
     }
     if (confirmPassword !== password) {
+      // eslint-disable-next-line no-alert
       alert('Password and confirm password fields need to match');
       validEntries = false;
     }
-    //  if(password != confirmPassword || password.length < 8){
-    // if(password.localeCompare(confirmPassword) != 0 || password.length < 8){
-    //   alert("Password and confirm password fields need to match");
-    //   validEntries = false;
-    // }
 
     if (validEntries === true) {
       accounts.fname = fname;
@@ -81,33 +79,42 @@ function Example() {
   return (
     <div>
       <form>
-        <label htmlFor="fname">First name:</label>
-        {' '}
+        <label htmlFor="fname">
+          First name:
+          {' '}
+          <br />
+          <input type="text" id="fname" name="fname" onChange={fnameChange} />
+        </label>
         <br />
-        <input type="text" id="fname" name="fname" onChange={fnameChange} />
-        <br />
-        <label htmlFor="lname">Last name:</label>
-        <br />
-        <input type="text" id="lname" name="lname" onChange={lnameChange} />
-        <br />
-        <label type="eAddress">Email Address:</label>
-        <br />
+        <label htmlFor="lname">
+          Last name:
+          <br />
+          <input type="text" id="lname" name="lname" onChange={lnameChange} />
+          <br />
+        </label>
+        {/* eslint-disable-next-line jsx-a11y/label-has-associated-control */}
+        <label type="eAddress">
+          Email Address:
+          <br />
 
-        <input type="email" id="email" name="email" onChange={usernameChange} required />
-        <br />
-        {/* <input type="submit" value="Submit" />  */}
+          <input type="email" id="email" name="email" onChange={usernameChange} required />
+          <br />
+        </label>
+        {/* eslint-disable-next-line jsx-a11y/label-has-associated-control */}
+        <label name="pass">
+          Password:
+          <br />
+          <input type="password" id="pass" name="pass" onChange={passwordChange} />
+          <br />
+        </label>
+        {/* eslint-disable-next-line jsx-a11y/label-has-associated-control */}
+        <label name="confirmPass">
+          Confirm Password:
+          <br />
+          <input type="password" id="confirmPass" name="confirmPass" onChange={confirmPasswordChange} />
+          <br />
+        </label>
 
-        {/* <input type="text" id="eAddress" name="eAddress" onChange={usernameChange} /><br></br> */}
-        {/* <input type="email" id="email" name="eAddress" pattern=".+@example\.com" onChange={usernameChange} required /><br></br> */}
-        <label name="pass">Password:</label>
-        <br />
-        <input type="password" id="pass" name="pass" onChange={passwordChange} />
-        <br />
-        <label name="confirmPass">Confirm Password:</label>
-        <br />
-        <input type="password" id="confirmPass" name="confirmPass" onChange={confirmPasswordChange} />
-        <br />
-        {/* <input type="submit" value="Submit" onClick={submitLog} /><br></br> */}
         <input type="submit" value="Submit" onClick={submitLog} />
         <br />
       </form>

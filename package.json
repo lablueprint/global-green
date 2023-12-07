@@ -11,6 +11,8 @@
   "dependencies": {
     "dotenv-webpack": "^8.0.1",
     "mapbox-gl": "^2.15.0",
+    "mongodb": "^6.3.0",
+    "mongoose": "^8.0.2",
     "next": "14.0.3",
     "prop-types": "^15.8.1",
     "react": "^18",

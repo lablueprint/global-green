@@ -1,0 +1,24 @@
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+    text-align: center;
+  }
+  
+  .title {
+    color: #0070f3;
+    font-size: 2em;
+    margin-bottom: 20px;
+  }
+
+  .title1{
+    color: #00f37a;
+    font-size: 2em;
+    margin-bottom: 20px;
+  }
+  
+  .description {
+    color: #666;
+    font-size: 1em;
+  }
+  

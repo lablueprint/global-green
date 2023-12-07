@@ -1,0 +1,93 @@
+.profile {
+    text-align: center;
+    color: black;
+    font-size: 2em;
+    margin-bottom: 20px;
+    font-weight: bold;
+    padding-right: 225px; /* Adjust the padding value */
+
+  }
+  
+  .name {
+    display: inline-block;
+    position: relative;
+    bottom: 25px;
+    margin-left: 50px;
+    font-weight: bold;
+  }
+  
+  .editableInput {
+    font-size: 1.5em;
+    border: none;
+    border-bottom: 1px solid #ccc;
+    text-align: center;
+  }
+  
+  .editableInput:focus {
+    outline: none;
+    border-bottom: 2px solid rgb(141, 141, 171);
+  }
+
+  
+  
+  .badgesSection {
+    text-align: flex; /* This should be 'left' or 'center' if 'flex' is not intentional */
+  }
+  
+  .row {
+    display: flex;
+    justify-content: center;
+    padding: 10px;
+    flex-wrap: wrap;
+    gap: 20px; /* This creates equal space between the items both vertically and horizontally */
+  }
+  
+  .badgeItem {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  .badgeIcon {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    background-color: #ddd;
+    margin-bottom: 10px;
+  }
+  
+  .courseItem {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 20px; /* Adjust margin to increase/decrease space between items */
+    box-shadow: 0 3px 5px 0 rgba(0,0,0,0.2); /* Add shadow for layer effect */
+    transition: 0.3s; /* Adds a smooth transition effect */
+    border-radius: 10px; /* Rounded corners for the cards */
+  }
+  
+  .courseItem:hover {
+    box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2); /* Changes the shadow on hover for a lifted effect */
+  }
+  
+  .courseIcon {
+    width: 250px; /* Set to 100% of the parent element to fill width */
+    height: 100px; /* Adjust height to match the image */
+    margin-bottom: 10px; /* Adjust bottom margin as needed */
+    background-color: #ddd;
+    border-radius: 20px; /* Adjust border-radius to match the image */
+  }
+  
+  .rowName {
+    font-size: 1em; /* Adjust the font size to match the image */
+    color: #333; /* Darken the text color a bit */
+    margin-top: -5px; /* Adjust if needed to position the text closer/further from the box */
+  }
+  
+  .circle {
+    width: '120px';
+    height: '120px';
+    border-radius: '50%';
+    background-color: '#ddd';
+    display: 'inline-block';
+  }

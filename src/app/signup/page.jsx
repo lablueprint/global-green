@@ -21,7 +21,6 @@ function Example() {
     "lname": "testing",
     "username": "testing",
     "password": "testing",
-    "confirmPassword" : "testing"
 
 }
   const fnameChange = (e) => {
@@ -80,7 +79,6 @@ function Example() {
       accounts.lname = lname;
       accounts.username = username;
       accounts.password = password;
-      accounts.confirmPassword = confirmPassword;
       console.log(accounts);
     }
   }
@@ -94,7 +92,7 @@ function Example() {
         <label type ="eAddress">Email Address:</label><br></br>
 
 
-      <input type="email" id="email" name="email" required /><br></br>
+      <input type="email" id="email" name="email"  onChange={usernameChange} required /><br></br>
        {/* <input type="submit" value="Submit" />  */}
       
         

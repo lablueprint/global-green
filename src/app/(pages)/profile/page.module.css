@@ -27,8 +27,6 @@
     outline: none;
     border-bottom: 2px solid rgb(141, 141, 171);
   }
-
-  
   
   .badgesSection {
     text-align: flex; /* This should be 'left' or 'center' if 'flex' is not intentional */

@@ -1,8 +1,9 @@
-"use client";
+'use client';
+
 import React, { useState } from 'react';
+import Image from 'next/image';
 import styles from './page.module.css';
 import defaultProfilePic from './profilepic.jpg'; // Assuming you have a default profile pic
-import Image from 'next/image'
 
 const userData = {
   name: 'Isaac Wen',
@@ -11,7 +12,7 @@ const userData = {
   courses: ['Course 1', 'Course 2', 'Course 3'],
 };
 
-const Profile = () => {
+function Profile() {
   const [isEditing, setIsEditing] = useState(false);
   const [editedName, setEditedName] = useState(userData.name);
   const [profileImage, setProfileImage] = useState(defaultProfilePic);
@@ -31,7 +32,7 @@ const Profile = () => {
 
   const handleChangeProfileImage = (event) => {
     const file = event.target.files[0];
-    if (file && file.type.substr(0, 5) === "image") {
+    if (file && file.type.substr(0, 5) === 'image') {
       setProfileImage(URL.createObjectURL(file));
     }
   };
@@ -40,7 +41,9 @@ const Profile = () => {
     <div style={{ textAlign: 'center', margin: '20px 0' }}>
       <div className={styles.profile}>Profile</div>
       <div
-        style={{ width: '120px', height: '120px', borderRadius: '50%', display: 'inline-block', position: 'relative' }}
+        style={{
+          width: '120px', height: '120px', borderRadius: '50%', display: 'inline-block', position: 'relative',
+        }}
         onClick={() => document.getElementById('profileImageInput').click()}
       >
         <Image
@@ -71,14 +74,17 @@ const Profile = () => {
         ) : (
           <h1 onClick={handleNameClick}>{userData.name}</h1>
         )}
-        <p>Rank: {userData.rank}</p>
+        <p>
+          Rank:
+          {userData.rank}
+        </p>
       </div>
       <div className={styles.badgesSection}>
         <h2>Badges</h2>
         <div className={styles.row}>
           {userData.badges.map((badge, index) => (
             <div key={index} className={styles.badgeItem}>
-              <div className={styles.badgeIcon}></div>
+              <div className={styles.badgeIcon} />
               <div className={styles.rowName}>{badge}</div>
             </div>
           ))}
@@ -89,7 +95,7 @@ const Profile = () => {
         <div className={styles.row}>
           {userData.courses.map((course, index) => (
             <div key={index} className={styles.courseItem}>
-              <div className={styles.courseIcon}></div>
+              <div className={styles.courseIcon} />
               <div className={styles.rowName}>{course}</div>
             </div>
           ))}
@@ -97,6 +103,6 @@ const Profile = () => {
       </div>
     </div>
   );
-};
+}
 
 export default Profile;

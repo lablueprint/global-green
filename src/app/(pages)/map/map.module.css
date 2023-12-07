@@ -1,0 +1,90 @@
+
+.wrapper {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: flex-start;
+    width: 100%;
+    height: 100%;
+    border: 1px solid #ccc;
+    padding: 20px;
+    margin: 10px;
+    box-shadow: 0 2px 3px #ccc;
+    box-sizing: border-box;
+}
+
+
+.mapContainer {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 1200px;
+    height: 600px;
+    z-index: 100;
+    box-sizing: border-box;
+}
+
+.mainBox {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: flex-start;
+    border: 1px solid #ccc;
+    padding: 10px;
+    margin: 10px;
+    width: 100%;
+    height: 100%;
+    box-shadow: 0 2px 3px #ccc;
+    box-sizing: border-box;
+  }
+
+.sideBar {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: flex-start;
+    width: 100%;
+    height: 100%;
+    box-sizing: border-box;
+}
+
+.sideBarItem {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: flex-start;
+    width: 90%;
+    height: 100%;
+
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    padding: 10px;
+    margin: 10px;
+    box-shadow: 0 2px 3px #ccc;
+    box-sizing: border-box;
+}
+
+.markerModal {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: flex-start;
+    width: 100%;
+    height: 100%;
+    padding: 10px;
+    box-sizing: border-box;
+}
+
+.markerModalTag {
+    background-color: #dfdcdc;
+    border-radius: 10px;
+    padding: 6px 13px;
+    font-weight: 400;
+    margin: 0;
+}
+
+.markerModalLink{
+    margin-top: 2px;
+    color: blue;
+    text-decoration: none;
+}

@@ -8,3 +8,16 @@ export async function POST(request) {
   await User.create({ username });
   return NextResponse.json({ message: 'User Created' }, { status: 201 });
 }
+
+export async function GET() {
+  await connectMongoDB();
+  const users = await User.find();
+  return NextResponse.json({ users });
+}
+
+export async function DELETE(request) {
+  const id = request.searchParams.get('id');
+  await connectMongoDB();
+  await User.findByIdAndDelete(id);
+  return NextResponse.json({ message: 'User deleted' }, { status: 200 });
+}

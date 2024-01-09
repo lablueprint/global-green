@@ -1,4 +1,4 @@
-export const quiz = {
+const quizData = {
   totalQuestions: 5,
   questions: [
     {
@@ -45,3 +45,5 @@ export const quiz = {
     },
   ],
 };
+
+export default quizData;

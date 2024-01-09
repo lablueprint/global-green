@@ -1,21 +1,32 @@
-import React from 'react';
-import styles from './page.module.css';
+import React, { useState } from 'react';
+import quizData from './data';
 
-function MultipleChoiceQuiz({ question, options, handleAnswer }) {
+function MultipleChoiceQuiz({
+  question, options, correctAnswer, handleAnswer,
+}) {
+  const [selectedAnswer, setSelectedAnswer] = useState(null);
+
+  const handleClick = (option) => {
+    setSelectedAnswer(option);
+    handleAnswer(option === correctAnswer);
+  };
+
   return (
     <div>
       <p>{question}</p>
-      <div className={styles.options}>
-        {options.map((option, index) => (
-          <button
-            key={index}
-            onClick={() => handleAnswer(option)}
-            style={{ margin: '5px', padding: '20px 30px' }}
-          >
-            {option}
-          </button>
-        ))}
-      </div>
+      {options.map((option, index) => (
+        <button
+          key={index}
+          onClick={() => handleClick(option)}
+          style={{
+            margin: '5px',
+            padding: '10px 10px',
+            backgroundColor: selectedAnswer === option ? (option === correctAnswer ? '#00B353 ' : '#FF474C') : 'white',
+          }}
+        >
+          {option}
+        </button>
+      ))}
     </div>
   );
 }

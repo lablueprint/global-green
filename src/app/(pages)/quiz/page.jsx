@@ -25,7 +25,8 @@ function Quiz() {
           key={question.id}
           question={question.question}
           options={question.options}
-          handleAnswer={(answer) => handleAnswer(question.id, answer)}
+          correctAnswer={question.answer}
+          handleAnswer={(isCorrect) => handleAnswer(question.id, isCorrect)}
         />
       ))}
       {/* <div>

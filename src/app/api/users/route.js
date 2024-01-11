@@ -2,11 +2,11 @@ import { NextResponse } from 'next/server';
 import connectMongoDB from '../../../../libs/mongodb';
 import User from '../../../../models/user';
 
-export async function POST(request) {
+export async function POST(req) {
+  await connectMongoDB();
   const {
     firstName, lastName, email, password,
-  } = await request.json();
-  await connectMongoDB();
+  } = await req.json();
   await User.create({
     firstName, lastName, email, password,
   });
@@ -19,9 +19,18 @@ export async function GET() {
   return NextResponse.json({ users });
 }
 
-export async function DELETE(request) {
-  const id = request.searchParams.get('id');
-  await connectMongoDB();
-  await User.findByIdAndDelete(id);
-  return NextResponse.json({ message: 'User deleted' }, { status: 200 });
+export async function DELETE(req, res) {
+  try {
+    await connectMongoDB();
+    const url = new URL(req.url);
+    const id = url.searchParams.get('id');
+    if (!id) { return res.status(400).json({ message: 'Missing user ID' }); }
+
+    const deletedUser = await User.findByIdAndDelete(id);
+    if (!deletedUser) { return res.status(404).json({ message: 'User not found' }); }
+
+    return NextResponse.json({ message: 'User deleted' }, { status: 200 });
+  } catch (error) {
+    return NextResponse.json({ message: 'Error deleting user', error: error.message }, { status: 500 });
+  }
 }

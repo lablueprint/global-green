@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import quizData from './data';
 
 function MultipleChoiceQuiz({
   question, options, correctAnswer, handleAnswer,

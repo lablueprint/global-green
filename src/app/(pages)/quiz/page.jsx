@@ -21,18 +21,25 @@ function Quiz() {
     <div style={{ textAlign: 'center', margin: '20px 0' }}>
       <div className={styles.quiz}>Quiz</div>
       {quizData.questions.map((question) => (
-        <MultipleChoice
-          key={question.id}
-          question={question.question}
-          options={question.options}
-          correctAnswer={question.answer}
-          handleAnswer={(isCorrect) => handleAnswer(question.id, isCorrect)}
-        />
+        question.type === 'multiple'
+          ? (
+            <MultipleChoice
+              key={question.id}
+              question={question.question}
+              options={question.options}
+              correctAnswer={question.answer}
+              handleAnswer={(isCorrect) => handleAnswer(question.id, isCorrect)}
+            />
+          ) : (
+            <TrueFalse
+              key={question.id}
+              question={question.question}
+              options={question.options}
+              correctAnswer={question.answer}
+              handleAnswer={(isCorrect) => handleAnswer(question.id, isCorrect)}
+            />
+          )
       ))}
-      {/* <div>
-        <p>User's Answers:</p>
-        <pre>{JSON.stringify(userAnswers, null, 2)}</pre>
-      </div> */}
     </div>
   );
 }

@@ -2,8 +2,8 @@ import mongoose, { Schema } from 'mongoose';
 
 const markerSchema = new Schema(
   {
-    markername: { type: String, required: true },
-    longlat: {type: [Number, Number], required: true },
+    name: { type: String, required: true },
+    longlat: { type: [Number, Number], required: true },
     description: { type: String, required: true },
     tag: { type: String, required: true },
     link: { type: String, required: true },

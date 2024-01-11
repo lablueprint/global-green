@@ -9,11 +9,11 @@ export async function GET() {
 }
 export async function POST(request) {
   const {
-    markername, longlat, description, tag, link,
+    name, longlat, description, tag, link,
   } = await request.json();
   await connectMongoDB();
   await Marker.create({
-    markername, longlat, description, tag, link,
+    name, longlat, description, tag, link,
   });
   return NextResponse.json({ message: 'Marker Created' }, { status: 201 });
 }

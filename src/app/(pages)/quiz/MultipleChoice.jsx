@@ -1,14 +1,23 @@
-import React, { useState } from 'react';
-import quizData from './data';
+import React, { useState, useEffect } from 'react';
 
 function MultipleChoiceQuiz({
-  question, options, correctAnswer, handleAnswer,
+  question, options, correctAnswer, handleAnswer, selectedAnswer
 }) {
-  const [selectedAnswer, setSelectedAnswer] = useState(null);
+  // Initialize 'isCorrectAnswerChosen' based on whether 'selectedAnswer' is correct
+  const [isCorrectAnswerChosen, setIsCorrectAnswerChosen] = useState(selectedAnswer === correctAnswer);
+  const [selected, setSelected] = useState(selectedAnswer);
+
+  useEffect(() => {
+    setSelected(selectedAnswer);
+    // Update 'isCorrectAnswerChosen' if 'selectedAnswer' changes
+    setIsCorrectAnswerChosen(selectedAnswer === correctAnswer);
+  }, [selectedAnswer]);
 
   const handleClick = (option) => {
-    setSelectedAnswer(option);
-    handleAnswer(option === correctAnswer);
+    setSelected(option);
+    const isCorrect = option === correctAnswer;
+    setIsCorrectAnswerChosen(isCorrect);
+    handleAnswer(isCorrect, option);
   };
 
   return (
@@ -18,10 +27,11 @@ function MultipleChoiceQuiz({
         <button
           key={index}
           onClick={() => handleClick(option)}
+          disabled = {isCorrectAnswerChosen}
           style={{
             margin: '5px',
             padding: '10px 10px',
-            backgroundColor: selectedAnswer === option ? (option === correctAnswer ? '#00B353 ' : '#FF474C') : 'white',
+            backgroundColor: selected === option ? (option === correctAnswer ? '#00B353' : '#FF474C') : 'white',
           }}
         >
           {option}

@@ -1,0 +1,47 @@
+.container {
+    justify-content: center;
+    border: 2px solid black;
+    border-radius: 4px;
+    padding: 20px;
+    margin: 30px;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  .p {
+    font-size: 36px;
+    text-align: center;
+  }
+  
+  .div {
+    width: 800px;
+    height: 100px;
+    margin: 0;
+    border: 2px solid black;
+    padding: 5px;
+    margin: 20px;
+    
+  }
+  
+  .button {
+    border: 2px solid black;
+    background-color: white;
+    color: black;
+    border-radius: 4px;
+    padding: 40px 125px;
+    margin: 20px;
+  }
+  
+  .progressBarBackground {
+      width: 100%;
+      background-color: #e0e0e0;
+      border-radius: 5px;
+      margin-bottom: 15px; /* Space below the progress bar */
+    }
+    
+    .progressBarFill {
+      height: 20px;
+      background-color: #4caf50;
+      border-radius: 5px;
+    }
+  

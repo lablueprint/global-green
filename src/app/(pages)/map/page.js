@@ -5,51 +5,91 @@ import mapboxgl from 'mapbox-gl';
 import 'mapbox-gl/dist/mapbox-gl.css';
 import styles from './map.module.css';
 
-mapboxgl.accessToken = 'pk.eyJ1IjoibWFyaW9wZW5nbGVlIiwiYSI6ImNscGh4bWJ5ZDBiNGQycnAzenl3ZGFoMGgifQ.a9h8rGqm200YEYvCS_-szA';
+mapboxgl.accessToken = process.env.NEXT_PUBLIC_MAPBOX_TOKEN;
 
 function Map() {
   const mapContainerRef = useRef(null);
+  const mapRef = useRef(null);
+
+  // Array of Markers
+  const mapArray = [
+    {
+      markername: 'Fairmont Sirru Fen Fushi',
+      longlat: [73.0083407, 6.2910463],
+      description: 'Lorem ipsum dolor sit🌎',
+      tag: 'Sustainability Lab',
+      link: 'https://www.google.com',
+      ref: null,
+
+    },
+    {
+      markername: 'UCLA',
+      longlat: [-118.4677947, 34.0699182],
+      description: 'Lorem ipsum dolor sit 🌎',
+      tag: 'University',
+      link: 'https://www.google.com',
+      ref: null,
+    },
+    {
+      markername: 'Global Green USA Office',
+      longlat: [-74.126121, 41.0646971],
+      description: 'Lorem ipsum dolor sit 🌎',
+      tag: 'Office',
+      link: 'https://www.google.com',
+      ref: null,
+    },
+  ];
+
+  // Function to handle what happens when a marker or sidebar item is clicked
+  function HandleMarkerClick(marker) {
+    // Center map on marker
+    if (mapRef.current) {
+      mapRef.current.flyTo({
+        center: marker._lngLat,
+        zoom: 12,
+      });
+
+      console.log({
+        name: marker._popup._content.outerText,
+        lat: marker._lngLat.lat,
+        lng: marker._lngLat.lng,
+      });
+    }
+  }
+
+  function CloseAllPopups() {
+    mapArray.map((marker) => {
+      if (marker.ref.getPopup().isOpen()) {
+        marker.ref.togglePopup();
+      }
+    });
+  }
 
   useEffect(() => {
-    // Array of Markers
-    const mapArray = [
-      {
-        markername: 'marker1',
-        longlat: [-74.5, 40],
-        description: 'This was the first ever marker in the world!🌎',
-        tag: 'cool_marker',
-        link: 'https://www.google.com',
-
-      },
-      {
-        markername: 'marker2',
-        longlat: [-74.6, 40],
-        description: 'This was the second ever marker in the world!🌎 Way better than the first.🤨',
-        tag: 'fun_marker',
-        link: 'https://www.google.com',
-
-      },
-    ];
-
     // Display Map
     const map = new mapboxgl.Map({
       container: mapContainerRef.current,
       style: 'mapbox://styles/mapbox/streets-v11',
-      center: [-74.5, 40], // starting position
+      center: [-118.4677947, 34.0699182], // starting position
       zoom: 9, // starting zoom
     });
 
+    // Hook up mapRef to the map
+    mapRef.current = map;
+
     // Navigation Controls
-    map.addControl(new mapboxgl.NavigationControl());
+    map.addControl(new mapboxgl.NavigationControl(), 'bottom-right');
 
     // Display Markers on Map
     const mapmarkers = mapArray.map((marker) => {
       const markerpopup = new mapboxgl.Popup().setHTML(
         `
-        <h3>${marker.markername}</h3>
-        <p>${marker.description}</p>
-        <p>${marker.tag}</p>
-        <a href=${marker.link}>Learn More</a>
+        <div class=${styles.markerModal}>
+          <h3>${marker.markername}</h3>
+          <p class= ${styles.markerModalTag}>${marker.tag}</p>
+          <p>${marker.description}</p>
+          <a class=${styles.markerModalLink} href=${marker.link}>Learn More &boxbox;</a>
+        </div>
         `,
       );
 
@@ -58,17 +98,10 @@ function Map() {
         .setPopup(markerpopup)
         .addTo(map);
 
-      markerpopup.on('open', () => LogMarkerInfo(newMarker));
-    });
+      markerpopup.on('open', () => HandleMarkerClick(newMarker));
 
-    // Log Marker Info in JSON Format
-    function LogMarkerInfo(marker) {
-      console.log({
-        name: marker._popup._content.outerText,
-        lat: marker._lngLat.lat,
-        lng: marker._lngLat.lng,
-      });
-    }
+      marker.ref = newMarker;
+    });
 
     // Clean up on unmount
     return () => map.remove();
@@ -81,7 +114,27 @@ function Map() {
         <div className={styles.exampleText}>
           Map!
         </div>
-        <div ref={mapContainerRef} className={styles.mapContainer} />
+        <div className={styles.mainBox}>
+          <div ref={mapContainerRef} className={styles.mapContainer} />
+          <div className={styles.sideBar}>
+            {
+                mapArray.map((marker) => (
+                  <div
+                    className={styles.sideBarItem}
+                    key={marker.markername}
+                    onClick={() => {
+                      CloseAllPopups();
+                      HandleMarkerClick(marker.ref);
+                      marker.ref.togglePopup();
+                    }}
+                  >
+                    <h3>{marker.markername}</h3>
+                    <p>{marker.tag}</p>
+                  </div>
+                ))
+              }
+          </div>
+        </div>
       </div>
       <br />
     </>

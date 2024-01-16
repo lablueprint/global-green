@@ -1,0 +1,64 @@
+.GG_Scholar {
+    text-align:left;
+    color: black;
+    font-size: 10px;
+    margin-top: 20px;
+    margin-left: 15px;
+    margin-bottom: 30px;
+    font-weight: bold;
+
+}
+.Courses {
+    text-align:left;
+    color: black;
+    font-size: 7px;
+    margin-top: 20px;
+    margin-left: 15px;
+    margin-bottom: 20px;
+    font-weight: bold;
+
+}
+
+.Challenges {
+    text-align:left;
+    color: black;
+    font-size: 7px;
+    margin-top: 20px;
+    margin-left: 15px;
+    margin-bottom: 20px;
+    font-weight: bold;
+
+}
+
+.Map {
+    text-align:left;
+    color: black;
+    font-size: 7px;
+    margin-top: 20px;
+    margin-left: 15px;
+    margin-bottom: 20px;
+    font-weight: bold;
+
+}
+
+.Store {
+    text-align:left;
+    color: black;
+    font-size: 7px;
+    margin-top: 20px;
+    margin-left: 15px;
+    margin-bottom: 20px;
+    font-weight: bold;
+
+}
+
+.Profile {
+    text-align:left;
+    color: black;
+    font-size: 7px;
+    margin-top: 20px;
+    margin-left: 15px;
+    margin-bottom: 20px;
+    font-weight: bold;
+
+}

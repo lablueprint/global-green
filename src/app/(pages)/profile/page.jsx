@@ -2,6 +2,7 @@
 
 import React, { useState } from 'react';
 import Image from 'next/image';
+import NavBar from '@/app/components/navbar';
 import styles from './page.module.css';
 import defaultProfilePic from './profilepic.jpg'; // Assuming you have a default profile pic
 
@@ -39,6 +40,7 @@ function Profile() {
 
   return (
     <div style={{ textAlign: 'center', margin: '20px 0' }}>
+      <NavBar />
       <div className={styles.profile}>Profile</div>
       <div
         style={{

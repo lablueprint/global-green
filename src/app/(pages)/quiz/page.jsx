@@ -3,8 +3,9 @@
 import React, { useState } from 'react';
 import styles from './page.module.css';
 import MultipleChoiceQuiz from './MultipleChoice'; 
-import quizzes from './data'; // Assuming this is the path to your quizzes data
+import Quizzes from './data'; // Assuming this is the path to your Quizzes data
 import LinearWithValueLabel from '../quiz/progressBar';
+import Results from './results'
 
 
 function Quiz() {
@@ -14,17 +15,20 @@ function Quiz() {
   const [showNext, setShowNext] = useState(false);
   const [selectedAnswers, setSelectedAnswers] = useState({});
   const [points, setPoints] = useState(0);
+  const [showResults, setShowResults] = useState(false);
 
-  const currentQuiz = quizzes[currentQuizIndex];
+
+  const currentQuiz = Quizzes[currentQuizIndex];
   const currentQuestion = currentQuiz.questions[currentQuestionIndex];
 
   const handleAnswer = (isCorrect, selectedOption) => {
     setSelectedAnswers(prevAnswers => ({
       ...prevAnswers,
       [currentQuestionIndex]: selectedOption
-    }));
+    }
+    ));
+    setShowNext(true); 
     if (isCorrect) {
-      setShowNext(true); 
       setProgress(prevProgress => Math.min(prevProgress + (100 / currentQuiz.totalQuestions), 100));
       setPoints(prevPoints => prevPoints + 1);
     }
@@ -35,7 +39,7 @@ function Quiz() {
     if (nextQuestionIndex < currentQuiz.questions.length) {
       setCurrentQuestionIndex(nextQuestionIndex);
       setShowNext(selectedAnswers[nextQuestionIndex] !== undefined);
-    } else if (currentQuizIndex < quizzes.length - 1) {
+    } else if (currentQuizIndex < Quizzes.length - 1) {
       handleNextQuiz();
     }
   };
@@ -47,15 +51,24 @@ function Quiz() {
       setShowNext(selectedAnswers[previousQuestionIndex] !== undefined);
     }
   };
-  
+
   const handleNextQuiz = () => {
-    setCurrentQuizIndex(currentQuizIndex + 1);
-    setCurrentQuestionIndex(0);
-    setProgress(0);
-    setShowNext(false);
-    setSelectedAnswers({});
-    setPoints(0);
+    if (currentQuizIndex < Quizzes.length - 1) {
+      setShowResults(true); // Show results instead of next quiz
+    } else {
+      setCurrentQuizIndex(currentQuizIndex + 1);
+      setCurrentQuestionIndex(0);
+      setProgress(0);
+      setShowNext(false);
+      setSelectedAnswers({});
+      setPoints(0);
+    }
+
   };
+
+  if (showResults) {
+    return <Results points={points} totalQuestions={currentQuiz.totalQuestions} />;
+  }
 
   const handlePreviousQuiz = () => {
     if (currentQuizIndex > 0) {
@@ -94,19 +107,16 @@ function Quiz() {
           <button className={styles.nextButton} onClick={handleNextQuestion}>Next</button>
         )}
       </div>
-      <div>
+      {/* <div>
         {currentQuizIndex > 0 && (
           <button onClick={handlePreviousQuiz}>Previous Quiz</button>
         )}
-        {currentQuizIndex < quizzes.length - 1 && (
+        {currentQuizIndex < Quizzes.length - 1 && (
           <button onClick={handleNextQuiz}>Next Quiz</button>
         )}
-      </div>
+      </div> */}
     </div>
   );
 }
 
 export default Quiz;
-
-
-

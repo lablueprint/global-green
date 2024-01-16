@@ -1,0 +1,55 @@
+.resultsContainer {
+    text-align: center;
+    font-family: 'Arial', sans-serif; /* Replace with your font of choice */
+  }
+  
+  .goodJob {
+    font-size: 1.5em;
+    margin-bottom: 20px;
+  }
+  
+  .scoreCard {
+    background: #fff;
+    border-radius: 10px;
+    padding: 20px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    display: inline-block;
+    margin: 20px;
+  }
+  
+  .progressCircle {
+    width: 100px; /* Adjust as needed */
+    height: 100px; /* Adjust as needed */
+    margin: 0 auto 20px; /* Centers the circle and adds space below */  }
+  
+  .scoreDetails {
+    font-size: 1em;
+    margin-top: 20px;
+  }
+  
+  .correct {
+    color: green;
+  }
+  
+  .incorrect {
+    color: red;
+  }
+  
+  .xpCard {
+    background: #fff;
+    border-radius: 10px;
+    padding: 20px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    display: inline-block;
+    margin: 20px;
+  }
+  
+  .extraMessage {
+    background: #fff;
+    border-radius: 10px;
+    padding: 20px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    display: inline-block;
+    margin: 20px;
+  }
+  

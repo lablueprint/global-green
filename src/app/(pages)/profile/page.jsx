@@ -43,12 +43,32 @@ function Profile() {
       }
       fetchUserData();
     }
-
-    
-    
-
   }
   , [userData]);
+
+  const updateUserData = (data) => {
+    // update the user data in the database, make sure only the first user is updated.
+    async function updateUserDataInDB() {
+      console.log('data', data);
+      
+      const response = await fetch('/api/users', {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ data }),
+      });
+      const all_users = await response.json();
+      console.log(all_users);
+    }
+    updateUserDataInDB();
+
+
+    // update the user data in the local storage
+    localStorage.setItem('userData', JSON.stringify(data));
+
+  };
+
 
   const handleNameClick = () => {
     setIsEditing(true);
@@ -60,7 +80,9 @@ function Profile() {
 
   const handleBlur = () => {
     setIsEditing(false);
-    userData.name = editedName;
+    userData.userName = editedName;
+    localStorage.setItem('userData', JSON.stringify(userData));
+    updateUserData(userData);
   };
 
   const handleChangeProfileImage = (event) => {

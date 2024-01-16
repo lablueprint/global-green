@@ -6,6 +6,10 @@ const userSchema = new Schema(
     lastName: { type: String },
     email: { type: String, required: true },
     password: { type: String, required: true },
+    userName: { type: String },
+    rank: { type: String },
+    badges: { type: Array },
+    courses: { type: Array },
   },
   {
     timestamps: true,

@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import styles from './page.module.css';
 
 function MultipleChoiceQuiz({
   question, options, correctAnswer, handleAnswer, selectedAnswer
@@ -24,7 +25,7 @@ function MultipleChoiceQuiz({
     <div>
       <p>{question}</p>
       {options.map((option, index) => (
-        <button
+        <button className = {styles.choiceButton}
           key={index}
           onClick={() => handleClick(option)}
           disabled = {isCorrectAnswerChosen}

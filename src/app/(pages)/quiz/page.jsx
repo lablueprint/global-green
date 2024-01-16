@@ -6,6 +6,7 @@ import MultipleChoiceQuiz from './MultipleChoice';
 import quizzes from './data'; // Assuming this is the path to your quizzes data
 import LinearWithValueLabel from '../quiz/progressBar';
 
+
 function Quiz() {
   const [currentQuizIndex, setCurrentQuizIndex] = useState(0);
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
@@ -46,7 +47,7 @@ function Quiz() {
       setShowNext(selectedAnswers[previousQuestionIndex] !== undefined);
     }
   };
-
+  
   const handleNextQuiz = () => {
     setCurrentQuizIndex(currentQuizIndex + 1);
     setCurrentQuestionIndex(0);
@@ -68,7 +69,7 @@ function Quiz() {
   };
 
   return (
-    <div style={{ textAlign: 'center', margin: '20px 0' }}>
+    <div style={{ textAlign: 'center', margin: '20px 0', justifyContent: 'space-evenly' }}>
       <LinearWithValueLabel value={progress} />
       <div className={styles.quiz}>
         Question {currentQuestionIndex + 1} of {currentQuiz.totalQuestions}
@@ -85,12 +86,12 @@ function Quiz() {
         selectedAnswer={selectedAnswers[currentQuestionIndex]}
         disabled={showNext !== undefined}
       />
-      <div>
+      <div className={styles.container}>
         {currentQuestionIndex > 0 && (
-          <button onClick={handlePreviousQuestion}>Back</button>
+          <button className={styles.backButton} onClick={handlePreviousQuestion}>Back</button>
         )}
         {showNext && (
-          <button onClick={handleNextQuestion}>Next</button>
+          <button className={styles.nextButton} onClick={handleNextQuestion}>Next</button>
         )}
       </div>
       <div>

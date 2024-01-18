@@ -5,7 +5,6 @@ import Image from 'next/image';
 import styles from './page.module.css';
 import defaultProfilePic from './profilepic.jpg'; // Assuming you have a default profile pic
 
-
 /*
 const userData = {
   userName: 'Isaac Wen',
@@ -22,35 +21,38 @@ function Profile() {
   const [userData, setUserData] = useState({});
   const [editedName, setEditedName] = useState('');
 
-  useEffect(() => {
-    if (!userData.userName) {
-     async function fetchUserData() {
-        if (localStorage.getItem('userData')) {
-          const data = JSON.parse(localStorage.getItem('userData'));
-          setUserData(data);
-          setEditedName(data.userName);
-          return;
-        }
-        else {
-        const response = await fetch('/api/users');
-        const all_users = await response.json();
-        const data = all_users['users'][0];
-        setUserData(data);
-        setEditedName(data.userName);
-        localStorage.setItem('userData', JSON.stringify(data));
-        console.log('data', data);
-        }
-      }
-      fetchUserData();
+  async function fetchUserData() {
+    if (localStorage.getItem('userData')) {
+      const data = JSON.parse(localStorage.getItem('userData'));
+      setUserData(data);
+      setEditedName(data.userName);
+    } else {
+      const response = await fetch('/api/users');
+      const allUsers = await response.json();
+      const data = allUsers.users[0];
+      setUserData(data);
+      setEditedName(data.userName);
+      localStorage.setItem('userData', JSON.stringify(data));
+      // eslint-disable-next-line no-console
+      console.log('data', data);
     }
   }
-  , [userData]);
+
+  useEffect(
+    () => {
+      if (!userData.userName) {
+        fetchUserData();
+      }
+    },
+    [userData],
+  );
 
   const updateUserData = (data) => {
     // update the user data in the database, make sure only the first user is updated.
     async function updateUserDataInDB() {
+      // eslint-disable-next-line no-console
       console.log('data', data);
-      
+
       const response = await fetch('/api/users', {
         method: 'PUT',
         headers: {
@@ -58,17 +60,15 @@ function Profile() {
         },
         body: JSON.stringify({ data }),
       });
-      const all_users = await response.json();
-      console.log(all_users);
+      const allUsers = await response.json();
+      // eslint-disable-next-line no-console
+      console.log(allUsers);
     }
     updateUserDataInDB();
 
-
     // update the user data in the local storage
     localStorage.setItem('userData', JSON.stringify(data));
-
   };
-
 
   const handleNameClick = () => {
     setIsEditing(true);
@@ -97,7 +97,11 @@ function Profile() {
       <div className={styles.profile}>Profile</div>
       <div
         style={{
-          width: '120px', height: '120px', borderRadius: '50%', display: 'inline-block', position: 'relative',
+          width: '120px',
+          height: '120px',
+          borderRadius: '50%',
+          display: 'inline-block',
+          position: 'relative',
         }}
         onClick={() => document.getElementById('profileImageInput').click()}
       >

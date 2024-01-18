@@ -19,26 +19,26 @@ function Quiz() {
 
   return (
     <div style={{ textAlign: 'center', margin: '20px 0' }}>
-      <div className={styles.quiz}>Quiz</div>
+      {/* <div className={styles.quiz}>Quiz</div> */}
       {quizData.questions.map((question) => (
-        question.type === 'multiple'
+        question.type === 'dragdrop'
           ? (
-            <MultipleChoice
+            <DragDrop
               key={question.id}
-              question={question.question}
+              prompt={question.prompt}
               options={question.options}
-              correctAnswer={question.answer}
-              handleAnswer={(isCorrect) => handleAnswer(question.id, isCorrect)}
             />
-          ) : (
-            <TrueFalse
-              key={question.id}
-              question={question.question}
-              options={question.options}
-              correctAnswer={question.answer}
-              handleAnswer={(isCorrect) => handleAnswer(question.id, isCorrect)}
-            />
-          )
+
+          ) : ''
+      //  (
+        //   <MultipleChoice
+        //     key={question.id}
+        //     question={question.question}
+        //     options={question.options}
+        //     correctAnswer={question.answer}
+        //     handleAnswer={(isCorrect) => handleAnswer(question.id, isCorrect)}
+        //   />
+        // )
       ))}
     </div>
   );

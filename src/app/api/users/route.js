@@ -15,13 +15,13 @@ export async function POST(request) {
 
 export async function GET() {
   await connectMongoDB();
-  const users = await User.find();
-  return NextResponse.json({ users });
-}
-
-export async function DELETE(request) {
-  const id = request.searchParams.get('id');
-  await connectMongoDB();
-  await User.findByIdAndDelete(id);
-  return NextResponse.json({ message: 'User deleted' }, { status: 200 });
+  try {
+    const users = await User.find();
+    if (!users) {
+      return NextResponse.json({ message: 'User not found!' });
+    }
+    return NextResponse.json({ users });
+  } catch (error) {
+    return NextResponse.json({ message: error.message });
+  }
 }

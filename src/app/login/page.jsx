@@ -4,33 +4,40 @@ import React, { useEffect, useState } from 'react';
 // import styles from './page.module.css';
 
 function Example() {
-  const [username, setUsername] = useState('');
+  const [userName, setUsername] = useState('');
   const [password, setPassword] = useState('');
-  const [accounts, setAccounts] = useState({});
+  const [loading, setLoading] = React.useState(false);
 
-  async function fetchUserData() {
-    if (localStorage.getItem('accounts')) {
-      const data = JSON.parse(localStorage.getItem('accounts'));
-      setAccounts(data);
-    } else {
-      const response = await fetch('/api/users');
-      const allUsers = await response.json();
-      const data = allUsers.users;
-      setAccounts(data);
-      localStorage.setItem('accounts', JSON.stringify(data));
-      // eslint-disable-next-line no-console
-      console.log('data', data);
-    }
-  }
+  const onLogin = async () => {
+    try {
+      setLoading(true);
+      const response = await fetch('/api/users/login', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ userName, password }),
+      });
+      const data = await response.json();
 
-  useEffect(
-    () => {
-      if (!accounts.length) {
-        fetchUserData();
+      if (data.error) {
+        // eslint-disable-next-line no-alert
+        alert(data.error);
+        throw new Error(data.error);
+      } else {
+        // redirect to the profile page
+        window.location.href = '/profile';
       }
-    },
-    [accounts],
-  );
+
+      // eslint-disable-next-line no-console
+      console.log('Login success', response.data);
+    } catch (error) {
+      // eslint-disable-next-line no-console
+      console.log('Login failed', error.message);
+    } finally {
+      setLoading(false);
+    }
+  };
 
   const usernameChange = (e) => {
     setUsername(e.target.value);
@@ -43,29 +50,16 @@ function Example() {
   const submitLog = (event) => {
     event.preventDefault();
 
-    if (username === '' || password === '') {
+    if (userName === '' || password === '') {
       // eslint-disable-next-line no-alert
       alert('Input a username and/or password!!!');
     } else {
-      let validEntries = false;
-      for (let i = 0; i < accounts.length; i += 1) {
-        if ((accounts[i].userName === username || accounts[i].email === username)
-         && accounts[i].password === password) {
-          validEntries = true;
-        }
-      }
-      if (validEntries) {
-        // eslint-disable-next-line no-alert
-        alert('Login Successful!');
-        window.location.href = '/profile';
-      } else {
-        // eslint-disable-next-line no-alert
-        alert('Invalid username and/or password!');
-      }
+      onLogin();
     }
   };
   return (
     <div>
+      <h1>{loading ? 'Processing' : 'Login'}</h1>
       <form>
         {/* eslint-disable-next-line jsx-a11y/label-has-associated-control */}
         <label name="username">Username or Email:</label>

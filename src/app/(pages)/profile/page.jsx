@@ -17,35 +17,19 @@ const userData = {
 function Profile() {
   const [isEditing, setIsEditing] = useState(false);
   const [profileImage, setProfileImage] = useState(defaultProfilePic);
-
-  const [userData, setUserData] = useState({});
   const [editedName, setEditedName] = useState('');
+  const [userData, setData] = useState({});
 
-  async function fetchUserData() {
-    if (localStorage.getItem('userData')) {
-      const data = JSON.parse(localStorage.getItem('userData'));
-      setUserData(data);
-      setEditedName(data.userName);
-    } else {
-      const response = await fetch('/api/users');
-      const allUsers = await response.json();
-      const data = allUsers.users[0];
-      setUserData(data);
-      setEditedName(data.userName);
-      localStorage.setItem('userData', JSON.stringify(data));
-      // eslint-disable-next-line no-console
-      console.log('data', data);
-    }
-  }
+  const getUserDetails = async () => {
+    const res = await fetch('/api/users/me');
+    const data = await res.json();
+    setData(data.user);
+    console.log(data.user);
+  };
 
-  useEffect(
-    () => {
-      if (!userData.userName) {
-        fetchUserData();
-      }
-    },
-    [userData],
-  );
+  useEffect(() => {
+    getUserDetails();
+  }, []);
 
   const updateUserData = (data) => {
     // update the user data in the database, make sure only the first user is updated.
@@ -127,7 +111,6 @@ function Profile() {
             value={editedName}
             onChange={handleNameChange}
             onBlur={handleBlur}
-            autoFocus
             className={styles.editableInput}
           />
         ) : (

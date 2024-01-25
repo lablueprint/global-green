@@ -15,7 +15,7 @@ export async function POST(request) {
 
     // check if user already exists
     const user = await User.findOne({
-      $and: [{ email: userName }, { userName }],
+      $or: [{ email }, { userName }],
     });
 
     if (user) {

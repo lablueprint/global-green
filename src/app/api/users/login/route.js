@@ -22,8 +22,8 @@ export async function POST(request) {
     }
     // eslint-disable-next-line no-console
     console.log('user exists');
-    // const validPassword = await bcryptjs.compare(password, user.password);
-    const validPassword = password === user.password;
+    const validPassword = await bcryptjs.compare(password, user.password);
+    // const validPassword = password === user.password;
     if (!validPassword) {
       return NextResponse.json({ error: 'Invalid password' }, { status: 400 });
     }

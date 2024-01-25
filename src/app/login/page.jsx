@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 // import styles from './page.module.css';
 
 function Example() {
@@ -9,6 +9,9 @@ function Example() {
   const [loading, setLoading] = React.useState(false);
 
   const onLogin = async () => {
+    // login function. This will call upon /api/users/login
+    // and send the username and password to the backend
+    // if the login is successful, redirect to the profile page
     try {
       setLoading(true);
       const response = await fetch('/api/users/login', {

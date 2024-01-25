@@ -5,15 +5,6 @@ import Image from 'next/image';
 import styles from './page.module.css';
 import defaultProfilePic from './profilepic.jpg'; // Assuming you have a default profile pic
 
-/*
-const userData = {
-  userName: 'Isaac Wen',
-  rank: '1000',
-  badges: ['Badge 1', 'Badge 2', 'Badge 3', 'Badge 4', 'Badge 5'],
-  courses: ['Course 1', 'Course 2', 'Course 3'],
-};
-*/
-
 function Profile() {
   const [isEditing, setIsEditing] = useState(false);
   const [profileImage, setProfileImage] = useState(defaultProfilePic);
@@ -24,6 +15,8 @@ function Profile() {
     const res = await fetch('/api/users/me');
     const data = await res.json();
     setData(data.user);
+    setEditedName(data.user.userName);
+    // eslint-disable-next-line no-console
     console.log(data.user);
   };
 
@@ -37,16 +30,25 @@ function Profile() {
       // eslint-disable-next-line no-console
       console.log('data', data);
 
-      const response = await fetch('/api/users', {
-        method: 'PUT',
+      const response = await fetch('/api/users/me/change-name', {
+        method: 'PATCH',
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ data }),
+        body: JSON.stringify({ userName: data.userName }),
       });
-      const allUsers = await response.json();
+      const res = await response.json();
       // eslint-disable-next-line no-console
-      console.log(allUsers);
+      console.log('res', res);
+
+      if (res.error) {
+        // eslint-disable-next-line no-alert
+        alert(res.error);
+        throw new Error(res.error);
+      }
+
+      // eslint-disable-next-line no-console
+      console.log('Update success', response.data);
     }
     updateUserDataInDB();
 
@@ -124,8 +126,8 @@ function Profile() {
       <div className={styles.badgesSection}>
         <h2>Badges</h2>
         <div className={styles.row}>
-          {userData.badges ? userData.badges.map((badge, index) => (
-            <div key={index} className={styles.badgeItem}>
+          {userData.badges ? userData.badges.map((badge) => (
+            <div key={badge} className={styles.badgeItem}>
               <div className={styles.badgeIcon} />
               <div className={styles.rowName}>{badge}</div>
             </div>
@@ -136,8 +138,8 @@ function Profile() {
       <div className={styles.coursesSection}>
         <h2>Courses</h2>
         <div className={styles.row}>
-          {userData.courses ? userData.courses.map((course, index) => (
-            <div key={index} className={styles.courseItem}>
+          {userData.courses ? userData.courses.map((course) => (
+            <div key={course} className={styles.courseItem}>
               <div className={styles.courseIcon} />
               <div className={styles.rowName}>{course}</div>
             </div>

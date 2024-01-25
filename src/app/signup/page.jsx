@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 // import styles from './page.module.css';
 
 function Example() {
@@ -9,31 +9,59 @@ function Example() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
-  const [emails, setEmails] = useState('');
   const [userName, setUserName] = useState('');
 
-  async function fetchUserData() {
-    if (localStorage.getItem('emails')) {
-      const data = JSON.parse(localStorage.getItem('emails'));
-      setEmails(data);
-    } else {
-      const response = await fetch('/api/users');
-      const allUsers = await response.json();
-      const data = Array.from(allUsers.users, (user) => user.email);
-      setEmails(data);
-      localStorage.setItem('emails', JSON.stringify(data));
-      // eslint-disable-next-line no-console
-      console.log('data', data);
-    }
-  }
-  useEffect(
-    () => {
-      if (!emails) {
-        fetchUserData();
+  const OnSignup = async () => {
+    // signup function. This will call upon /api/users/signup
+    // and send the username and password to the backend
+    // if the signup is successful, redirect to the profile page
+    try {
+      const response = await fetch('/api/users/signup', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          userName, password, firstName, lastName, email,
+        }),
+      });
+      const data = await response.json();
+
+      if (data.error) {
+        // eslint-disable-next-line no-alert
+        alert(data.error);
+        throw new Error(data.error);
+      } else {
+        // log the user in after signing up
+        const loginResponse = await fetch('/api/users/login', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({ userName, password }),
+        });
+        const loginData = await loginResponse.json();
+
+        if (loginData.error) {
+          // eslint-disable-next-line no-alert
+          alert(loginData.error);
+          throw new Error(loginData.error);
+        } else {
+          // redirect to the profile page
+          window.location.href = '/profile';
+        }
+
+        // eslint-disable-next-line no-console
+        console.log('Login success', loginResponse.data);
       }
-    },
-    [emails],
-  );
+
+      // eslint-disable-next-line no-console
+      console.log('Signup success', response.data);
+    } catch (error) {
+      // eslint-disable-next-line no-console
+      console.log('Signup failed', error.message);
+    }
+  };
 
   const firstNameChange = (e) => {
     setFirstName(e.target.value);
@@ -58,13 +86,6 @@ function Example() {
     event.preventDefault();
     let validEntries = true;
 
-    // check if email already exists
-    if (emails.includes(email)) {
-      // eslint-disable-next-line no-alert
-      alert('Email already exists!');
-      validEntries = false;
-      return;
-    }
     // for email input format validation
     const regex = /^([\w-]+(?:\.[\w-]+)*)@((?:[\w-]+\.)*\w[\w-]{0,66})\.([a-z]{2,6}(?:\.[a-z]{2})?)$/;
     if (firstName === '' || lastName === '') {
@@ -98,35 +119,7 @@ function Example() {
       return;
     }
     if (validEntries) {
-      const data = {
-        firstName,
-        lastName,
-        email,
-        password,
-        userName,
-        rank: 0,
-        courses: [], // here we can put default starter courses
-        badges: [],
-      };
-      fetch('/api/users', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(data),
-      }).then((response) => {
-        if (response.status === 201) {
-          // eslint-disable-next-line no-alert
-          alert('Account created!');
-          window.location.href = '/profile';
-        } else {
-          // eslint-disable-next-line no-alert
-          alert('Error creating account!');
-        }
-      }).catch((error) => {
-        // eslint-disable-next-line no-console
-        console.error('Error:', error);
-      });
+      OnSignup();
     }
   };
   return (

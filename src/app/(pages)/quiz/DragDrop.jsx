@@ -2,6 +2,15 @@ import Draggable from 'react-draggable';
 import React, { useState, useEffect } from 'react';
 
 export default function DragDrop({ prompt, options }) {
+  const [x, setX] = useState(0);
+  const [y, setY] = useState(0);
+
+  const handleStop = (e, data) => {
+    console.log(data);
+    setX(data.x);
+    setY(data.y);
+  };
+
   return (
     <div>
       <h3>GeeksforGeeks - Draggable Components</h3>
@@ -19,7 +28,6 @@ export default function DragDrop({ prompt, options }) {
             }}
           >
             this is the answer box
-
           </div>
           <div
             key={index}
@@ -37,7 +45,10 @@ export default function DragDrop({ prompt, options }) {
       ))}
       <div style={{ display: 'flex', gap: 5 }}>
         {options.map((option, index) => (
-          <Draggable>
+          <Draggable
+            position={{ x: 0, y: 0 }}
+            onStop={handleStop}
+          >
             <div
               key={index}
               style={{
@@ -46,7 +57,6 @@ export default function DragDrop({ prompt, options }) {
                 border: '1px solid black',
               }}
             >
-
               {option.answer}
             </div>
           </Draggable>

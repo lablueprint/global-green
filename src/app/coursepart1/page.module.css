@@ -1,0 +1,20 @@
+.flexCol {
+  display: flex;
+  flex-direction: col;
+}
+
+.navBarWidth {
+  width: 18%;
+}
+.moduleWidth {
+  width: 100%;
+}
+
+/* styles.css */
+
+.leftBorder {
+  border-left: 5px solid #d3d3d3;
+  padding-left: 10px;
+  margin-top: 0px;
+  height: 900px;
+}

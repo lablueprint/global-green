@@ -1,0 +1,34 @@
+.navbarEntries {
+  cursor: pointer;
+  margin-bottom: 20px;
+  list-style: none;
+  padding: 0;
+}
+
+.bulletPoint {
+  list-style: none;
+  padding: 0;
+}
+
+.navBar {
+  width: 210px;
+  margin-right: 15px;
+  position: fixed;
+}
+
+.horizonalLine {
+  width: 210px;
+  text-align: right;
+  margin-left: 0px;
+  color: #d3d3d3;
+  size: 5px;
+}
+
+.navbarEntries:hover {
+  background-color: #d3d3d3;
+  font-weight: bold;
+}
+.activeNavItem {
+  /* background-color: grey; */
+  font-weight: bold;
+}

@@ -22,3 +22,7 @@
     font-size: 1em;
   }
   
+  .wrapper {
+    display: flex;
+    flex-direction: column;
+  }

@@ -76,7 +76,7 @@ const quizData = {
         question: 'question2',
         answer: 'ans2',
       }],
-      type: 'dragdrop',
+      type: 'select',
     },
   ],
 };

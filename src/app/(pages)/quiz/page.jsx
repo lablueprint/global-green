@@ -4,7 +4,7 @@ import React, { useState } from 'react';
 import styles from './page.module.css';
 import MultipleChoice from './MultipleChoice';
 import TrueFalse from './TrueFalse';
-import DragDrop from './DragDrop';
+import Select from './Select';
 import quizData from './data';
 
 function Quiz() {
@@ -21,9 +21,9 @@ function Quiz() {
     <div style={{ textAlign: 'center', margin: '20px 0' }}>
       {/* <div className={styles.quiz}>Quiz</div> */}
       {quizData.questions.map((question) => (
-        question.type === 'dragdrop'
+        question.type === 'select'
           ? (
-            <DragDrop
+            <Select
               key={question.id}
               prompt={question.prompt}
               options={question.options}

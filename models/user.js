@@ -10,6 +10,8 @@ const userSchema = new Schema(
     rank: { type: Number },
     badges: { type: Array },
     courses: { type: Array },
+    verified: { type: Boolean, default: false },
+    verifyToken: { type: String },
   },
   {
     timestamps: true,

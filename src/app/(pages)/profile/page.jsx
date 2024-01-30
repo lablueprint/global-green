@@ -18,6 +18,9 @@ function Profile() {
     setEditedName(data.user.userName);
     // eslint-disable-next-line no-console
     console.log(data.user);
+    if (data.user.verified === false) {
+      window.location.href = '/verifyemail';
+    }
   };
 
   useEffect(() => {

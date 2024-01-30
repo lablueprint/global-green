@@ -48,7 +48,7 @@ function Example() {
           throw new Error(loginData.error);
         } else {
           // redirect to the profile page
-          window.location.href = '/profile';
+          window.location.href = '/login';
         }
 
         // eslint-disable-next-line no-console

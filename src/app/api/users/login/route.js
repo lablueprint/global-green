@@ -38,6 +38,7 @@ export async function POST(request) {
       rank: user.rank,
       badges: user.badges,
       courses: user.courses,
+      verified: user.verified,
     };
     // create token, this is the payload and the secret key. The token is valid for 1 day
     const token = jwt.sign(tokenData, process.env.JWT_SECRET, { expiresIn: '1d' });

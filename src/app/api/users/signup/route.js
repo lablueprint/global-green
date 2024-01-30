@@ -2,6 +2,7 @@ import { NextResponse } from 'next/server';
 import bcryptjs from 'bcryptjs';
 import connectMongoDB from '../../../../../libs/mongodb';
 import User from '../../../../../models/user';
+import { sendEmail } from '../../../../../helpers/mailer';
 
 export async function POST(request) {
   await connectMongoDB();
@@ -32,11 +33,21 @@ export async function POST(request) {
       userName,
       email,
       password: hashedPassword,
+      badges: [],
+      courses: [],
+      rank: 0,
+      verified: false,
     });
 
     const savedUser = await newUser.save();
-    // eslint-disable-next-line no-console
-    console.log(savedUser);
+
+    const hashedToken = (await bcryptjs.hash(savedUser.id.toString(), 10)).slice(7, 15);
+    savedUser.verifyToken = hashedToken;
+
+    await savedUser.save();
+
+    // send email to user to verify email
+    await sendEmail({ email, emailType: 'VERIFY', userId: savedUser.id });
 
     return NextResponse.json({
       message: 'User created successfully',

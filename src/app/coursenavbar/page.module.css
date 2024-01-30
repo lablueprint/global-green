@@ -1,34 +1,51 @@
-.navbarEntries {
-  cursor: pointer;
-  margin-bottom: 20px;
-  list-style: none;
-  padding: 0;
-}
-
 .bulletPoint {
   list-style: none;
   padding: 0;
 }
 
 .navBar {
-  width: 210px;
-  margin-right: 15px;
   position: fixed;
 }
 
 .horizonalLine {
-  width: 210px;
+  width: 50%;
   text-align: right;
   margin-left: 0px;
   color: #d3d3d3;
   size: 5px;
 }
+.navbarEntries {
+  border-radius: 10px;
+  background-color: #d3d3d3;
+  color: black;
+  padding: 10px;
+  cursor: pointer;
+  list-style: none;
+}
+
+.padding {
+  margin-bottom: 15px;
+  margin-right: 10px;
+}
 
 .navbarEntries:hover {
-  background-color: #d3d3d3;
-  font-weight: bold;
+  color: grey;
 }
+
 .activeNavItem {
-  /* background-color: grey; */
-  font-weight: bold;
+  border-radius: 10px;
+  background-color: #555;
+  color: white;
+  padding: 10px;
+}
+
+.rightBorder {
+  border-right: 1px solid #d3d3d3;
+  padding-left: 0px;
+  margin-top: 0px;
+  padding-top: 0px;
+  height: 100%;
+}
+.font {
+  font-family: "DM sans";
 }

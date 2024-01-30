@@ -9,6 +9,10 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@emotion/react": "^11.11.3",
+    "@emotion/styled": "^11.11.0",
+    "@mui/icons-material": "^5.15.6",
+    "@mui/material": "^5.15.6",
     "mapbox-gl": "^2.15.0",
     "mongodb": "^6.3.0",
     "mongoose": "^8.0.2",

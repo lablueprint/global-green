@@ -1,9 +1,13 @@
-import nodemailer from 'nodemailer';
 import bcryptjs from 'bcryptjs';
+import { Resend } from 'resend';
 import User from '../models/user';
+import { Email } from './email';
 
-export const sendEmail = async ({ email, emailType, userId }) => {
+const resend = new Resend(process.env.NEXT_PUBLIC_RESEND_TOKEN);
+
+export const sendEmail = async ({ email, emailType, user }) => {
   try {
+    const userId = user.id;
     // create a hased token
     const hashedToken = await (await bcryptjs.hash(userId.toString(), 10)).slice(7, 15);
 
@@ -18,26 +22,19 @@ export const sendEmail = async ({ email, emailType, userId }) => {
         { forgotPasswordToken: hashedToken, forgotPasswordTokenExpiry: Date.now() + 3600000 },
       );
     }
-
-    const transport = nodemailer.createTransport({
-      host: 'sandbox.smtp.mailtrap.io',
-      port: 2525,
-      auth: {
-        user: 'e8e4915c5d18b3',
-        pass: 'e7870bf611ac3a',
-        // TODO: add these credentials to .env file
-      },
-    });
-
-    const mailOptions = {
-      from: 'global@green.com',
-      to: email,
+    console.log('sending email');
+    await resend.emails.send({
+      from: 'onboarding@resend.dev',
+      to: 'mariopeng@ucla.edu',
       subject: emailType === 'VERIFY' ? 'Verify your email' : 'Reset your password',
-      html: `<p>Your verification token is <strong>${hashedToken}</strong></p>`,
-    };
-
-    const mailresponse = await transport.sendMail(mailOptions);
-    return mailresponse;
+      react: <Email
+        userName={user.userName}
+        firstName={user.firstName}
+        lastName={user.lastName}
+        verificationToken={hashedToken}
+      />,
+    });
+    console.log('email sent');
   } catch (error) {
     throw new Error(error.message);
   }

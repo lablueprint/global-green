@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useRef, useEffect } from 'react';
+import React, { useRef, useEffect, useState } from 'react';
 import mapboxgl from 'mapbox-gl';
 import 'mapbox-gl/dist/mapbox-gl.css';
 import styles from './map.module.css';
@@ -8,37 +8,10 @@ import styles from './map.module.css';
 mapboxgl.accessToken = process.env.NEXT_PUBLIC_MAPBOX_TOKEN;
 
 function Map() {
+  // Initialize state variables
+  const [mapArray, setMapArray] = useState([]);
   const mapContainerRef = useRef(null);
   const mapRef = useRef(null);
-
-  // Array of Markers
-  const mapArray = [
-    {
-      markername: 'Fairmont Sirru Fen Fushi',
-      longlat: [73.0083407, 6.2910463],
-      description: 'Lorem ipsum dolor sit🌎',
-      tag: 'Sustainability Lab',
-      link: 'https://www.google.com',
-      ref: null,
-
-    },
-    {
-      markername: 'UCLA',
-      longlat: [-118.4677947, 34.0699182],
-      description: 'Lorem ipsum dolor sit 🌎',
-      tag: 'University',
-      link: 'https://www.google.com',
-      ref: null,
-    },
-    {
-      markername: 'Global Green USA Office',
-      longlat: [-74.126121, 41.0646971],
-      description: 'Lorem ipsum dolor sit 🌎',
-      tag: 'Office',
-      link: 'https://www.google.com',
-      ref: null,
-    },
-  ];
 
   // Function to handle what happens when a marker or sidebar item is clicked
   function HandleMarkerClick(marker) {
@@ -47,12 +20,6 @@ function Map() {
       mapRef.current.flyTo({
         center: marker._lngLat,
         zoom: 12,
-      });
-
-      console.log({
-        name: marker._popup._content.outerText,
-        lat: marker._lngLat.lat,
-        lng: marker._lngLat.lng,
       });
     }
   }
@@ -65,25 +32,47 @@ function Map() {
     });
   }
 
+  async function fetchData() {
+    if (localStorage.getItem('mapMarkers')) {
+      setMapArray(JSON.parse(localStorage.getItem('mapMarkers')));
+    } else {
+      const res = await fetch('/api/markers');
+      const data = await res.json();
+      setMapArray(data);
+      localStorage.setItem('mapMarkers', JSON.stringify(data));
+    }
+  }
+
   useEffect(() => {
+    if (!mapArray.length) {
+      // Fetch data from mongoDB if not loaded from local storage
+      // If local storage has content, use that instead
+      // This might lead to a mismatch between local storage and the database
+      // Fix this by clearing local storage when the database is updated.
+      // Perhaps by adding an endpoint to the API that manages the version of the database
+      // and comparing that to the version in local storage.
+      fetchData();
+    }
+
+    if (mapArray.length) {
     // Display Map
-    const map = new mapboxgl.Map({
-      container: mapContainerRef.current,
-      style: 'mapbox://styles/mapbox/streets-v11',
-      center: [-118.4677947, 34.0699182], // starting position
-      zoom: 9, // starting zoom
-    });
+      const map = new mapboxgl.Map({
+        container: mapContainerRef.current,
+        style: 'mapbox://styles/mapbox/streets-v11',
+        center: mapArray[0].longlat, // starting position
+        zoom: 9, // starting zoom
+      });
 
-    // Hook up mapRef to the map
-    mapRef.current = map;
+      // Hook up mapRef to the map
+      mapRef.current = map;
 
-    // Navigation Controls
-    map.addControl(new mapboxgl.NavigationControl(), 'bottom-right');
+      // Navigation Controls
+      map.addControl(new mapboxgl.NavigationControl(), 'bottom-right');
 
-    // Display Markers on Map
-    const mapmarkers = mapArray.map((marker) => {
-      const markerpopup = new mapboxgl.Popup().setHTML(
-        `
+      // Display Markers on Map
+      const mapmarkers = mapArray.map((marker) => {
+        const markerpopup = new mapboxgl.Popup().setHTML(
+          `
         <div class=${styles.markerModal}>
           <h3>${marker.markername}</h3>
           <p class= ${styles.markerModalTag}>${marker.tag}</p>
@@ -91,21 +80,21 @@ function Map() {
           <a class=${styles.markerModalLink} href=${marker.link}>Learn More &boxbox;</a>
         </div>
         `,
-      );
+        );
 
-      const newMarker = new mapboxgl.Marker({ color: 'black' })
-        .setLngLat(marker.longlat)
-        .setPopup(markerpopup)
-        .addTo(map);
+        const newMarker = new mapboxgl.Marker({ color: 'black' })
+          .setLngLat(marker.longlat)
+          .setPopup(markerpopup)
+          .addTo(map);
 
-      markerpopup.on('open', () => HandleMarkerClick(newMarker));
+        markerpopup.on('open', () => HandleMarkerClick(newMarker));
 
-      marker.ref = newMarker;
-    });
-
-    // Clean up on unmount
-    return () => map.remove();
-  }, []);
+        marker.ref = newMarker;
+      });
+      // Clean up on unmount
+      return () => map.remove();
+    }
+  }, [mapArray]);
 
   // ref = {mapContainerRef} is callback reference for the div that contains the map
   return (

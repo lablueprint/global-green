@@ -4,32 +4,79 @@ import React, { useState } from 'react';
 // import styles from './page.module.css';
 
 function Example() {
-  const [fname, setFName] = useState('');
-  const [lname, setLName] = useState('');
-  const [username, setUsername] = useState('');
+  const [firstName, setFirstName] = useState('');
+  const [lastName, setLastName] = useState('');
+  const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
+  const [userName, setUserName] = useState('');
 
-  let accounts = {};
-  accounts = {
-    fname: 'testing',
-    lname: 'testing',
-    username: 'testing',
-    password: 'testing',
-    confirmPassword: 'testing',
+  const OnSignup = async () => {
+    // signup function. This will call upon /api/users/signup
+    // and send the username and password to the backend
+    // if the signup is successful, redirect to the profile page
+    try {
+      const response = await fetch('/api/users/signup', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          userName, password, firstName, lastName, email,
+        }),
+      });
+      const data = await response.json();
 
+      if (data.error) {
+        // eslint-disable-next-line no-alert
+        alert(data.error);
+        throw new Error(data.error);
+      } else {
+        // log the user in after signing up
+        const loginResponse = await fetch('/api/users/login', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({ userName, password }),
+        });
+        const loginData = await loginResponse.json();
+
+        if (loginData.error) {
+          // eslint-disable-next-line no-alert
+          alert(loginData.error);
+          throw new Error(loginData.error);
+        } else {
+          // redirect to the profile page
+          window.location.href = '/profile';
+        }
+
+        // eslint-disable-next-line no-console
+        console.log('Login success', loginResponse.data);
+      }
+
+      // eslint-disable-next-line no-console
+      console.log('Signup success', response.data);
+    } catch (error) {
+      // eslint-disable-next-line no-console
+      console.log('Signup failed', error.message);
+    }
   };
-  const fnameChange = (e) => {
-    setFName(e.target.value);
+
+  const firstNameChange = (e) => {
+    setFirstName(e.target.value);
   };
-  const lnameChange = (e) => {
-    setLName(e.target.value);
+  const lastNameChange = (e) => {
+    setLastName(e.target.value);
   };
   const passwordChange = (e) => {
     setPassword(e.target.value);
   };
-  const usernameChange = (e) => {
-    setUsername(e.target.value);
+  const emailChange = (e) => {
+    setEmail(e.target.value);
+  };
+  const userNameChange = (e) => {
+    setUserName(e.target.value);
   };
   const confirmPasswordChange = (e) => {
     setConfirmPassword(e.target.value);
@@ -38,58 +85,57 @@ function Example() {
   const submitLog = (event) => {
     event.preventDefault();
     let validEntries = true;
-    const email = document.getElementById('email').value;
 
     // for email input format validation
     const regex = /^([\w-]+(?:\.[\w-]+)*)@((?:[\w-]+\.)*\w[\w-]{0,66})\.([a-z]{2,6}(?:\.[a-z]{2})?)$/;
-    if (fname === '' || lname === '') {
+    if (firstName === '' || lastName === '') {
       // eslint-disable-next-line no-alert
       alert('Name is required!');
       validEntries = false;
+      return;
     }
     if (!regex.test(email)) {
       // eslint-disable-next-line no-alert
       alert('Invalid email!');
       validEntries = false;
+      return;
     }
     if (password === '') {
       // eslint-disable-next-line no-alert
       alert('Password is required!');
       validEntries = false;
+      return;
     }
     if (password.length < 8) {
       // eslint-disable-next-line no-alert
       alert('Password needs to be at least 8 characters');
       validEntries = false;
+      return;
     }
     if (confirmPassword !== password) {
       // eslint-disable-next-line no-alert
       alert('Password and confirm password fields need to match');
       validEntries = false;
+      return;
     }
-
-    if (validEntries === true) {
-      accounts.fname = fname;
-      accounts.lname = lname;
-      accounts.username = username;
-      accounts.password = password;
-      console.log(accounts);
+    if (validEntries) {
+      OnSignup();
     }
   };
   return (
     <div>
       <form>
-        <label htmlFor="fname">
+        <label htmlFor="firstName">
           First name:
           {' '}
           <br />
-          <input type="text" id="fname" name="fname" onChange={fnameChange} />
+          <input type="text" id="firstName" name="firstName" onChange={firstNameChange} />
         </label>
         <br />
-        <label htmlFor="lname">
+        <label htmlFor="lastName">
           Last name:
           <br />
-          <input type="text" id="lname" name="lname" onChange={lnameChange} />
+          <input type="text" id="lastName" name="lastName" onChange={lastNameChange} />
           <br />
         </label>
         {/* eslint-disable-next-line jsx-a11y/label-has-associated-control */}
@@ -97,7 +143,13 @@ function Example() {
           Email Address:
           <br />
 
-          <input type="email" id="email" name="email" onChange={usernameChange} required />
+          <input type="email" id="email" name="email" onChange={emailChange} />
+          <br />
+        </label>
+        <label htmlFor="userName">
+          Username:
+          <br />
+          <input type="text" id="userName" name="userName" onChange={userNameChange} />
           <br />
         </label>
         {/* eslint-disable-next-line jsx-a11y/label-has-associated-control */}

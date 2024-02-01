@@ -2,12 +2,12 @@
 
 import React, { useState } from "react";
 import VertNavbar from "src/app/coursenavbar/page.jsx";
-import styles from "./page.module.css";
 import Button from "@mui/material/Button";
 import KeyboardArrowLeftIcon from "@mui/icons-material/KeyboardArrowLeft";
 import KeyboardArrowRightIcon from "@mui/icons-material/KeyboardArrowRight";
 import KeyboardDoubleArrowLeftIcon from "@mui/icons-material/KeyboardDoubleArrowLeft";
 import KeyboardDoubleArrowRightIcon from "@mui/icons-material/KeyboardDoubleArrowRight";
+import styles from "./page.module.css";
 
 function Module({ modules, currentIndex, handlePrevClick, handleNextClick }) {
   const currentModule = modules[currentIndex];

@@ -2,6 +2,7 @@
 
 import React from "react";
 import styles from "src/app/coursenavbar/page.module.css";
+import KeyboardDoubleArrowLeftIcon from "@mui/icons-material/KeyboardDoubleArrowLeft";
 
 function VertNavbar({ modules, setCurrentIndex, currentIndex }) {
   return (

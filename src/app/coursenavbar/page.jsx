@@ -1,8 +1,8 @@
-"use client";
+'use client';
 
-import React from "react";
-import styles from "src/app/coursenavbar/page.module.css";
-import KeyboardDoubleArrowLeftIcon from "@mui/icons-material/KeyboardDoubleArrowLeft";
+import React from 'react';
+import styles from 'src/app/coursenavbar/page.module.css';
+import KeyboardDoubleArrowLeftIcon from '@mui/icons-material/KeyboardDoubleArrowLeft';
 
 function VertNavbar({ modules, setCurrentIndex, currentIndex }) {
   return (
@@ -21,7 +21,11 @@ function VertNavbar({ modules, setCurrentIndex, currentIndex }) {
                   : styles.navbarEntries
               }
             >
-              Lesson #{index + 1}: {module.lessonTitle}
+              Lesson #
+              {index + 1}
+              :
+              {' '}
+              {module.lessonTitle}
             </li>
           </div>
         ))}

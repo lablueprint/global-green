@@ -82,39 +82,36 @@ function Quiz() {
   };
 
   return (
-    <div style={{ textAlign: 'center', margin: '20px 0', justifyContent: 'space-evenly' }}>
-      <LinearWithValueLabel value={progress} />
-      <div className={styles.quiz}>
-        Question {currentQuestionIndex + 1} of {currentQuiz.totalQuestions}
+    <div className={styles.container}>
+      <div className={styles.quizContainer}>
+        <LinearWithValueLabel value={progress} />
+        <div className={styles.quizQuestionNumber}>
+          Question {currentQuestionIndex + 1} of {currentQuiz.totalQuestions}
+        </div>
+        <div>
+          <strong>Points: {points}</strong>
+        </div>
+        <MultipleChoiceQuiz
+          key={currentQuestion.id}
+          question={currentQuestion.question}
+          options={currentQuestion.options}
+          correctAnswer={currentQuestion.answer}
+          handleAnswer={handleAnswer}
+          selectedAnswer={selectedAnswers[currentQuestionIndex]}
+        />
+        <div className={currentQuestionIndex > 0 ? styles.buttonsContainerWithBack : styles.buttonsContainer}>
+          {currentQuestionIndex > 0 && (
+            <button className={styles.backButton} onClick={handlePreviousQuestion}>
+              Back
+            </button>
+          )}
+          {showNext && (
+            <button className={styles.nextButton} onClick={handleNextQuestion}>
+              Next
+            </button>
+          )}
+        </div>
       </div>
-      <div>
-        <strong>Points: {points}</strong>
-      </div>
-      <MultipleChoiceQuiz
-        key={currentQuestion.id}
-        question={currentQuestion.question}
-        options={currentQuestion.options}
-        correctAnswer={currentQuestion.answer}
-        handleAnswer={handleAnswer}
-        selectedAnswer={selectedAnswers[currentQuestionIndex]}
-        disabled={showNext !== undefined}
-      />
-      <div className={styles.container}>
-        {currentQuestionIndex > 0 && (
-          <button className={styles.backButton} onClick={handlePreviousQuestion}>Back</button>
-        )}
-        {showNext && (
-          <button className={styles.nextButton} onClick={handleNextQuestion}>Next</button>
-        )}
-      </div>
-      {/* <div>
-        {currentQuizIndex > 0 && (
-          <button onClick={handlePreviousQuiz}>Previous Quiz</button>
-        )}
-        {currentQuizIndex < Quizzes.length - 1 && (
-          <button onClick={handleNextQuiz}>Next Quiz</button>
-        )}
-      </div> */}
     </div>
   );
 }

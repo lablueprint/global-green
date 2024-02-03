@@ -13,6 +13,7 @@
     "@emotion/styled": "^11.11.0",
     "@mantine/core": "^7.4.0",
     "@mantine/hooks": "^7.4.0",
+    "@mui/icons-material": "^5.15.6",
     "@mui/material": "^5.15.3",
     "dotenv-webpack": "^8.0.1",
     "mapbox-gl": "^2.15.0",

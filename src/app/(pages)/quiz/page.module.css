@@ -1,53 +1,114 @@
 .container{
-    justify-content: space-evenly;
+    min-width: 100%;
+    min-height: 100%;
+    display: flex;
+    justify-content: center; ;
 }
 
-.nextButton {
-    border: 1px solid black;
+.quizContainer {
+    justify-self: center;
+    text-align: center;
+    font-family: 'Arial', sans-serif; 
+    display: flex;
+    flex-direction: column;
+    align-items: center; 
+    justify-content: center; 
+    /* height: 30vh;  */
+    margin-top: 20px;
+    max-width: 1000px; 
+    min-width: 500px; 
+    max-height: 1000px;
+    min-height: 200px;
     background-color: white;
+    /* border: "1px solid black"; */
+  }
+
+  .quizQuestionNumber {
+    font-weight: bold;
     color: black;
+    text-align: left;
+  }
+
+  .buttonsContainer {
+    display: flex; 
+    justify-content: flex-end; 
+    align-items: center; 
+    min-width: 500px; 
+    background-color: white; 
+    padding: 0 10px; 
+  }
+  
+  .buttonsContainerWithBack {
+    display: flex; 
+    justify-content: space-between; 
+    align-items: center; 
+    min-width: 525px; 
+    background-color: white; 
+    padding: 0 0px; 
+  }
+  
+
+  .nextButton {
+    border: 0px solid black;
+    background-color: green;
+    color: white;
     border-radius: 4px;
     padding: 10px 30px;
-    margin-left: 135px;
+    margin-left: 25px;
     transition-duration: 0.6s;
+    font-weight: bold; 
 }
 
-
 .nextButton:hover {
-    background-color: #04AA6D; /* Green */
-    color: white;
+    background-color: #04AA6D; 
     opacity: 0.5;
 } 
 
 .backButton {
-    border: 1px solid black;
+    border: 1px solid grey;
     background-color: white;
-    color: black;
+    color: grey;
     border-radius: 4px;
     padding: 10px 30px;
-    margin-right: 135px;
     transition-duration: 0.6s;
+    font-weight: bold;
   }
 
 
 .backButton:hover {
-    background-color: #d6d67d; /* Green */
-    color: white;
+    background-color: light-grey;
     opacity: 0.5;
 } 
 
+.choiceContainer {
+    display: flex;
+    flex-direction: column;
+    align-items: stretch; /* Stretch the child elements to fill the container */
+    width: 100%; /* Container takes the full width */
+}
+
+.choiceRow {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between; /* Distribute the space between the buttons */
+    margin: 0; /* Reset any default margin */
+}
+
 .choiceButton {
+    flex-basis: calc(50% - 10px); /* Take up half the container width minus the gap */
+    text-align: center; /* Center the text inside the button */
+    margin: 5px; /* This adds a 10px gap between buttons */
     border: 1px solid black;
     background-color: white;
     color: black;
     border-radius: 4px;
     padding: 10px 30px;
-    margin-left: 200px;
     transition-duration: 0.6s;
 }
 
 .choiceButton:hover {
     background-color: wheat;
     color: white;
-    opacity: 0.5;
+    opacity: 0.50;
 } 
+

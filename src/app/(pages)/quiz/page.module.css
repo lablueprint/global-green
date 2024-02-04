@@ -108,7 +108,7 @@
 
 .choiceButton:hover {
     background-color: wheat;
-    color: white;
-    opacity: 0.50;
+    color: black;
+    opacity: 0.35;
 } 
 

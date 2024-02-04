@@ -86,7 +86,8 @@ function Results({ points, totalQuestions }) {
         </div>
         <div className={styles.extraMessage}>
           <div className={styles.extraMessageLines}>
-            <span className={styles.boldText}> Your plant collection is growing! </span>
+            <span className={styles.goodJob}> Your plant collection is growing! </span>
+            <hi>Plant Image Here :)</hi>
           </div>
         </div>
       </div>

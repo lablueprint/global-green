@@ -96,11 +96,11 @@
 }
 
 .correct {
-  color: black;
+  color: green;
 }
 
 .incorrect {
-  color: black;
+  color: red;
 }
 
 .boldText {

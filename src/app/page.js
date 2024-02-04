@@ -10,9 +10,9 @@ export default function Page() {
         This is a basic starter template for a Next.js page.
       </p>
 
-      <Link href="/quiz">
-        <a className={styles.button}>Go to Quiz Page</a> {/* Style this as needed */}
-      </Link>
+      {/* <Link href="/quiz"> */}
+        {/* <a className={styles.button}>Go to Quiz Page</a> Style this as needed */}
+      {/* </Link> */}
     </main>
   );
 }

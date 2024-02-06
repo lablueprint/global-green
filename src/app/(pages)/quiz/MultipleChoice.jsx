@@ -8,7 +8,7 @@ function MultipleChoiceQuiz({
   correctAnswer,
   handleAnswer,
   selectedAnswer,
-}) => {
+}) {
   const [isCorrectAnswerChosen, setIsCorrectAnswerChosen] = useState(selectedAnswer === correctAnswer);
   const [isQuestionAttempted, setIsQuestionAttempted] = useState(false);
   const [selected, setSelected] = useState(selectedAnswer);

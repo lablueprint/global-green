@@ -65,7 +65,8 @@ const quizData = [
     ],
   },
 ];
-const quizData = {
+
+const quizData2 = {
   totalQuestions: 5,
   questions: [
     {

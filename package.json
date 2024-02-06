@@ -9,6 +9,12 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@emotion/react": "^11.11.3",
+    "@emotion/styled": "^11.11.0",
+    "@mantine/core": "^7.4.0",
+    "@mantine/hooks": "^7.4.0",
+    "@mui/icons-material": "^5.15.6",
+    "@mui/material": "^5.15.3",
     "dotenv-webpack": "^8.0.1",
     "mapbox-gl": "^2.15.0",
     "mongodb": "^6.3.0",
@@ -16,9 +22,7 @@
     "next": "14.0.3",
     "prop-types": "^15.8.1",
     "react": "^18",
-    "react-beautiful-dnd": "^13.1.1",
-    "react-dnd": "^16.0.1",
-    "react-dnd-html5-backend": "^16.0.1",
+    "react-circular-progressbar": "^2.1.0",
     "react-dom": "^18",
     "react-draggable": "^4.4.6",
     "react-helmet": "^6.1.0",

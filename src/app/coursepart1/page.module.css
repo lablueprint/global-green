@@ -1,0 +1,58 @@
+.flexCol {
+  display: flex;
+  flex-direction: col;
+  font-family: "comic sans", sans-serif;
+}
+
+.navBarWidth {
+  width: 260px;
+  padding-right: 10px;
+  padding-left: 10px;
+}
+.moduleWidth {
+  width: 1100px;
+  margin-left: 30px;
+  margin-right: 30px;
+}
+
+.firstNavBarWidth {
+  width: 10%;
+  background-color: #d3d3d3;
+}
+
+.lessonImage {
+  height: 300px;
+}
+
+.wrapper {
+  margin-right: 50px;
+  margin-left: 50px;
+}
+
+.font {
+  font-family: "DM sans";
+}
+
+.previousButton {
+  position: absolute;
+  bottom: 100;
+  left: 20;
+  margin-top: 10px;
+  color: black;
+  border-color: black;
+}
+
+.nextButton {
+  margin-top: 10px;
+  position: absolute;
+  margin-right: 30px;
+  color: black;
+  border-color: black;
+  bottom: 30;
+  right: 0;
+}
+
+.button {
+  color: black;
+  border-color: black;
+}

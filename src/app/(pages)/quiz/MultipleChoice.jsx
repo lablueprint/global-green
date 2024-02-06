@@ -8,7 +8,7 @@ function MultipleChoiceQuiz({
   correctAnswer,
   handleAnswer,
   selectedAnswer,
-}) {
+}) => {
   const [isCorrectAnswerChosen, setIsCorrectAnswerChosen] = useState(selectedAnswer === correctAnswer);
   const [isQuestionAttempted, setIsQuestionAttempted] = useState(false);
   const [selected, setSelected] = useState(selectedAnswer);
@@ -18,12 +18,21 @@ function MultipleChoiceQuiz({
     setIsCorrectAnswerChosen(selectedAnswer === correctAnswer);
   }, [selectedAnswer, correctAnswer]);
 
-  const handleClick = (option) => {
+  function handleClick(option) {
     const isCorrect = option === correctAnswer;
     setSelected(option);
     setIsQuestionAttempted(true);
     setIsCorrectAnswerChosen(isCorrect);
     handleAnswer(isCorrect, option);
+  }
+
+  const determineBackgroundColor = (opt) => {
+    if (selected === opt) {
+      return opt === correctAnswer ? 'green' : 'red';
+    } if (isQuestionAttempted && opt === correctAnswer) {
+      return 'lightgreen';
+    }
+    return 'white';
   };
 
   return (
@@ -33,20 +42,20 @@ function MultipleChoiceQuiz({
         {options.reduce((acc, option, index) => {
           if (index % 2 === 0) acc.push(options.slice(index, index + 2));
           return acc;
-        }, []).map((optionPair, index) => (
-          <div className={styles.choiceRow} key={index}>
-            {optionPair.map((opt, idx) => (
+        }, []).map((optionPair) => (
+          // Using the values of the options to generate a unique key for each row
+          <div className={styles.choiceRow} key={optionPair.map((opt) => opt).join('-')}>
+            {optionPair.map((opt) => (
               <button
+                type="button"
                 className={styles.choiceButton}
-                key={idx}
+                key={opt}
                 onClick={() => handleClick(opt)}
                 disabled={isQuestionAttempted}
                 style={{
                   margin: '5px',
                   padding: '10px 10px',
-                  backgroundColor: selected === opt
-                    ? (opt === correctAnswer ? 'green' : 'red')
-                    : (isQuestionAttempted && opt === correctAnswer ? 'lightgreen' : 'white'),
+                  backgroundColor: determineBackgroundColor(opt),
                 }}
               >
                 {opt}

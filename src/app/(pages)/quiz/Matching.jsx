@@ -7,8 +7,7 @@ function Matching({ prompt, options }) {
   const [selectedQuestion, setSelectedQuestion] = useState(null);
   const [matches, setMatches] = useState([]);
 
-  // line
-
+  // checks that there is match and creates a line connection
   const checkForMatch = () => {
     let line;
     if (selectedAnswer && selectedQuestion) {
@@ -37,6 +36,7 @@ function Matching({ prompt, options }) {
     }
   };
 
+  // checks the answers are correct when submit button is clicked
   const checkAnswers = () => {
     matches.forEach((match) => {
       if (match.answerId === match.questionId) {
@@ -46,34 +46,13 @@ function Matching({ prompt, options }) {
       }
     });
   };
-  const handleAnswerClick = (option) => {
-    setSelectedAnswer(option);
-    if (selectedAnswer === option) {
-      setSelectedAnswer(null);
-      return;
-    }
-    if (isOptionMatched(option)) {
-      unmatchOption(option, 'answer');
-    }
-    checkForMatch();
-  };
 
-  const handleQuestionClick = (option) => {
-    setSelectedQuestion(option);
-    if (selectedQuestion === option) {
-      setSelectedQuestion(null);
-      return;
-    }
-    if (isOptionMatched(option)) {
-      unmatchOption(option, 'question');
-    }
-    checkForMatch();
-  };
-
+  // checks if option is matched
   const isOptionMatched = (option) => matches.some(
     (match) => match.answerId === option.id || match.questionId === option.id,
   );
 
+  // unmatches the answer and question pair
   const unmatchOption = (option, type) => {
     setMatches((prevMatches) => {
       prevMatches.forEach((match) => {
@@ -87,6 +66,33 @@ function Matching({ prompt, options }) {
     });
   };
 
+  // handles clicking an answer choice
+  const handleAnswerClick = (option) => {
+    setSelectedAnswer(option);
+    if (selectedAnswer === option) {
+      setSelectedAnswer(null);
+      return;
+    }
+    if (isOptionMatched(option)) {
+      unmatchOption(option, 'answer');
+    }
+    checkForMatch();
+  };
+
+  // handles clicking a question choice
+  const handleQuestionClick = (option) => {
+    setSelectedQuestion(option);
+    if (selectedQuestion === option) {
+      setSelectedQuestion(null);
+      return;
+    }
+    if (isOptionMatched(option)) {
+      unmatchOption(option, 'question');
+    }
+    checkForMatch();
+  };
+
+  // constantly checks for matches
   useEffect(() => {
     checkForMatch();
   }, [selectedAnswer, selectedQuestion, checkForMatch]);

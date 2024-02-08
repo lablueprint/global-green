@@ -17,24 +17,13 @@ function Quiz() {
   const [selectedAnswers, setSelectedAnswers] = useState({});
   const [points, setPoints] = useState(0);
   const [showResults, setShowResults] = useState(false);
+  // eslint-disable-next-line max-len
+  const [attempted, setAttempted] = useState(false); // New state to track if a question has been attempted
 
   const currentQuiz = Quizzes[currentQuizIndex];
   const currentQuestion = currentQuiz.questions[currentQuestionIndex];
 
-  const handleAnswer = (isCorrect, selectedOption) => {
-    setSelectedAnswers((prevAnswers) => ({
-      ...prevAnswers,
-      [currentQuestionIndex]: selectedOption,
-    }
-    ));
-    setShowNext(true);
-    if (isCorrect) {
-      setProgress((prevProgress) => Math.min(prevProgress + (100 / currentQuiz.totalQuestions), 100));
-      setPoints((prevPoints) => prevPoints + 1);
-    }
-  };
-
-  const handleNextQuestion = () => {
+  const goToNextQuestion = () => {
     const nextQuestionIndex = currentQuestionIndex + 1;
     if (nextQuestionIndex < currentQuiz.questions.length) {
       setCurrentQuestionIndex(nextQuestionIndex);
@@ -63,6 +52,11 @@ function Quiz() {
     }
   };
 
+  const checkAnswer = (selectedOption) => {
+    const isCorrect = selectedOption === currentQuestion.answer;
+    handleAnswer(isCorrect, selectedOption);
+  };
+
   if (showResults) {
     return <Results points={points} totalQuestions={currentQuiz.totalQuestions} />;
   }
@@ -86,15 +80,7 @@ function Quiz() {
             {points}
           </strong>
         </div>
-        {/* <MultipleChoiceQuiz
-          key={currentQuestion.id}
-          question={currentQuestion.question}
-          options={currentQuestion.options}
-          correctAnswer={currentQuestion.answer}
-          handleAnswer={handleAnswer}
-          selectedAnswer={selectedAnswers[currentQuestionIndex]}
-        /> */}
-        <MatchingQuiz
+        <MultipleChoiceQuiz
           key={currentQuestion.id}
           question={currentQuestion.question}
           options={currentQuestion.options}

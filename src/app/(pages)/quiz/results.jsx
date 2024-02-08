@@ -1,12 +1,10 @@
-import styles from './results.module.css';
-import * as React from 'react'; 
+import * as React from 'react';
 import Typography from '@mui/material/Typography';
-import Box from '@mui/material/Box';
-
 import CircularProgress, { circularProgressClasses } from '@mui/material/CircularProgress';
-
+import Box from '@mui/material/Box';
 import StarIcon from '@mui/icons-material/Star';
-
+import PropTypes from 'prop-types';
+import styles from './results.module.css';
 
 function CircularWithLabel({ value }) {
   return (
@@ -17,7 +15,7 @@ function CircularWithLabel({ value }) {
         size="100px"
         thickness={6}
         sx={{
-          color: "#4caf50", // This is your progress color
+          color: '#4caf50', // This is your progress color
           [`& .${circularProgressClasses.circle}`]: {
             strokeLinecap: 'round',
           },
@@ -50,12 +48,21 @@ function CircularWithLabel({ value }) {
             fontWeight: 'bold',
             color: 'black', // Text color
           }}
-        >{`${Math.round(value)}%`}</Typography>
+        >
+          {`${Math.round(value)}%`}
+        </Typography>
       </Box>
     </Box>
   );
 }
 
+CircularWithLabel.propTypes = {
+  value: PropTypes.number.isRequired, // Add prop validation for 'value'
+};
+
+function calculateXP(correctAnswers) {
+  return correctAnswers * 10; // Example: 10 XP for each correct answer
+}
 
 function Results({ points, totalQuestions }) {
   const percentage = ((points / totalQuestions) * 100).toFixed(0);
@@ -69,18 +76,44 @@ function Results({ points, totalQuestions }) {
         <div className={styles.scoreDetails}>
           <p className={styles.goodJob}>Good Job!</p>
           <div className={styles.normalFont}>
-            <p>Out of <strong>{totalQuestions}</strong> questions, you got:</p>
-            <p className={styles.correct}>✔ <strong>{points} </strong>correct</p>
-            <p className={styles.incorrect}>✘ <strong>{totalQuestions - points}</strong> incorrect</p>
+            <p>
+              Out of
+              {' '}
+              <strong>{totalQuestions}</strong>
+              {' '}
+              questions, you got:
+            </p>
+            <p className={styles.correct}>
+              ✔
+              {' '}
+              <strong>
+                {points}
+              </strong>
+              {' '}
+              correct
+            </p>
+            <p className={styles.incorrect}>
+              ✘
+              {' '}
+              <strong>{totalQuestions - points}</strong>
+              {' '}
+              incorrect
+            </p>
           </div>
         </div>
       </div>
       <div className={styles.secondRow}>
         <div className={styles.xpCard}>
           <div className={styles.xpCardLines}>
-            <p>You earned <br />
-              <span className={styles.boldText}>{calculateXP(points)} XP</span> <br />
-              <StarIcon sx={{ fontSize: '3rem', color: "grey" }} />
+            <p>
+              You earned
+              <br />
+              <span className={styles.boldText}>
+                {calculateXP(points)}
+                XP
+              </span>
+              <br />
+              <StarIcon sx={{ fontSize: '3rem', color: 'grey' }} />
             </p>
           </div>
         </div>
@@ -95,8 +128,9 @@ function Results({ points, totalQuestions }) {
   );
 }
 
-function calculateXP(correctAnswers) {
-  return correctAnswers * 10; // Example: 10 XP for each correct answer
-}
+Results.propTypes = {
+  points: PropTypes.number.isRequired,
+  totalQuestions: PropTypes.number.isRequired,
+};
 
 export default Results;

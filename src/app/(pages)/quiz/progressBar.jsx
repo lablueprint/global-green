@@ -8,26 +8,25 @@ function LinearProgressWithLabel(props) {
   return (
     <Box sx={{ display: 'flex', alignItems: 'center' }}>
       <Box sx={{ width: '100%', mr: 1 }}>
-        <LinearProgress 
-          variant="determinate" 
-          {...props} 
-          sx={{ 
+        <LinearProgress
+          variant="determinate"
+          {...props}
+          sx={{
             borderRadius: 5, // This applies rounded corners to the container
             '& .MuiLinearProgress-bar': {
               backgroundColor: 'green',
               borderRadius: 5, // This applies rounded corners to the bar itself
             },
-          }} 
-        /> 
+          }}
+        />
       </Box>
       <Box sx={{ minWidth: 35 }}>
+        {/* eslint-disable-next-line react/destructuring-assignment */}
         <Typography variant="body2" color="text.secondary">{`${Math.round(props.value)}%`}</Typography>
       </Box>
     </Box>
   );
 }
-
-  
 
 LinearProgressWithLabel.propTypes = {
   value: PropTypes.number.isRequired,

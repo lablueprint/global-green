@@ -9,10 +9,11 @@ import LinearWithValueLabel from './progressBar';
 import Results from './results';
 
 function Quiz() {
+  // may need setCurrentQuizIndex function in the future
+  // eslint-disable-next-line no-unused-vars
   const [currentQuizIndex, setCurrentQuizIndex] = useState(0);
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
   const [progress, setProgress] = useState(0);
-  const [showNext, setShowNext] = useState(false);
   const [selectedAnswers, setSelectedAnswers] = useState({});
   const [points, setPoints] = useState(0);
   const [showResults, setShowResults] = useState(false);
@@ -37,47 +38,34 @@ function Quiz() {
     const nextQuestionIndex = currentQuestionIndex + 1;
     if (nextQuestionIndex < currentQuiz.questions.length) {
       setCurrentQuestionIndex(nextQuestionIndex);
-      setShowNext(selectedAnswers[nextQuestionIndex] !== undefined);
     } else if (currentQuizIndex < Quizzes.length - 1) {
-      handleNextQuiz();
+      setShowResults(true);
+      // setCurrentQuizIndex(currentQuizIndex + 1);
+      // setCurrentQuestionIndex(0);
+      // setProgress(0);
     }
+    setAttempted(false); // Reset attempt state
   };
 
-  const handlePreviousQuestion = () => {
-    const previousQuestionIndex = currentQuestionIndex - 1;
-    if (previousQuestionIndex >= 0) {
-      setCurrentQuestionIndex(previousQuestionIndex);
-      setShowNext(selectedAnswers[previousQuestionIndex] !== undefined);
-    }
-  };
-
-  const handleNextQuiz = () => {
-    if (currentQuizIndex < Quizzes.length - 1) {
-      setShowResults(true); // Show results instead of next quiz
+  const handleAnswer = (isCorrect, selectedOption) => {
+    setSelectedAnswers((prevAnswers) => ({
+      ...prevAnswers,
+      [currentQuestionIndex]: selectedOption,
+    }));
+    if (isCorrect) {
+      // eslint-disable-next-line max-len
+      setProgress((prevProgress) => Math.min(prevProgress + (100 / currentQuiz.totalQuestions), 100));
+      setPoints((prevPoints) => prevPoints + 1);
+      goToNextQuestion();
     } else {
-      setCurrentQuizIndex(currentQuizIndex + 1);
-      setCurrentQuestionIndex(0);
-      setProgress(0);
-      setShowNext(false);
-      setSelectedAnswers({});
-      setPoints(0);
+      // Mark as attempted but incorrect
+      setAttempted(true);
     }
   };
 
   if (showResults) {
     return <Results points={points} totalQuestions={currentQuiz.totalQuestions} />;
   }
-
-  const handlePreviousQuiz = () => {
-    if (currentQuizIndex > 0) {
-      setCurrentQuizIndex(currentQuizIndex - 1);
-      setCurrentQuestionIndex(0);
-      setProgress(0);
-      setShowNext(false);
-      setSelectedAnswers({});
-      setPoints(0);
-    }
-  };
 
   return (
     <div className={styles.container}>
@@ -111,18 +99,24 @@ function Quiz() {
           question={currentQuestion.question}
           options={currentQuestion.options}
           correctAnswer={currentQuestion.answer}
-          handleAnswer={handleAnswer}
+          // eslint-disable-next-line max-len
+          handleAnswer={handleAnswer} // This might be kept for legacy reasons but won't be used directly for checking answers anymore
           selectedAnswer={selectedAnswers[currentQuestionIndex]}
+          isAttempted={attempted}
+          onCheckAnswer={checkAnswer} // Pass the checkAnswer function here
         />
-        <div className={currentQuestionIndex > 0 ? styles.buttonsContainerWithBack : styles.buttonsContainer}>
-          {currentQuestionIndex > 0 && (
-            <button className={styles.backButton} onClick={handlePreviousQuestion}>
-              Back
+        <div className={styles.buttonsContainer}>
+          <button type="button" className={styles.skipButton} onClick={goToNextQuestion}>
+            Skip
+          </button>
+          {!attempted && (
+            <button type="button" className={styles.checkButton} onClick={() => setAttempted(true)}>
+              Check
             </button>
           )}
-          {showNext && (
-            <button className={styles.nextButton} onClick={handleNextQuestion}>
-              Next
+          {attempted && (
+            <button type="button" className={styles.tryAgainButton} onClick={() => setAttempted(false)}>
+              Try Again
             </button>
           )}
         </div>

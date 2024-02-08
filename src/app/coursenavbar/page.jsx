@@ -1,13 +1,13 @@
-'use client';
+"use client";
 
-import React from 'react';
-import styles from 'src/app/coursenavbar/page.module.css';
-import KeyboardDoubleArrowLeftIcon from '@mui/icons-material/KeyboardDoubleArrowLeft';
+import React from "react";
+import styles from "src/app/coursenavbar/page.module.css";
+import KeyboardDoubleArrowLeftIcon from "@mui/icons-material/KeyboardDoubleArrowLeft";
 
 function VertNavbar({ modules, setCurrentIndex, currentIndex }) {
   return (
     <div className={(styles.navBar, styles.font, styles.rightBorder)}>
-      <h3>Course Name</h3>
+      <h3 className={styles.moduleTitle}>{modules[0].moduleName}</h3>
       <hr className={styles.horizonalBar} />
       <ul className={styles.bulletPoint}>
         {modules.map((module, index) => (
@@ -21,10 +21,6 @@ function VertNavbar({ modules, setCurrentIndex, currentIndex }) {
                   : styles.navbarEntries
               }
             >
-              Lesson #
-              {index + 1}
-              :
-              {' '}
               {module.lessonTitle}
             </li>
           </div>

@@ -5,12 +5,13 @@
 }
 
 .navBarWidth {
-  width: 260px;
+  width: 290px;
   padding-right: 10px;
   padding-left: 10px;
 }
 .moduleWidth {
-  width: 1100px;
+  /* width: 1100px; */
+  width: 100%;
   margin-left: 30px;
   margin-right: 30px;
 }

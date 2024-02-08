@@ -7,9 +7,9 @@ import MatchingQuiz from './Matching';
 import Quizzes from './data'; // Assuming this is the path to your Quizzes data
 import LinearWithValueLabel from './progressBar';
 import Results from './results';
+import AnswerPopup from './AnswerPopup'; // Renamed for general use
 
 function Quiz() {
-  // may need setCurrentQuizIndex function in the future
   // eslint-disable-next-line no-unused-vars
   const [currentQuizIndex, setCurrentQuizIndex] = useState(0);
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
@@ -17,8 +17,10 @@ function Quiz() {
   const [selectedAnswers, setSelectedAnswers] = useState({});
   const [points, setPoints] = useState(0);
   const [showResults, setShowResults] = useState(false);
+  const [attempted, setAttempted] = useState(false);
   // eslint-disable-next-line max-len
-  const [attempted, setAttempted] = useState(false); // New state to track if a question has been attempted
+  const [showAnswerPopup, setShowAnswerPopup] = useState(false); // For showing both correct and incorrect popups
+  const [popupMessage, setPopupMessage] = useState(''); // To display appropriate message in the popup
 
   const currentQuiz = Quizzes[currentQuizIndex];
   const currentQuestion = currentQuiz.questions[currentQuestionIndex];
@@ -29,11 +31,13 @@ function Quiz() {
       setCurrentQuestionIndex(nextQuestionIndex);
     } else if (currentQuizIndex < Quizzes.length - 1) {
       setShowResults(true);
-      // setCurrentQuizIndex(currentQuizIndex + 1);
-      // setCurrentQuestionIndex(0);
-      // setProgress(0);
     }
     setAttempted(false); // Reset attempt state
+  };
+
+  const closePopupAndProceed = () => {
+    setShowAnswerPopup(false); // Hide popup
+    goToNextQuestion();
   };
 
   const handleAnswer = (isCorrect, selectedOption) => {
@@ -41,14 +45,15 @@ function Quiz() {
       ...prevAnswers,
       [currentQuestionIndex]: selectedOption,
     }));
+    setShowAnswerPopup(true); // Show popup for both correct and incorrect answers
+
     if (isCorrect) {
+      setPopupMessage('Correct!');
       // eslint-disable-next-line max-len
       setProgress((prevProgress) => Math.min(prevProgress + (100 / currentQuiz.totalQuestions), 100));
       setPoints((prevPoints) => prevPoints + 1);
-      goToNextQuestion();
     } else {
-      // Mark as attempted but incorrect
-      setAttempted(true);
+      setPopupMessage('Incorrect!');
     }
   };
 
@@ -67,9 +72,7 @@ function Quiz() {
         <LinearWithValueLabel value={progress} />
         <div className={styles.quizQuestionNumber}>
           Question
-          {' '}
           {currentQuestionIndex + 1}
-          {' '}
           of
           {' '}
           {currentQuiz.totalQuestions}
@@ -85,28 +88,22 @@ function Quiz() {
           question={currentQuestion.question}
           options={currentQuestion.options}
           correctAnswer={currentQuestion.answer}
-          // eslint-disable-next-line max-len
-          handleAnswer={handleAnswer} // This might be kept for legacy reasons but won't be used directly for checking answers anymore
           selectedAnswer={selectedAnswers[currentQuestionIndex]}
           isAttempted={attempted}
-          onCheckAnswer={checkAnswer} // Pass the checkAnswer function here
+          onCheckAnswer={checkAnswer}
         />
         <div className={styles.buttonsContainer}>
           <button type="button" className={styles.skipButton} onClick={goToNextQuestion}>
             Skip
           </button>
-          {!attempted && (
-            <button type="button" className={styles.checkButton} onClick={() => setAttempted(true)}>
-              Check
-            </button>
-          )}
-          {attempted && (
-            <button type="button" className={styles.tryAgainButton} onClick={() => setAttempted(false)}>
-              Try Again
-            </button>
-          )}
         </div>
       </div>
+      {showAnswerPopup && (
+        <AnswerPopup
+          message={popupMessage}
+          onClose={closePopupAndProceed} // Use onClose for both closing and proceeding as needed
+        />
+      )}
     </div>
   );
 }

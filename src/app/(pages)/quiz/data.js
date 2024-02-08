@@ -66,6 +66,7 @@ const quizData = [
   },
 ];
 
+// eslint-disable-next-line no-unused-vars
 const quizData2 = {
   totalQuestions: 5,
   questions: [

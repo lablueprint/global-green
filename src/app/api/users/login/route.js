@@ -1,6 +1,6 @@
 import { NextResponse } from 'next/server';
 import bcryptjs from 'bcryptjs';
-import jwt from 'jsonwebtoken';
+import { SignJWT } from 'jose';
 import connectMongoDB from '../../../../../libs/mongodb';
 import User from '../../../../../models/user';
 
@@ -40,8 +40,12 @@ export async function POST(request) {
       courses: user.courses,
       verified: user.verified,
     };
-    // create token, this is the payload and the secret key. The token is valid for 1 day
-    const token = jwt.sign(tokenData, process.env.JWT_SECRET, { expiresIn: '1d' });
+    // create token with jose
+    const encoder = new TextEncoder();
+    const token = await new SignJWT(tokenData)
+      .setProtectedHeader({ alg: 'HS256', typ: 'JWT' })
+      .setExpirationTime('1d') // Sets an expiration time
+      .sign(encoder.encode(process.env.JWT_SECRET));
 
     const response = NextResponse.json({
       message: 'Login successful',

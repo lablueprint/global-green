@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 // import styles from './page.module.css';
 
 function Example() {
@@ -60,24 +60,6 @@ function Example() {
       onLogin();
     }
   };
-
-  useEffect(
-    () => {
-      // make sure if the user is already logged in, redirect to the profile page
-      async function fetchUser() {
-        const res = await fetch('/api/users/me');
-        const data = await res.json();
-        setUsername(data.user.userName);
-        if (data.user.verified) {
-          window.location.href = '/profile';
-        } else {
-          window.location.href = '/verifyemail';
-        }
-      }
-      fetchUser();
-    },
-    [],
-  );
   return (
     <div>
       <h1>{loading ? 'Processing' : 'Login'}</h1>

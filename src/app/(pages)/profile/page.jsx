@@ -18,9 +18,6 @@ function Profile() {
     setEditedName(data.user.userName);
     // eslint-disable-next-line no-console
     console.log(data.user);
-    if (data.user.verified === false) {
-      window.location.href = '/verifyemail';
-    }
   };
 
   useEffect(() => {
@@ -81,9 +78,23 @@ function Profile() {
     }
   };
 
+  const handleLogout = async () => {
+    const response = await fetch('/api/users/logout');
+    const data = await response.json();
+    if (data.error) {
+      // eslint-disable-next-line no-alert
+      alert(data.error);
+      throw new Error(data.error);
+    }
+    window.location.href = '/login';
+  };
+
   return (
     <div style={{ textAlign: 'center', margin: '20px 0' }}>
       <div className={styles.profile}>Profile</div>
+      <button type="button" onClick={handleLogout}>
+        Logout
+      </button>
       <div
         style={{
           width: '120px',

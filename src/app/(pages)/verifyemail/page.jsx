@@ -35,9 +35,6 @@ function VerifyEmail() {
         const res = await fetch('/api/users/me');
         const data = await res.json();
         setUserName(data.user.userName);
-        if (data.user.verified === true) {
-          window.location.href = '/profile';
-        }
       }
       getUserDetails();
     },

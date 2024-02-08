@@ -13,6 +13,7 @@
     "@react-email/render": "^0.0.12",
     "bcryptjs": "^2.4.3",
     "dotenv-webpack": "^8.0.1",
+    "jose": "^5.2.1",
     "jsonwebtoken": "^9.0.2",
     "mapbox-gl": "^2.15.0",
     "mongodb": "^6.3.0",

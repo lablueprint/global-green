@@ -2,82 +2,63 @@
 
 import React, { useState } from 'react';
 import styles from './page.module.css';
-import MultipleChoiceQuiz from './MultipleChoice';
+import MultipleChoice from './MultipleChoice';
 import Quizzes from './data'; // Assuming this is the path to your Quizzes data
 import LinearWithValueLabel from './progressBar';
 import Results from './results';
 
 function Quiz() {
+  // may need setCurrentQuizIndex function in the future
+  // eslint-disable-next-line no-unused-vars
   const [currentQuizIndex, setCurrentQuizIndex] = useState(0);
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
   const [progress, setProgress] = useState(0);
-  const [showNext, setShowNext] = useState(false);
   const [selectedAnswers, setSelectedAnswers] = useState({});
   const [points, setPoints] = useState(0);
   const [showResults, setShowResults] = useState(false);
+  // eslint-disable-next-line max-len
+  const [attempted, setAttempted] = useState(false); // New state to track if a question has been attempted
 
   const currentQuiz = Quizzes[currentQuizIndex];
   const currentQuestion = currentQuiz.questions[currentQuestionIndex];
+
+  const goToNextQuestion = () => {
+    const nextQuestionIndex = currentQuestionIndex + 1;
+    if (nextQuestionIndex < currentQuiz.questions.length) {
+      setCurrentQuestionIndex(nextQuestionIndex);
+    } else if (currentQuizIndex < Quizzes.length - 1) {
+      setShowResults(true);
+      // setCurrentQuizIndex(currentQuizIndex + 1);
+      // setCurrentQuestionIndex(0);
+      // setProgress(0);
+    }
+    setAttempted(false); // Reset attempt state
+  };
 
   const handleAnswer = (isCorrect, selectedOption) => {
     setSelectedAnswers((prevAnswers) => ({
       ...prevAnswers,
       [currentQuestionIndex]: selectedOption,
-    }
-    ));
-    setShowNext(true);
+    }));
     if (isCorrect) {
-      setProgress((prevProgress) => Math.min(prevProgress
-         + (100 / currentQuiz.totalQuestions), 100));
+      // eslint-disable-next-line max-len
+      setProgress((prevProgress) => Math.min(prevProgress + (100 / currentQuiz.totalQuestions), 100));
       setPoints((prevPoints) => prevPoints + 1);
-    }
-  };
-
-  const handleNextQuiz = () => {
-    if (currentQuizIndex < Quizzes.length - 1) {
-      setShowResults(true); // Show results instead of next quiz
+      goToNextQuestion();
     } else {
-      setCurrentQuizIndex(currentQuizIndex + 1);
-      setCurrentQuestionIndex(0);
-      setProgress(0);
-      setShowNext(false);
-      setSelectedAnswers({});
-      setPoints(0);
+      // Mark as attempted but incorrect
+      setAttempted(true);
     }
   };
 
-  const handleNextQuestion = () => {
-    const nextQuestionIndex = currentQuestionIndex + 1;
-    if (nextQuestionIndex < currentQuiz.questions.length) {
-      setCurrentQuestionIndex(nextQuestionIndex);
-      setShowNext(selectedAnswers[nextQuestionIndex] !== undefined);
-    } else if (currentQuizIndex < Quizzes.length - 1) {
-      handleNextQuiz();
-    }
-  };
-
-  const handlePreviousQuestion = () => {
-    const previousQuestionIndex = currentQuestionIndex - 1;
-    if (previousQuestionIndex >= 0) {
-      setCurrentQuestionIndex(previousQuestionIndex);
-      setShowNext(selectedAnswers[previousQuestionIndex] !== undefined);
-    }
+  const checkAnswer = (selectedOption) => {
+    const isCorrect = selectedOption === currentQuestion.answer;
+    handleAnswer(isCorrect, selectedOption);
   };
 
   if (showResults) {
     return <Results points={points} totalQuestions={currentQuiz.totalQuestions} />;
   }
-
-  // const handlePreviousQuiz = () => {
-  //   if (currentQuizIndex > 0) {
-  //     setCurrentQuizIndex(currentQuizIndex - 1);
-  //     setCurrentQuestionIndex(0);
-  //     setProgress(0);
-  //     setShowNext(false);
-  //     setSelectedAnswers({});
-  //     setPoints(0);
-  //   }
-  // };
 
   return (
     <div className={styles.container}>
@@ -89,7 +70,6 @@ function Quiz() {
           {currentQuestionIndex + 1}
           {' '}
           of
-          {' '}
           {currentQuiz.totalQuestions}
         </div>
         <div>
@@ -98,25 +78,29 @@ function Quiz() {
             {points}
           </strong>
         </div>
-        <MultipleChoiceQuiz
+        <MultipleChoice
           key={currentQuestion.id}
           question={currentQuestion.question}
           options={currentQuestion.options}
           correctAnswer={currentQuestion.answer}
-          handleAnswer={handleAnswer}
+          // eslint-disable-next-line max-len
+          handleAnswer={handleAnswer} // This might be kept for legacy reasons but won't be used directly for checking answers anymore
           selectedAnswer={selectedAnswers[currentQuestionIndex]}
+          isAttempted={attempted}
+          onCheckAnswer={checkAnswer} // Pass the checkAnswer function here
         />
-        <div className={currentQuestionIndex > 0
-          ? styles.buttonsContainerWithBack : styles.buttonsContainer}
-        >
-          {currentQuestionIndex > 0 && (
-            <button type="button" className={styles.backButton} onClick={handlePreviousQuestion}>
-              Back
+        <div className={styles.buttonsContainer}>
+          <button type="button" className={styles.skipButton} onClick={goToNextQuestion}>
+            Skip
+          </button>
+          {!attempted && (
+            <button type="button" className={styles.checkButton} onClick={() => setAttempted(true)}>
+              Check
             </button>
           )}
-          {showNext && (
-            <button type="button" className={styles.nextButton} onClick={handleNextQuestion}>
-              Next
+          {attempted && (
+            <button type="button" className={styles.tryAgainButton} onClick={() => setAttempted(false)}>
+              Try Again
             </button>
           )}
         </div>

@@ -2,82 +2,75 @@ import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types'; // Import PropTypes for prop type validation
 import styles from './page.module.css';
 
-function MultipleChoiceQuiz({
+function MultipleChoice({
   question,
   options,
+  // eslint-disable-next-line no-unused-vars
   correctAnswer,
+  // eslint-disable-next-line no-unused-vars
   handleAnswer,
   selectedAnswer,
+  isAttempted,
+  onCheckAnswer, // Add a new prop for handling answer check
 }) {
-  const [isCorrectAnswerChosen, setIsCorrectAnswerChosen] = useState(selectedAnswer === correctAnswer);
-  const [isQuestionAttempted, setIsQuestionAttempted] = useState(false);
   const [selected, setSelected] = useState(selectedAnswer);
 
   useEffect(() => {
     setSelected(selectedAnswer);
-    setIsCorrectAnswerChosen(selectedAnswer === correctAnswer);
-  }, [selectedAnswer, correctAnswer]);
+  }, [selectedAnswer]);
 
-  function handleClick(option) {
-    const isCorrect = option === correctAnswer;
+  function handleSelect(option) {
     setSelected(option);
-    setIsQuestionAttempted(true);
-    setIsCorrectAnswerChosen(isCorrect);
-    handleAnswer(isCorrect, option);
   }
-
-  const determineBackgroundColor = (opt) => {
-    if (selected === opt) {
-      return opt === correctAnswer ? 'green' : 'red';
-    } if (isQuestionAttempted && opt === correctAnswer) {
-      return 'lightgreen';
-    }
-    return 'white';
-  };
 
   return (
     <div>
       <p style={{ fontSize: '20px', color: 'black' }}>{question}</p>
       <div className={styles.choiceContainer}>
-        {options.reduce((acc, option, index) => {
-          if (index % 2 === 0) acc.push(options.slice(index, index + 2));
-          return acc;
-        }, []).map((optionPair) => (
-          // Using the values of the options to generate a unique key for each row
-          <div className={styles.choiceRow} key={optionPair.map((opt) => opt).join('-')}>
-            {optionPair.map((opt) => (
-              <button
-                type="button"
-                className={styles.choiceButton}
-                key={opt}
-                onClick={() => handleClick(opt)}
-                disabled={isQuestionAttempted}
-                style={{
-                  margin: '5px',
-                  padding: '10px 10px',
-                  backgroundColor: determineBackgroundColor(opt),
-                }}
-              >
-                {opt}
-              </button>
-            ))}
-          </div>
+        {options.map((option) => (
+          <button
+            type="button"
+            className={styles.choiceButton}
+            key={option}
+            onClick={() => handleSelect(option)}
+            disabled={isAttempted} // Disable options if already attempted
+            style={{
+              backgroundColor: selected === option ? 'lightgrey' : 'white',
+            }}
+          >
+            {option}
+          </button>
         ))}
       </div>
+      {isAttempted && (
+        <div style={{ marginTop: '10px' }}>
+          Incorrect!
+
+          Selected Answer:
+          {selected}
+          I do not like coding
+        </div>
+      )}
+      {/* eslint-disable-next-line max-len */}
+      <button type="button" onClick={() => onCheckAnswer(selected)} disabled={!selected || isAttempted}>Check</button>
     </div>
   );
 }
 
-MultipleChoiceQuiz.propTypes = {
+MultipleChoice.propTypes = {
   question: PropTypes.string.isRequired,
   options: PropTypes.arrayOf(PropTypes.string).isRequired,
   correctAnswer: PropTypes.string.isRequired,
   handleAnswer: PropTypes.func.isRequired,
   selectedAnswer: PropTypes.string,
+  onCheckAnswer: PropTypes.func.isRequired,
+  isAttempted: PropTypes.bool,
+
 };
 
-MultipleChoiceQuiz.defaultProps = {
+MultipleChoice.defaultProps = {
   selectedAnswer: '',
+  isAttempted: false,
 };
 
-export default MultipleChoiceQuiz;
+export default MultipleChoice;

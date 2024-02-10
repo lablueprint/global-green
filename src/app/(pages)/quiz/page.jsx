@@ -1,14 +1,14 @@
 'use client'
 
-// Assuming React and necessary hooks are already imported
 import React, { useState } from 'react';
-import styles from './page.module.css'; // Path to your CSS module
-import MultipleChoiceQuiz from './MultipleChoice'; // Adjust the import path as necessary
-// Import other quiz types as needed, like MatchingQuiz
-import Quizzes from './data'; // Assuming this is the path to your quizzes data
-import LinearWithValueLabel from './progressBar'; // Your progress bar component
-import Results from './results'; // Your results component
-import AnswerPopup from './AnswerPopup'; // Popup component for correct/incorrect answers
+import styles from './page.module.css'; 
+import MultipleChoiceQuiz from './MultipleChoice'; 
+import TrueFalseQuiz from './TrueFalse';
+import MatchingQuiz from './Matching';
+import Quizzes from './data'; 
+import LinearWithValueLabel from './progressBar'; 
+import Results from './results'; 
+import AnswerPopup from './AnswerPopup'; 
 
 function Quiz() {
   const [currentQuizIndex, setCurrentQuizIndex] = useState(0);
@@ -20,12 +20,49 @@ function Quiz() {
   const [attempted, setAttempted] = useState(false);
   const [showAnswerPopup, setShowAnswerPopup] = useState(false);
   const [popupMessage, setPopupMessage] = useState('');
-  const [selectedOption, setSelectedOption] = useState(''); // State to store selected option
-  const [showHint, setShowHint] = useState(false); // State to control hint popup visibility
-
-
-  const currentQuiz = Quizzes[currentQuizIndex];
+  const [selectedOption, setSelectedOption] = useState(''); 
+  const [showHint, setShowHint] = useState(false); 
+  
+  const currentQuiz = Quizzes;
   const currentQuestion = currentQuiz.questions[currentQuestionIndex];
+
+  console.log(Quizzes)
+  console.log(currentQuestion)
+
+  const renderQuestionComponent = (question) => {
+    switch (question.type) {
+      case 'multiple':
+        return (
+          <MultipleChoiceQuiz
+            question={question.question}
+            options={question.options}
+            selectedAnswer={selectedOption}
+            isAttempted={attempted}
+            onOptionSelect={setSelectedOption}
+          />
+        );
+      case 'truefalse':
+        return (
+          <TrueFalseQuiz
+            question={question.question}
+            options={question.options}
+            selectedAnswer={selectedOption}
+            isAttempted={attempted}
+            onOptionSelect={setSelectedOption}
+          />
+        );
+      case 'select':
+        return (
+          <MatchingQuiz
+            prompt={question.prompt}
+            options={question.options}
+          />
+        );
+      default:
+        return <div>Question type not supported</div>;
+    }
+  };
+  
 
   function HintPopup({ message, onClose }) {
     return (
@@ -119,11 +156,8 @@ function Quiz() {
               <div>Hint</div>
             </div>
             <div className={styles.hintContentColumns}>
-              {/* Column 2 content */}
               <div> wehfuwehfuwe9fhweu uhwefweiuhfweuifhweiufhwe ihwefui hwefiuwehfwieufhwiu ehweiufhwuifhweifuh</div>
-              {/* ... Add more items as needed */}
             </div>
-            {/* ... Add more columns as needed */}
           </div>
           <button 
             className={styles.closeButton} 
@@ -138,14 +172,7 @@ function Quiz() {
           Question {currentQuestionIndex + 1} of {currentQuiz.questions.length}
         </div>
         <div><strong>Points: {points}</strong></div>
-        <MultipleChoiceQuiz
-          key={currentQuestion.id}
-          question={currentQuestion.question}
-          options={currentQuestion.options}
-          selectedAnswer={selectedOption}
-          isAttempted={attempted}
-          onOptionSelect={setSelectedOption} // Function to update selectedOption state
-        />
+        {renderQuestionComponent(currentQuestion)}
         <div className={styles.buttonsContainer}>
           <button
             type="button"

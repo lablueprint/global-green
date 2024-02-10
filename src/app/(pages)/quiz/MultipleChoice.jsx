@@ -21,9 +21,6 @@ function MultipleChoice({
     onOptionSelect(option); // This will be provided by the Quiz component
   }
 
-  // Removed the Check button JSX
-
-  // Return statement remains largely unchanged, minus the Check button
   return (
     <div>
       <p style={{ fontSize: '20px', color: 'black' }}>{question}</p>

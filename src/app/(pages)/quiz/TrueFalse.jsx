@@ -1,28 +1,39 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import styles from './page.module.css'
 
 function TrueFalse({
-  question, options, correctAnswer, handleAnswer,
-}) {
-  const [selectedAnswer, setSelectedAnswer] = useState(null);
+  question,
+  options,
+  selectedAnswer,
+  isAttempted,
+  onOptionSelect, // Renamed from handleSelect for clarity
 
-  const handleClick = (option) => {
-    setSelectedAnswer(option);
-    handleAnswer(option === correctAnswer);
-  };
+}) {
+  const [selected, setSelected] = useState(selectedAnswer); // Define the selected state
+
+  useEffect(() => {
+    setSelected(selectedAnswer);
+  }, [selectedAnswer]);
+
+  // Updated to call onOptionSelect, which is now passed from Quiz component
+  function handleSelect(option) {
+    onOptionSelect(option); // This will be provided by the Quiz component
+  }
 
   return (
     <div>
       <p>{question}</p>
       {options.map((option, index) => (
-        <button
-          key={index}
-          onClick={() => handleClick(option)}
-          style={{
-            margin: '5px',
-            padding: '10px 10px',
-            backgroundColor: selectedAnswer === option ? (option === correctAnswer ? '#00B353 ' : '#FF474C') : 'white',
-          }}
-        >
+              <button
+              type="button"
+              className={styles.choiceButton}
+              key={option}
+              onClick={() => handleSelect(option)}
+              disabled={isAttempted}
+              style={{
+                backgroundColor: selected === option ? 'lightgrey' : 'white',
+              }}
+            >
           {option}
         </button>
       ))}

@@ -2,10 +2,12 @@
     min-width: 100%;
     min-height: 100%;
     display: flex;
-    justify-content: center; ;
+    justify-content: center; 
+    background-color: pink;
 }
 
 .quizContainer {
+    position: relative;
     justify-self: center;
     text-align: center;
     font-family: 'Arial', sans-serif; 
@@ -19,7 +21,7 @@
     min-width: 500px; 
     max-height: 1000px;
     min-height: 200px;
-    background-color: white;
+    background-color: blue;
     /* border: "1px solid black"; */
   }
 
@@ -29,12 +31,23 @@
     text-align: left;
   }
 
+  .progressbarandhintcontainer {
+    display: flex; 
+    justify-content: space-between; /* This spreads out the items to both ends */
+    align-items: center; 
+    min-width: 500px; /* or adjust as needed for your layout */
+    background-color: red; /* or any color/background as per your design */
+    padding: 0 10px; 
+  }
+
+  
+
   .buttonsContainer {
     display: flex; 
-    justify-content: flex-end; 
+    justify-content: space-between; /* This spreads out the items to both ends */
     align-items: center; 
-    min-width: 500px; 
-    background-color: white; 
+    min-width: 500px; /* or adjust as needed for your layout */
+    background-color: pink; /* or any color/background as per your design */
     padding: 0 10px; 
   }
   
@@ -111,4 +124,61 @@
     color: black;
     opacity: 0.35;
 } 
+
+.hintOverlay {
+  position: absolute; /* Cover the entire screen */
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5); /* Dim the background */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000; /* Ensure it's above other content */
+}
+
+.hintPopup {
+  background-color: white;
+  padding: 20px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+  width: auto; /* Adjust width as needed */
+  max-width: 80%; /* Don't let the popup be wider than 80% of the screen width */
+  border-radius: 8px;
+  position: relative; /* For positioning the close button */
+}
+
+.hintContent {
+  display: flex;
+  flex-direction: row; /* This will layout its children (the columns) in a row */
+  text-align: left;
+  justify-content: center; /* Center the columns horizontally */
+  align-items: start; /* Align the columns to the start of the hintContent */
+  width: 100%; /* Ensure the hintContent takes up the full width of its parent */
+}
+
+.hintContentColumns {
+  display: flex;
+  flex-direction: column; /* This will layout its children (the items in the column) vertically */
+  align-items: flex-start; /* Align the items to the start of the column */
+  justify-content: center; /* Center the items vertically, if there's space */
+  width: 100%; /* Each column takes the full width available */
+}
+
+
+.closeButton {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  border: none;
+  background: transparent;
+  cursor: pointer;
+  font-size: 16px; /* Large enough to be easily clickable */
+}
+
+.closeButton:hover {
+  color: #ff0000; /* Change color on hover for visual feedback */
+}
+
+/* Rest of your styling for buttons and content inside the popup */
 

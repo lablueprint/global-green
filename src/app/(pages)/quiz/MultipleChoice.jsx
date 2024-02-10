@@ -2,27 +2,28 @@ import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types'; // Import PropTypes for prop type validation
 import styles from './page.module.css';
 
+// In MultipleChoice.jsx
 function MultipleChoice({
   question,
   options,
-  // eslint-disable-next-line no-unused-vars
-  correctAnswer,
-  // eslint-disable-next-line no-unused-vars
-  handleAnswer,
   selectedAnswer,
   isAttempted,
-  onCheckAnswer, // Add a new prop for handling answer check
+  onOptionSelect, // Renamed from handleSelect for clarity
 }) {
-  const [selected, setSelected] = useState(selectedAnswer);
+  const [selected, setSelected] = useState(selectedAnswer); // Define the selected state
 
   useEffect(() => {
     setSelected(selectedAnswer);
   }, [selectedAnswer]);
 
+  // Updated to call onOptionSelect, which is now passed from Quiz component
   function handleSelect(option) {
-    setSelected(option);
+    onOptionSelect(option); // This will be provided by the Quiz component
   }
 
+  // Removed the Check button JSX
+
+  // Return statement remains largely unchanged, minus the Check button
   return (
     <div>
       <p style={{ fontSize: '20px', color: 'black' }}>{question}</p>
@@ -31,15 +32,14 @@ function MultipleChoice({
           if (index % 2 === 0) acc.push(options.slice(index, index + 2));
           return acc;
         }, []).map((optionPair, pairIndex) => (
-          // eslint-disable-next-line react/no-array-index-key
           <div className={styles.choiceRow} key={pairIndex}>
             {optionPair.map((option) => (
               <button
                 type="button"
                 className={styles.choiceButton}
-                key={option} // Fixed to use option instead of optionPair.map
+                key={option}
                 onClick={() => handleSelect(option)}
-                disabled={isAttempted} // Disable options if already attempted
+                disabled={isAttempted}
                 style={{
                   backgroundColor: selected === option ? 'lightgrey' : 'white',
                 }}
@@ -50,23 +50,18 @@ function MultipleChoice({
           </div>
         ))}
       </div>
-      {isAttempted && (
-        <div style={{ marginTop: '10px' }}>
-          Incorrect! Selected Answer:
-          {selected}
-        </div>
-      )}
-      <button
-        type="button"
-        onClick={() => onCheckAnswer(selected)}
-        disabled={!selected || isAttempted}
-        style={{ marginTop: '10px' }} // Added to separate the button from the message
-      >
-        Check
-      </button>
     </div>
   );
 }
+
+// Update PropTypes accordingly
+MultipleChoice.propTypes = {
+  // Correct propTypes definitions
+  onOptionSelect: PropTypes.func.isRequired, // This replaces onCheckAnswer
+};
+
+// Update defaultProps if necessary
+
 
 MultipleChoice.propTypes = {
   question: PropTypes.string.isRequired,

@@ -58,7 +58,8 @@ function Matching({ prompt, options }) {
       prevMatches.forEach((match) => {
         if (match[`${type}Id`] === option.id) {
           if (match.lineObj) {
-            match.lineObj.setOptions({ color: 'transparent' });
+            match.lineObj.remove();
+            match.lineObj = null;
           }
         }
       });

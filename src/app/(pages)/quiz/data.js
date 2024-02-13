@@ -64,23 +64,22 @@ const quizData = {
       type: 'truefalse',
       answer: 'False',
     },
-    // {
-    //   id: 10,
-    //   prompt: 'click a term to match it with a definition',
-    //   options: [{
-    //     id: 100,
-    //     question: 'question1',
-    //     answer: 'ans1',
-    //   }, {
-    //     id: 200,
-    //     question: 'question2',
-    //     answer: 'ans2',
-    //   }],
-    //   type: 'select',
-    // },
+    {
+      id: 10,
+      prompt: 'click a term to match it with a definition',
+      options: [{
+        id: 100,
+        question: 'question1',
+        answer: 'ans1',
+      }, {
+        id: 200,
+        question: 'question2',
+        answer: 'ans2',
+      }],
+      type: 'select',
+    },
   ],
 };
-
 
 // const quizData1 = [
 //   {

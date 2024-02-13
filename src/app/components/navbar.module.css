@@ -1,24 +1,37 @@
 .navbar {
-    padding: 100px;
-    margin-right: 700px;
-    margin-bottom: 10px;
-    margin-inline-start: -50px;
     background-color: #d9d9d9;
-    background-position: 50px 100px;
-    background-repeat: repeat-y;
     height: 100vh;
+    max-width: 300px;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
 }
 
 .navcomp {
+    width: 100%;
     text-align:left;
-    color: black;
-    font-size: 17px;
-    margin-top: 20px;
-    margin-bottom: 20px;
-    font-weight: bold;
+    font-family: 'Work Sans', sans-serif;
 }
 
-.GG_Scholar {
-    font-size: 10px;
-    margin-bottom: 30px;
- }
+.link {
+    text-align:left;
+    background-color: #d9d9d9;
+    color: black;
+    cursor: pointer;
+    font-weight: 620;
+    display: block;
+    padding: 20px;
+    box-sizing: border-box;
+    display: block;
+    width: 100%;
+    text-decoration: none !important; 
+}
+    
+.link:hover, .link.active {
+    background-color: #f0f0f0;
+}
+
+.GGScholar {
+        margin-top: 30px; 
+        font-size: 1.2em; 
+}

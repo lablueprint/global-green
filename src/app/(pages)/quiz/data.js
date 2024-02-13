@@ -7,6 +7,7 @@ const quizData = {
       options: ['17 Billion Pounds', '33 Billion Pounds', '52 Billion Pounds', '95 Billion Pounds'],
       type: 'multiple',
       answer: '33 Billion Pounds',
+      hint: "hint for question 1",
     },
     {
       id: 2,
@@ -14,6 +15,7 @@ const quizData = {
       options: ['30%', '50%', '80%', '90%'],
       type: 'multiple',
       answer: '80%',
+      hint: "hint for question 2",
     },
     {
       id: 3,
@@ -21,6 +23,7 @@ const quizData = {
       options: ['Microplastics', 'Straws', 'Bags', 'Fishing line'],
       type: 'multiple',
       answer: 'Microplastics',
+      hint: "hint for question 3",
     },
     {
       id: 4,
@@ -28,6 +31,7 @@ const quizData = {
       options: ['2035', '2040', '2045', '2050'],
       type: 'multiple',
       answer: '2050',
+      hint: "hint for question 4",
     },
     {
       id: 5,
@@ -35,6 +39,7 @@ const quizData = {
       options: ['15%', '40%', '70%', '95%'],
       type: 'multiple',
       answer: '70%',
+      hint: "hint for question 5",
     },
     {
       id: 6,
@@ -42,6 +47,7 @@ const quizData = {
       options: ['50,000', '100,000', '150,000', '200,000'],
       type: 'multiple',
       answer: '100,000',
+      hint: "hint for question 6",
     },
     {
       id: 7,
@@ -49,6 +55,7 @@ const quizData = {
       options: ['Fossil fuels', 'Cellulose', 'Lignin', 'Glucose'],
       type: 'multiple',
       answer: 'Fossil fuels',
+      hint: "hint for question 7",
     },
     {
       id: 8,
@@ -56,6 +63,7 @@ const quizData = {
       options: ['True', 'False'],
       type: 'truefalse',
       answer: 'True',
+      hint: "hint for question 8",
     },
     {
       id: 9,
@@ -63,6 +71,7 @@ const quizData = {
       options: ['True', 'False'],
       type: 'truefalse',
       answer: 'False',
+      hint: "hint for question 9",
     },
     {
       id: 10,

@@ -1,16 +1,18 @@
 'use client'
 
+// Import necessary React components and styles
 import React, { useState } from 'react';
-import styles from './page.module.css'; 
-import MultipleChoiceQuiz from './MultipleChoice'; 
+import styles from './page.module.css';
+import MultipleChoiceQuiz from './MultipleChoice';
 import TrueFalseQuiz from './TrueFalse';
 import MatchingQuiz from './Matching';
-import Quizzes from './data'; 
-import LinearWithValueLabel from './progressBar'; 
-import Results from './results'; 
-import AnswerPopup from './AnswerPopup'; 
+import Quizzes from './data';
+import LinearWithValueLabel from './progressBar';
+import Results from './results';
+import AnswerPopup from './AnswerPopup';
 
 function Quiz() {
+  // State hooks for quiz functionality
   const [currentQuizIndex, setCurrentQuizIndex] = useState(0);
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
   const [progress, setProgress] = useState(0);
@@ -20,106 +22,70 @@ function Quiz() {
   const [attempted, setAttempted] = useState(false);
   const [showAnswerPopup, setShowAnswerPopup] = useState(false);
   const [popupMessage, setPopupMessage] = useState('');
-  const [selectedOption, setSelectedOption] = useState(''); 
-  const [showHint, setShowHint] = useState(false); 
-  
+  const [selectedOption, setSelectedOption] = useState('');
+  const [showHint, setShowHint] = useState(false);
+  const [disableSkipButton, setSkipButton] = useState(false); // Initially Skip button is enabled
+
   const currentQuiz = Quizzes;
   const currentQuestion = currentQuiz.questions[currentQuestionIndex];
 
-  console.log(Quizzes)
-  console.log(currentQuestion)
-
+  // Function to render the appropriate question component based on question type
   const renderQuestionComponent = (question) => {
     switch (question.type) {
       case 'multiple':
-        return (
-          <MultipleChoiceQuiz
-            question={question.question}
-            options={question.options}
-            selectedAnswer={selectedOption}
-            isAttempted={attempted}
-            onOptionSelect={setSelectedOption}
-          />
-        );
+        return <MultipleChoiceQuiz question={question.question} options={question.options} selectedAnswer={selectedOption} isAttempted={attempted} onOptionSelect={setSelectedOption} />;
       case 'truefalse':
-        return (
-          <TrueFalseQuiz
-            question={question.question}
-            options={question.options}
-            selectedAnswer={selectedOption}
-            isAttempted={attempted}
-            onOptionSelect={setSelectedOption}
-          />
-        );
+        return <TrueFalseQuiz question={question.question} options={question.options} selectedAnswer={selectedOption} isAttempted={attempted} onOptionSelect={setSelectedOption} />;
       case 'select':
-        return (
-          <MatchingQuiz
-            prompt={question.prompt}
-            options={question.options}
-          />
-        );
+        return <MatchingQuiz prompt={question.prompt} options={question.options} />;
       default:
         return <div>Question type not supported</div>;
     }
   };
-  
 
+  // Functions for hint popup management
   function HintPopup({ message, onClose }) {
     return (
       <div className={styles.hintPopup}>
-        <div className={styles.hintContent}>
-          {message}
-          <button type="button" onClick={onClose}>Close</button>
-        </div>
+        <div className={styles.hintContent}>{message}<button type="button" onClick={onClose}>Close</button></div>
       </div>
     );
   }
 
-  const closeHintPopup = () => {
-    setShowHint(false); // Hide the hint popup
-  };
-
-  // This function is called when the overlay is clicked
   const handleOverlayClick = (event) => {
-    // If the clicked element is not the popup box itself,
-    // and not any of its descendants, then close the popup
     if (event.target === event.currentTarget) {
-      closeHintPopup();
+      setShowHint(false); // Close hint popup if overlay is clicked
     }
   };
 
   const handleHint = () => {
-    // You can set a specific message for the hint or use the current question's hint
     setPopupMessage(currentQuestion.hint || 'This is a hint for the question.');
-    setShowHint(true); // Show the hint popup
+    setShowHint(true); // Display the hint popup
   };
 
+  // Function to proceed to the next question or quiz
   const goToNextQuestion = () => {
     const nextQuestionIndex = currentQuestionIndex + 1;
     if (nextQuestionIndex < currentQuiz.questions.length) {
       setCurrentQuestionIndex(nextQuestionIndex);
     } else if (currentQuizIndex < Quizzes.length - 1) {
-      // Move to next quiz or show results
       setCurrentQuizIndex((prevIndex) => prevIndex + 1);
-      setCurrentQuestionIndex(0); // Reset for next quiz
+      setCurrentQuestionIndex(0); // Start at the first question of the next quiz
     } else {
-      setShowResults(true); // End of all quizzes
+      setShowResults(true); // Show results if all quizzes are completed
     }
-    setSelectedOption(''); // Reset selected option for next question
+    setSelectedOption(''); // Reset selected option for the next question
     setAttempted(false); // Reset attempt state
+    setSkipButton(false); // Re-enable the Skip button
   };
 
-  const closePopupAndProceed = () => {
-    setShowAnswerPopup(false); // Hide popup
-    goToNextQuestion();
-  };
-
+  // Function to handle correct or incorrect answers
   const handleAnswer = (isCorrect, selectedOption) => {
     setSelectedAnswers((prevAnswers) => ({
       ...prevAnswers,
       [currentQuestionIndex]: selectedOption,
     }));
-    setShowAnswerPopup(true); // Show popup
+    setShowAnswerPopup(true); // Show answer feedback popup
 
     if (isCorrect) {
       setPopupMessage('Correct!');
@@ -128,73 +94,41 @@ function Quiz() {
     } else {
       setPopupMessage('Incorrect!');
     }
-    setAttempted(true); // Mark as attempted
+    setAttempted(true); // Mark the question as attempted
+    setSkipButton(true); // Disable the Skip button when an answer is checked
   };
 
+  // Function to check the selected answer
   const checkAnswer = (selectedOption) => {
     const isCorrect = selectedOption === currentQuestion.answer;
     handleAnswer(isCorrect, selectedOption);
   };
 
-  // Rendering the results component if quiz is finished
+  // Render the results component if the quiz is finished
   if (showResults) {
     return <Results points={points} totalQuestions={currentQuiz.questions.length} />;
   }
 
-  // Main Quiz component render
+  // Main Quiz component rendering
   return (
     <div className={styles.container}>
       <div className={styles.quizContainer}>
         <div className={styles.progressbarandhintcontainer}>
-        <LinearWithValueLabel value={progress} />
-        <button type="button" onClick={handleHint}>Hint</button>
-    {showHint && (
-      <div className={styles.hintOverlay} onClick={handleOverlayClick}>
-        <div className={styles.hintPopup}>
-        <div className={styles.hintContent}>
-            <div className={styles.hintContentColumns}>
-              <div>Hint</div>
+          <LinearWithValueLabel value={progress} />
+          <button type="button" onClick={handleHint}>Hint</button>
+          {showHint && (
+            <div className={styles.hintOverlay} onClick={handleOverlayClick}>
+              <HintPopup message={popupMessage} onClose={() => setShowHint(false)} />
             </div>
-            <div className={styles.hintContentColumns}>
-              <div> wehfuwehfuwe9fhweu uhwefweiuhfweuifhweiufhwe ihwefui hwefiuwehfwieufhwiu ehweiufhwuifhweifuh</div>
-            </div>
-          </div>
-          <button 
-            className={styles.closeButton} 
-            onClick={closeHintPopup}
-          >
-          </button>
+          )}
         </div>
-      </div>
-        )}
-        </div>
-        <div className={styles.quizQuestionNumber}>
-          Question {currentQuestionIndex + 1} of {currentQuiz.questions.length}
-        </div>
+        <div className={styles.quizQuestionNumber}>Question {currentQuestionIndex + 1} of {currentQuiz.questions.length}</div>
         <div><strong>Points: {points}</strong></div>
         {renderQuestionComponent(currentQuestion)}
         <div className={styles.buttonsContainer}>
-          <button
-            type="button"
-            className={styles.skipButton}
-            onClick={goToNextQuestion}
-          >
-            Skip
-          </button>
-          <button
-            type="button"
-            className={styles.checkButton}
-            onClick={() => checkAnswer(selectedOption)}
-            disabled={!selectedOption || attempted}
-          >
-            Check
-          </button>
-                  {showAnswerPopup && (
-                <AnswerPopup
-                  message={popupMessage}
-                  onClose={closePopupAndProceed}
-                />
-              )}
+          <button type="button" className={styles.skipButton} onClick={goToNextQuestion} disabled={disableSkipButton}>Skip</button>
+          <button type="button" className={styles.checkButton} onClick={() => checkAnswer(selectedOption)} disabled={!selectedOption || attempted}>Check</button>
+          {showAnswerPopup && <AnswerPopup message={popupMessage} onClose={() => { setShowAnswerPopup(false); setSkipButton(false); goToNextQuestion(); }} />}
         </div>
       </div>
     </div>

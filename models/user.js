@@ -12,6 +12,8 @@ const userSchema = new Schema(
     courses: { type: Array },
     verified: { type: Boolean, default: false },
     verifyToken: { type: String },
+    verifyExpires: { type: Date, default: Date.now, index: { expireAfterSeconds: 300 } },
+
   },
   {
     timestamps: true,

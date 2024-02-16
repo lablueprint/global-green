@@ -7,7 +7,12 @@ function VerifyEmail() {
   const [message, setMessage] = useState('');
   const [error, setError] = useState('');
   const [userName, setUserName] = useState('');
-
+  const [userEmail, setUserEmail] = useState('');
+  const [timeLeft, setTimeLeft] = useState(null);
+  const [expiresAt, setExpiresAt] = useState(null);
+  const [resendDisabled, setResendDisabled] = useState(true);
+  const [cooldown, setCooldown] = useState(60); // 60 seconds cooldown
+  const intervalRef = React.useRef();
   const handleVerifyEmail = async () => {
     try {
       const res = await fetch('/api/users/verifyemail', {
@@ -28,19 +33,138 @@ function VerifyEmail() {
       setError(err.message);
     }
   };
+  const handleLogout = async () => {
+    const response = await fetch('/api/users/logout');
+    const data = await response.json();
+    if (data.error) {
+      // eslint-disable-next-line no-alert
+      alert(data.error);
+      throw new Error(data.error);
+    }
+    window.location.href = '/login';
+    // eslint-disable-next-line no-alert
+    alert('Your verification time has expired. Please sign up again.');
+  };
+  const updateTimer = () => {
+    if (expiresAt) {
+      const currentTime = new Date();
+      const diff = expiresAt - currentTime;
+
+      if (diff > 0) {
+        setTimeLeft(Math.round(diff / 1000));
+      } else {
+        setTimeLeft(0);
+        handleLogout();
+      }
+    }
+  };
+
+  async function getUserDetails() {
+    const res = await fetch('/api/users/me');
+    const data = await res.json();
+    if (data.error) {
+      setError(data.error);
+      return;
+    }
+    if (!data.user) {
+      setError('User not found');
+      handleLogout();
+      return;
+    }
+    setExpiresAt(new Date(data.user.verifyExpires));
+    setUserName(data.user.userName);
+    setUserEmail(data.user.email);
+  }
+
+  function startResendCooldown() {
+    const intervalId = setInterval(() => {
+      if (cooldown <= 1) {
+        clearInterval(intervalId);
+        setResendDisabled(false);
+        setCooldown(60); // Reset cooldown for next use
+      } else {
+        setCooldown((prev) => prev - 1);
+      }
+    }, 1000);
+    return intervalId;
+  }
+
+  async function resendVerificationEmail() {
+    try {
+      const res = await fetch('/api/users/resendemail', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ email: userEmail }),
+      });
+      const data = await res.json();
+      if (data.error) {
+        setError(data.error);
+      } else {
+        setMessage(`${data.message} You can resend in 60 seconds.`);
+      }
+    } catch (err) {
+      setError(err.message);
+    }
+    setResendDisabled(true);
+  }
 
   useEffect(
     () => {
-      async function getUserDetails() {
-        const res = await fetch('/api/users/me');
-        const data = await res.json();
-        setUserName(data.user.userName);
-      }
       getUserDetails();
+      // make sure only one interval is running at a time
+      if (intervalRef.current) {
+        clearInterval(intervalRef.current);
+      }
+      intervalRef.current = startResendCooldown();
+      return () => clearInterval(intervalRef.current);
     },
     [],
   );
 
+  useEffect(() => {
+    const timer = expiresAt ? setInterval(updateTimer, 1000) : null;
+
+    // Cleanup timer on component unmount or when expiresAt changes
+    return () => {
+      if (timer) clearInterval(timer);
+    };
+  }, [expiresAt]); // Dependency array includes expiresAt to re-trigger countdown when it's updated
+
+  function renderIndicator() {
+    if (timeLeft === null) {
+      return <p>Loading...</p>;
+    } if (timeLeft > 0) {
+      return (
+        <div>
+          <p>
+            Your account will be deleted in
+            {' '}
+            {timeLeft}
+            {' '}
+            seconds. Please verify your email before then.
+            {' '}
+            This is to ensure that your account is secure.
+          </p>
+          <input
+            type="text"
+            value={token}
+            onChange={(e) => setToken(e.target.value)}
+            placeholder="Enter token"
+          />
+          <button type="button" onClick={handleVerifyEmail}>Verify Email</button>
+          <p>
+            Did&apos;t receive the email?
+          </p>
+          <button type="button" onClick={resendVerificationEmail} disabled={resendDisabled}>
+            {resendDisabled ? `Resend in ${cooldown} seconds` : 'Resend Verification'}
+          </button>
+        </div>
+      );
+    }
+    return <p>Your verification time has expired. Please sign up again.</p>;
+  }
   return (
     <div>
       <h1>
@@ -49,13 +173,7 @@ function VerifyEmail() {
         {userName}
         . Please check your email for a verification code to verify your account.
       </h1>
-      <input
-        type="text"
-        value={token}
-        onChange={(e) => setToken(e.target.value)}
-        placeholder="Enter token"
-      />
-      <button type="button" onClick={handleVerifyEmail}>Verify Email</button>
+      {renderIndicator()}
       {message && <p>{message}</p>}
       {error && <p>{error}</p>}
     </div>

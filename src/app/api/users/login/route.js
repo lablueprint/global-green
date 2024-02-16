@@ -39,12 +39,14 @@ export async function POST(request) {
       badges: user.badges,
       courses: user.courses,
       verified: user.verified,
+      verifyExpires: user.verifyExpires,
     };
     // create token with jose
     const encoder = new TextEncoder();
+    // dynamically set expiration time based on whether the user has verified their email
     const token = await new SignJWT(tokenData)
       .setProtectedHeader({ alg: 'HS256', typ: 'JWT' })
-      .setExpirationTime('1d') // Sets an expiration time
+      .setExpirationTime(user.verified ? '1d' : '5m')
       .sign(encoder.encode(process.env.JWT_SECRET));
 
     const response = NextResponse.json({

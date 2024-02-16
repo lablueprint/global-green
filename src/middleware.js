@@ -2,6 +2,7 @@ import { NextResponse } from 'next/server';
 import { isUserVerified } from '@helpers/getDataFromToken';
 
 const protectedRoutes = ['/profile', '/courses', '/badges', '/verifyemail'];
+
 export async function middleware(req) {
   const { pathname } = req.nextUrl;
   const url = req.nextUrl.clone();
@@ -16,8 +17,15 @@ export async function middleware(req) {
   // Redirect logic for protected and unprotected routes with a token
   if (token) {
     const verified = await isUserVerified(req);
+    console.log('verified', verified);
 
     if (verified) {
+      if (pathname === '/verifyemail') {
+        // Redirect from /verifyemail to /profile if user is verified
+        url.pathname = '/profile';
+        return NextResponse.redirect(url);
+      }
+
       // Redirect from /login or /signup to /profile if user is verified
       if (pathname === '/login' || pathname === '/signup') {
         url.pathname = '/profile';

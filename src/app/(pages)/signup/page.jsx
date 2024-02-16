@@ -1,7 +1,8 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 // import styles from './page.module.css';
+import ReCAPTCHA from 'react-google-recaptcha';
 
 function Example() {
   const [firstName, setFirstName] = useState('');
@@ -10,6 +11,16 @@ function Example() {
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
   const [userName, setUserName] = useState('');
+  // Captcha Related
+  const recaptcha = useRef(null);
+  const [captchaToken, setCaptchaToken] = useState('');
+
+  const onCaptchaChange = (token) => {
+    // Set the captcha token when the user completes the reCAPTCHA
+    if (token) {
+      setCaptchaToken(token);
+    }
+  };
 
   const OnSignup = async () => {
     // signup function. This will call upon /api/users/signup
@@ -22,7 +33,7 @@ function Example() {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({
-          userName, password, firstName, lastName, email,
+          userName, password, firstName, lastName, email, captchaToken,
         }),
       });
       const data = await response.json();
@@ -45,10 +56,11 @@ function Example() {
         if (loginData.error) {
           // eslint-disable-next-line no-alert
           alert(loginData.error);
+
           throw new Error(loginData.error);
         } else {
           // redirect to the profile page
-          window.location.href = '/login';
+          window.location.href = '/profile';
         }
 
         // eslint-disable-next-line no-console
@@ -57,9 +69,12 @@ function Example() {
 
       // eslint-disable-next-line no-console
       console.log('Signup success', response.data);
+      recaptcha?.current?.reset();
     } catch (error) {
       // eslint-disable-next-line no-console
       console.log('Signup failed', error.message);
+      // refresh the page to clear the form
+      window.location.href = '/signup';
     }
   };
 
@@ -166,7 +181,15 @@ function Example() {
           <input type="password" id="confirmPass" name="confirmPass" onChange={confirmPasswordChange} />
           <br />
         </label>
-
+        <div className="pb-20px">
+          <ReCAPTCHA
+            size="normal"
+            sitekey={process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY}
+            onChange={onCaptchaChange}
+            ref={recaptcha}
+          />
+        </div>
+        <br />
         <input type="submit" value="Submit" onClick={submitLog} />
         <br />
       </form>

@@ -1,0 +1,58 @@
+.bulletPoint {
+  list-style: none;
+  padding: 0;
+}
+
+.navBar {
+  position: fixed;
+}
+
+.moduleTitle {
+  margin-right: 10px;
+}
+
+.horizonalLine {
+  width: 50%;
+  text-align: right;
+  margin-left: 0px;
+  color: #d3d3d3;
+  size: 5px;
+}
+.navbarEntries {
+  border-radius: 10px;
+  /* background-color: #d3d3d3; */
+  color: black;
+  padding: 10px;
+  cursor: pointer;
+  list-style: none;
+  margin-right: 10px;
+}
+
+.padding {
+  margin-bottom: 15px;
+  margin-right: 10px;
+}
+
+.navbarEntries:hover {
+  color: grey;
+}
+
+.activeNavItem {
+  border-radius: 10px;
+  background-color: #d3d3d3;
+  color: black;
+  padding: 10px;
+  margin-right: 10px;
+  width: 240px;
+}
+
+.rightBorder {
+  border-right: 1px solid #d3d3d3;
+  padding-left: 0px;
+  margin-top: 0px;
+  padding-top: 0px;
+  height: 100%;
+}
+.font {
+  font-family: "DM sans";
+}

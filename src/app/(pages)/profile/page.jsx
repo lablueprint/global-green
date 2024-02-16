@@ -1,22 +1,61 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Image from 'next/image';
 import NavBar from '@/app/components/navbar';
 import styles from './page.module.css';
 import defaultProfilePic from './profilepic.jpg'; // Assuming you have a default profile pic
 
-const userData = {
-  name: 'Isaac Wen',
-  rank: '1000',
-  badges: ['Badge 1', 'Badge 2', 'Badge 3', 'Badge 4', 'Badge 5'],
-  courses: ['Course 1', 'Course 2', 'Course 3'],
-};
-
 function Profile() {
   const [isEditing, setIsEditing] = useState(false);
-  const [editedName, setEditedName] = useState(userData.name);
   const [profileImage, setProfileImage] = useState(defaultProfilePic);
+  const [editedName, setEditedName] = useState('');
+  const [userData, setData] = useState({});
+
+  const getUserDetails = async () => {
+    const res = await fetch('/api/users/me');
+    const data = await res.json();
+    setData(data.user);
+    setEditedName(data.user.userName);
+    // eslint-disable-next-line no-console
+    console.log(data.user);
+  };
+
+  useEffect(() => {
+    getUserDetails();
+  }, []);
+
+  const updateUserData = (data) => {
+    // update the user data in the database, make sure only the first user is updated.
+    async function updateUserDataInDB() {
+      // eslint-disable-next-line no-console
+      console.log('data', data);
+
+      const response = await fetch('/api/users/me/change-name', {
+        method: 'PATCH',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ userName: data.userName }),
+      });
+      const res = await response.json();
+      // eslint-disable-next-line no-console
+      console.log('res', res);
+
+      if (res.error) {
+        // eslint-disable-next-line no-alert
+        alert(res.error);
+        throw new Error(res.error);
+      }
+
+      // eslint-disable-next-line no-console
+      console.log('Update success', response.data);
+    }
+    updateUserDataInDB();
+
+    // update the user data in the local storage
+    localStorage.setItem('userData', JSON.stringify(data));
+  };
 
   const handleNameClick = () => {
     setIsEditing(true);
@@ -28,7 +67,9 @@ function Profile() {
 
   const handleBlur = () => {
     setIsEditing(false);
-    userData.name = editedName;
+    userData.userName = editedName;
+    localStorage.setItem('userData', JSON.stringify(userData));
+    updateUserData(userData);
   };
 
   const handleChangeProfileImage = (event) => {
@@ -44,7 +85,11 @@ function Profile() {
       <div className={styles.profile}>Profile</div>
       <div
         style={{
-          width: '120px', height: '120px', borderRadius: '50%', display: 'inline-block', position: 'relative',
+          width: '120px',
+          height: '120px',
+          borderRadius: '50%',
+          display: 'inline-block',
+          position: 'relative',
         }}
         onClick={() => document.getElementById('profileImageInput').click()}
       >
@@ -70,11 +115,10 @@ function Profile() {
             value={editedName}
             onChange={handleNameChange}
             onBlur={handleBlur}
-            autoFocus
             className={styles.editableInput}
           />
         ) : (
-          <h1 onClick={handleNameClick}>{userData.name}</h1>
+          <h1 onClick={handleNameClick}>{userData.userName}</h1>
         )}
         <p>
           Rank:
@@ -84,23 +128,25 @@ function Profile() {
       <div className={styles.badgesSection}>
         <h2>Badges</h2>
         <div className={styles.row}>
-          {userData.badges.map((badge, index) => (
-            <div key={index} className={styles.badgeItem}>
+          {userData.badges ? userData.badges.map((badge) => (
+            <div key={badge} className={styles.badgeItem}>
               <div className={styles.badgeIcon} />
               <div className={styles.rowName}>{badge}</div>
             </div>
-          ))}
+          ))
+            : null}
         </div>
       </div>
       <div className={styles.coursesSection}>
         <h2>Courses</h2>
         <div className={styles.row}>
-          {userData.courses.map((course, index) => (
-            <div key={index} className={styles.courseItem}>
+          {userData.courses ? userData.courses.map((course) => (
+            <div key={course} className={styles.courseItem}>
               <div className={styles.courseIcon} />
               <div className={styles.rowName}>{course}</div>
             </div>
-          ))}
+          ))
+            : null}
         </div>
       </div>
     </div>

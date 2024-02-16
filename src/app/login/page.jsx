@@ -4,44 +4,70 @@ import React, { useState } from 'react';
 // import styles from './page.module.css';
 
 function Example() {
-  const [username, setUsername] = useState('');
+  const [userName, setUsername] = useState('');
   const [password, setPassword] = useState('');
-  const accounts = {
-    username: 'testing',
-    password: 'testing',
+  const [loading, setLoading] = React.useState(false);
+
+  const onLogin = async () => {
+    // login function. This will call upon /api/users/login
+    // and send the username and password to the backend
+    // if the login is successful, redirect to the profile page
+    try {
+      setLoading(true);
+      const response = await fetch('/api/users/login', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ userName, password }),
+      });
+      const data = await response.json();
+
+      if (data.error) {
+        // eslint-disable-next-line no-alert
+        alert(data.error);
+        throw new Error(data.error);
+      } else {
+        // redirect to the profile page
+        window.location.href = '/profile';
+      }
+
+      // eslint-disable-next-line no-console
+      console.log('Login success', response.data);
+    } catch (error) {
+      // eslint-disable-next-line no-console
+      console.log('Login failed', error.message);
+    } finally {
+      setLoading(false);
+    }
   };
 
   const usernameChange = (e) => {
     setUsername(e.target.value);
-    // accounts.username = username;
   };
 
   const passwordChange = (e) => {
     setPassword(e.target.value);
-    // accounts.password = password;
   };
 
   const submitLog = (event) => {
     event.preventDefault();
 
-    // setPassword(accounts.password);
-    // setUsername(accounts.username);
-    if (username === '' || password === '') {
+    if (userName === '' || password === '') {
+      // eslint-disable-next-line no-alert
       alert('Input a username and/or password!!!');
     } else {
-      // accounts["username"] = username;
-
-      accounts.username = username;
-      accounts.password = password;
-      console.log(accounts);
+      onLogin();
     }
   };
   return (
     <div>
+      <h1>{loading ? 'Processing' : 'Login'}</h1>
       <form>
-        <label type="eAddress">Email Address:</label>
-
-        <input type="text" id="eAddress" name="eAddress" onChange={usernameChange} />
+        {/* eslint-disable-next-line jsx-a11y/label-has-associated-control */}
+        <label name="username">Username or Email:</label>
+        <input type="text" id="username" name="username" onChange={usernameChange} />
+        {/* eslint-disable-next-line jsx-a11y/label-has-associated-control */}
         <label name="pass">Password:</label>
         <input type="password" id="pass" name="pass" onChange={passwordChange} />
         {/* <input type="email" id="email" name="email" required />

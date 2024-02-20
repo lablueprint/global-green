@@ -45,16 +45,17 @@ function VerifyEmail() {
     // eslint-disable-next-line no-alert
     alert('Your verification time has expired. Please sign up again.');
   };
+
   const updateTimer = () => {
     if (expiresAt) {
       const currentTime = new Date();
       const diff = expiresAt - currentTime;
-
-      if (diff > 0) {
-        setTimeLeft(Math.round(diff / 1000));
-      } else {
+      if (diff <= 0) {
         setTimeLeft(0);
+        clearInterval(intervalRef.current); // Assuming you have a ref for this interval as well
         handleLogout();
+      } else {
+        setTimeLeft(Math.round(diff / 1000));
       }
     }
   };
@@ -78,15 +79,31 @@ function VerifyEmail() {
 
   function startResendCooldown() {
     const intervalId = setInterval(() => {
-      if (cooldown <= 1) {
-        clearInterval(intervalId);
-        setResendDisabled(false);
-        setCooldown(60); // Reset cooldown for next use
-      } else {
-        setCooldown((prev) => prev - 1);
-      }
+      setCooldown((prev) => {
+        if (prev <= 1) {
+          clearInterval(intervalId);
+          setResendDisabled(false);
+          return 60; // Immediately return 60 to reset, but this line is only for clarity
+        }
+        return prev - 1;
+      });
     }, 1000);
     return intervalId;
+  }
+
+  async function fetchUpdatedUserDetails() {
+    try {
+      const res = await fetch('/api/users/me');
+      const data = await res.json();
+      if (!data.error && data.user) {
+        setExpiresAt(new Date(data.user.verifyExpires));
+        // Update any other user details as necessary
+      } else if (data.error) {
+        setError(data.error);
+      }
+    } catch (err) {
+      setError('An error occurred while fetching user details.');
+    }
   }
 
   async function resendVerificationEmail() {
@@ -103,11 +120,16 @@ function VerifyEmail() {
         setError(data.error);
       } else {
         setMessage(`${data.message} You can resend in 60 seconds.`);
+        await fetchUpdatedUserDetails();
+        setResendDisabled(true);
+        setCooldown(60);
+        if (intervalRef.current) clearInterval(intervalRef.current);
+        intervalRef.current = startResendCooldown();
       }
     } catch (err) {
       setError(err.message);
+      setResendDisabled(true);
     }
-    setResendDisabled(true);
   }
 
   useEffect(
@@ -168,7 +190,7 @@ function VerifyEmail() {
   return (
     <div>
       <h1>
-        Welcome,
+        Welcome back
         {' '}
         {userName}
         . Please check your email for a verification code to verify your account.

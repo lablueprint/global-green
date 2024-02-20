@@ -46,7 +46,7 @@ export async function POST(request) {
     // dynamically set expiration time based on whether the user has verified their email
     const token = await new SignJWT(tokenData)
       .setProtectedHeader({ alg: 'HS256', typ: 'JWT' })
-      .setExpirationTime(user.verified ? '1d' : '5m')
+      .setExpirationTime('1d')
       .sign(encoder.encode(process.env.JWT_SECRET));
 
     const response = NextResponse.json({

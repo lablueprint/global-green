@@ -182,3 +182,29 @@
 
 /* Rest of your styling for buttons and content inside the popup */
 
+/* Add this to your page.module.css */
+.selected {
+  background-color: #f0ad4e; /* Bootstrap's button warning color for illustration */
+  color: white;
+}
+
+.matched {
+  background-color: #5cb85c; /* Bootstrap's button success color for illustration */
+  color: white;
+}
+
+.termsContainer button,
+.definitionsContainer button {
+  margin: 2px;
+  border: 1px solid #ccc;
+  background-color: #ffffff;
+  color: #333333;
+  cursor: pointer;
+}
+
+.termsContainer button:hover,
+.definitionsContainer button:hover {
+  border-color: #f0ad4e; /* Hover effect to match selected state for consistency */
+}
+
+

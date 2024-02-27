@@ -5,7 +5,7 @@ import React, { useState } from 'react';
 import styles from './page.module.css';
 import MultipleChoiceQuiz from './MultipleChoice';
 import TrueFalseQuiz from './TrueFalse';
-import MatchingQuiz from './Matching';
+import SelectorQuiz from './SelectorQuiz'
 import Quizzes from './data';
 import LinearWithValueLabel from './progressBar';
 import Results from './results';
@@ -15,7 +15,8 @@ function Quiz() {
   // State hooks for quiz functionality
   const [currentQuizIndex, setCurrentQuizIndex] = useState(0);
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
-  const [progress, setProgress] = useState(0);
+  const [TotalProgress, setTotalProgress] = useState(0);
+  const [CorrectProgress, setCorrectProgress] = useState(0);
   const [selectedAnswers, setSelectedAnswers] = useState({});
   const [points, setPoints] = useState(0);
   const [showResults, setShowResults] = useState(false);
@@ -25,6 +26,9 @@ function Quiz() {
   const [selectedOption, setSelectedOption] = useState('');
   const [showHint, setShowHint] = useState(false);
   const [disableSkipButton, setSkipButton] = useState(false); // Initially Skip button is enabled
+  const [selectedMatches, setSelectedMatches] = useState([]);
+  const [skippedQuestions, setSkippedQuestions] = useState([]);
+
 
   const currentQuiz = Quizzes;
   const currentQuestion = currentQuiz.questions[currentQuestionIndex];
@@ -33,11 +37,17 @@ function Quiz() {
   const renderQuestionComponent = (question) => {
     switch (question.type) {
       case 'multiple':
-        return <MultipleChoiceQuiz question={question.question} options={question.options} selectedAnswer={selectedOption} isAttempted={attempted} onOptionSelect={setSelectedOption} />;
+        return <MultipleChoiceQuiz
+        question={currentQuestion.question}
+        options={currentQuestion.options}
+        selectedAnswer={selectedOption}
+        isAttempted={attempted}
+        onOptionSelect={setSelectedOption} // This should correctly update selectedOption in Quiz's state
+      />
       case 'truefalse':
         return <TrueFalseQuiz question={question.question} options={question.options} selectedAnswer={selectedOption} isAttempted={attempted} onOptionSelect={setSelectedOption} />;
-      case 'select':
-        return <MatchingQuiz prompt={question.prompt} options={question.options} />;
+      case 'selector':
+        return <SelectorQuiz terms={question.terms} selectedMatches={selectedMatches} setSelectedMatches={setSelectedMatches} isAttempted={attempted}/>;
       default:
         return <div>Question type not supported</div>;
     }
@@ -59,26 +69,48 @@ function Quiz() {
   };
 
   const handleHint = () => {
-    setPopupMessage(currentQuestion.hint || 'This is a hint for the question.');
+    setPopupMessage(currentQuestion.hint || 'This i s a hint for the question.');
     setShowHint(true); // Display the hint popup
   };
 
-  // Function to proceed to the next question or quiz
   const goToNextQuestion = () => {
-    const nextQuestionIndex = currentQuestionIndex + 1;
-    if (nextQuestionIndex < currentQuiz.questions.length) {
-      setCurrentQuestionIndex(nextQuestionIndex);
-    } else if (currentQuizIndex < Quizzes.length - 1) {
-      setCurrentQuizIndex((prevIndex) => prevIndex + 1);
-      setCurrentQuestionIndex(0); // Start at the first question of the next quiz
+    // Attempt to find the next unattempted question index
+    let nextQuestionIndex = -1;
+  
+    // Check if the next question in the natural order has been attempted
+    if (currentQuestionIndex + 1 < currentQuiz.questions.length && !selectedAnswers.hasOwnProperty(currentQuestionIndex + 1) && !skippedQuestions.includes(currentQuestionIndex + 1)) {
+      nextQuestionIndex = currentQuestionIndex + 1;
     } else {
-      setShowResults(true); // Show results if all quizzes are completed
+      // Look for the next unattempted question in the remaining questions
+      for (let i = 0; i < currentQuiz.questions.length; i++) {
+        if (!selectedAnswers.hasOwnProperty(i) && !skippedQuestions.includes(i)) {
+          nextQuestionIndex = i;
+          break;
+        }
+      }
+  
+      // If no unattempted question is found, check skippedQuestions for any remaining
+      if (nextQuestionIndex === -1 && skippedQuestions.length > 0) {
+        nextQuestionIndex = skippedQuestions.shift(); // Get the first element from the skippedQuestions
+      }
     }
-    setSelectedOption(''); // Reset selected option for the next question
-    setAttempted(false); // Reset attempt state
-    setSkipButton(false); // Re-enable the Skip button
+  
+    // Determine if we found a next question to answer or if the quiz is complete
+    if (nextQuestionIndex !== -1) {
+      setCurrentQuestionIndex(nextQuestionIndex);
+      setAttempted(false);
+      setShowAnswerPopup(false);
+      setPopupMessage('');
+      setSelectedOption('');
+      setSkipButton(false); // Re-enable the Skip button for the next question
+    } else {
+      // No more questions to answer; show results
+      setShowResults(true);
+    }
   };
-
+  
+  
+  
   // Function to handle correct or incorrect answers
   const handleAnswer = (isCorrect, selectedOption) => {
     setSelectedAnswers((prevAnswers) => ({
@@ -86,23 +118,46 @@ function Quiz() {
       [currentQuestionIndex]: selectedOption,
     }));
     setShowAnswerPopup(true); // Show answer feedback popup
+    setTotalProgress((prevProgress) => Math.min(prevProgress + (100 / currentQuiz.questions.length), 100));
 
     if (isCorrect) {
       setPopupMessage('Correct!');
-      setProgress((prevProgress) => Math.min(prevProgress + (100 / currentQuiz.questions.length), 100));
+      setCorrectProgress((prevProgress) => Math.min(prevProgress + (100 / currentQuiz.questions.length), 100));
       setPoints((prevPoints) => prevPoints + 1);
     } else {
       setPopupMessage('Incorrect!');
+      // setProgress((prevProgress) => Math.min(prevProgress + (100 / currentQuiz.questions.length), 100));
+      // setPoints((prevPoints) => prevPoints + 1);
     }
     setAttempted(true); // Mark the question as attempted
     setSkipButton(true); // Disable the Skip button when an answer is checked
   };
 
-  // Function to check the selected answer
-  const checkAnswer = (selectedOption) => {
+  const handleSkip = () => {
+    // Add the current question to the skippedQuestions array if not already added
+    if (!skippedQuestions.includes(currentQuestionIndex)) {
+        setSkippedQuestions([...skippedQuestions, currentQuestionIndex]);
+    }
+    goToNextQuestion();
+};
+
+
+// Function to check the selected answer
+const checkAnswer = (selectedOption) => {
+  if (currentQuestion.type === 'selector') {
+    console.log("hi im in selector")
+    const isCorrect = selectedMatches.length === currentQuestion.terms.length && selectedMatches.every(match => currentQuestion.terms.find(term => term.term === match.term && term.definition === match.definition));
+    handleAnswer(isCorrect, selectedMatches.map(match => match.term).join(', '));
+    setAttempted(true);
+    setSelectedMatches([]); // Reset for next question
+  } else {
+    console.log(currentQuestion.answer)
+    console.log(selectedOption)
     const isCorrect = selectedOption === currentQuestion.answer;
     handleAnswer(isCorrect, selectedOption);
-  };
+  }
+}
+
 
   // Render the results component if the quiz is finished
   if (showResults) {
@@ -114,7 +169,7 @@ function Quiz() {
     <div className={styles.container}>
       <div className={styles.quizContainer}>
         <div className={styles.progressbarandhintcontainer}>
-          <LinearWithValueLabel value={progress} />
+          <LinearWithValueLabel value={TotalProgress} />
           <button type="button" onClick={handleHint}>Hint</button>
           {showHint && (
             <div className={styles.hintOverlay} onClick={handleOverlayClick}>
@@ -126,8 +181,19 @@ function Quiz() {
         <div><strong>Points: {points}</strong></div>
         {renderQuestionComponent(currentQuestion)}
         <div className={styles.buttonsContainer}>
-          <button type="button" className={styles.skipButton} onClick={goToNextQuestion} disabled={disableSkipButton}>Skip</button>
-          <button type="button" className={styles.checkButton} onClick={() => checkAnswer(selectedOption)} disabled={!selectedOption || attempted}>Check</button>
+        {
+          // Hide Skip button if it's the last question or if skip is disabled
+          currentQuestionIndex < currentQuiz.questions.length - 1 && !disableSkipButton && (
+            <button type="button" className={styles.skipButton} onClick={handleSkip}>Skip</button>
+          )
+        }          
+        <button type="button" className={styles.checkButton} 
+          onClick={() => checkAnswer(selectedOption)} 
+          disabled={currentQuestion.type !== 'selector' ? !selectedOption || attempted 
+          : selectedMatches.length !== currentQuestion.terms.length || attempted}>
+          Check
+        </button>
+
           {showAnswerPopup && <AnswerPopup message={popupMessage} onClose={() => { setShowAnswerPopup(false); setSkipButton(false); goToNextQuestion(); }} />}
         </div>
       </div>

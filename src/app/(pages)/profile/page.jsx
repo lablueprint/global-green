@@ -5,6 +5,7 @@ import Image from 'next/image';
 import NavBar from '@/app/components/navbar';
 import styles from './page.module.css';
 import defaultProfilePic from './profilepic.jpg'; // Assuming you have a default profile pic
+import PdfForm from './PdfForm';
 
 function Profile() {
   const [isEditing, setIsEditing] = useState(false);
@@ -79,8 +80,14 @@ function Profile() {
     }
   };
 
+  const handlePdf = () => {
+    console.log('hi');
+  };
+
   return (
     <div style={{ textAlign: 'center', margin: '20px 0' }}>
+      <PdfForm templatePdfUrl="https://pdf-lib.js.org/assets/with_update_sections.pdf" username={userData.userName} />
+      {/* <PdfForm templatePdfUrl="https://pdf-lib.js.org/assets/dod_character.pdf" username={userData.userName} /> */}
       <NavBar />
       <div className={styles.profile}>Profile</div>
       <div

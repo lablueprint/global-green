@@ -38,7 +38,7 @@ function MultipleChoice({
                 onClick={() => handleSelect(option)}
                 disabled={isAttempted}
                 style={{
-                  // backgroundColor: selected === option ? 'lightgrey' : 'white',
+                  backgroundColor: selected === option ? 'lightgrey' : 'white',
                 }}
               >
                 {option}

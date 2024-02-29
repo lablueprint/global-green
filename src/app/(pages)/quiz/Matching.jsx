@@ -83,8 +83,8 @@ function Matching({ terms, selectedMatches, setSelectedMatches, isAttempted }) {
           {terms.map((item, index) => (
             <div
               onClick={() => handleTermClick(item, index)}
-              key={`answer-${index}`}
-              id={`answer-${index}`}
+              key={`answer-${index + 1}`}
+              id={`answer-${index + 1}`}
               disabled={isAttempted}
               style={{
                 margin: '30px', 
@@ -101,8 +101,8 @@ function Matching({ terms, selectedMatches, setSelectedMatches, isAttempted }) {
           {terms.map((item, index) => (
             <div
               onClick={() => handleDefinitionClick(item, index)}
-              key={`question-${index}`}
-              id={`question-${index}`}
+              key={`question-${index + 1}`}
+              id={`question-${index + 1}`}
               disabled={isAttempted}
               style={{
                 margin: '30px', 

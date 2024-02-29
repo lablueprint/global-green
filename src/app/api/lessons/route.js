@@ -13,14 +13,15 @@ export async function POST(request) {
   return NextResponse.json({ message: 'Lesson Created' }, { status: 201 });
 }
 
-export async function GET() {
+export async function GET(request) {
   await connectMongoDB();
+  const key = new URL(request.url).searchParams.get('key');
   try {
-    const lessons = await Lesson.find();
-    if (!lessons) {
+    const res = key ? await Lesson.findOne({ key }) : await Lesson.find();
+    if (!res) {
       return NextResponse.json({ message: 'Lesson not found!' });
     }
-    return NextResponse.json({ lessons });
+    return NextResponse.json({ res });
   } catch (error) {
     return NextResponse.json({ message: error.message });
   }

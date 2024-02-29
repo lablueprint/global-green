@@ -9,7 +9,7 @@ const lessonSchema = new Schema({
   label: { type: String, required: true },
   parts: [{
     type: { type: String, required: true, enum: ['Title', 'Text', 'Image', 'Index'] },
-    value: { required: true },
+    value: { type: mongoose.SchemaTypes.Mixed, required: true },
   }],
 }, {
   timestamps: true,

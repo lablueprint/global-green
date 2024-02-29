@@ -13,14 +13,15 @@ export async function POST(request) {
   return NextResponse.json({ message: 'Quiz Created' }, { status: 201 });
 }
 
-export async function GET() {
+export async function GET(request) {
   await connectMongoDB();
+  const key = new URL(request.url).searchParams.get('key');
   try {
-    const quizzes = await Quiz.find();
-    if (!quizzes) {
-      return NextResponse.json({ message: 'Quizzes not found!' });
+    const res = key ? await Quiz.findOne({ key }) : await Quiz.find();
+    if (!res) {
+      return NextResponse.json({ message: 'Quiz not found!' });
     }
-    return NextResponse.json({ quizzes });
+    return NextResponse.json({ res });
   } catch (error) {
     return NextResponse.json({ message: error.message });
   }

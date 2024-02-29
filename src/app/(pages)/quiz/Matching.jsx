@@ -5,7 +5,7 @@ import styles from './page.module.css';
 // Predefined set of colors for matches
 const matchColors = ['#FFD700', '#FF8C00', '#1E90FF', '#32CD32', '#BA55D3', '#FF69B4', '#A52A2A'];
 
-function SelectorQuiz({ terms, selectedMatches, setSelectedMatches, isAttempted }) {
+function Matching({ terms, selectedMatches, setSelectedMatches, isAttempted }) {
   const [selectedTerm, setSelectedTerm] = useState('');
   const [selectedDefinition, setSelectedDefinition] = useState('');
 
@@ -59,7 +59,7 @@ function SelectorQuiz({ terms, selectedMatches, setSelectedMatches, isAttempted 
   );
 }
 
-SelectorQuiz.propTypes = {
+Matching.propTypes = {
   terms: PropTypes.arrayOf(PropTypes.shape({
     term: PropTypes.string.isRequired,
     definition: PropTypes.string.isRequired,
@@ -74,8 +74,8 @@ SelectorQuiz.propTypes = {
   isAttempted: PropTypes.bool,
 };
 
-SelectorQuiz.defaultProps = {
+Matching.defaultProps = {
   isAttempted: false,
 };
 
-export default SelectorQuiz;
+export default Matching;

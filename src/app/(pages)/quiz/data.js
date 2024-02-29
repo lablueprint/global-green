@@ -4,7 +4,7 @@ const quizData = {
     {
       id: 10,
       question: 'Match the terms with their definitions',
-      type: 'selector',
+      type: 'matching',
       terms: [
         {term: 'Term 1', definition: 'Definition1'},
         {term: 'Term 2', definition: "Definition2"},

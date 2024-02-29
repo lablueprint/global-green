@@ -23,7 +23,7 @@ function MultipleChoice({
 
   return (
     <div>
-      <p style={{ fontSize: '20px', color: 'black' }}>{question}</p>
+      <p style={{ fontSize: '17px', color: 'black' }}>{question}</p>
       <div className={styles.choiceContainer}>
         {options.reduce((acc, option, index) => {
           if (index % 2 === 0) acc.push(options.slice(index, index + 2));
@@ -38,7 +38,7 @@ function MultipleChoice({
                 onClick={() => handleSelect(option)}
                 disabled={isAttempted}
                 style={{
-                  backgroundColor: selected === option ? 'lightgrey' : 'white',
+                  // backgroundColor: selected === option ? 'lightgrey' : 'white',
                 }}
               >
                 {option}

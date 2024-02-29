@@ -4,7 +4,7 @@ import CircularProgress, { circularProgressClasses } from '@mui/material/Circula
 import Box from '@mui/material/Box';
 import StarIcon from '@mui/icons-material/Star';
 import PropTypes from 'prop-types';
-import styles from './results.module.css';
+import styles from './page.module.css';
 
 function CircularWithLabel({ value }) {
   return (

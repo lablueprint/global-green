@@ -3,78 +3,53 @@ import PropTypes from 'prop-types';
 import styles from './page.module.css';
 import LeaderLine from 'react-leader-line';
 
-// Predefined set of colors for matches
-const matchColors = ['#FFD700', '#FF8C00', '#1E90FF', '#32CD32', '#BA55D3', '#FF69B4', '#A52A2A'];
-
-function Matching({ terms, selectedMatches, setSelectedMatches, isAttempted }) {
+function Matching({ terms, selectedMatches, setSelectedMatches, isAttempted}) {
   const [selectedTerm, setSelectedTerm] = useState(null);
   const [selectedDefinition, setSelectedDefinition] = useState(null);
 
-  const checkForMatch = () => {
-    console.log('selected term is');
-    console.log(selectedTerm);
-    console.log('selectedDefinition is');
-    console.log(selectedDefinition);
-    let line;
-  
-    if (selectedTerm && selectedDefinition) {
-      console.log('inside');
-      line = new LeaderLine(
+  useEffect(() => {
+    if (selectedTerm !== null && selectedDefinition !== null && !isAttempted) {
+      const line = new LeaderLine(
         document.getElementById(`answer-${selectedTerm}`),
         document.getElementById(`question-${selectedDefinition}`),
+        {
+          color: '#00B353', // Set the line color to green
+          size: 2,
+          startPlug: 'disc',
+          endPlug: 'disc',
+          path: 'straight',
+        }
       );
+  
+      // Update selected matches with the new match
+      setSelectedMatches((prevMatches) => [
+        ...prevMatches,
+        {
+          term: selectedTerm,
+          definition: selectedDefinition,
+          lineObj: line,
+        },
+      ]);
 
-      line.setOptions({
-        color: '#00B353',
-        size: 2,
-        startPlug: 'disc',
-        endPlug: 'disc',
-        path: 'straight',
-      });
-
-      // setSelectedMatches((prevMatches) => [...prevMatches,
-      //   {
-      //     answerId: selectedTerm.id,
-      //     questionId: selectedDefinition.id,
-      //     lineObj: line,
-      //   }]);
-
+      console.log(selectedMatches)
+  
+      // Reset selections
       setSelectedTerm(null);
       setSelectedDefinition(null);
+  
+      // Cleanup function to remove the line if the component unmounts or the match is removed
+      return () => line.remove();
     }
-  };
+  }, [selectedTerm, selectedDefinition, setSelectedMatches, isAttempted]);
+  
 
   const handleTermClick = (item, index) => {
-    setSelectedTerm(index); 
-    checkForMatch();
-    console.log(item); 
-    console.log(index);
-  }
+    setSelectedTerm(index);
+  };
 
   const handleDefinitionClick = (item, index) => {
     setSelectedDefinition(index);
-    checkForMatch();
-    console.log(item); 
-    console.log(index);
-  }
-
-  useEffect(() => {
-    checkForMatch();
-  })
-
-  // useEffect(() => {
-  //   if (selectedTerm && selectedDefinition) {
-  //     const newMatch = {
-  //       term: selectedTerm,
-  //       definition: selectedDefinition,
-  //       // Assign a color from the predefined set, cycling based on the current number of matches
-  //       color: matchColors[selectedMatches.length % matchColors.length],
-  //     };
-  //     setSelectedMatches(prevMatches => [...prevMatches, newMatch]);
-  //     setSelectedTerm('');
-  //     setSelectedDefinition('');
-  //   }
-  // }, [selectedTerm, selectedDefinition, setSelectedMatches, selectedMatches]);
+  };
 
   return (
     <div>
@@ -83,14 +58,14 @@ function Matching({ terms, selectedMatches, setSelectedMatches, isAttempted }) {
           {terms.map((item, index) => (
             <div
               onClick={() => handleTermClick(item, index)}
-              key={`answer-${index + 1}`}
-              id={`answer-${index + 1}`}
-              disabled={isAttempted}
+              key={`answer-${index}`}
+              id={`answer-${index}`}
               style={{
-                margin: '30px', 
-                padding: '10px 10px', 
+                margin: '30px',
+                padding: '10px 10px',
                 border: '1px solid black',
-                backgroundColor: selectedMatches.find(match => match.term === item.term)?.color || 'transparent'
+                backgroundColor: selectedMatches.find(match => match.term === index)?.lineObj ? '#00B353' : 'transparent', // Highlight if matched
+                pointerEvents: isAttempted ? 'none' : 'auto',
               }}
             >
               {item.term}
@@ -101,14 +76,14 @@ function Matching({ terms, selectedMatches, setSelectedMatches, isAttempted }) {
           {terms.map((item, index) => (
             <div
               onClick={() => handleDefinitionClick(item, index)}
-              key={`question-${index + 1}`}
-              id={`question-${index + 1}`}
-              disabled={isAttempted}
+              key={`question-${index}`}
+              id={`question-${index}`}
               style={{
-                margin: '30px', 
-                padding: '10px 10px', 
+                margin: '30px',
+                padding: '10px 10px',
                 border: '1px solid black',
-                backgroundColor: selectedMatches.find(match => match.definition === item.definition)?.color || 'transparent'
+                backgroundColor: selectedMatches.find(match => match.definition === index)?.lineObj ? '#00B353' : 'transparent', // Highlight if matched
+                pointerEvents: isAttempted ? 'none' : 'auto',
               }}
             >
               {item.definition}
@@ -126,13 +101,14 @@ Matching.propTypes = {
     definition: PropTypes.string.isRequired,
   })).isRequired,
   selectedMatches: PropTypes.arrayOf(PropTypes.shape({
-    term: PropTypes.string.isRequired,
-    definition: PropTypes.string.isRequired,
-    // Include color in the PropTypes validation
-    color: PropTypes.string,
+    term: PropTypes.number.isRequired,
+    definition: PropTypes.number.isRequired,
+    lineObj: PropTypes.instanceOf(LeaderLine),
   })).isRequired,
   setSelectedMatches: PropTypes.func.isRequired,
   isAttempted: PropTypes.bool,
+  clearLines: PropTypes.bool.isRequired,
+  setClearLines: PropTypes.func.isRequired,
 };
 
 Matching.defaultProps = {

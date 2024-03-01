@@ -29,7 +29,7 @@ function Quiz() {
   const [selectedMatches, setSelectedMatches] = useState([]);
   const [skippedQuestions, setSkippedQuestions] = useState([]);
   const [showCheckButton, setShowCheckButton] = useState(true);
-
+  // const [clearLines, setClearLines] = useState(false);
 
 
   const currentQuiz = Quizzes;
@@ -58,7 +58,10 @@ function Quiz() {
         terms={question.terms} 
         selectedMatches={selectedMatches} 
         setSelectedMatches={setSelectedMatches} 
-        isAttempted={attempted}/>;
+        isAttempted={attempted}
+        // clearLines={clearLines} // Pass the clearLines state as a prop
+        // setClearLines={setClearLines} // Pass setClearLines function
+        />;
       default:
         return <div>Question type not supported</div>;
     }
@@ -99,15 +102,21 @@ function Quiz() {
   };
 
   const goToNextQuestion = () => {
+
+    if (currentQuestion.type === 'matching') {
+      console.log("Hi")
+      console.log(selectedMatches)
+      selectedMatches.forEach(match => match.lineObj.remove());
+      setSelectedMatches([]); // Clear the selectedMatches state
+    }
+
     setShowCheckButton(true); // Show the Check button for the next question
-    // Attempt to find the next unattempted question index
+
     let nextQuestionIndex = -1;
   
-    // Check if the next question in the natural order has been attempted
     if (currentQuestionIndex + 1 < currentQuiz.questions.length && !selectedAnswers.hasOwnProperty(currentQuestionIndex + 1) && !skippedQuestions.includes(currentQuestionIndex + 1)) {
       nextQuestionIndex = currentQuestionIndex + 1;
     } else {
-      // Look for the next unattempted question in the remaining questions
       for (let i = 0; i < currentQuiz.questions.length; i++) {
         if (!selectedAnswers.hasOwnProperty(i) && !skippedQuestions.includes(i)) {
           nextQuestionIndex = i;
@@ -115,27 +124,22 @@ function Quiz() {
         }
       }
   
-      // If no unattempted question is found, check skippedQuestions for any remaining
       if (nextQuestionIndex === -1 && skippedQuestions.length > 0) {
-        nextQuestionIndex = skippedQuestions.shift(); // Get the first element from the skippedQuestions
+        nextQuestionIndex = skippedQuestions.shift();
       }
     }
   
-    // Determine if we found a next question to answer or if the quiz is complete
     if (nextQuestionIndex !== -1) {
       setCurrentQuestionIndex(nextQuestionIndex);
       setAttempted(false);
       setShowAnswerPopup(false);
       setPopupMessage('');
       setSelectedOption('');
-      setSkipButton(false); // Re-enable the Skip button for the next question
+      setSkipButton(false);
     } else {
-      // No more questions to answer; show results
       setShowResults(true);
     }
   };
-  
-  
   
   // Function to handle correct or incorrect answers
   const handleAnswer = (isCorrect, selectedOption) => {

@@ -176,7 +176,22 @@ function Quiz() {
 const checkAnswer = (selectedOption) => {
   setShowCheckButton(false); // Hide the Check button
   if (currentQuestion.type === 'matching') {
-    const isCorrect = selectedMatches.length === currentQuestion.terms.length && selectedMatches.every(match => currentQuestion.terms.find(term => term.term === match.term && term.definition === match.definition));
+      console.log(selectedMatches)
+      console.log(currentQuestion.terms)
+
+      //good
+      console.log(selectedMatches.length)
+      console.log(currentQuestion.terms.length)
+
+      console.log(selectedMatches.every(match => currentQuestion.terms.find(term => term.term === match.term && term.definition === match.definition)))
+
+      
+      const isCorrect = selectedMatches.length === currentQuestion.terms.length &&
+      selectedMatches.every(match => 
+        currentQuestion.terms[match.term].definition === currentQuestion.answer[match.definition]
+      );
+
+
     handleAnswer(isCorrect, selectedMatches.map(match => match.term).join(', '));
     setAttempted(true);
     setSelectedMatches([]); // Reset for next question

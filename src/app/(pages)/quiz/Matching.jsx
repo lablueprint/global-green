@@ -30,15 +30,12 @@ function Matching({ terms, selectedMatches, setSelectedMatches, isAttempted}) {
           lineObj: line,
         },
       ]);
-
-      console.log(selectedMatches)
   
       // Reset selections
       setSelectedTerm(null);
       setSelectedDefinition(null);
   
-      // Cleanup function to remove the line if the component unmounts or the match is removed
-      return () => line.remove();
+      // return () => line.remove();
     }
   }, [selectedTerm, selectedDefinition, setSelectedMatches, isAttempted]);
   

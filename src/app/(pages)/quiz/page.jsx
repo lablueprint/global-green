@@ -25,17 +25,14 @@ function Quiz() {
   const [popupMessage, setPopupMessage] = useState('');
   const [selectedOption, setSelectedOption] = useState('');
   const [showHint, setShowHint] = useState(false);
-  const [disableSkipButton, setSkipButton] = useState(false); // Initially Skip button is enabled
+  const [disableSkipButton, setSkipButton] = useState(false);
   const [selectedMatches, setSelectedMatches] = useState([]);
   const [skippedQuestions, setSkippedQuestions] = useState([]);
-  const [showCheckButton, setShowCheckButton] = useState(true);
-  // const [clearLines, setClearLines] = useState(false);
-
+  const [showCheckButton, setShowCheckButton] = useState(true)
 
   const currentQuiz = Quizzes;
   const currentQuestion = currentQuiz.questions[currentQuestionIndex];
 
-  // Function to render the appropriate question component based on question type
   const renderQuestionComponent = (question) => {
     switch (question.type) {
       case 'multiple':
@@ -44,7 +41,7 @@ function Quiz() {
         options={currentQuestion.options}
         selectedAnswer={selectedOption}
         isAttempted={attempted}
-        onOptionSelect={setSelectedOption} // This should correctly update selectedOption in Quiz's state
+        onOptionSelect={setSelectedOption} 
       />
       case 'truefalse':
         return <TrueFalseQuiz 
@@ -59,8 +56,6 @@ function Quiz() {
         selectedMatches={selectedMatches} 
         setSelectedMatches={setSelectedMatches} 
         isAttempted={attempted}
-        // clearLines={clearLines} // Pass the clearLines state as a prop
-        // setClearLines={setClearLines} // Pass setClearLines function
         />;
       default:
         return <div>Question type not supported</div>;
@@ -81,7 +76,6 @@ function Quiz() {
     );
   }
 
-  // Functions for hint popup management
   function HintPopup({ message, onClose }) {
     return (
       <div className={styles.hintPopup}>
@@ -92,25 +86,23 @@ function Quiz() {
 
   const handleOverlayClick = (event) => {
     if (event.target === event.currentTarget) {
-      setShowHint(false); // Close hint popup if overlay is clicked
+      setShowHint(false); 
     }
   };
 
   const handleHint = () => {
     setPopupMessage(currentQuestion.hint || 'This i s a hint for the question.');
-    setShowHint(true); // Display the hint popup
+    setShowHint(true); 
   };
 
   const goToNextQuestion = () => {
-
+    setShowCheckButton(true); 
     if (currentQuestion.type === 'matching') {
-      console.log("Hi")
       console.log(selectedMatches)
       selectedMatches.forEach(match => match.lineObj.remove());
-      setSelectedMatches([]); // Clear the selectedMatches state
+      setSelectedMatches([]); 
     }
 
-    setShowCheckButton(true); // Show the Check button for the next question
 
     let nextQuestionIndex = -1;
   
@@ -177,13 +169,13 @@ const checkAnswer = (selectedOption) => {
   setShowCheckButton(false); // Hide the Check button
   if (currentQuestion.type === 'matching') {
       console.log(selectedMatches)
-      console.log(currentQuestion.terms)
+      // console.log(currentQuestion.terms)
 
       //good
-      console.log(selectedMatches.length)
-      console.log(currentQuestion.terms.length)
+      // console.log(selectedMatches.length)
+      // console.log(currentQuestion.terms.length)
 
-      console.log(selectedMatches.every(match => currentQuestion.terms.find(term => term.term === match.term && term.definition === match.definition)))
+      // console.log(selectedMatches.every(match => currentQuestion.terms.find(term => term.term === match.term && term.definition === match.definition)))
 
       
       const isCorrect = selectedMatches.length === currentQuestion.terms.length &&
@@ -194,7 +186,7 @@ const checkAnswer = (selectedOption) => {
 
     handleAnswer(isCorrect, selectedMatches.map(match => match.term).join(', '));
     setAttempted(true);
-    setSelectedMatches([]); // Reset for next question
+    // setSelectedMatches([]); // Reset for next question
   } else {
     console.log(currentQuestion.answer)
     console.log(selectedOption)
@@ -213,7 +205,7 @@ const checkAnswer = (selectedOption) => {
       <div className={styles.quizContainer}>
         <div className={styles.progressbarandhintcontainer}>
           <LinearWithValueLabel value={TotalProgress} />
-          <button type="button" onClick={handleHint}>Hint</button>
+          <button type="button" className={styles.hintButton} onClick={handleHint}></button>
           {showHint && (
             <div className={styles.hintOverlay} onClick={handleOverlayClick}>
               <HintPopup message={popupMessage} onClose={() => setShowHint(false)} />
@@ -225,7 +217,6 @@ const checkAnswer = (selectedOption) => {
         {renderQuestionComponent(currentQuestion)}
         <div className={styles.buttonsContainer}>
         {
-          // Hide Skip button if it's the last question or if skip is disabled
           currentQuestionIndex < currentQuiz.questions.length - 1 && !disableSkipButton && (
             <button type="button" className={styles.skipButton} onClick={handleSkip}>Skip</button>
           )

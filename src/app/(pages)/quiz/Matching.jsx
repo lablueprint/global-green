@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import styles from './page.module.css';
 import LeaderLine from 'react-leader-line';
 
-function Matching({ terms, selectedMatches, setSelectedMatches, isAttempted, clearLines, setClearLines }) {
+function Matching({ terms, selectedMatches, setSelectedMatches, isAttempted = false}) {
   const [selectedTerm, setSelectedTerm] = useState(null);
   const [selectedDefinition, setSelectedDefinition] = useState(null);
   const [matchedPairs, setMatchedPairs] = useState([]);
@@ -36,17 +36,6 @@ function Matching({ terms, selectedMatches, setSelectedMatches, isAttempted, cle
       setSelectedDefinition(null);
     }
   }, [selectedTerm, selectedDefinition, setSelectedMatches, isAttempted]);
-
-  useEffect(() => {
-    if (clearLines) {
-      selectedMatches.forEach((match) => {
-        match.lineObj.remove();
-      });
-      setSelectedMatches([]);
-      setClearLines(false);
-      setMatchedPairs([]); // Clear matched pairs as well
-    }
-  }, [clearLines, selectedMatches, setSelectedMatches, setClearLines]);
 
   const handleTermClick = (index) => {
     setSelectedTerm(index); // Set the selected term index
@@ -115,12 +104,6 @@ Matching.propTypes = {
   })).isRequired,
   setSelectedMatches: PropTypes.func.isRequired,
   isAttempted: PropTypes.bool,
-  clearLines: PropTypes.bool.isRequired,
-  setClearLines: PropTypes.func.isRequired,
-};
-
-Matching.defaultProps = {
-  isAttempted: false,
 };
 
 export default Matching;

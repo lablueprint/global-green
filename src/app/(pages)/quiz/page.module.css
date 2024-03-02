@@ -21,8 +21,7 @@
   max-height: 1000px;
   min-height: 200px;
   background-color: white;
-  /* Correcting the border property */
-  border: 1px solid black; /* Removed the quotes around the border value */
+  border: 1px solid black; 
 }
 
   .quizQuestionNumber {
@@ -33,14 +32,11 @@
 
   .progressbarandhintcontainer {
     display: flex; 
-    justify-content: space-between; /* This spreads out the items to both ends */
+    justify-content: space-between; 
     align-items: center; 
-    min-width: 500px; /* or adjust as needed for your layout */
-    background-color: white; /* or any color/background as per your design */
-    padding: 0 10px; 
+    min-width: 500px;
+    background-color: white; 
   }
-
-  
 
   .buttonsContainer {
     display: flex; 
@@ -89,22 +85,36 @@
     flex-direction: row;
     justify-content: space-between; /* Distribute the space between the buttons */
     margin: 0; /* Reset any default margin */
+    padding: 0;
 }
 
 .choiceButton {
-    flex-basis: calc(50% - 10px);   
-    text-align: center; 
-    margin: 5px; 
-    outline: 1px solid black;
-    border-radius: 3px;
-    background-color: white;
-    padding: 10px 30px;
-    border: none;
+  flex-basis: calc(50% - 10px); /* Calculate the width of each button to take up half the row width minus any desired spacing */
+  text-align: left; 
+  margin: 5px 5px; /* Adjust the horizontal margin to decrease the space between buttons */
+  outline: 1px solid black;
+  border-radius: 3px;
+  background-color: white;
+  padding: 10px 30px;
+  border: none;
 }
 
 .choiceButton:hover {
   outline: 2.75px solid #1D594B;
   transition-duration: 0.2s;
+}
+
+.hintButton {
+  background-image: url('./quiz/hint_logo.png');
+  background-size: cover; /* or contain, depending on the aspect ratio of your image */
+  background-position: center;
+  background-repeat: no-repeat;
+  width: 50px; /* Adjust as necessary */
+  height: 50px; /* Adjust as necessary */
+  border: none;
+  cursor: pointer;
+  text-indent: -9999px; /* hides the text 'Hint' */
+  overflow: hidden; /* ensures no scroll bars appear if text is larger than button */
 }
 
 
@@ -378,5 +388,14 @@
   color: black;
 }
 
+.questionText {
+  font-size: 16px;
+  font-weight: bold;
+  color: #000;
+  max-width: 400px;
+  line-height: 1.6;
+  margin-bottom: 20px;
+  text-align: left; /* This ensures the text is left-aligned */
+}
 
 

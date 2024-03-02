@@ -6,8 +6,8 @@ import styles from './page.module.css';
 function MultipleChoice({
   question,
   options,
-  selectedAnswer,
-  isAttempted,
+  selectedAnswer = '',
+  isAttempted = false,
   onOptionSelect, // Renamed from handleSelect for clarity
 }) {
   const [selected, setSelected] = useState(selectedAnswer); // Define the selected state
@@ -16,14 +16,15 @@ function MultipleChoice({
     setSelected(selectedAnswer);
   }, [selectedAnswer]);
 
-  // Updated to call onOptionSelect, which is now passed from Quiz component
   function handleSelect(option) {
-    onOptionSelect(option); // This will be provided by the Quiz component
+    onOptionSelect(option); 
   }
 
   return (
     <div>
-      <p style={{ fontSize: '17px', color: 'black' }}>{question}</p>
+      <p className={styles.questionText}>
+        {question}
+      </p>
       <div className={styles.choiceContainer}>
         {options.reduce((acc, option, index) => {
           if (index % 2 === 0) acc.push(options.slice(index, index + 2));
@@ -38,7 +39,8 @@ function MultipleChoice({
                 onClick={() => handleSelect(option)}
                 disabled={isAttempted}
                 style={{
-                  backgroundColor: selected === option ? 'lightgrey' : 'white',
+                  outline: selected === option ? '2px solid #1D594B' : '1px solid #D9D9D9',
+                  backgroundColor: selected === option ? '#D5EDE0' : 'white',
                 }}
               >
                 {option}
@@ -51,28 +53,15 @@ function MultipleChoice({
   );
 }
 
-// Update PropTypes accordingly
 MultipleChoice.propTypes = {
-  // Correct propTypes definitions
-  onOptionSelect: PropTypes.func.isRequired, // This replaces onCheckAnswer
+  onOptionSelect: PropTypes.func.isRequired, 
 };
-
-// Update defaultProps if necessary
-
 
 MultipleChoice.propTypes = {
   question: PropTypes.string.isRequired,
   options: PropTypes.arrayOf(PropTypes.string).isRequired,
-  correctAnswer: PropTypes.string.isRequired,
-  handleAnswer: PropTypes.func.isRequired,
   selectedAnswer: PropTypes.string,
-  onCheckAnswer: PropTypes.func.isRequired,
   isAttempted: PropTypes.bool,
-};
-
-MultipleChoice.defaultProps = {
-  selectedAnswer: '',
-  isAttempted: false,
 };
 
 export default MultipleChoice;

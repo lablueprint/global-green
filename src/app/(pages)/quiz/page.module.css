@@ -103,19 +103,21 @@
   outline: 2.75px solid #1D594B;
   transition-duration: 0.2s;
 }
-
 .hintButton {
-  background-image: url('./quiz/hint_logo.png');
-  background-size: cover; /* or contain, depending on the aspect ratio of your image */
-  background-position: center;
-  background-repeat: no-repeat;
-  width: 50px; /* Adjust as necessary */
-  height: 50px; /* Adjust as necessary */
-  border: none;
+  background: url('../quiz/hint_logo.png') no-repeat center center;
+  background-size: contain; /* or cover, depending on the effect you want */
   cursor: pointer;
-  text-indent: -9999px; /* hides the text 'Hint' */
-  overflow: hidden; /* ensures no scroll bars appear if text is larger than button */
+  height: 50px; /* Adjust to the size you want */
+  width: 50px; /* Adjust to the size you want */
+  border: none;
+  background-color: red;
+  /* Additional properties for better control */
+  display: inline-block; /* This ensures that the width and height are applied */
+  /* If you want the button to be a circle and the image is square: */
+  border-radius: 50%; /* Optional: makes the button round */
 }
+
+
 
 
 .hintOverlay {

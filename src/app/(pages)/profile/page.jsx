@@ -2,27 +2,34 @@
 
 import React, { useEffect, useState } from 'react';
 import Image from 'next/image';
+import { useSession, signOut } from 'next-auth/react';
 import styles from './page.module.css';
-import defaultProfilePic from './profilepic.jpg'; // Assuming you have a default profile pic
-
+import defaultProfilePic from './profilepic.jpg';
+// Assuming you have a default profile pic
 function Profile() {
   const [isEditing, setIsEditing] = useState(false);
   const [profileImage, setProfileImage] = useState(defaultProfilePic);
   const [editedName, setEditedName] = useState('');
   const [userData, setData] = useState({});
 
-  const getUserDetails = async () => {
-    const res = await fetch('/api/users/me');
-    const data = await res.json();
-    setData(data.user);
-    setEditedName(data.user.userName);
-    // eslint-disable-next-line no-console
-    console.log(data.user);
-  };
+  const { data: session } = useSession();
+
+  // const getUserDetails = async () => {
+  //   const res = await fetch('/api/users/me');
+  //   const data = await res.json();
+  //   setData(data.user);
+  //   setEditedName(data.user.userName);
+  //   // eslint-disable-next-line no-console
+  //   console.log(data.user);
+  // };
 
   useEffect(() => {
-    getUserDetails();
-  }, []);
+    if (session?.user?.verified) {
+      console.log('session', session);
+      setData(session.user);
+    }
+    // getUserDetails();
+  }, [session]);
 
   const updateUserData = (data) => {
     // update the user data in the database, make sure only the first user is updated.
@@ -86,6 +93,7 @@ function Profile() {
       alert(data.error);
       throw new Error(data.error);
     }
+    await signOut();
     window.location.href = '/login';
   };
 
@@ -95,6 +103,17 @@ function Profile() {
       <button type="button" onClick={handleLogout}>
         Logout
       </button>
+      {
+        session ? (
+          <div>
+            <h2>
+              Welcome,
+              {session.user.userName}
+            </h2>
+          </div>
+        ) : null
+
+      }
       <div
         style={{
           width: '120px',

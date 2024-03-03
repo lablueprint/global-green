@@ -86,9 +86,6 @@ function Profile() {
 
   return (
     <div style={{ textAlign: 'center', margin: '20px 0' }}>
-      <PdfForm templatePdfUrl="https://pdf-lib.js.org/assets/with_update_sections.pdf" username={userData.userName} />
-      {/* <PdfForm templatePdfUrl="https://pdf-lib.js.org/assets/dod_character.pdf" username={userData.userName} /> */}
-      <NavBar />
       <div className={styles.profile}>Profile</div>
       <div
         style={{
@@ -156,6 +153,7 @@ function Profile() {
             : null}
         </div>
       </div>
+      <PdfForm templatePdfUrl="https://pdf-lib.js.org/assets/dod_character.pdf" firstName={userData.firstName} lastName={userData.lastName} />
     </div>
   );
 }

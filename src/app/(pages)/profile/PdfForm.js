@@ -1,15 +1,10 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import {
-  PDFDocument, rgb, degrees, StandardFonts,
+  PDFDocument, rgb, StandardFonts,
 } from 'pdf-lib';
 
-function PdfForm({ templatePdfUrl, username }) {
+function PdfForm({ templatePdfUrl, firstName, lastName }) {
   const [formData, setFormData] = useState({});
-
-  const handleInputChange = (e) => {
-    const { name, value } = e.target;
-    setFormData((prevData) => ({ ...prevData, [name]: value }));
-  };
 
   const generatePdf = async () => {
     try {
@@ -22,16 +17,19 @@ function PdfForm({ templatePdfUrl, username }) {
       const pages = pdfDoc.getPages();
 
       // Modify the PDF document by replacing the placeholder text with the desired name
-      const newText = `Name: ${username}`;
+      const newText = `Name: ${firstName} ${lastName}`;
 
       const firstPage = pages[0];
       const { width, height } = firstPage.getSize();
+      const textWidth = helveticaFont.widthOfTextAtSize(newText, 30);
+      const textX = (width - textWidth) / 2;
+
       firstPage.drawText(newText, {
-        x: 55,
-        y: height / 2 - 275,
-        size: 20,
+        x: textX,
+        y: height / 2,
+        size: 30,
         font: helveticaFont,
-        color: rgb(0.95, 0.1, 0.1),
+        color: rgb(0, 0, 0),
       });
 
       // Generate the modified PDF
@@ -49,6 +47,10 @@ function PdfForm({ templatePdfUrl, username }) {
       console.error('Error generating PDF:', error);
     }
   };
+
+  useEffect(() => {
+    generatePdf();
+  }, []);
 
   return (
     <div>

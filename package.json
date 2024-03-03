@@ -16,6 +16,7 @@
     "@react-pdf/renderer": "^3.3.8",
     "bcryptjs": "^2.4.3",
     "dotenv-webpack": "^8.0.1",
+    "fs": "^0.0.1-security",
     "jsonwebtoken": "^9.0.2",
     "mapbox-gl": "^2.15.0",
     "mongodb": "^6.3.0",

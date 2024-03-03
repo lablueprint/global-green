@@ -118,7 +118,7 @@ function Quiz() {
   function HintPopup({ message, onClose }) {
     return (
       <div style={{
-        position: 'absolute', //could use fixed herer
+        position: 'absolute', //could use fixed here
         top: '50%', 
         left: '50%',
         transform: 'translate(-50%, -50%)',

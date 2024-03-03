@@ -3,18 +3,37 @@ import PropTypes from 'prop-types';
 import styles from './page.module.css';
 import LeaderLine from 'react-leader-line';
 
-function Matching({ terms, selectedMatches, setSelectedMatches, isAttempted = false}) {
+function Matching({ terms, selectedMatches, setSelectedMatches, isAttempted = false }) {
   const [selectedTerm, setSelectedTerm] = useState(null);
   const [selectedDefinition, setSelectedDefinition] = useState(null);
   const [matchedPairs, setMatchedPairs] = useState([]);
 
   useEffect(() => {
     if (selectedTerm !== null && selectedDefinition !== null && !isAttempted) {
+      // First, remove existing lines connected to either the selected term or definition
+      const updatedMatches = selectedMatches.filter(match => {
+        const isMatchedWithTerm = match.term === selectedTerm;
+        const isMatchedWithDefinition = match.definition === selectedDefinition;
+
+        // If the current match involves either the selected term or definition, remove the line
+        if (isMatchedWithTerm || isMatchedWithDefinition) {
+          match.lineObj.remove(); // Remove the line visually
+          return false; // Exclude this match from the updated array
+        }
+
+        return true;
+      });
+
+      // Update the state to reflect the removal of any existing matches
+      setSelectedMatches(updatedMatches);
+      setMatchedPairs(updatedMatches.map(({ term, definition }) => ({ term, definition })));
+
+      // Proceed to create a new line and match
       const line = new LeaderLine(
         document.getElementById(`answer-${selectedTerm}`),
         document.getElementById(`question-${selectedDefinition}`),
         {
-          color: '#B4B4B4', // Set the line color to green
+          color: '#B4B4B4',
           size: 2,
           startPlug: 'behind',
           endPlug: 'behind',
@@ -22,27 +41,27 @@ function Matching({ terms, selectedMatches, setSelectedMatches, isAttempted = fa
         }
       );
 
-      // Update selected matches with the new match
       const newMatch = {
         term: selectedTerm,
         definition: selectedDefinition,
         lineObj: line,
       };
-      setSelectedMatches((prevMatches) => [...prevMatches, newMatch]);
-      setMatchedPairs((prevPairs) => [...prevPairs, { term: selectedTerm, definition: selectedDefinition }]);
+
+      setSelectedMatches(prevMatches => [...prevMatches, newMatch]);
+      setMatchedPairs(prevPairs => [...prevPairs, { term: selectedTerm, definition: selectedDefinition }]);
 
       // Reset selections
       setSelectedTerm(null);
       setSelectedDefinition(null);
     }
-  }, [selectedTerm, selectedDefinition, setSelectedMatches, isAttempted]);
+  }, [selectedTerm, selectedDefinition, setSelectedMatches, isAttempted, selectedMatches]);
 
   const handleTermClick = (index) => {
-    setSelectedTerm(index); // Set the selected term index
+    setSelectedTerm(index);
   };
 
   const handleDefinitionClick = (index) => {
-    setSelectedDefinition(index); // Set the selected definition index
+    setSelectedDefinition(index);
   };
 
   // Function to determine if an item is matched
@@ -61,8 +80,6 @@ function Matching({ terms, selectedMatches, setSelectedMatches, isAttempted = fa
               id={`answer-${index}`}
               className={`${styles.termBox} ${selectedTerm === index ? styles.selected : ''} ${isMatched(index, 'term') ? styles.matched : ''}`}
               style={{
-                // backgroundColor: isAttempted ? 'lightgrey' : (selectedTerm === index ? 'lightblue' : 'pink'),
-                outline: isAttempted ? "#B4B4B4" : (selectedTerm === index ? '#1D594B' : '#B4B4B4'),
                 outline: isMatched(index, 'term') ? '2px solid green' : '',
               }}
             >
@@ -78,8 +95,6 @@ function Matching({ terms, selectedMatches, setSelectedMatches, isAttempted = fa
               id={`question-${index}`}
               className={`${styles.definitionBox} ${selectedDefinition === index ? styles.selected : ''} ${isMatched(index, 'definition') ? styles.matched : ''}`}
               style={{
-                // backgroundColor: isAttempted ? 'lightgrey' : (selectedDefinition === index ? 'lightblue' : 'pink'),
-                outline: isAttempted ? "lightgrey" : (selectedTerm === index ? 'green' : 'lightgrey'),
                 outline: isMatched(index, 'definition') ? '2px solid green' : '',
               }}
             >

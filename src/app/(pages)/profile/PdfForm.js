@@ -6,40 +6,44 @@ import { AiOutlineInfoCircle } from 'react-icons/ai';
 import styles from './page.module.css';
 
 function PdfForm({
-  templatePdfUrl, firstName, lastName, course, date, duration,
+  templatePdf, firstName, lastName, course, date, duration,
 }) {
   const generatePdf = async () => {
     try {
       // Fetch the template PDF from the provided URL
-      const templateBytes = await fetch(templatePdfUrl).then((response) => response.arrayBuffer());
+      const response = await fetch(templatePdf);
+      const templateBytes = await response.arrayBuffer();
 
       // Load the template PDF into a PDF document
       const pdfDoc = await PDFDocument.load(templateBytes);
+
       const helveticaFont = await pdfDoc.embedFont(StandardFonts.Helvetica);
       const pages = pdfDoc.getPages();
 
       // Modify the PDF document by replacing the placeholder text with the desired name
-      const newText = `Name: ${firstName} ${lastName}`;
+      const newText = `${firstName} ${lastName}`;
 
       const firstPage = pages[0];
       const { width, height } = firstPage.getSize();
-      const textWidth = helveticaFont.widthOfTextAtSize(newText, 30);
-      const textX = (width - textWidth) / 2;
+      const nameWidth = helveticaFont.widthOfTextAtSize(newText, 50);
+      const nameX = (width - nameWidth) / 2;
+      const courseWidth = helveticaFont.widthOfTextAtSize(course, 30);
+      const courseX = (width - courseWidth) / 2;
 
       firstPage.drawText(newText, {
-        x: textX,
-        y: height / 2,
-        size: 30,
+        x: nameX,
+        y: height / 2 + 20,
+        size: 50,
         font: helveticaFont,
-        color: rgb(0, 0, 0),
+        color: rgb(0, 0.1, 0),
       });
 
       firstPage.drawText(course, {
-        x: textX,
-        y: height / 2 + 10,
+        x: courseX,
+        y: height / 2 - 110,
         size: 30,
         font: helveticaFont,
-        color: rgb(0, 0, 0),
+        color: rgb(0, 0.1, 0),
       });
 
       // Generate the modified PDF

@@ -132,7 +132,7 @@ function Profile() {
           {certData.map((certificate, index) => (
             <div key={index} onClick={PdfForm.generatePdf}>
               <PdfForm
-                templatePdfUrl="https://pdf-lib.js.org/assets/dod_character.pdf"
+                templatePdf="/certificate.pdf"
                 firstName={userData.firstName}
                 lastName={userData.lastName}
                 course={certificate.name}

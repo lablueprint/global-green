@@ -10,7 +10,7 @@ const certData = [
     duration: '2 hrs',
   },
   {
-    name: 'Eco-friendlly Traveling',
+    name: 'Eco-friendly Traveling',
     date: 'June 24, 2024',
     duration: '1 hr',
   },

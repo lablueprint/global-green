@@ -2,6 +2,7 @@
 
 import React, { useEffect, useState } from 'react';
 import Image from 'next/image';
+import { FaPencilAlt } from 'react-icons/fa';
 import NavBar from '@/app/components/navbar';
 import styles from './page.module.css';
 import defaultProfilePic from './profilepic.jpg'; // Assuming you have a default profile pic
@@ -83,17 +84,8 @@ function Profile() {
 
   return (
     <div className={styles.container}>
-      <div className={styles.profile}> My Profile</div>
-      <div
-        style={{
-          width: '120px',
-          height: '120px',
-          borderRadius: '50%',
-          display: 'inline-block',
-          position: 'relative',
-        }}
-        onClick={() => document.getElementById('profileImageInput').click()}
-      >
+      <div className={styles.pageName}> My Profile </div>
+      <div className={styles.profileSection}>
         <Image
           src={profileImage}
           alt="Profile"
@@ -108,39 +100,34 @@ function Profile() {
           style={{ display: 'none' }}
           onChange={handleChangeProfileImage}
         />
+        <div className={styles.name}>
+          <div className={styles.preferred}> Preferred Name </div>
+          {isEditing ? (
+            <input
+              type="text"
+              value={editedName}
+              onChange={handleNameChange}
+              onBlur={handleBlur}
+              className={styles.editingName}
+            />
+          ) : (
+            <div className={styles.username} onClick={handleNameClick}>{userData.userName}</div>
+          )}
+        </div>
       </div>
-      <div className={styles.name}>
-        <div> Preferred Name </div>
-        {isEditing ? (
-          <input
-            type="text"
-            value={editedName}
-            onChange={handleNameChange}
-            onBlur={handleBlur}
-            className={styles.editableInput}
-          />
-        ) : (
-          <h1 onClick={handleNameClick}>{userData.userName}</h1>
-        )}
-        <p>
-          Rank:
-          {userData.rank}
-        </p>
-      </div>
-      <div className={styles.badgesSection}>
-        <h2>Badges</h2>
-        <div className={styles.row}>
-          {userData.badges ? userData.badges.map((badge) => (
-            <div key={badge} className={styles.badgeItem}>
-              <div className={styles.badgeIcon} />
-              <div className={styles.rowName}>{badge}</div>
-            </div>
-          ))
-            : null}
+      <div className={styles.accountSection}>
+        <div className={styles.sectionHeader}> Account </div>
+        <div className={styles.accountRow}>
+          <div className={styles.sectionText}> Avatar </div>
+          <FaPencilAlt onClick={() => document.getElementById('profileImageInput').click()} />
+        </div>
+        <div className={styles.accountRow}>
+          <div className={styles.sectionText}> Password </div>
+          <FaPencilAlt />
         </div>
       </div>
       <div className={styles.certificateSection}>
-        <h2> Certificates </h2>
+        <div className={styles.sectionHeader}> Certificates </div>
         <div className={styles.row}>
           {certData.map((certificate, index) => (
             <div key={index} onClick={PdfForm.generatePdf}>
@@ -157,12 +144,24 @@ function Profile() {
         </div>
       </div>
       <div className={styles.coursesSection}>
-        <h2>Courses</h2>
+        <div className={styles.sectionHeader}>Courses</div>
         <div className={styles.row}>
           {userData.courses ? userData.courses.map((course) => (
             <div key={course} className={styles.courseItem}>
               <div className={styles.courseIcon} />
               <div className={styles.rowName}>{course}</div>
+            </div>
+          ))
+            : null}
+        </div>
+      </div>
+      <div className={styles.badgesSection}>
+        <div className={styles.sectionHeader}>Badges</div>
+        <div className={styles.row}>
+          {userData.badges ? userData.badges.map((badge) => (
+            <div key={badge} className={styles.badgeItem}>
+              <div className={styles.badgeIcon} />
+              <div className={styles.rowName}>{badge}</div>
             </div>
           ))
             : null}

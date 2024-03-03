@@ -65,8 +65,7 @@ function PdfForm({
   return (
     <div className={styles.certificateBox} onClick={generatePdf}>
       <div className={styles.certificateHeader}> Certificate </div>
-      <div className={styles.certificateHeaderLine}> --------------------------- </div>
-      <div className={styles.certificateHeader}>{course}</div>
+      <div className={styles.certificateName}>{course}</div>
       <div className={styles.certificateInfo}>
         <AiOutlineInfoCircle className={styles.infoCircle} />
         <div> Date: </div>

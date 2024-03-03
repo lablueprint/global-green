@@ -4,44 +4,62 @@ import LinearProgress from '@mui/material/LinearProgress';
 import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
 
-function LinearProgressWithLabel(props) {
+function LinearProgressWithLabel({ value, x, y }) {
   return (
-    <Box sx={{ display: 'flex', alignItems: 'center' }}>
-      <Box sx={{ width: '100%', mr: 1 }}>
+    <Box sx={{ display: 'flex', justifyContent: 'center', width: '100%'}}>
+      <Box sx={{ width: '85%', mr: 0, ml: 8}}>
         <LinearProgress
           variant="determinate"
-          {...props}
+          value={value}
           sx={{
-            borderRadius: 5, // This applies rounded corners to the container
+            borderRadius: 5,
+            border: '1px solid black',
+            height: '10px', 
+            backgroundColor: '#ffffff',
             '& .MuiLinearProgress-bar': {
-              backgroundColor: 'green',
-              borderRadius: 5, // This applies rounded corners to the bar itself
+              backgroundColor: '#1D594B',
+              borderRadius: 5,
             },
           }}
         />
       </Box>
-      <Box sx={{ minWidth: 35 }}>
-        {/* eslint-disable-next-line react/destructuring-assignment */}
-        <Typography variant="body2" color="text.secondary">{`${Math.round(props.value)}%`}</Typography>
+      <Box sx={{ minWidth: 35, ml: 1, position: 'relative' }}>
+        <Typography
+          style={{
+            fontSize: '0.60rem',
+            color: '#606060',
+            lineHeight: '1',
+            fontFamily: 'Arial',
+            textAlign: 'left',
+          }}
+        >
+          {`${x}/${y}`}
+        </Typography>
       </Box>
     </Box>
   );
 }
 
+
+
 LinearProgressWithLabel.propTypes = {
   value: PropTypes.number.isRequired,
+  x: PropTypes.number.isRequired,
+  y: PropTypes.number.isRequired,
 };
 
-function LinearWithValueLabel({ value }) {
+function LinearWithValueLabel({ value, x, y }) {
   return (
     <Box sx={{ width: '100%' }}>
-      <LinearProgressWithLabel value={value} />
+      <LinearProgressWithLabel value={value} x={x} y={y} />
     </Box>
   );
 }
 
 LinearWithValueLabel.propTypes = {
   value: PropTypes.number.isRequired,
+  x: PropTypes.number.isRequired,
+  y: PropTypes.number.isRequired,
 };
 
 export default LinearWithValueLabel;

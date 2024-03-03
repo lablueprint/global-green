@@ -2,15 +2,15 @@ import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types'; // Import PropTypes for prop type validation
 import styles from './page.module.css';
 
-// In MultipleChoice.jsx
 function MultipleChoice({
   question,
   options,
   selectedAnswer = '',
+  isCorrect, // Added prop to indicate if the answer is correct
   isAttempted = false,
-  onOptionSelect, // Renamed from handleSelect for clarity
+  onOptionSelect,
 }) {
-  const [selected, setSelected] = useState(selectedAnswer); // Define the selected state
+  const [selected, setSelected] = useState(selectedAnswer);
 
   useEffect(() => {
     setSelected(selectedAnswer);
@@ -31,21 +31,28 @@ function MultipleChoice({
           return acc;
         }, []).map((optionPair, pairIndex) => (
           <div className={styles.choiceRow} key={pairIndex}>
-            {optionPair.map((option) => (
-              <button
-                type="button"
-                className={styles.choiceButton}
-                key={option}
-                onClick={() => handleSelect(option)}
-                disabled={isAttempted}
-                style={{
-                  outline: selected === option ? '2px solid #1D594B' : '1px solid #D9D9D9',
-                  backgroundColor: selected === option ? '#D5EDE0' : 'white',
-                }}
-              >
-                {option}
-              </button>
-            ))}
+            {optionPair.map((option) => {
+              let backgroundColor = 'white';
+              if (isAttempted && selected === option) {
+                backgroundColor = isCorrect ? '#D5EDE0' : '#FFF3C0'; // correct, incorrect
+              }
+              return (
+                <button
+                  type="button"
+                  className={styles.choiceButton}
+                  key={option}
+                  onClick={() => handleSelect(option)}
+                  disabled={isAttempted}
+                  style={{
+                    outline: selected === option ? '3px solid #1D594B' : '1.80px solid lightgrey',
+                    backgroundColor: backgroundColor,
+                    color: isAttempted ? 'black' : 'inherit', // Keep text color black after disabling
+                  }}
+                >
+                  {option}
+                </button>
+              );
+            })}
           </div>
         ))}
       </div>

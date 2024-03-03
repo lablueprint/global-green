@@ -14,10 +14,10 @@ function Matching({ terms, selectedMatches, setSelectedMatches, isAttempted = fa
         document.getElementById(`answer-${selectedTerm}`),
         document.getElementById(`question-${selectedDefinition}`),
         {
-          color: 'grey', // Set the line color to green
-          size: 3,
-          startPlug: 'disc',
-          endPlug: 'disc',
+          color: '#B4B4B4', // Set the line color to green
+          size: 2,
+          startPlug: 'behind',
+          endPlug: 'behind',
           path: 'straight',
         }
       );
@@ -52,7 +52,7 @@ function Matching({ terms, selectedMatches, setSelectedMatches, isAttempted = fa
 
   return (
     <div>
-      <div className={styles.selectorContainer}>
+      <div className={styles.matchingContainer}>
         <div className={styles.termsContainer}>
           {terms.map((item, index) => (
             <div
@@ -62,7 +62,7 @@ function Matching({ terms, selectedMatches, setSelectedMatches, isAttempted = fa
               className={`${styles.termBox} ${selectedTerm === index ? styles.selected : ''} ${isMatched(index, 'term') ? styles.matched : ''}`}
               style={{
                 // backgroundColor: isAttempted ? 'lightgrey' : (selectedTerm === index ? 'lightblue' : 'pink'),
-                outline: isAttempted ? "lightgrey" : (selectedTerm === index ? 'green' : 'lightgrey'),
+                outline: isAttempted ? "#B4B4B4" : (selectedTerm === index ? '#1D594B' : '#B4B4B4'),
                 outline: isMatched(index, 'term') ? '2px solid green' : '',
               }}
             >

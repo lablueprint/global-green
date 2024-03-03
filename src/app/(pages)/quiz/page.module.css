@@ -3,7 +3,7 @@
     min-height: 100%;
     display: flex;
     justify-content: center; 
-    background-color: pink;
+    background-color: white;
 }
 
 .quizContainer {
@@ -21,7 +21,7 @@
   max-height: 1000px;
   min-height: 200px;
   background-color: white;
-  border: 1px solid black; 
+  border: 0px solid black; 
 }
 
   .quizQuestionNumber {
@@ -40,10 +40,10 @@
 
   .buttonsContainer {
     display: flex; 
-    justify-content: space-between; /* This spreads out the items to both ends */
+    justify-content: space-between;
     align-items: center; 
     min-width: 500px; /* or adjust as needed for your layout */
-    background-color: red; /* or any color/background as per your design */
+    background-color: white; 
     padding: 0 10px;
     margin-top: auto;
   }
@@ -76,22 +76,30 @@
 .choiceContainer {
     display: flex;
     flex-direction: column;
-    align-items: stretch; /* Stretch the child elements to fill the container */
-    width: 100%; /* Container takes the full width */
+    align-items: stretch; 
+    width: 100%; 
+}
+
+.choiceContainerTrueandFalse {
+  display: flex;
+  flex-direction: row;
+  align-items: stretch; 
+  width: 100%; 
 }
 
 .choiceRow {
     display: flex;
     flex-direction: row;
-    justify-content: space-between; /* Distribute the space between the buttons */
-    margin: 0; /* Reset any default margin */
+    justify-content: space-between; 
+    margin: 0;
     padding: 0;
+    margin-bottom: 10px;
 }
 
 .choiceButton {
   flex-basis: calc(50% - 10px); /* Calculate the width of each button to take up half the row width minus any desired spacing */
   text-align: left; 
-  margin: 5px 5px; /* Adjust the horizontal margin to decrease the space between buttons */
+  margin: 5px 10px; /* Adjust the horizontal margin to decrease the space between buttons */
   outline: 1px solid black;
   border-radius: 3px;
   background-color: white;
@@ -101,24 +109,18 @@
 
 .choiceButton:hover {
   outline: 2.75px solid #1D594B;
-  transition-duration: 0.2s;
 }
+
 .hintButton {
   background: url('../quiz/hint_logo.png') no-repeat center center;
   background-size: contain; /* or cover, depending on the effect you want */
   cursor: pointer;
-  height: 50px; /* Adjust to the size you want */
-  width: 50px; /* Adjust to the size you want */
+  height: 18px; 
+  width: 18px; 
   border: none;
-  background-color: red;
-  /* Additional properties for better control */
   display: inline-block; /* This ensures that the width and height are applied */
-  /* If you want the button to be a circle and the image is square: */
   border-radius: 50%; /* Optional: makes the button round */
 }
-
-
-
 
 .hintOverlay {
   position: absolute; /* Cover the entire screen */
@@ -134,6 +136,8 @@
 }
 
 .hintPopup {
+  display: 'flex';
+  justify-content: 'space-between';
   background-color: white;
   padding: 20px;
   box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
@@ -148,7 +152,7 @@
   flex-direction: row; /* This will layout its children (the columns) in a row */
   text-align: left;
   justify-content: center; /* Center the columns horizontally */
-  align-items: start; /* Align the columns to the start of the hintContent */
+  align-items: flex-start; /* Align the columns to the start of the hintContent */
   width: 100%; /* Ensure the hintContent takes up the full width of its parent */
 }
 
@@ -300,7 +304,7 @@
 
 .nextButton {
   border: 0px solid black;
-  background-color: green;
+  background-color: #1D594B;
   color: white;
   border-radius: 4px;
   padding: 10px 30px;
@@ -317,13 +321,14 @@
 
 .checkButton {
   border: 0px solid black;
-  background-color: lightgrey;
+  background-color: #BFBFBF;
   color: white;
   border-radius: 5px;
   padding: 5px 25px;
   transition-duration: 0.6s;
   font-size: 10px;
-  color: black;
+  font: bold;
+  color: white;
 }
 
 .checkButton:hover {
@@ -342,51 +347,79 @@
 }
 
 .skipButton {
-  border: 0px solid black;
-  background-color: lightgrey;
-  color: white;
-  border-radius: 25px;
+  background-color: white;
+  border: 1px solid #B4B4B4; 
+  border-radius: 5px;
   padding: 5px 25px;
   transition-duration: 0.6s;
   font-size: 10px;
-  color: black;
+  color: #B4B4B4;
+  cursor: pointer; 
+  text-align: center; 
+  display: inline-block; 
+  font-family: Arial, sans-serif; 
 }
 
 .skipButton:hover {
-  opacity: 0.80;
-} 
-
-.selectorContainer {
-  display: flex;
-  justify-content: space-between;
+  background-color: #f2f2f2; 
+  color: #808080; 
+  border-color: #808080; 
 }
 
-.termsContainer, .definitionsContainer {
+
+.matchingContainer {
+  margin-top: 15px;
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  /* gap: 10px; */
+  width: calc(100% + 100px); 
+  position: relative;
+  left: -20px; 
+  /* background-color: red; */
+}
+
+.termsContainer {
   display: flex;
   flex-direction: column;
-  /* Add more styling here as needed, e.g., padding, alignment, etc. */
+  width: 25%; 
+  align-items: flex-start;
+  /* background-color: green; */
+}
+.definitionsContainer {
+  display: flex;
+  flex-direction: column;
+  width: 50%;
+  align-items: flex-start; 
+  /* background-color: blue; */
 }
 
-.termBox,
+.termBox, 
 .definitionBox {
-  margin: 30px;
-  padding: 10px; /* Simplified */
-  border: 1px solid black;
+  display: flex;
+  align-items: center; /* Align the icon and text vertically */
+  outline: 1px solid #B4B4B4;
+  border-radius: 5px;
+  padding: 5px;
+  margin-bottom: 10px;
+  background-color: white;
   cursor: pointer;
+  text-align: left;
+  font-size: 10px;
+}
+.definitionBox {
+  min-width: 270px;
+  padding-left: 15px;
 }
 
-
-/* Add this to your page.module.css */
 .selected {
   outline: 2px solid green; /* Adjust the thickness as needed */
   color: black;
   /* Optional: set a specific background color or remove this line to keep the original background */
-  background-color: transparent; /* Example: Keeping the original background color */
 }
 
 
 .matched {
-  /* background-color: #5cb85c; Bootstrap's button success color for illustration */
   color: black;
 }
 

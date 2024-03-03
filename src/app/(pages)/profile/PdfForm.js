@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import {
   PDFDocument, rgb, StandardFonts,
 } from 'pdf-lib';
+import { AiOutlineInfoCircle } from 'react-icons/ai';
 import styles from './page.module.css';
 
 function PdfForm({
@@ -67,16 +68,14 @@ function PdfForm({
       <div className={styles.certificateHeaderLine}> --------------------------- </div>
       <div className={styles.certificateHeader}>{course}</div>
       <div className={styles.certificateInfo}>
-        Date:
-        {' '}
-        {' '}
-        {date}
+        <AiOutlineInfoCircle className={styles.infoCircle} />
+        <div> Date: </div>
+        <div>{date}</div>
       </div>
       <div className={styles.certificateInfo}>
-        Duration:
-        {' '}
-        {' '}
-        {duration}
+        <AiOutlineInfoCircle className={styles.infoCircle} />
+        <div> Duration: </div>
+        <div>{duration}</div>
       </div>
     </div>
   );

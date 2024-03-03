@@ -1,17 +1,21 @@
+.container {
+  text-align: left;
+  margin: 4%;
+}
+
 .profile {
-    text-align: center;
     color: black;
     font-size: 2em;
-    margin-bottom: 20px;
+    margin-bottom: 40px;
     font-weight: bold;
     padding-right: 225px; /* Adjust the padding value */
-
   }
   
   .name {
     display: inline-block;
     position: relative;
     bottom: 25px;
+    font-size: 15px;
     margin-left: 50px;
     font-weight: bold;
   }
@@ -34,7 +38,7 @@
   
   .row {
     display: flex;
-    justify-content: center;
+    justify-content: left;
     padding: 10px;
     flex-wrap: wrap;
     gap: 20px; /* This creates equal space between the items both vertically and horizontally */
@@ -101,7 +105,7 @@
 
 .certificateHeader{
   font-size: 20px;
-  font-weight: 600;
+  font-weight: 500;
 }
 
 .certificateHeaderLine{
@@ -109,7 +113,14 @@
 }
 
 .certificateInfo{
+  display: flex;
   font-size: 15px;
   color: #a7a0a0;
   padding-top: 8px;
+  gap: 5px;
 }
+
+.infoCircle {
+  padding-top: 1px;
+}
+

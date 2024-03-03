@@ -82,8 +82,8 @@ function Profile() {
   };
 
   return (
-    <div style={{ textAlign: 'center', margin: '20px 0' }}>
-      <div className={styles.profile}>Profile</div>
+    <div className={styles.container}>
+      <div className={styles.profile}> My Profile</div>
       <div
         style={{
           width: '120px',
@@ -139,6 +139,23 @@ function Profile() {
             : null}
         </div>
       </div>
+      <div className={styles.certificateSection}>
+        <h2> Certificates </h2>
+        <div className={styles.row}>
+          {certData.map((certificate, index) => (
+            <div key={index} onClick={PdfForm.generatePdf}>
+              <PdfForm
+                templatePdfUrl="https://pdf-lib.js.org/assets/dod_character.pdf"
+                firstName={userData.firstName}
+                lastName={userData.lastName}
+                course={certificate.name}
+                date={certificate.date}
+                duration={certificate.duration}
+              />
+            </div>
+          ))}
+        </div>
+      </div>
       <div className={styles.coursesSection}>
         <h2>Courses</h2>
         <div className={styles.row}>
@@ -149,24 +166,6 @@ function Profile() {
             </div>
           ))
             : null}
-        </div>
-        <div className={styles.certificateSection}>
-          <h2> Certificates </h2>
-          <div className={styles.row}>
-            {certData.map((certificate, index) => (
-              <div key={index} onClick={PdfForm.generatePdf}>
-                <PdfForm
-                  key={index}
-                  templatePdfUrl="https://pdf-lib.js.org/assets/dod_character.pdf"
-                  firstName={userData.firstName}
-                  lastName={userData.lastName}
-                  course={certificate.name}
-                  date={certificate.date}
-                  duration={certificate.duration}
-                />
-              </div>
-            ))}
-          </div>
         </div>
       </div>
     </div>

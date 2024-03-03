@@ -21,16 +21,16 @@ function PdfForm({
       const pages = pdfDoc.getPages();
 
       // Modify the PDF document by replacing the placeholder text with the desired name
-      const newText = `${firstName} ${lastName}`;
-
+      const name = `${firstName} ${lastName}`;
       const firstPage = pages[0];
       const { width, height } = firstPage.getSize();
-      const nameWidth = helveticaFont.widthOfTextAtSize(newText, 50);
+      const nameWidth = helveticaFont.widthOfTextAtSize(name, 50);
       const nameX = (width - nameWidth) / 2;
       const courseWidth = helveticaFont.widthOfTextAtSize(course, 30);
       const courseX = (width - courseWidth) / 2;
 
-      firstPage.drawText(newText, {
+      // inserts name
+      firstPage.drawText(name, {
         x: nameX,
         y: height / 2 + 20,
         size: 50,
@@ -38,6 +38,7 @@ function PdfForm({
         color: rgb(0, 0.1, 0),
       });
 
+      // inserts course
       firstPage.drawText(course, {
         x: courseX,
         y: height / 2 - 110,

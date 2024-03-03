@@ -6,6 +6,7 @@ import NavBar from '@/app/components/navbar';
 import styles from './page.module.css';
 import defaultProfilePic from './profilepic.jpg'; // Assuming you have a default profile pic
 import PdfForm from './PdfForm';
+import certData from './certData';
 
 function Profile() {
   const [isEditing, setIsEditing] = useState(false);
@@ -80,10 +81,6 @@ function Profile() {
     }
   };
 
-  const handlePdf = () => {
-    console.log('hi');
-  };
-
   return (
     <div style={{ textAlign: 'center', margin: '20px 0' }}>
       <div className={styles.profile}>Profile</div>
@@ -113,6 +110,7 @@ function Profile() {
         />
       </div>
       <div className={styles.name}>
+        <div> Preferred Name </div>
         {isEditing ? (
           <input
             type="text"
@@ -152,8 +150,25 @@ function Profile() {
           ))
             : null}
         </div>
+        <div className={styles.certificateSection}>
+          <h2> Certificates </h2>
+          <div className={styles.row}>
+            {certData.map((certificate, index) => (
+              <div key={index} onClick={PdfForm.generatePdf}>
+                <PdfForm
+                  key={index}
+                  templatePdfUrl="https://pdf-lib.js.org/assets/dod_character.pdf"
+                  firstName={userData.firstName}
+                  lastName={userData.lastName}
+                  course={certificate.name}
+                  date={certificate.date}
+                  duration={certificate.duration}
+                />
+              </div>
+            ))}
+          </div>
+        </div>
       </div>
-      <PdfForm templatePdfUrl="https://pdf-lib.js.org/assets/dod_character.pdf" firstName={userData.firstName} lastName={userData.lastName} />
     </div>
   );
 }

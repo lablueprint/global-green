@@ -1,0 +1,19 @@
+const certData = [
+  {
+    name: 'Plastics & Recycling',
+    date: 'June 16, 2024',
+    duration: '2 hrs',
+  },
+  {
+    name: 'Ocean Pollution',
+    date: 'June 20, 2024',
+    duration: '2 hrs',
+  },
+  {
+    name: 'Eco-friendlly Traveling',
+    date: 'June 24, 2024',
+    duration: '1 hr',
+  },
+];
+
+export default certData;

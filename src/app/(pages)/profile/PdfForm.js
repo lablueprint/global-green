@@ -2,10 +2,11 @@ import React, { useState, useEffect } from 'react';
 import {
   PDFDocument, rgb, StandardFonts,
 } from 'pdf-lib';
+import styles from './page.module.css';
 
-function PdfForm({ templatePdfUrl, firstName, lastName }) {
-  const [formData, setFormData] = useState({});
-
+function PdfForm({
+  templatePdfUrl, firstName, lastName, course, date, duration,
+}) {
   const generatePdf = async () => {
     try {
       // Fetch the template PDF from the provided URL
@@ -32,6 +33,14 @@ function PdfForm({ templatePdfUrl, firstName, lastName }) {
         color: rgb(0, 0, 0),
       });
 
+      firstPage.drawText(course, {
+        x: textX,
+        y: height / 2 + 10,
+        size: 30,
+        font: helveticaFont,
+        color: rgb(0, 0, 0),
+      });
+
       // Generate the modified PDF
       const modifiedPdfBytes = await pdfDoc.save();
 
@@ -53,8 +62,22 @@ function PdfForm({ templatePdfUrl, firstName, lastName }) {
   }, []);
 
   return (
-    <div>
-      <button onClick={generatePdf}>Generate PDF</button>
+    <div className={styles.certificateBox} onClick={generatePdf}>
+      <div className={styles.certificateHeader}> Certificate </div>
+      <div className={styles.certificateHeaderLine}> --------------------------- </div>
+      <div className={styles.certificateHeader}>{course}</div>
+      <div className={styles.certificateInfo}>
+        Date:
+        {' '}
+        {' '}
+        {date}
+      </div>
+      <div className={styles.certificateInfo}>
+        Duration:
+        {' '}
+        {' '}
+        {duration}
+      </div>
     </div>
   );
 }

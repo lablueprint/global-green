@@ -89,3 +89,27 @@
     background-color: '#ddd';
     display: 'inline-block';
   }
+
+/* certificate section */
+
+.certificateBox {
+  border: 2px solid #a7a0a0; 
+  border-radius: 10px;
+  text-align: left;
+  padding: 15px;
+}
+
+.certificateHeader{
+  font-size: 20px;
+  font-weight: 600;
+}
+
+.certificateHeaderLine{
+  color: #a7a0a0;
+}
+
+.certificateInfo{
+  font-size: 15px;
+  color: #a7a0a0;
+  padding-top: 8px;
+}

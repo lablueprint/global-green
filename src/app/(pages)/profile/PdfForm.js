@@ -22,14 +22,16 @@ function PdfForm({
 
       // Modify the PDF document by replacing the placeholder text with the desired name
       const name = `${firstName} ${lastName}`;
+      const dateText = `Completed on: ${date}`;
+
       const firstPage = pages[0];
       const { width, height } = firstPage.getSize();
-      const nameWidth = helveticaFont.widthOfTextAtSize(name, 50);
-      const nameX = (width - nameWidth) / 2;
-      const courseWidth = helveticaFont.widthOfTextAtSize(course, 30);
-      const courseX = (width - courseWidth) / 2;
 
       // inserts name - adjustable name pos
+
+      const nameWidth = helveticaFont.widthOfTextAtSize(name, 50);
+      const nameX = (width - nameWidth) / 2;
+
       firstPage.drawText(name, {
         x: nameX,
         y: height / 2 + 20,
@@ -39,10 +41,25 @@ function PdfForm({
       });
 
       // inserts course - adjustable course name pos
+      const courseWidth = helveticaFont.widthOfTextAtSize(course, 30);
+      const courseX = (width - courseWidth) / 2;
+
       firstPage.drawText(course, {
         x: courseX,
         y: height / 2 - 110,
         size: 30,
+        font: helveticaFont,
+        color: rgb(0, 0.1, 0),
+      });
+
+      // inserts date
+      const dateWidth = helveticaFont.widthOfTextAtSize(dateText, 20);
+      const dateX = (width - dateWidth) / 2;
+
+      firstPage.drawText(dateText, {
+        x: dateX,
+        y: height / 2 - 290,
+        size: 20,
         font: helveticaFont,
         color: rgb(0, 0.1, 0),
       });

@@ -19,8 +19,10 @@ function Courses() {
     <>
       <h1>Courses</h1>
       <div className={styles.courseContainer}>
-        <div>
-          Toggle Section
+        <div className={styles.courseToggle}>
+          <div>All Courses</div>
+          <div>Completed</div>
+          <div>Incomplete</div>
         </div>
         <div className={styles.courseLayout}>
           {data.map((course) => (

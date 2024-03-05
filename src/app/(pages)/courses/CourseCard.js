@@ -9,11 +9,17 @@ function CourseCard({ name, duration, progress }) {
       <div className={styles.courseName}>
         {name}
       </div>
-      <div className={styles.time}>
-        {duration}
-      </div>
-      <div className={styles.progressBar}>
-        {progress}
+      <div className={styles.bottomBar}>
+        <div className={styles.courseDuration}>
+          {duration}
+        </div>
+        <div className={styles.progressBar}>
+          <div className={styles.bar} />
+          <div>
+            {progress}
+            /5
+          </div>
+        </div>
       </div>
     </div>
   );

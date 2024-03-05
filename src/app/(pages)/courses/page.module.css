@@ -1,12 +1,53 @@
+/* course layout */
 .courseLayout{
     display: flex;
     gap: 20px;
 }
 
+/* course toggle */
+.courseToggle {
+    display: flex;
+    gap: 20px;
+    color: gray;
+    border-bottom: 2px solid gray;
+    padding: 5px;
+    margin-bottom: 30px;
+}
+
+/* course cards */
 .courseCard{
     border: 2px solid black;
     border-radius: 10px;
     padding: 20px;
-    width: 200px;
-    height: 150px;
+    width: 210px;
+    height: 140px;
+}
+
+.courseName{
+    font-weight: 500; 
+    font-size: 20px;
+    width: 100px;
+    border-left: 4px solid;
+    padding: 0px 10px;
+}
+
+.bottomBar{
+    display: flex;
+}
+
+.courseDuration{
+    border-radius: 10px;
+    background-color: rgb(207, 187, 187);
+    text-align: center;
+    padding: 2px 5px;
+}
+
+.progressBar {
+    display: flex;
+}
+
+.bar {
+    border: 2px solid black;
+    width: 120px;
+    height: 5px;
 }

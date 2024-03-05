@@ -1,9 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
-import styles from './page.module.css';
 import LeaderLine from 'react-leader-line';
+import styles from './page.module.css';
 
-function Matching({ terms, selectedMatches, setSelectedMatches, isAttempted = false }) {
+function Matching({
+  terms, selectedMatches, setSelectedMatches, isAttempted = false,
+}) {
   const [selectedTerm, setSelectedTerm] = useState(null);
   const [selectedDefinition, setSelectedDefinition] = useState(null);
   const [matchedPairs, setMatchedPairs] = useState([]);
@@ -11,7 +13,7 @@ function Matching({ terms, selectedMatches, setSelectedMatches, isAttempted = fa
   useEffect(() => {
     if (selectedTerm !== null && selectedDefinition !== null && !isAttempted) {
       // First, remove existing lines connected to either the selected term or definition
-      const updatedMatches = selectedMatches.filter(match => {
+      const updatedMatches = selectedMatches.filter((match) => {
         const isMatchedWithTerm = match.term === selectedTerm;
         const isMatchedWithDefinition = match.definition === selectedDefinition;
 
@@ -38,7 +40,7 @@ function Matching({ terms, selectedMatches, setSelectedMatches, isAttempted = fa
           startPlug: 'behind',
           endPlug: 'behind',
           path: 'straight',
-        }
+        },
       );
 
       const newMatch = {
@@ -47,8 +49,8 @@ function Matching({ terms, selectedMatches, setSelectedMatches, isAttempted = fa
         lineObj: line,
       };
 
-      setSelectedMatches(prevMatches => [...prevMatches, newMatch]);
-      setMatchedPairs(prevPairs => [...prevPairs, { term: selectedTerm, definition: selectedDefinition }]);
+      setSelectedMatches((prevMatches) => [...prevMatches, newMatch]);
+      setMatchedPairs((prevPairs) => [...prevPairs, { term: selectedTerm, definition: selectedDefinition }]);
 
       // Reset selections
       setSelectedTerm(null);
@@ -65,9 +67,7 @@ function Matching({ terms, selectedMatches, setSelectedMatches, isAttempted = fa
   };
 
   // function to determine if an item is matched
-  const isMatched = (index, type) => {
-    return matchedPairs.some(pair => pair[type] === index);
-  };
+  const isMatched = (index, type) => matchedPairs.some((pair) => pair[type] === index);
 
   return (
     <div>

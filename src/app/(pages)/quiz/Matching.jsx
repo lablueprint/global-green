@@ -24,11 +24,11 @@ function Matching({ terms, selectedMatches, setSelectedMatches, isAttempted = fa
         return true;
       });
 
-      // Update the state to reflect the removal of any existing matches
+      // update the state to reflect the removal of any existing matches
       setSelectedMatches(updatedMatches);
       setMatchedPairs(updatedMatches.map(({ term, definition }) => ({ term, definition })));
 
-      // Proceed to create a new line and match
+      // create a new line and match
       const line = new LeaderLine(
         document.getElementById(`answer-${selectedTerm}`),
         document.getElementById(`question-${selectedDefinition}`),
@@ -64,7 +64,7 @@ function Matching({ terms, selectedMatches, setSelectedMatches, isAttempted = fa
     setSelectedDefinition(index);
   };
 
-  // Function to determine if an item is matched
+  // function to determine if an item is matched
   const isMatched = (index, type) => {
     return matchedPairs.some(pair => pair[type] === index);
   };

@@ -42,7 +42,7 @@
     display: flex; 
     justify-content: space-between;
     align-items: center; 
-    min-width: 500px; /* or adjust as needed for your layout */
+    min-width: 500px; 
     background-color: white; 
     padding: 0 10px;
     margin-top: auto;
@@ -97,9 +97,9 @@
 }
 
 .choiceButton {
-  flex-basis: calc(50% - 10px); /* Calculate the width of each button to take up half the row width minus any desired spacing */
+  flex-basis: calc(50% - 10px); 
   text-align: left; 
-  margin: 5px 10px; /* Adjust the horizontal margin to decrease the space between buttons */
+  margin: 5px 10px; 
   outline: 1px solid black;
   border-radius: 3px;
   background-color: white;
@@ -113,17 +113,17 @@
 
 .hintButton {
   background: url('../quiz/hint_logo.png') no-repeat center center;
-  background-size: contain; /* or cover, depending on the effect you want */
+  background-size: contain; 
   cursor: pointer;
   height: 18px; 
   width: 18px; 
   border: none;
-  display: inline-block; /* This ensures that the width and height are applied */
-  border-radius: 50%; /* Optional: makes the button round */
+  display: inline-block; 
+  border-radius: 50%; 
 }
 
 .hintOverlay {
-  position: absolute; /* Cover the entire screen */
+  position: absolute; 
   top: 0;
   left: 0;
   right: 0;
@@ -133,7 +133,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  z-index: 1000; /* Ensure it's above other content */
+  z-index: 1000; 
 }
 
 .hintPopup {
@@ -142,27 +142,27 @@
   background-color: white;
   padding: 20px;
   box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
-  width: auto; /* Adjust width as needed */
-  max-width: 80%; /* Don't let the popup be wider than 80% of the screen width */
+  width: auto; 
+  max-width: 80%; 
   border-radius: 8px;
-  position: relative; /* For positioning the close button */
+  position: relative; 
 }
 
 .hintContent {
   display: flex;
-  flex-direction: row; /* This will layout its children (the columns) in a row */
+  flex-direction: row; 
   text-align: left;
-  justify-content: center; /* Center the columns horizontally */
-  align-items: flex-start; /* Align the columns to the start of the hintContent */
-  width: 100%; /* Ensure the hintContent takes up the full width of its parent */
+  justify-content: center; 
+  align-items: flex-start; 
+  width: 100%; 
 }
 
 .hintContentColumns {
   display: flex;
-  flex-direction: column; /* This will layout its children (the items in the column) vertically */
-  align-items: flex-start; /* Align the items to the start of the column */
-  justify-content: center; /* Center the items vertically, if there's space */
-  width: 100%; /* Each column takes the full width available */
+  flex-direction: column; 
+  align-items: flex-start; 
+  justify-content: center; 
+  width: 100%; 
 }
 
 .closeButton {
@@ -172,11 +172,11 @@
   border: none;
   background: transparent;
   cursor: pointer;
-  font-size: 16px; /* Large enough to be easily clickable */
+  font-size: 16px; 
 }
 
 .closeButton:hover {
-  color: #ff0000; /* Change color on hover for visual feedback */
+  color: #ff0000; 
 }
 
 .termsContainer button,
@@ -190,13 +190,13 @@
 
 .termsContainer button:hover,
 .definitionsContainer button:hover {
-  border-color: #f0ad4e; /* Hover effect to match selected state for consistency */
+  border-color: #f0ad4e;
 }
 
 .appBackground {
   background-color: grey;
-  min-height: 100vh; /* Ensure at least the full viewport height is covered */
-  min-height: 100vh; /* Ensure at least the full viewport height is covered */
+  min-height: 100vh; 
+  min-height: 100vh; 
 }
 
 .resultsContainer {
@@ -398,7 +398,7 @@
 .termBox, 
 .definitionBox {
   display: flex;
-  align-items: center; /* Align the icon and text vertically */
+  align-items: center; 
   outline: 1px solid #B4B4B4;
   border-radius: 5px;
   padding: 5px;
@@ -414,9 +414,8 @@
 }
 
 .selected {
-  outline: 2px solid green; /* Adjust the thickness as needed */
+  outline: 2px solid green; 
   color: black;
-  /* Optional: set a specific background color or remove this line to keep the original background */
 }
 
 
@@ -431,7 +430,7 @@
   max-width: 400px;
   line-height: 1.6;
   margin-bottom: 20px;
-  text-align: left; /* This ensures the text is left-aligned */
+  text-align: left; 
 }
 
 

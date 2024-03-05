@@ -15,7 +15,7 @@ function CircularWithLabel({ value }) {
         size="100px"
         thickness={6}
         sx={{
-          color: '#4caf50', // This is your progress color
+          color: '#4caf50', // progress color
           [`& .${circularProgressClasses.circle}`]: {
             strokeLinecap: 'round',
           },

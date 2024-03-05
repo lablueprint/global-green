@@ -17,6 +17,9 @@ function PdfForm({
       // Load the template PDF into a PDF document
       const pdfDoc = await PDFDocument.load(templateBytes);
 
+      // set name of certificate
+      pdfDoc.setTitle('Certificate.pdf');
+
       const helveticaFont = await pdfDoc.embedFont(StandardFonts.Helvetica);
       const pages = pdfDoc.getPages();
 

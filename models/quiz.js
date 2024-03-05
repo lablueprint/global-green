@@ -16,6 +16,7 @@ const quizSchema = new Schema(
       options: { type: mongoose.SchemaTypes.Mixed, required: true },
       answer: { type: mongoose.SchemaTypes.Mixed, required: true },
       hint: { type: String },
+      explanation: { type: String },
     }],
   },
   {

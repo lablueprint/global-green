@@ -3,7 +3,6 @@
 import React, { useEffect, useState } from 'react';
 import Image from 'next/image';
 import { FaPencilAlt } from 'react-icons/fa';
-import NavBar from '@/app/components/navbar';
 import styles from './page.module.css';
 import defaultProfilePic from './profilepic.jpg'; // Assuming you have a default profile pic
 import PdfForm from './PdfForm';

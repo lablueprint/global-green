@@ -29,7 +29,7 @@ function PdfForm({
       const courseWidth = helveticaFont.widthOfTextAtSize(course, 30);
       const courseX = (width - courseWidth) / 2;
 
-      // inserts name
+      // inserts name - adjustable name pos
       firstPage.drawText(name, {
         x: nameX,
         y: height / 2 + 20,
@@ -38,7 +38,7 @@ function PdfForm({
         color: rgb(0, 0.1, 0),
       });
 
-      // inserts course
+      // inserts course - adjustable course name pos
       firstPage.drawText(course, {
         x: courseX,
         y: height / 2 - 110,

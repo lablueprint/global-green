@@ -1,6 +1,7 @@
 'use client';
 
 import React, { useEffect, useState } from 'react';
+import { useSession } from 'next-auth/react';
 
 function VerifyEmail() {
   const [token, setToken] = useState('');
@@ -13,6 +14,7 @@ function VerifyEmail() {
   const [resendDisabled, setResendDisabled] = useState(true);
   const [cooldown, setCooldown] = useState(60); // 60 seconds cooldown
   const intervalRef = React.useRef();
+  const { data: session } = useSession();
   const handleVerifyEmail = async () => {
     try {
       const res = await fetch('/api/users/verifyemail', {
@@ -60,17 +62,21 @@ function VerifyEmail() {
     }
   };
 
-  async function getUserDetails() {
-    const res = await fetch('/api/users/me');
-    const data = await res.json();
+  async function getUserDetails(id) {
+    if (!id) return;
+    const response = await fetch(
+      '/api/users/me',
+      {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ id }),
+      },
+    );
+    const data = await response.json();
     if (data.error) {
       setError(data.error);
-      return;
-    }
-    if (!data.user) {
-      setError('User not found');
-      handleLogout();
-      return;
     }
     setExpiresAt(new Date(data.user.verifyExpires));
     setUserName(data.user.userName);
@@ -91,19 +97,22 @@ function VerifyEmail() {
     return intervalId;
   }
 
-  async function fetchUpdatedUserDetails() {
-    try {
-      const res = await fetch('/api/users/me');
-      const data = await res.json();
-      if (!data.error && data.user) {
-        setExpiresAt(new Date(data.user.verifyExpires));
-        // Update any other user details as necessary
-      } else if (data.error) {
-        setError(data.error);
-      }
-    } catch (err) {
-      setError('An error occurred while fetching user details.');
+  async function fetchUpdatedUserDetails(id) {
+    const response = await fetch(
+      '/api/users/me',
+      {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ id }),
+      },
+    );
+    const data = await response.json();
+    if (data.error) {
+      setError(data.error);
     }
+    setExpiresAt(new Date(data.user.verifyExpires));
   }
 
   async function resendVerificationEmail() {
@@ -134,7 +143,7 @@ function VerifyEmail() {
 
   useEffect(
     () => {
-      getUserDetails();
+      getUserDetails(session.user.id);
       // make sure only one interval is running at a time
       if (intervalRef.current) {
         clearInterval(intervalRef.current);

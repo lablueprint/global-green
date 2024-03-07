@@ -29,9 +29,6 @@ function Example() {
         // eslint-disable-next-line no-alert
         alert(data.error);
         throw new Error(data.error);
-      } else {
-        // redirect to the profile page
-        window.location.href = '/profile';
       }
 
       // eslint-disable-next-line no-console
@@ -52,6 +49,13 @@ function Example() {
     setPassword(e.target.value);
   };
 
+  const login = async (provider) => {
+    // Call signIn function from next-auth, passing the provider name
+    signIn(provider).catch((error) => {
+      alert(error.error);
+      console.error('Login error', error);
+    });
+  };
   const submitLog = (event) => {
     event.preventDefault();
 
@@ -59,16 +63,16 @@ function Example() {
       // eslint-disable-next-line no-alert
       alert('Input a username and/or password!!!');
     } else {
-      onLogin();
+      // onLogin();
+      signIn('credentials', {
+        username: userName,
+        password,
+        callbackUrl: '/profile',
+      }).catch((error) => {
+        alert(error.error);
+        console.error('Login error', error);
+      });
     }
-  };
-
-  const login = async (provider) => {
-    // Call signIn function from next-auth, passing the provider name
-    signIn(provider).catch((error) => {
-      alert(error.error);
-      console.error('Login error', error);
-    });
   };
 
   useEffect(() => {

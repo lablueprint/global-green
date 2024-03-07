@@ -14,21 +14,26 @@ function Profile() {
 
   const { data: session } = useSession();
 
-  // const getUserDetails = async () => {
-  //   const res = await fetch('/api/users/me');
-  //   const data = await res.json();
-  //   setData(data.user);
-  //   setEditedName(data.user.userName);
-  //   // eslint-disable-next-line no-console
-  //   console.log(data.user);
-  // };
+  const getUserDetails = async (id) => {
+    if (!id) return;
+    const response = await fetch(
+      '/api/users/me',
+      {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ id }),
+      },
+    );
+    const data = await response.json();
+    setData(data.user);
+    setEditedName(data.user.userName);
+  };
 
   useEffect(() => {
-    if (session?.user?.verified) {
-      console.log('session', session);
-      setData(session.user);
-    }
-    // getUserDetails();
+    console.log('session', session);
+    getUserDetails(session.user.id);
   }, [session]);
 
   const updateUserData = (data) => {
@@ -42,7 +47,7 @@ function Profile() {
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ userName: data.userName }),
+        body: JSON.stringify({ userName: data.userName, userId: data._id }),
       });
       const res = await response.json();
       // eslint-disable-next-line no-console
@@ -98,12 +103,14 @@ function Profile() {
   };
 
   return (
-    <div style={{ textAlign: 'center', margin: '20px 0' }}>
-      <div className={styles.profile}>Profile</div>
-      <button type="button" onClick={handleLogout}>
-        Logout
-      </button>
-      {
+    userData
+      ? (
+        <div style={{ textAlign: 'center', margin: '20px 0' }}>
+          <div className={styles.profile}>Profile</div>
+          <button type="button" onClick={handleLogout}>
+            Logout
+          </button>
+          {
         session ? (
           <div>
             <h2>
@@ -114,73 +121,76 @@ function Profile() {
         ) : null
 
       }
-      <div
-        style={{
-          width: '120px',
-          height: '120px',
-          borderRadius: '50%',
-          display: 'inline-block',
-          position: 'relative',
-        }}
-        onClick={() => document.getElementById('profileImageInput').click()}
-      >
-        <Image
-          src={profileImage}
-          alt="Profile"
-          width={120}
-          height={120}
-          style={{ borderRadius: '50%' }}
-        />
-        <input
-          id="profileImageInput"
-          type="file"
-          accept="image/*"
-          style={{ display: 'none' }}
-          onChange={handleChangeProfileImage}
-        />
-      </div>
-      <div className={styles.name}>
-        {isEditing ? (
-          <input
-            type="text"
-            value={editedName}
-            onChange={handleNameChange}
-            onBlur={handleBlur}
-            className={styles.editableInput}
-          />
-        ) : (
-          <h1 onClick={handleNameClick}>{userData.userName}</h1>
-        )}
-        <p>
-          Rank:
-          {userData.rank}
-        </p>
-      </div>
-      <div className={styles.badgesSection}>
-        <h2>Badges</h2>
-        <div className={styles.row}>
-          {userData.badges ? userData.badges.map((badge) => (
-            <div key={badge} className={styles.badgeItem}>
-              <div className={styles.badgeIcon} />
-              <div className={styles.rowName}>{badge}</div>
+          <div
+            style={{
+              width: '120px',
+              height: '120px',
+              borderRadius: '50%',
+              display: 'inline-block',
+              position: 'relative',
+            }}
+            onClick={() => document.getElementById('profileImageInput').click()}
+          >
+            <Image
+              src={profileImage}
+              alt="Profile"
+              width={120}
+              height={120}
+              style={{ borderRadius: '50%' }}
+            />
+            <input
+              id="profileImageInput"
+              type="file"
+              accept="image/*"
+              style={{ display: 'none' }}
+              onChange={handleChangeProfileImage}
+            />
+          </div>
+          <div className={styles.name}>
+            {isEditing ? (
+              <input
+                type="text"
+                value={editedName}
+                onChange={handleNameChange}
+                onBlur={handleBlur}
+                className={styles.editableInput}
+              />
+            ) : (
+              <h1 onClick={handleNameClick}>{userData.userName}</h1>
+            )}
+            <p>
+              Rank:
+              {userData.rank}
+            </p>
+          </div>
+          <div className={styles.badgesSection}>
+            <h2>Badges</h2>
+            <div className={styles.row}>
+              {userData.badges ? userData.badges.map((badge) => (
+                <div key={badge} className={styles.badgeItem}>
+                  <div className={styles.badgeIcon} />
+                  <div className={styles.rowName}>{badge}</div>
+                </div>
+              ))
+                : null}
             </div>
-          ))
-            : null}
-        </div>
-      </div>
-      <div className={styles.coursesSection}>
-        <h2>Courses</h2>
-        <div className={styles.row}>
-          {userData.courses ? userData.courses.map((course) => (
-            <div key={course} className={styles.courseItem}>
-              <div className={styles.courseIcon} />
-              <div className={styles.rowName}>{course}</div>
+          </div>
+          <div className={styles.coursesSection}>
+            <h2>Courses</h2>
+            <div className={styles.row}>
+              {userData.courses ? userData.courses.map((course) => (
+                <div key={course} className={styles.courseItem}>
+                  <div className={styles.courseIcon} />
+                  <div className={styles.rowName}>{course}</div>
+                </div>
+              ))
+                : null}
             </div>
-          ))
-            : null}
+          </div>
         </div>
-      </div>
-    </div>
+      )
+      : null
+
   );
 }
 

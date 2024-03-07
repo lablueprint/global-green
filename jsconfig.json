@@ -4,6 +4,7 @@
       "@/*": ["./src/*"],
       "@helpers/*": ["./helpers/*"],
       "@models/*": ["./models/*"],
+      "@api/*": ["./api/*"],
     }
   }
 }

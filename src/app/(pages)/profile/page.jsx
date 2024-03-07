@@ -26,6 +26,7 @@ function Profile() {
         body: JSON.stringify({ id }),
       },
     );
+
     const data = await response.json();
     setData(data.user);
     setEditedName(data.user.userName);
@@ -33,7 +34,7 @@ function Profile() {
 
   useEffect(() => {
     console.log('session', session);
-    getUserDetails(session.user.id);
+    if (session) getUserDetails(session.user.id);
   }, [session]);
 
   const updateUserData = (data) => {
@@ -91,13 +92,6 @@ function Profile() {
   };
 
   const handleLogout = async () => {
-    const response = await fetch('/api/users/logout');
-    const data = await response.json();
-    if (data.error) {
-      // eslint-disable-next-line no-alert
-      alert(data.error);
-      throw new Error(data.error);
-    }
     await signOut();
     window.location.href = '/login';
   };

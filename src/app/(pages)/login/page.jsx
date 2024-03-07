@@ -10,37 +10,6 @@ function Example() {
   const [loading, setLoading] = React.useState(false);
   const { data: session } = useSession();
 
-  const onLogin = async () => {
-    // login function. This will call upon /api/users/login
-    // and send the username and password to the backend
-    // if the login is successful, redirect to the profile page
-    try {
-      setLoading(true);
-      const response = await fetch('/api/users/login', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ userName, password }),
-      });
-      const data = await response.json();
-
-      if (data.error) {
-        // eslint-disable-next-line no-alert
-        alert(data.error);
-        throw new Error(data.error);
-      }
-
-      // eslint-disable-next-line no-console
-      console.log('Login success', response.data);
-    } catch (error) {
-      // eslint-disable-next-line no-console
-      console.log('Login failed', error.message);
-    } finally {
-      setLoading(false);
-    }
-  };
-
   const usernameChange = (e) => {
     setUsername(e.target.value);
   };

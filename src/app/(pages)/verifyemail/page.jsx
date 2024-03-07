@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useEffect, useState } from 'react';
-import { useSession } from 'next-auth/react';
+import { useSession, signOut } from 'next-auth/react';
 
 function VerifyEmail() {
   const [token, setToken] = useState('');
@@ -15,6 +15,25 @@ function VerifyEmail() {
   const [cooldown, setCooldown] = useState(60); // 60 seconds cooldown
   const intervalRef = React.useRef();
   const { data: session } = useSession();
+
+  async function fetchUpdatedUserDetails(id) {
+    if (!id) return;
+    const response = await fetch(
+      '/api/users/me',
+      {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ id }),
+      },
+    );
+    const data = await response.json();
+    if (data.error) {
+      setError(data.error);
+    }
+    setExpiresAt(new Date(data.user.verifyExpires));
+  }
   const handleVerifyEmail = async () => {
     try {
       const res = await fetch('/api/users/verifyemail', {
@@ -29,23 +48,18 @@ function VerifyEmail() {
         setError(data.error);
       } else {
         setMessage(data.message);
+        await fetchUpdatedUserDetails(session.user.id);
         window.location.href = '/profile';
       }
     } catch (err) {
       setError(err.message);
     }
   };
+
   const handleLogout = async () => {
-    const response = await fetch('/api/users/logout');
-    const data = await response.json();
-    if (data.error) {
-      // eslint-disable-next-line no-alert
-      alert(data.error);
-      throw new Error(data.error);
-    }
-    window.location.href = '/login';
-    // eslint-disable-next-line no-alert
+    await signOut();
     alert('Your verification time has expired. Please sign up again.');
+    window.location.href = '/signup';
   };
 
   const updateTimer = () => {
@@ -78,6 +92,7 @@ function VerifyEmail() {
     if (data.error) {
       setError(data.error);
     }
+    console.log('data', data);
     setExpiresAt(new Date(data.user.verifyExpires));
     setUserName(data.user.userName);
     setUserEmail(data.user.email);
@@ -97,24 +112,6 @@ function VerifyEmail() {
     return intervalId;
   }
 
-  async function fetchUpdatedUserDetails(id) {
-    const response = await fetch(
-      '/api/users/me',
-      {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ id }),
-      },
-    );
-    const data = await response.json();
-    if (data.error) {
-      setError(data.error);
-    }
-    setExpiresAt(new Date(data.user.verifyExpires));
-  }
-
   async function resendVerificationEmail() {
     try {
       const res = await fetch('/api/users/resendemail', {
@@ -129,7 +126,7 @@ function VerifyEmail() {
         setError(data.error);
       } else {
         setMessage(`${data.message} You can resend in 60 seconds.`);
-        await fetchUpdatedUserDetails();
+        await fetchUpdatedUserDetails(session.user.id);
         setResendDisabled(true);
         setCooldown(60);
         if (intervalRef.current) clearInterval(intervalRef.current);
@@ -143,7 +140,9 @@ function VerifyEmail() {
 
   useEffect(
     () => {
-      getUserDetails(session.user.id);
+      console.log('session', session);
+      if (session?.user?.id) getUserDetails(session.user.id);
+
       // make sure only one interval is running at a time
       if (intervalRef.current) {
         clearInterval(intervalRef.current);
@@ -151,7 +150,7 @@ function VerifyEmail() {
       intervalRef.current = startResendCooldown();
       return () => clearInterval(intervalRef.current);
     },
-    [],
+    [session],
   );
 
   useEffect(() => {

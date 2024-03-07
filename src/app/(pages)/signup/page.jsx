@@ -1,6 +1,7 @@
 'use client';
 
 import React, { useState, useRef } from 'react';
+import { signIn } from 'next-auth/react';
 // import styles from './page.module.css';
 import ReCAPTCHA from 'react-google-recaptcha';
 
@@ -44,27 +45,13 @@ function Example() {
         throw new Error(data.error);
       } else {
         // log the user in after signing up
-        const loginResponse = await fetch('/api/users/login', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify({ userName, password }),
+        signIn('credentials', {
+          username: email,
+          password,
+          callbackUrl: '/verifyemail',
         });
-        const loginData = await loginResponse.json();
-
-        if (loginData.error) {
-          // eslint-disable-next-line no-alert
-          alert(loginData.error);
-
-          throw new Error(loginData.error);
-        } else {
-          // redirect to the profile page
-          window.location.href = '/profile';
-        }
-
-        // eslint-disable-next-line no-console
-        console.log('Login success', loginResponse.data);
+        console.log('Signup success', response.data);
+        recaptcha?.current?.reset();
       }
 
       // eslint-disable-next-line no-console

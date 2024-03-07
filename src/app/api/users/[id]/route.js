@@ -1,17 +1,16 @@
-/* eslint-disable import/prefer-default-export */
 import { NextResponse } from 'next/server';
 import connectMongoDB from '../../../../../libs/mongodb';
 import User from '../../../../../models/user';
 
-export async function GET(request, { params: { id } }) {
+export async function GET(_, { params: { id } }) {
   await connectMongoDB();
 
   try {
-    const users = await User.findById(id);
-    if (!users) {
+    const user = await User.findById(id);
+    if (!user) {
       return NextResponse.json({ message: 'User not found!' });
     }
-    return NextResponse.json({ users });
+    return NextResponse.json({ user });
   } catch (error) {
     return NextResponse.json({ message: error.message });
   }
@@ -34,7 +33,7 @@ export async function PATCH(request, { params: { id } }) {
   }
 }
 
-export async function DELETE(request, { params: { id } }) {
+export async function DELETE(_, { params: { id } }) {
   await connectMongoDB();
 
   try {

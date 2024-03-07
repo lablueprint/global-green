@@ -3,7 +3,7 @@ const courseData = [{
   duration: '2 hrs',
   progress: 1,
 }, {
-  name: 'Economy',
+  name: 'Eco-friendly Traveling',
   duration: '1 hr',
   progress: 2,
 }, {
@@ -11,11 +11,15 @@ const courseData = [{
   duration: '3 hrs',
   progress: 0,
 }, {
-  name: 'Global Green',
+  name: 'Ecosystem Conservation',
   duration: '2 hrs',
   progress: 5,
 }, {
-  name: 'Sustainability',
+  name: 'Climate Change',
+  duration: '2 hrs',
+  progress: 5,
+}, {
+  name: 'Sustainability Lab',
   duration: '2 hrs',
   progress: 5,
 }];

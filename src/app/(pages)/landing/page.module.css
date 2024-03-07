@@ -1,53 +1,103 @@
-.WelcomeText {
-  display: flex;
-  flex-direction: column; 
-  padding: 30px;
-  background-color: #ffffff; 
-  text-align: left;
-  width: 100vw;
-  padding-left: 180px;
-  text-indent: 40px;
+.welcome{
+  display: flex; 
+  flex-direction: row;
+}
 
+.banner {
+  padding: 40px;
 }
 
 .landingPage {
   display: flex;
   flex-direction: column;
-  align-items: center; 
+  align-items: left; 
+  padding: 40px;
 }
 
-.lpbuttoncontainer {
-display: flex;
-align-items: center;
-justify-content: space-between;
-position: relative
+.imageGarden{
+  display: flex;
+  gap: 30px;
 }
 
-.lpbutton{
-background-color: #f0f0f0;
-border-radius: 27%;
-color: #000000;
-margin-right: 500px;
-transform: translateY(70%);
-width: 140px;
-height: 35px;
-font-size: 12px;
-font-family: "Nimbus", "Sans Bold", serif;
-font-weight: bold;
-text-transform: capitalize;
-display: flex;
+.garden{
+  border: 2px solid black;
+  padding: 30px 30px;
+  border-radius: 15px;
+  background-color: rgb(206, 202, 202);
 }
 
-.landingpageImage{
-display: flex;
-margin-left: 40px;
+.gardenInfo{
+  font-size: 20px;
+  margin: 2px;
 }
 
-.enterGardenText{
-display: flex;
-color: #000000;
-font-size: 19px;
-font-family: "Nimbus", "Sans Bold", serif;
-margin-right: -180px;
-margin-top: 2px;
+.enterGarden {
+  border: 2px solid green;
+  border-radius: 20px;
+  text-align: center;
+  margin-top: 20px;
+}
+
+/* whole course part */
+.courseContainer {
+  padding: 40px;
+}
+
+/* course layout */
+.courseLayout{
+  display: flex;
+  flex-wrap: wrap; 
+  align-items: center;
+  gap: 20px;
+}
+
+/* course toggle */
+.courseToggle {
+  display: flex;
+  gap: 20px;
+  color: gray;
+  border-bottom: 2px solid gray;
+  padding: 5px;
+  margin-bottom: 30px;
+}
+
+.active {
+  color: green;
+  font-weight: 600;
+}
+
+
+/* course cards */
+.courseCard{
+  display: flex; 
+  flex-direction: column;
+  flex: 0 0 calc(28% - 20px);
+  justify-content: space-between;
+  border: 2px solid black;
+  border-radius: 10px;
+  padding: 20px;
+  height: 150px;
+}
+
+.courseName{
+  font-weight: 500; 
+  font-size: 20px;
+  width: 120px;
+  border-left: 4px solid;
+  padding: 0px 10px;
+}
+
+.bottomBar{
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.courseDuration{
+  border-radius: 10px;
+  width: 40px;
+  background-color: rgb(207, 187, 187);
+  text-align: center;
+  font-size: 14px;
+  padding: 2px 5px;
 }

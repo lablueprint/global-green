@@ -1,0 +1,23 @@
+const courseData = [{
+  name: 'Plastic & Recycling',
+  duration: '2 hrs',
+  progress: 1,
+}, {
+  name: 'Economy',
+  duration: '1 hr',
+  progress: 2,
+}, {
+  name: 'Ocean Pollution',
+  duration: '3 hrs',
+  progress: 0,
+}, {
+  name: 'Global Green',
+  duration: '2 hrs',
+  progress: 5,
+}, {
+  name: 'Sustainability',
+  duration: '2 hrs',
+  progress: 5,
+}];
+
+export default courseData;

@@ -2,6 +2,7 @@
 
 import React from 'react';
 import styles from './page.module.css';
+import ProgressBar from './progressBar';
 
 function CourseCard({ name, duration, progress }) {
   return (
@@ -14,11 +15,7 @@ function CourseCard({ name, duration, progress }) {
           {duration}
         </div>
         <div className={styles.progressBar}>
-          <div className={styles.bar} />
-          <div>
-            {progress}
-            /5
-          </div>
+          <ProgressBar value={progress} x={progress} y={5} />
         </div>
       </div>
     </div>

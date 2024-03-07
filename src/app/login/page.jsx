@@ -1,11 +1,11 @@
-'use client';
+"use client";
 
-import React, { useState } from 'react';
+import React, { useState } from "react";
 // import styles from './page.module.css';
 
 function Example() {
-  const [userName, setUsername] = useState('');
-  const [password, setPassword] = useState('');
+  const [userName, setUsername] = useState("");
+  const [password, setPassword] = useState("");
   const [loading, setLoading] = React.useState(false);
 
   const onLogin = async () => {
@@ -14,10 +14,10 @@ function Example() {
     // if the login is successful, redirect to the profile page
     try {
       setLoading(true);
-      const response = await fetch('/api/users/login', {
-        method: 'POST',
+      const response = await fetch("/api/users/login", {
+        method: "POST",
         headers: {
-          'Content-Type': 'application/json',
+          "Content-Type": "application/json",
         },
         body: JSON.stringify({ userName, password }),
       });
@@ -29,14 +29,14 @@ function Example() {
         throw new Error(data.error);
       } else {
         // redirect to the profile page
-        window.location.href = '/profile';
+        window.location.href = "/profile";
       }
 
       // eslint-disable-next-line no-console
-      console.log('Login success', response.data);
+      console.log("Login success", response.data);
     } catch (error) {
       // eslint-disable-next-line no-console
-      console.log('Login failed', error.message);
+      console.log("Login failed", error.message);
     } finally {
       setLoading(false);
     }
@@ -53,28 +53,39 @@ function Example() {
   const submitLog = (event) => {
     event.preventDefault();
 
-    if (userName === '' || password === '') {
+    if (userName === "" || password === "") {
       // eslint-disable-next-line no-alert
-      alert('Input a username and/or password!!!');
+      alert("Input a username and/or password!!!");
     } else {
       onLogin();
     }
   };
   return (
     <div>
-      <h1>{loading ? 'Processing' : 'Login'}</h1>
+      <h1>{loading ? "Processing" : "Login"}</h1>
       <form>
         {/* eslint-disable-next-line jsx-a11y/label-has-associated-control */}
         <label name="username">Username or Email:</label>
-        <input type="text" id="username" name="username" onChange={usernameChange} />
+        <input
+          type="text"
+          id="username"
+          name="username"
+          onChange={usernameChange}
+        />
         {/* eslint-disable-next-line jsx-a11y/label-has-associated-control */}
         <label name="pass">Password:</label>
-        <input type="password" id="pass" name="pass" onChange={passwordChange} />
+        <input
+          type="password"
+          id="pass"
+          name="pass"
+          onChange={passwordChange}
+        />
         {/* <input type="email" id="email" name="email" required />
         <input type="submit" value="Submit" /> */}
-        <button type="submit" onClick={submitLog}>Submit</button>
+        <button type="submit" onClick={submitLog}>
+          Submit
+        </button>
       </form>
-
     </div>
   );
 }

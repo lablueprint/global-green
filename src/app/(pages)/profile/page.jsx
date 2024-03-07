@@ -1,18 +1,18 @@
-'use client';
+"use client";
 
-import React, { useEffect, useState } from 'react';
-import Image from 'next/image';
-import styles from './page.module.css';
-import defaultProfilePic from './profilepic.jpg'; // Assuming you have a default profile pic
+import React, { useEffect, useState } from "react";
+import Image from "next/image";
+import styles from "./page.module.css";
+import defaultProfilePic from "./profilepic.jpg"; // Assuming you have a default profile pic
 
 function Profile() {
   const [isEditing, setIsEditing] = useState(false);
   const [profileImage, setProfileImage] = useState(defaultProfilePic);
-  const [editedName, setEditedName] = useState('');
+  const [editedName, setEditedName] = useState("");
   const [userData, setData] = useState({});
 
   const getUserDetails = async () => {
-    const res = await fetch('/api/users/me');
+    const res = await fetch("/api/users/me");
     const data = await res.json();
     setData(data.user);
     setEditedName(data.user.userName);
@@ -28,18 +28,18 @@ function Profile() {
     // update the user data in the database, make sure only the first user is updated.
     async function updateUserDataInDB() {
       // eslint-disable-next-line no-console
-      console.log('data', data);
+      console.log("data", data);
 
-      const response = await fetch('/api/users/me/change-name', {
-        method: 'PATCH',
+      const response = await fetch("/api/users/me/change-name", {
+        method: "PATCH",
         headers: {
-          'Content-Type': 'application/json',
+          "Content-Type": "application/json",
         },
         body: JSON.stringify({ userName: data.userName }),
       });
       const res = await response.json();
       // eslint-disable-next-line no-console
-      console.log('res', res);
+      console.log("res", res);
 
       if (res.error) {
         // eslint-disable-next-line no-alert
@@ -48,12 +48,12 @@ function Profile() {
       }
 
       // eslint-disable-next-line no-console
-      console.log('Update success', response.data);
+      console.log("Update success", response.data);
     }
     updateUserDataInDB();
 
     // update the user data in the local storage
-    localStorage.setItem('userData', JSON.stringify(data));
+    localStorage.setItem("userData", JSON.stringify(data));
   };
 
   const handleNameClick = () => {
@@ -67,42 +67,42 @@ function Profile() {
   const handleBlur = () => {
     setIsEditing(false);
     userData.userName = editedName;
-    localStorage.setItem('userData', JSON.stringify(userData));
+    localStorage.setItem("userData", JSON.stringify(userData));
     updateUserData(userData);
   };
 
   const handleChangeProfileImage = (event) => {
     const file = event.target.files[0];
-    if (file && file.type.substr(0, 5) === 'image') {
+    if (file && file.type.substr(0, 5) === "image") {
       setProfileImage(URL.createObjectURL(file));
     }
   };
 
   return (
-    <div style={{ textAlign: 'center', margin: '20px 0' }}>
+    <div style={{ textAlign: "center", margin: "20px 0" }}>
       <div className={styles.profile}>Profile</div>
       <div
         style={{
-          width: '120px',
-          height: '120px',
-          borderRadius: '50%',
-          display: 'inline-block',
-          position: 'relative',
+          width: "120px",
+          height: "120px",
+          borderRadius: "50%",
+          display: "inline-block",
+          position: "relative",
         }}
-        onClick={() => document.getElementById('profileImageInput').click()}
+        onClick={() => document.getElementById("profileImageInput").click()}
       >
         <Image
           src={profileImage}
           alt="Profile"
           width={120}
           height={120}
-          style={{ borderRadius: '50%' }}
+          style={{ borderRadius: "50%" }}
         />
         <input
           id="profileImageInput"
           type="file"
           accept="image/*"
-          style={{ display: 'none' }}
+          style={{ display: "none" }}
           onChange={handleChangeProfileImage}
         />
       </div>
@@ -119,31 +119,33 @@ function Profile() {
           <h1 onClick={handleNameClick}>{userData.userName}</h1>
         )}
         <p>
-          Rank:
-          {userData.rank}
+          Points:
+          {userData.points}
         </p>
       </div>
       <div className={styles.badgesSection}>
         <h2>Badges</h2>
         <div className={styles.row}>
-          {userData.badges ? userData.badges.map((badge) => (
-            <div key={badge} className={styles.badgeItem}>
-              <div className={styles.badgeIcon} />
-              <div className={styles.rowName}>{badge}</div>
-            </div>
-          ))
+          {userData.badges
+            ? userData.badges.map((badge) => (
+                <div key={badge} className={styles.badgeItem}>
+                  <div className={styles.badgeIcon} />
+                  <div className={styles.rowName}>{badge}</div>
+                </div>
+              ))
             : null}
         </div>
       </div>
       <div className={styles.coursesSection}>
         <h2>Courses</h2>
         <div className={styles.row}>
-          {userData.courses ? userData.courses.map((course) => (
-            <div key={course} className={styles.courseItem}>
-              <div className={styles.courseIcon} />
-              <div className={styles.rowName}>{course}</div>
-            </div>
-          ))
+          {userData.courses
+            ? userData.courses.map((course) => (
+                <div key={course} className={styles.courseItem}>
+                  <div className={styles.courseIcon} />
+                  <div className={styles.rowName}>{course}</div>
+                </div>
+              ))
             : null}
         </div>
       </div>

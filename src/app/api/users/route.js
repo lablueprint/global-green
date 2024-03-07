@@ -18,7 +18,7 @@ export async function GET() {
   try {
     const users = await User.find();
     if (!users) {
-      return NextResponse.json({ message: 'User not found!' });
+      return NextResponse.json({ message: 'Users not found!' });
     }
     return NextResponse.json({ users });
   } catch (error) {

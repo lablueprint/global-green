@@ -1,5 +1,4 @@
 "use client";
-
 import React, { useState } from "react";
 import VertNavbar from "src/app/coursenavbar/page.jsx";
 import Button from "@mui/material/Button";

@@ -1,15 +1,15 @@
 import { NextResponse } from 'next/server';
-import { getDataFromToken } from '../../../../../helpers/getDataFromToken';
 import connectMongoDB from '../../../../../libs/mongodb';
 import User from '../../../../../models/user';
 
-export async function GET(request) {
+export async function POST(request) {
+  const {
+    id,
+  } = await request.json();
   await connectMongoDB();
-  try {
-    const userId = await getDataFromToken(request);
-    const user = await User.findOne({ _id: userId }).select('-password');
-    return NextResponse.json({ user });
-  } catch (error) {
-    return NextResponse.json({ error: error.message }, { status: 400 });
+  const user = await User.findById(id);
+  if (!user) {
+    return NextResponse.json({ message: 'User not found!' });
   }
+  return NextResponse.json({ user });
 }

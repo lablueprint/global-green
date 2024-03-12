@@ -1,16 +1,27 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useRef } from 'react';
+import { signIn } from 'next-auth/react';
 // import styles from './page.module.css';
+import ReCAPTCHA from 'react-google-recaptcha';
 
 function Example() {
-  const [firstName, setFirstName] = useState("");
-  const [lastName, setLastName] = useState("");
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [confirmPassword, setConfirmPassword] = useState("");
-  const [userName, setUserName] = useState("");
-  const [points, setPoints] = useState(0);
+  const [firstName, setFirstName] = useState('');
+  const [lastName, setLastName] = useState('');
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [confirmPassword, setConfirmPassword] = useState('');
+  const [userName, setUserName] = useState('');=
+  // Captcha Related
+  const recaptcha = useRef(null);
+  const [captchaToken, setCaptchaToken] = useState('');
+
+  const onCaptchaChange = (token) => {
+    // Set the captcha token when the user completes the reCAPTCHA
+    if (token) {
+      setCaptchaToken(token);
+    }
+  };
 
   const OnSignup = async () => {
     // signup function. This will call upon /api/users/signup
@@ -23,12 +34,7 @@ function Example() {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          userName,
-          password,
-          firstName,
-          lastName,
-          email,
-          points,
+          userName, password, firstName, lastName, email, points, captchaToken,
         }),
       });
       const data = await response.json();
@@ -39,33 +45,23 @@ function Example() {
         throw new Error(data.error);
       } else {
         // log the user in after signing up
-        const loginResponse = await fetch("/api/users/login", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({ userName, password }),
+        signIn('credentials', {
+          username: email,
+          password,
+          callbackUrl: '/verifyemail',
         });
-        const loginData = await loginResponse.json();
-
-        if (loginData.error) {
-          // eslint-disable-next-line no-alert
-          alert(loginData.error);
-          throw new Error(loginData.error);
-        } else {
-          // redirect to the profile page
-          window.location.href = "/profile";
-        }
-
-        // eslint-disable-next-line no-console
-        console.log("Login success", loginResponse.data);
+        console.log('Signup success', response.data);
+        recaptcha?.current?.reset();
       }
 
       // eslint-disable-next-line no-console
-      console.log("Signup success", response.data);
+      console.log('Signup success', response.data);
+      recaptcha?.current?.reset();
     } catch (error) {
       // eslint-disable-next-line no-console
-      console.log("Signup failed", error.message);
+      console.log('Signup failed', error.message);
+      // refresh the page to clear the form
+      window.location.href = '/signup';
     }
   };
 
@@ -195,7 +191,15 @@ function Example() {
           />
           <br />
         </label>
-
+        <div className="pb-20px">
+          <ReCAPTCHA
+            size="normal"
+            sitekey={process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY}
+            onChange={onCaptchaChange}
+            ref={recaptcha}
+          />
+        </div>
+        <br />
         <input type="submit" value="Submit" onClick={submitLog} />
         <br />
       </form>

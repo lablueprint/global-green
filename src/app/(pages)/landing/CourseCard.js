@@ -4,6 +4,8 @@ import React from 'react';
 import styles from './page.module.css';
 import ProgressBar from './progressBar';
 
+// course card component: individual course cards
+
 function CourseCard({
   name, duration, progress, color, background,
 }) {
@@ -13,6 +15,7 @@ function CourseCard({
     backgroundPosition: 'center',
   };
 
+  // code for cours name, duration, and progress bar
   return (
     <div className={styles.courseCard} style={cardStyle}>
       <div className={styles.courseName}>

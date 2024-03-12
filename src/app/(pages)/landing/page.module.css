@@ -1,3 +1,5 @@
+/* whole landing page */
+
 .landingPage {
   display: flex;
   flex-direction: column;
@@ -20,6 +22,7 @@
   gap: 40px;
 }
 
+/* going to the garden */
 .garden{
   padding: 30px 40px;
   border-radius: 15px;
@@ -75,6 +78,25 @@
   font-weight: 600;
 }
 
+.filterItem {
+  cursor: pointer;
+}
+
+.filterItem:hover {
+  text-decoration: none;
+}
+
+.active {
+  color: green;
+}
+
+.active::after{
+  content: ''; 
+  display: block;
+  border-bottom: 2px solid green;
+  margin-top: 5px;
+}
+
 
 /* course cards */
 .courseCard{
@@ -110,25 +132,7 @@
   padding: 2px 5px;
 }
 
-.filterItem {
-  cursor: pointer;
-}
-
-.filterItem:hover {
-  text-decoration: none;
-}
-
-.active {
-  color: green;
-}
-
-.active::after{
-  content: ''; 
-  display: block;
-  border-bottom: 2px solid green;
-  margin-top: 5px;
-}
-
+/* responsiveness */
 @media (max-width: 800px) {
   .imageGarden{
     display: flex; 

@@ -5,6 +5,7 @@ import CourseCard from './CourseCard';
 import styles from './page.module.css';
 import courseData from './courseData';
 
+// course display: seeing all courses, incomplete, complete courses
 function CourseDisplay() {
   const [filter, setFilter] = useState('all');
 
@@ -39,6 +40,7 @@ function CourseDisplay() {
           Complete
         </div>
       </div>
+      {/* displaying all of the courses */}
       <div className={styles.courseLayout}>
         {filteredData.map((course) => (
           <CourseCard

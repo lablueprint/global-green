@@ -10,6 +10,7 @@ import CourseDisplay from './CourseDisplay';
 function LandingPage() {
   const [currentModule] = useState({ imageUrl: '/landingpageImage.png', name: 'Chinenye Eneh' });
 
+  // seeing landing page banner
   return (
     <div className={styles.landingPage}>
       <div className={styles.welcome}>
@@ -20,6 +21,7 @@ function LandingPage() {
       </div>
       <div className={styles.banner}>
         <div className={styles.imageGarden}>
+          {/* landing page image */}
           <Image
             className={styles.image}
             src={currentModule.imageUrl}
@@ -28,6 +30,7 @@ function LandingPage() {
             height={300}
             style={{ borderRadius: '10px' }}
           />
+          {/* going to garden */}
           <div className={styles.garden}>
             <h2>Your Garden</h2>
             <div className={styles.gardenInfo}>Started on June 2024</div>

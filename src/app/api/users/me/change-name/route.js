@@ -1,14 +1,15 @@
 import { NextResponse } from 'next/server';
 import connectMongoDB from '../../../../../../libs/mongodb';
 import User from '../../../../../../models/user';
-import { getDataFromToken } from '../../../../../../helpers/getDataFromToken';
 
 export async function PATCH(request) {
   await connectMongoDB();
   try {
-    const userId = await getDataFromToken(request);
     const reqBody = await request.json();
-    const { userName } = reqBody;
+    const {
+      userId,
+      userName,
+    } = reqBody;
 
     if (!userName) {
       return NextResponse.json({ error: 'New name is required' }, { status: 400 });

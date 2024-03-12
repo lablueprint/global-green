@@ -16,6 +16,7 @@
     "@react-pdf/renderer": "^3.3.8",
     "bcryptjs": "^2.4.3",
     "dotenv-webpack": "^8.0.1",
+    "framer-motion": "^11.0.8",
     "fs": "^0.0.1-security",
     "jsonwebtoken": "^9.0.2",
     "leader-line": "^1.0.7",

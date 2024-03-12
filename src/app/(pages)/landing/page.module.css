@@ -74,6 +74,7 @@ margin-top: 2px;
   border-radius: 10px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
   width: 80%;
+  height: min-content;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -105,46 +106,222 @@ margin-top: 2px;
     height: 300px;
     margin: 20px;
     border-radius: 10px;
+    overflow: hidden;
   }
 
   .gardenImage{
     position: absolute;
     top: 0;
     left: 0;
-    width: 100%;
-    height: 100%;
-    
+    width: 600px;
+    height: 300px;
+    background-position: center;
     background-size: contain;
+    border-radius: 0%;
     background-repeat: no-repeat;
     
+  }
+  .gardenEditImage{
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 500px;
+    height: 400px;
+    background-size: contain;
+    background-repeat: no-repeat;
+    border-radius: 20px;
   }
   .gardenBackground {
     background-image: url('/garden/background.png');
   }
+  .gardenBackgroundWide {
+    width: 600px;
+    height: 300px;
+    background-size: cover;
+    border-radius: 20px;
+    background-image: url('/garden/background.png');
+  }
   .gardenEarth {
+    width: 250px;
+    height: 250px;
+    top: 125px;
+    left: 50px;
+    background-image: url('/garden/earth.png');
+    z-index: 10;
+  }
+  .gardenEarthWide {
+    width: 250px;
+    height: 250px;
+    top: 190px;
+    left: 175px;
     background-image: url('/garden/earth.png');
     z-index: 10;
   }
   .gardenFlower1 {
-    background-image: url('/garden/1.png');
+    top: 100px;
+    left: 100px;
+    
+    width: 40px;
+    height: 100px;
+    background-image: url('/garden/flower1.png');
+  }
+  .gardenFlower1Wide {
+    top: 150px;
+    left: 200px;
+    width: 50px;
+    height: 80px;
+
+    background-image: url('/garden/flower1.png');
   }
   .gardenFlower2 {
-    background-image: url('/garden/2.png');
+    top: 70px;
+    left: 200px;
+    width: 100px;
+    height: 100px;
+    background-image: url('/garden/flower2.png');
   }
+
+  .gardenFlower2Wide {
+    top: 150px;
+    left: 350px;
+    width: 60px;
+    height: 60px;
+    background-image: url('/garden/flower2.png');
+  }
+
   .gardenFlower3 {
-    background-image: url('/garden/3.png');
+    top: 100px;
+    left: 250px;
+    width: 100px;
+    height: 100px;
+    background-image: url('/garden/flower3.png');
   }
+
+  .gardenFlower3Wide {
+    top: 120px;
+    left: 270px;
+    width: 60px;
+    height: 80px;
+    background-image: url('/garden/flower3.png');
+  }
+
   .gardenFlower4 {
-    background-image: url('/garden/4.png');
+    top: 80px;
+    left: 50px;
+    width: 100px;
+    height: 100px;
+    background-image: url('/garden/flower4.png');
+  }
+
+  .gardenFlower4Wide {
+    top: 150px;
+    left: 160px;
+    width: 80px;
+    height: 80px;
+    background-image: url('/garden/flower4.png');
   }
   .gardenFlower5 {
-    background-image: url('/garden/5.png');
+    top: 75px;
+    left: 180px;
+    width: 100px;
+    height: 100px;
+
+    background-image: url('/garden/flower5.png');
+  }
+  .gardenFlower5Wide {
+    top: 120px;
+    left: 300px;
+    width: 80px;
+    height: 80px;
+    background-image: url('/garden/flower5.png');
   }
   .gardenFlower6 {
-    background-image: url('/garden/6.png');
+    top: 60px;
+    left: 90px;
+    width: 100px;
+    height: 100px;
+    background-image: url('/garden/flower6.png');
+  }
+  .gardenFlower6Wide {
+    top: 130px;
+    left: 240px;
+    width: 50px;
+    height: 80px;
+    background-image: url('/garden/flower6.png');
   }
   .gardenFlower7 {
-    background-image: url('/garden/7.png');
+    width: 100px;
+    height: 100px;
+    background-image: url('/garden/flower7.png');
   }
 }
 
+.gardenModalEditBox{
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  justify-content: flex-start;
+  width: 100%;
+  gap: 10px;
+
+  .gardenModalEditBoxLeft{
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: flex-start;
+    height: 100%;
+    gap: 10px;
+  }
+  .gardenModalEditBoxRight{
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: flex-start;
+    gap: 10px;
+  }
+ 
+}
+
+.gardenModalEditTab{
+  /* 3 columns infinity  */
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  justify-content: flex-start;
+  gap: 10px;
+  flex-wrap: wrap;
+  height: 250px;
+
+  overflow-y: auto;
+  
+
+  gap: 10px;
+}
+.gardenModalEditItem{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 125px !important;
+  height: 125px !important;
+  background-color: #f0f0f0;
+  border-radius: 10px;
+  box-sizing: border-box;
+  background-position: center;
+  background-size: contain;
+  background-repeat: no-repeat;
+  
+
+}
+
+.gardenModalEditItemRemove{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: black;
+  padding: 5px;
+  border-radius: 10px;
+  box-sizing: border-box;
+  color: white;
+  font-weight: bold;
+  cursor: pointer;
+}

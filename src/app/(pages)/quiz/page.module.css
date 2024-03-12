@@ -115,7 +115,7 @@
 }
 
 .hintButton {
-  background: url("../quiz/hint_logo.png") no-repeat center center;
+  background: url("/hint_logo.png");
   background-size: contain;
   cursor: pointer;
   height: 18px;

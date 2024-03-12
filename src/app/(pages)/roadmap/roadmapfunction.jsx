@@ -1,5 +1,6 @@
-// pages/roadmap/roadmap.jsx
+//src/app/(pages)/roadmap/[roadmap].jsx
 import React from 'react';
+
 
 function Roadmap({ title, steps }) {
   if (!Array.isArray(steps)) {

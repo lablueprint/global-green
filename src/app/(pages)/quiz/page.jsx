@@ -1,6 +1,5 @@
 'use client';
 
-// Import necessary React components and styles
 import React, { useState } from 'react';
 import styles from './page.module.css';
 import MultipleChoiceQuiz from './MultipleChoice';
@@ -12,7 +11,6 @@ import Results from './results';
 // import AnswerPopup from './AnswerPopup';
 
 function Quiz() {
-  // State hooks for quiz functionality
   const [currentQuizIndex, setCurrentQuizIndex] = useState(0);
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
   const [TotalProgress, setTotalProgress] = useState(0);

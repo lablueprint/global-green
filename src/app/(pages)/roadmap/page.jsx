@@ -1,6 +1,9 @@
-// pages/roadmap/roadmaps.jsx
+//src/app/(pages)/roadmap/page.jsx
+'use client'
 import React from 'react';
 import Link from 'next/link';
+import { useRouter } from 'next/navigation'
+
 
 const roadmapsList = [
   { path: 'plastic-and-recycling', title: 'Plastic and Recycling' },
@@ -10,15 +13,19 @@ const roadmapsList = [
 ];
 
 function RoadmapsIndexPage() {
+  const router = useRouter()
   return (
     <div>
       <h1>Roadmaps</h1>
       <ul>
-        {roadmapsList.map((roadmap, index) => (
-          <li key={index}>
-            <Link href={`/roadmap/${roadmap.path}`}>{roadmap.title}</Link>
-          </li>
-        ))}
+            <button type="button" onClick={() => router.push('/roadmap/introduction')}> Introduction</button>
+            <button type="button" onClick={() => router.push('/roadmap/plastic-and-recycling')}> Plastic and Recycling</button>
+            <button type="button" onClick={() => router.push('/roadmap/sustainability-labs')}> Sustainability Labs</button>
+            <button type="button" onClick={() => router.push('/roadmap/conservation-and-restoration')}> Conservation and Restoration</button>
+            <button type="button" onClick={() => router.push('/roadmap/climate-change')}> Climate Change</button>
+            <button type="button" onClick={() => router.push('/roadmap/eco-friendly-travel')}> Eco-Friendly Travel</button>
+            <button type="button" onClick={() => router.push('/roadmap/ocean-pollution')}> Ocean Pollution</button>
+
       </ul>
     </div>
   );

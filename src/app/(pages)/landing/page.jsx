@@ -7,7 +7,7 @@ import Image from 'next/image';
 import { AnimatePresence, motion } from 'framer-motion';
 import styles from './page.module.css';
 
-function GardenModal() {
+function GardenModal({ setIsGardenModalOpen }) {
   const variant = {
     initial: { opacity: 0, scale: 0.9, y: 100 },
     animate: { opacity: 1, scale: 1.2, y: 0 },
@@ -205,7 +205,9 @@ function GardenModal() {
   const [isCustomizing, setIsCustomizing] = useState(false);
   const [currentTab, setCurrentTab] = useState('accessories'); // accessories, background, flowers
   return (
-    <div className={styles.gardenModalOverlay}>
+    <div
+      className={styles.gardenModalOverlay}
+    >
       {
       isCustomizing
         ? (
@@ -416,6 +418,7 @@ function GardenModal() {
                   textTransform: 'none',
                   fontFamily: 'inherit',
                 }}
+                onClick={() => setIsGardenModalOpen(false)}
               >
                 Cancel
               </Button>
@@ -505,7 +508,7 @@ function LandingPage() {
 
   return (
     <div className={styles.landingPage}>
-      {isGardenModalOpen && <GardenModal />}
+      {isGardenModalOpen && <GardenModal setIsGardenModalOpen={setIsGardenModalOpen} />}
       <WelcomeText
         imageUrl={currentModule.imageUrl}
         name={currentModule.name}

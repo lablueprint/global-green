@@ -56,13 +56,25 @@ function Example() {
       <form>
         {/* eslint-disable-next-line jsx-a11y/label-has-associated-control */}
         <label name="username">Username or Email:</label>
-        <input type="text" id="username" name="username" onChange={usernameChange} />
+        <input
+          type="text"
+          id="username"
+          name="username"
+          onChange={usernameChange}
+        />
         {/* eslint-disable-next-line jsx-a11y/label-has-associated-control */}
         <label name="pass">Password:</label>
-        <input type="password" id="pass" name="pass" onChange={passwordChange} />
+        <input
+          type="password"
+          id="pass"
+          name="pass"
+          onChange={passwordChange}
+        />
         {/* <input type="email" id="email" name="email" required />
         <input type="submit" value="Submit" /> */}
-        <button type="submit" onClick={submitLog}>Submit</button>
+        <button type="submit" onClick={submitLog}>
+          Submit
+        </button>
       </form>
       <p>
         Don't have an account?

@@ -1,4 +1,4 @@
-'use client';
+"use client";
 
 import React, { useState, useRef } from 'react';
 import { signIn } from 'next-auth/react';
@@ -11,7 +11,7 @@ function Example() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
-  const [userName, setUserName] = useState('');
+  const [userName, setUserName] = useState('');=
   // Captcha Related
   const recaptcha = useRef(null);
   const [captchaToken, setCaptchaToken] = useState('');
@@ -28,13 +28,13 @@ function Example() {
     // and send the username and password to the backend
     // if the signup is successful, redirect to the profile page
     try {
-      const response = await fetch('/api/users/signup', {
-        method: 'POST',
+      const response = await fetch("/api/users/signup", {
+        method: "POST",
         headers: {
-          'Content-Type': 'application/json',
+          "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          userName, password, firstName, lastName, email, captchaToken,
+          userName, password, firstName, lastName, email, points, captchaToken,
         }),
       });
       const data = await response.json();
@@ -89,34 +89,35 @@ function Example() {
     let validEntries = true;
 
     // for email input format validation
-    const regex = /^([\w-]+(?:\.[\w-]+)*)@((?:[\w-]+\.)*\w[\w-]{0,66})\.([a-z]{2,6}(?:\.[a-z]{2})?)$/;
-    if (firstName === '' || lastName === '') {
+    const regex =
+      /^([\w-]+(?:\.[\w-]+)*)@((?:[\w-]+\.)*\w[\w-]{0,66})\.([a-z]{2,6}(?:\.[a-z]{2})?)$/;
+    if (firstName === "" || lastName === "") {
       // eslint-disable-next-line no-alert
-      alert('Name is required!');
+      alert("Name is required!");
       validEntries = false;
       return;
     }
     if (!regex.test(email)) {
       // eslint-disable-next-line no-alert
-      alert('Invalid email!');
+      alert("Invalid email!");
       validEntries = false;
       return;
     }
-    if (password === '') {
+    if (password === "") {
       // eslint-disable-next-line no-alert
-      alert('Password is required!');
+      alert("Password is required!");
       validEntries = false;
       return;
     }
     if (password.length < 8) {
       // eslint-disable-next-line no-alert
-      alert('Password needs to be at least 8 characters');
+      alert("Password needs to be at least 8 characters");
       validEntries = false;
       return;
     }
     if (confirmPassword !== password) {
       // eslint-disable-next-line no-alert
-      alert('Password and confirm password fields need to match');
+      alert("Password and confirm password fields need to match");
       validEntries = false;
       return;
     }
@@ -128,44 +129,66 @@ function Example() {
     <div>
       <form>
         <label htmlFor="firstName">
-          First name:
-          {' '}
-          <br />
-          <input type="text" id="firstName" name="firstName" onChange={firstNameChange} />
+          First name: <br />
+          <input
+            type="text"
+            id="firstName"
+            name="firstName"
+            onChange={firstNameChange}
+          />
         </label>
         <br />
         <label htmlFor="lastName">
           Last name:
           <br />
-          <input type="text" id="lastName" name="lastName" onChange={lastNameChange} />
+          <input
+            type="text"
+            id="lastName"
+            name="lastName"
+            onChange={lastNameChange}
+          />
           <br />
         </label>
         {/* eslint-disable-next-line jsx-a11y/label-has-associated-control */}
         <label type="eAddress">
           Email Address:
           <br />
-
           <input type="email" id="email" name="email" onChange={emailChange} />
           <br />
         </label>
         <label htmlFor="userName">
           Username:
           <br />
-          <input type="text" id="userName" name="userName" onChange={userNameChange} />
+          <input
+            type="text"
+            id="userName"
+            name="userName"
+            onChange={userNameChange}
+          />
           <br />
         </label>
         {/* eslint-disable-next-line jsx-a11y/label-has-associated-control */}
         <label name="pass">
           Password:
           <br />
-          <input type="password" id="pass" name="pass" onChange={passwordChange} />
+          <input
+            type="password"
+            id="pass"
+            name="pass"
+            onChange={passwordChange}
+          />
           <br />
         </label>
         {/* eslint-disable-next-line jsx-a11y/label-has-associated-control */}
         <label name="confirmPass">
           Confirm Password:
           <br />
-          <input type="password" id="confirmPass" name="confirmPass" onChange={confirmPasswordChange} />
+          <input
+            type="password"
+            id="confirmPass"
+            name="confirmPass"
+            onChange={confirmPasswordChange}
+          />
           <br />
         </label>
         <div className="pb-20px">

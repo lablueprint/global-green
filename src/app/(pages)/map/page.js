@@ -8,6 +8,7 @@ import styles from './map.module.css';
 mapboxgl.accessToken = process.env.NEXT_PUBLIC_MAPBOX_TOKEN;
 
 function Map() {
+
   // Initialize state variables
   const [mapArray, setMapArray] = useState([]);
   const mapContainerRef = useRef(null);

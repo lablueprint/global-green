@@ -3,9 +3,13 @@
 import React, { useEffect, useState } from 'react';
 import Image from 'next/image';
 import { useSession, signOut } from 'next-auth/react';
+import { FaPencilAlt } from 'react-icons/fa';
 import styles from './page.module.css';
 import defaultProfilePic from './profilepic.jpg';
 // Assuming you have a default profile pic
+import PdfForm from './PdfForm';
+import certData from './certData';
+
 function Profile() {
   const [isEditing, setIsEditing] = useState(false);
   const [profileImage, setProfileImage] = useState(defaultProfilePic);
@@ -99,8 +103,8 @@ function Profile() {
   return (
     userData
       ? (
-        <div style={{ textAlign: 'center', margin: '20px 0' }}>
-          <div className={styles.profile}>Profile</div>
+        <div className={styles.container}>
+          <div className={styles.pageName}> My Profile </div>
           <button type="button" onClick={handleLogout}>
             Logout
           </button>
@@ -115,14 +119,10 @@ function Profile() {
         ) : null
 
       }
+      <div className={styles.container}>
+          <div className={styles.pageName}> My Profile </div>
           <div
-            style={{
-              width: '120px',
-              height: '120px',
-              borderRadius: '50%',
-              display: 'inline-block',
-              position: 'relative',
-            }}
+            className={styles.profileSection}
             onClick={() => document.getElementById('profileImageInput').click()}
           >
             <Image
@@ -141,50 +141,74 @@ function Profile() {
             />
           </div>
           <div className={styles.name}>
+            <div className={styles.preferred}> Preferred Name </div>
             {isEditing ? (
               <input
                 type="text"
                 value={editedName}
                 onChange={handleNameChange}
                 onBlur={handleBlur}
-                className={styles.editableInput}
+                className={styles.editingName}
               />
             ) : (
-              <h1 onClick={handleNameClick}>{userData.userName}</h1>
+              <div className={styles.username} onClick={handleNameClick}>{userData.userName}</div>
             )}
-            <p>
-              Rank:
-              {userData.rank}
-            </p>
-          </div>
-          <div className={styles.badgesSection}>
-            <h2>Badges</h2>
-            <div className={styles.row}>
-              {userData.badges ? userData.badges.map((badge) => (
-                <div key={badge} className={styles.badgeItem}>
-                  <div className={styles.badgeIcon} />
-                  <div className={styles.rowName}>{badge}</div>
-                </div>
-              ))
-                : null}
             </div>
           </div>
-          <div className={styles.coursesSection}>
-            <h2>Courses</h2>
-            <div className={styles.row}>
-              {userData.courses ? userData.courses.map((course) => (
-                <div key={course} className={styles.courseItem}>
-                  <div className={styles.courseIcon} />
-                  <div className={styles.rowName}>{course}</div>
-                </div>
-              ))
-                : null}
-            </div>
-          </div>
+      <div className={styles.accountSection}>
+        <div className={styles.sectionHeader}> Account </div>
+        <div className={styles.accountRow}>
+          <div className={styles.sectionText}> Avatar </div>
+          <FaPencilAlt onClick={() => document.getElementById('profileImageInput').click()} />
         </div>
-      )
-      : null
-
+        <div className={styles.accountRow}>
+          <div className={styles.sectionText}> Password </div>
+          <FaPencilAlt />
+        </div>
+      </div>
+      <div className={styles.certificateSection}>
+        <div className={styles.sectionHeader}> Certificates </div>
+        <div className={styles.row}>
+          {certData.map((certificate, index) => (
+            <div key={index} onClick={PdfForm.generatePdf}>
+              <PdfForm
+                templatePdf="/certificate.pdf"
+                firstName={userData.firstName}
+                lastName={userData.lastName}
+                course={certificate.name}
+                date={certificate.date}
+                duration={certificate.duration}
+              />
+            </div>
+          ))}
+        </div>
+      </div>
+      <div className={styles.coursesSection}>
+        <div className={styles.sectionHeader}>Courses</div>
+        <div className={styles.row}>
+          {userData.courses ? userData.courses.map((course) => (
+            <div key={course} className={styles.courseItem}>
+              <div className={styles.courseIcon} />
+              <div className={styles.rowName}>{course}</div>
+            </div>
+          ))
+            : null}
+        </div>
+      </div>
+      <div className={styles.badgesSection}>
+        <div className={styles.sectionHeader}>Badges</div>
+        <div className={styles.row}>
+          {userData.badges ? userData.badges.map((badge) => (
+            <div key={badge} className={styles.badgeItem}>
+              <div className={styles.badgeIcon} />
+              <div className={styles.rowName}>{badge}</div>
+            </div>
+          ))
+            : null}
+        </div>
+      </div>
+      </div>
+      
   );
 }
 

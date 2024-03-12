@@ -1,0 +1,53 @@
+.WelcomeText {
+  display: flex;
+  flex-direction: column; 
+  padding: 30px;
+  background-color: #ffffff; 
+  text-align: left;
+  width: 100vw;
+  padding-left: 180px;
+  text-indent: 40px;
+
+}
+
+.landingPage {
+  display: flex;
+  flex-direction: column;
+  align-items: center; 
+}
+
+.lpbuttoncontainer {
+display: flex;
+align-items: center;
+justify-content: space-between;
+position: relative
+}
+
+.lpbutton{
+background-color: #f0f0f0;
+border-radius: 27%;
+color: #000000;
+margin-right: 500px;
+transform: translateY(70%);
+width: 140px;
+height: 35px;
+font-size: 12px;
+font-family: "Nimbus", "Sans Bold", serif;
+font-weight: bold;
+text-transform: capitalize;
+display: flex;
+}
+
+.landingpageImage{
+display: flex;
+margin-left: 40px;
+}
+
+.enterGardenText{
+display: flex;
+color: #000000;
+font-size: 19px;
+font-family: "Nimbus", "Sans Bold", serif;
+margin-right: -180px;
+margin-top: 2px;
+}

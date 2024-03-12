@@ -1,7 +1,9 @@
 import { Inter } from 'next/font/google';
+import NavBar from './components/navbar';
 import './globals.css';
 import { getServerSession } from 'next-auth';
 import SessionProvider from './components/SessionProvider';
+import styles from './page.module.css'
 
 const inter = Inter({ subsets: ['latin'] });
 
@@ -17,8 +19,10 @@ export default async function RootLayout({ children }) {
     <html lang="en">
       <body className={inter.className}>
         <SessionProvider session={session}>
-
-          {children}
+          <div className={styles.wrapper}>
+            <NavBar />
+            {children}
+          </div>
         </SessionProvider>
       </body>
     </html>

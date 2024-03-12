@@ -41,7 +41,13 @@ function CourseDisplay() {
       </div>
       <div className={styles.courseLayout}>
         {filteredData.map((course) => (
-          <CourseCard name={course.name} duration={course.duration} progress={course.progress} />
+          <CourseCard
+            name={course.name}
+            duration={course.duration}
+            progress={course.progress}
+            color={course.color}
+            background={course.background}
+          />
         ))}
       </div>
     </div>

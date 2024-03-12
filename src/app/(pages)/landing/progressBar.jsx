@@ -4,7 +4,9 @@ import LinearProgress from '@mui/material/LinearProgress';
 import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
 
-function LinearProgressWithLabel({ value, x, y }) {
+function LinearProgressWithLabel({
+  value, x, y, color,
+}) {
   return (
     <Box sx={{
       display: 'flex', justifyContent: 'center', width: '100%',
@@ -21,7 +23,7 @@ function LinearProgressWithLabel({ value, x, y }) {
             height: '10px',
             backgroundColor: 'white',
             '& .MuiLinearProgress-bar': {
-              backgroundColor: 'green',
+              backgroundColor: color,
               borderRadius: 5,
             },
           }}
@@ -55,12 +57,15 @@ LinearProgressWithLabel.propTypes = {
   value: PropTypes.number.isRequired,
   x: PropTypes.number.isRequired,
   y: PropTypes.number.isRequired,
+  color: PropTypes.string.isRequired,
 };
 
-function LinearWithValueLabel({ value, x, y }) {
+function LinearWithValueLabel({
+  value, x, y, color,
+}) {
   return (
     <Box sx={{ width: '100%' }}>
-      <LinearProgressWithLabel value={value} x={x} y={y} />
+      <LinearProgressWithLabel value={value} x={x} y={y} color={color} />
     </Box>
   );
 }

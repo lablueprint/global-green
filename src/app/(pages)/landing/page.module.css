@@ -1,64 +1,73 @@
-.welcome{
-  display: flex; 
-  flex-direction: row;
-}
-
-.banner {
-  padding: 40px;
-}
-
 .landingPage {
   display: flex;
   flex-direction: column;
   align-items: left; 
-  padding: 40px;
+  padding: 70px;
+}
+
+.userName{
+  color: green;
+}
+
+.welcome{
+  display: flex; 
+  gap: 5px;
+  flex-direction: row;
 }
 
 .imageGarden{
   display: flex;
-  gap: 30px;
+  gap: 40px;
 }
 
 .garden{
-  border: 2px solid black;
-  padding: 30px 30px;
+  padding: 30px 40px;
   border-radius: 15px;
-  background-color: rgb(206, 202, 202);
+  background-color: rgb(237, 234, 234);
+  width: 400px;
 }
 
 .gardenInfo{
-  font-size: 20px;
+  font-size: 18px;
+  color: gray;
   margin: 2px;
+  padding: 2px;
 }
 
 .enterGarden {
+  cursor: pointer;
   border: 2px solid green;
+  background: green;
+  color: white;
   border-radius: 20px;
+  width: 200px;
   text-align: center;
   margin-top: 20px;
+  padding: 10px 5px;
 }
 
 /* whole course part */
 .courseContainer {
-  padding: 40px;
+  align-items: left;
+  padding-top: 40px;
 }
 
 /* course layout */
 .courseLayout{
   display: flex;
-  flex-wrap: wrap; 
-  align-items: center;
+  flex-wrap: wrap;
   gap: 20px;
 }
 
 /* course toggle */
 .courseToggle {
+  cursor: pointer;
   display: flex;
   gap: 20px;
   color: gray;
   border-bottom: 2px solid gray;
-  padding: 5px;
   margin-bottom: 30px;
+  position: relative;
 }
 
 .active {
@@ -69,11 +78,11 @@
 
 /* course cards */
 .courseCard{
+  cursor: pointer;
   display: flex; 
   flex-direction: column;
-  flex: 0 0 calc(28% - 20px);
+  flex: 0 0 250px;
   justify-content: space-between;
-  border: 2px solid black;
   border-radius: 10px;
   padding: 20px;
   height: 150px;
@@ -96,8 +105,56 @@
 .courseDuration{
   border-radius: 10px;
   width: 40px;
-  background-color: rgb(207, 187, 187);
   text-align: center;
   font-size: 14px;
   padding: 2px 5px;
+}
+
+.filterItem {
+  cursor: pointer;
+}
+
+.filterItem:hover {
+  text-decoration: none;
+}
+
+.active {
+  color: green;
+}
+
+.active::after{
+  content: ''; 
+  display: block;
+  border-bottom: 2px solid green;
+  margin-top: 5px;
+}
+
+@media (max-width: 800px) {
+  .imageGarden{
+    display: flex; 
+    flex-direction: column;
+  }
+
+  .image {
+    width: 90%; 
+    max-width: 700px;
+    height: auto;
+  }
+  
+  .garden{
+    width: 90%;
+    max-width: 400px;
+    font-size: 14px;
+  }
+
+  .gardenInfo{
+    width: 100%;
+    font-size: 12px;
+  }
+
+  .enterGarden {
+    width: 100px; 
+    padding: 5px; 
+    font-size: 14px;
+  }
 }

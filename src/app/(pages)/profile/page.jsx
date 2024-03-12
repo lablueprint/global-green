@@ -117,98 +117,97 @@ function Profile() {
             </h2>
           </div>
         ) : null
-
-      }
-      <div className={styles.container}>
-          <div className={styles.pageName}> My Profile </div>
-          <div
-            className={styles.profileSection}
-            onClick={() => document.getElementById('profileImageInput').click()}
-          >
-            <Image
-              src={profileImage}
-              alt="Profile"
-              width={120}
-              height={120}
-              style={{ borderRadius: '50%' }}
-            />
-            <input
-              id="profileImageInput"
-              type="file"
-              accept="image/*"
-              style={{ display: 'none' }}
-              onChange={handleChangeProfileImage}
-            />
-          </div>
-          <div className={styles.name}>
-            <div className={styles.preferred}> Preferred Name </div>
-            {isEditing ? (
+        }
+          <div className={styles.container}>
+            <div className={styles.pageName}> My Profile </div>
+            <div
+              className={styles.profileSection}
+              onClick={() => document.getElementById('profileImageInput').click()}
+            >
+              <Image
+                src={profileImage}
+                alt="Profile"
+                width={120}
+                height={120}
+                style={{ borderRadius: '50%' }}
+              />
               <input
-                type="text"
-                value={editedName}
-                onChange={handleNameChange}
-                onBlur={handleBlur}
-                className={styles.editingName}
+                id="profileImageInput"
+                type="file"
+                accept="image/*"
+                style={{ display: 'none' }}
+                onChange={handleChangeProfileImage}
               />
-            ) : (
-              <div className={styles.username} onClick={handleNameClick}>{userData.userName}</div>
-            )}
+            </div>
+            <div className={styles.name}>
+              <div className={styles.preferred}> Preferred Name </div>
+              {isEditing ? (
+                <input
+                  type="text"
+                  value={editedName}
+                  onChange={handleNameChange}
+                  onBlur={handleBlur}
+                  className={styles.editingName}
+                />
+              ) : (
+                <div className={styles.username} onClick={handleNameClick}>{userData.userName}</div>
+              )}
             </div>
           </div>
-      <div className={styles.accountSection}>
-        <div className={styles.sectionHeader}> Account </div>
-        <div className={styles.accountRow}>
-          <div className={styles.sectionText}> Avatar </div>
-          <FaPencilAlt onClick={() => document.getElementById('profileImageInput').click()} />
-        </div>
-        <div className={styles.accountRow}>
-          <div className={styles.sectionText}> Password </div>
-          <FaPencilAlt />
-        </div>
-      </div>
-      <div className={styles.certificateSection}>
-        <div className={styles.sectionHeader}> Certificates </div>
-        <div className={styles.row}>
-          {certData.map((certificate, index) => (
-            <div key={index} onClick={PdfForm.generatePdf}>
-              <PdfForm
-                templatePdf="/certificate.pdf"
-                firstName={userData.firstName}
-                lastName={userData.lastName}
-                course={certificate.name}
-                date={certificate.date}
-                duration={certificate.duration}
-              />
+          <div className={styles.accountSection}>
+            <div className={styles.sectionHeader}> Account </div>
+            <div className={styles.accountRow}>
+              <div className={styles.sectionText}> Avatar </div>
+              <FaPencilAlt onClick={() => document.getElementById('profileImageInput').click()} />
             </div>
-          ))}
-        </div>
-      </div>
-      <div className={styles.coursesSection}>
-        <div className={styles.sectionHeader}>Courses</div>
-        <div className={styles.row}>
-          {userData.courses ? userData.courses.map((course) => (
-            <div key={course} className={styles.courseItem}>
-              <div className={styles.courseIcon} />
-              <div className={styles.rowName}>{course}</div>
+            <div className={styles.accountRow}>
+              <div className={styles.sectionText}> Password </div>
+              <FaPencilAlt />
             </div>
-          ))
-            : null}
-        </div>
-      </div>
-      <div className={styles.badgesSection}>
-        <div className={styles.sectionHeader}>Badges</div>
-        <div className={styles.row}>
-          {userData.badges ? userData.badges.map((badge) => (
-            <div key={badge} className={styles.badgeItem}>
-              <div className={styles.badgeIcon} />
-              <div className={styles.rowName}>{badge}</div>
+          </div>
+          <div className={styles.certificateSection}>
+            <div className={styles.sectionHeader}> Certificates </div>
+            <div className={styles.row}>
+              {certData.map((certificate, index) => (
+                <div key={index} onClick={PdfForm.generatePdf}>
+                  <PdfForm
+                    templatePdf="/certificate.pdf"
+                    firstName={userData.firstName}
+                    lastName={userData.lastName}
+                    course={certificate.name}
+                    date={certificate.date}
+                    duration={certificate.duration}
+                  />
+                </div>
+              ))}
             </div>
-          ))
-            : null}
+          </div>
+          <div className={styles.coursesSection}>
+            <div className={styles.sectionHeader}>Courses</div>
+            <div className={styles.row}>
+              {userData.courses ? userData.courses.map((course) => (
+                <div key={course} className={styles.courseItem}>
+                  <div className={styles.courseIcon} />
+                  <div className={styles.rowName}>{course}</div>
+                </div>
+              ))
+                : null}
+            </div>
+          </div>
+          <div className={styles.badgesSection}>
+            <div className={styles.sectionHeader}>Badges</div>
+            <div className={styles.row}>
+              {userData.badges ? userData.badges.map((badge) => (
+                <div key={badge} className={styles.badgeItem}>
+                  <div className={styles.badgeIcon} />
+                  <div className={styles.rowName}>{badge}</div>
+                </div>
+              ))
+                : null}
+            </div>
+          </div>
         </div>
-      </div>
-      </div>
-      
+      ) : null
   );
 }
 

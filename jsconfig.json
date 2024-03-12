@@ -5,6 +5,7 @@
       "@helpers/*": ["./helpers/*"],
       "@models/*": ["./models/*"],
       "@api/*": ["./api/*"],
+      "@libs/*": ["./libs/*"],
     }
   }
 }

@@ -2,9 +2,13 @@
 
 import React, { useEffect, useState } from 'react';
 import Image from 'next/image';
-import NavBar from '@/app/components/navbar';
+import { useSession, signOut } from 'next-auth/react';
+import { FaPencilAlt } from 'react-icons/fa';
 import styles from './page.module.css';
-import defaultProfilePic from './profilepic.jpg'; // Assuming you have a default profile pic
+import defaultProfilePic from './profilepic.jpg';
+// Assuming you have a default profile pic
+import PdfForm from './PdfForm';
+import certData from './certData';
 
 function Profile() {
   const [isEditing, setIsEditing] = useState(false);
@@ -12,18 +16,30 @@ function Profile() {
   const [editedName, setEditedName] = useState('');
   const [userData, setData] = useState({});
 
-  const getUserDetails = async () => {
-    const res = await fetch('/api/users/me');
-    const data = await res.json();
+  const { data: session } = useSession();
+
+  const getUserDetails = async (id) => {
+    if (!id) return;
+    const response = await fetch(
+      '/api/users/me',
+      {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ id }),
+      },
+    );
+
+    const data = await response.json();
     setData(data.user);
     setEditedName(data.user.userName);
-    // eslint-disable-next-line no-console
-    console.log(data.user);
   };
 
   useEffect(() => {
-    getUserDetails();
-  }, []);
+    console.log('session', session);
+    if (session) getUserDetails(session.user.id);
+  }, [session]);
 
   const updateUserData = (data) => {
     // update the user data in the database, make sure only the first user is updated.
@@ -36,7 +52,7 @@ function Profile() {
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ userName: data.userName }),
+        body: JSON.stringify({ userName: data.userName, userId: data._id }),
       });
       const res = await response.json();
       // eslint-disable-next-line no-console
@@ -79,77 +95,119 @@ function Profile() {
     }
   };
 
+  const handleLogout = async () => {
+    await signOut();
+    window.location.href = '/login';
+  };
+
   return (
-    <div style={{ textAlign: 'center', margin: '20px 0' }}>
-      <NavBar />
-      <div className={styles.profile}>Profile</div>
-      <div
-        style={{
-          width: '120px',
-          height: '120px',
-          borderRadius: '50%',
-          display: 'inline-block',
-          position: 'relative',
-        }}
-        onClick={() => document.getElementById('profileImageInput').click()}
-      >
-        <Image
-          src={profileImage}
-          alt="Profile"
-          width={120}
-          height={120}
-          style={{ borderRadius: '50%' }}
-        />
-        <input
-          id="profileImageInput"
-          type="file"
-          accept="image/*"
-          style={{ display: 'none' }}
-          onChange={handleChangeProfileImage}
-        />
-      </div>
-      <div className={styles.name}>
-        {isEditing ? (
-          <input
-            type="text"
-            value={editedName}
-            onChange={handleNameChange}
-            onBlur={handleBlur}
-            className={styles.editableInput}
-          />
-        ) : (
-          <h1 onClick={handleNameClick}>{userData.userName}</h1>
-        )}
-        <p>
-          Rank:
-          {userData.rank}
-        </p>
-      </div>
-      <div className={styles.badgesSection}>
-        <h2>Badges</h2>
-        <div className={styles.row}>
-          {userData.badges ? userData.badges.map((badge) => (
-            <div key={badge} className={styles.badgeItem}>
-              <div className={styles.badgeIcon} />
-              <div className={styles.rowName}>{badge}</div>
+    userData
+      ? (
+        <div className={styles.container}>
+          <div className={styles.pageName}> My Profile </div>
+          <button type="button" onClick={handleLogout}>
+            Logout
+          </button>
+          {
+        session ? (
+          <div>
+            <h2>
+              Welcome,
+              {session.user.userName}
+            </h2>
+          </div>
+        ) : null
+        }
+          <div className={styles.container}>
+            <div className={styles.pageName}> My Profile </div>
+            <div
+              className={styles.profileSection}
+              onClick={() => document.getElementById('profileImageInput').click()}
+            >
+              <Image
+                src={profileImage}
+                alt="Profile"
+                width={120}
+                height={120}
+                style={{ borderRadius: '50%' }}
+              />
+              <input
+                id="profileImageInput"
+                type="file"
+                accept="image/*"
+                style={{ display: 'none' }}
+                onChange={handleChangeProfileImage}
+              />
             </div>
-          ))
-            : null}
-        </div>
-      </div>
-      <div className={styles.coursesSection}>
-        <h2>Courses</h2>
-        <div className={styles.row}>
-          {userData.courses ? userData.courses.map((course) => (
-            <div key={course} className={styles.courseItem}>
-              <div className={styles.courseIcon} />
-              <div className={styles.rowName}>{course}</div>
+            <div className={styles.name}>
+              <div className={styles.preferred}> Preferred Name </div>
+              {isEditing ? (
+                <input
+                  type="text"
+                  value={editedName}
+                  onChange={handleNameChange}
+                  onBlur={handleBlur}
+                  className={styles.editingName}
+                />
+              ) : (
+                <div className={styles.username} onClick={handleNameClick}>{userData.userName}</div>
+              )}
             </div>
-          ))
-            : null}
+          </div>
+          <div className={styles.accountSection}>
+            <div className={styles.sectionHeader}> Account </div>
+            <div className={styles.accountRow}>
+              <div className={styles.sectionText}> Avatar </div>
+              <FaPencilAlt onClick={() => document.getElementById('profileImageInput').click()} />
+            </div>
+            <div className={styles.accountRow}>
+              <div className={styles.sectionText}> Password </div>
+              <FaPencilAlt />
+            </div>
+          </div>
+          <div className={styles.certificateSection}>
+            <div className={styles.sectionHeader}> Certificates </div>
+            <div className={styles.row}>
+              {certData.map((certificate, index) => (
+                <div key={index} onClick={PdfForm.generatePdf}>
+                  <PdfForm
+                    templatePdf="/certificate.pdf"
+                    firstName={userData.firstName}
+                    lastName={userData.lastName}
+                    course={certificate.name}
+                    date={certificate.date}
+                    duration={certificate.duration}
+                  />
+                </div>
+              ))}
+            </div>
+          </div>
+          <div className={styles.coursesSection}>
+            <div className={styles.sectionHeader}>Courses</div>
+            <div className={styles.row}>
+              {userData.courses ? userData.courses.map((course) => (
+                <div key={course} className={styles.courseItem}>
+                  <div className={styles.courseIcon} />
+                  <div className={styles.rowName}>{course}</div>
+                </div>
+              ))
+                : null}
+            </div>
+          </div>
+          <div className={styles.badgesSection}>
+            <div className={styles.sectionHeader}>Badges</div>
+            <div className={styles.row}>
+              {userData.badges ? userData.badges.map((badge) => (
+                <div key={badge} className={styles.badgeItem}>
+                  <div className={styles.badgeIcon} />
+                  <div className={styles.rowName}>{badge}</div>
+                </div>
+              ))
+                : null}
+            </div>
+          </div>
         </div>
-      </div>
-    </div>
+      ) : null
   );
 }
 

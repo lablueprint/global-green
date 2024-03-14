@@ -53,7 +53,7 @@ export async function POST(request) {
       password: hashedPassword,
       badges: [],
       courses: [],
-      rank: 0,
+      points: 0,
       verified: false,
       verifyExpires: new Date(Date.now() + 300000),
     });

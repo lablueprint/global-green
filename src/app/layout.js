@@ -1,7 +1,9 @@
 import { Inter } from 'next/font/google';
-import NavBar from './components/navbar';
 import './globals.css';
-import styles from './page.module.css'
+import { getServerSession } from 'next-auth';
+import SessionProvider from './components/SessionProvider';
+import NavBar from './components/navbar';
+import styles from './page.module.css';
 
 const inter = Inter({ subsets: ['latin'] });
 
@@ -11,13 +13,20 @@ export const metadata = {
 };
 
 /* eslint react/prop-types: 0 */
-export default function RootLayout({ children }) {
+export default async function RootLayout({ children }) {
+  const session = await getServerSession();
   return (
     <html lang="en">
-      <div className={styles.wrapper}>
-        <NavBar />
-        <body className={inter.className}>{children}</body>
-      </div>
+      <body className={inter.className}>
+        <SessionProvider session={session}>
+          <div className={styles.wrapper}>
+            <NavBar />
+            <div>
+              {children}
+            </div>
+          </div>
+        </SessionProvider>
+      </body>
     </html>
   );
 }

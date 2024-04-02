@@ -13,6 +13,19 @@
     font-family: 'Work Sans', sans-serif;
 }
 
+.navBottom {
+    position: absolute;
+    bottom: 0;
+}
+
+.personIcon {
+    border-radius: 50%;
+    height: 50px;
+    width: 50px;
+    justify-self: center;
+    background-color: white;
+}
+
 .link {
     text-align:left;
     background-color: #d9d9d9;

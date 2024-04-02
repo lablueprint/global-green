@@ -1,0 +1,159 @@
+.daniel {
+  text-align: center;
+}
+
+.exampleText {
+  font-size: 50px;
+  color: rgb(41, 15, 107);
+}
+
+.lessonImage {
+  width: 74px;
+  height: 74px;
+  flex-shrink: 0;
+  margin-right: 40px;
+  margin-left: 20px;
+}
+
+.leafImage {
+  width: 16.995px;
+  height: 16.992px;
+  align-items: center;
+}
+
+.leafPoints {
+  display: flex;
+  flex-direction: row;
+  padding-top: 35px;
+  align-items: center;
+  gap: 10px;
+}
+
+.completedleafPoints {
+  width: 231px;
+  height: 43px;
+  flex-shrink: 0;
+  border-radius: 16px;
+  background-color: white;
+  display: flex;
+  border: 2px solid black;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+
+  /* margin-left: 100px; */
+}
+
+.points {
+  color: #000;
+
+  font-family: Inter;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: 100%; /* 16px */
+  letter-spacing: -0.32px;
+  align-items: center;
+}
+
+.overlayText {
+  margin-left: 155px;
+  color: black;
+  transform: translate(-50%, -50%);
+  color: black;
+  font-size: 14px;
+}
+.cardTitle {
+  color: #000;
+
+  font-family: Inter;
+  font-size: 18px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: 100%;
+  letter-spacing: -0.36px;
+}
+
+.completedcardTitle {
+  color: #000;
+
+  font-family: Inter;
+  font-size: 18px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: 100%;
+  letter-spacing: -0.36px;
+}
+
+.cardBorder {
+  border-radius: 30px;
+  width: 622px;
+  height: 155px;
+  border-radius: 12px;
+  border: 0.697px solid #a3a3a3;
+  background: #fff;
+  padding: 28px 33px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 10px;
+  margin: 40px;
+}
+
+.completedcardBorder {
+  border-radius: 30px;
+  width: 622px;
+  height: 155px;
+  border-radius: 12px;
+  border: 0.697px solid #a3a3a3;
+  background: #fff;
+  padding: 28px 33px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 10px;
+  background-color: #b8d1bd;
+  margin: 36px;
+}
+
+.progressBar {
+  width: 334px;
+  height: 24px;
+  background-color: #e0e0e0;
+  border-radius: 5px;
+  overflow: hidden;
+  border-radius: 16px;
+  border: 2px solid #000;
+}
+.cardcontainer {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 36px;
+}
+
+.progressFill {
+  height: 100%;
+  background-color: #b8d1bd;
+  transition: width 0.3s ease;
+  border-radius: 16px;
+}
+
+.cardInner {
+  display: flex;
+  padding: 12px 0px;
+  align-items: center;
+  gap: 40px;
+}
+
+.check {
+  transform: scale(1.5);
+  width: 43px;
+  height: 43px;
+  font-size: 43px;
+  flex-shrink: 0;
+  margin-top: -15px;
+  margin-left: 30px;
+  position: absolute;
+}

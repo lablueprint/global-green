@@ -4,30 +4,43 @@ import LinearProgress from '@mui/material/LinearProgress';
 import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
 
-function LinearProgressWithLabel({ value, x, y }) {
+function LinearProgressWithLabel({
+  value, x, y, color,
+}) {
   return (
-    <Box sx={{ display: 'flex', justifyContent: 'center', width: '100%' }}>
-      <Box sx={{ width: '85%', mr: 0, ml: 8 }}>
+    <Box sx={{
+      display: 'flex', justifyContent: 'center', width: '100%',
+    }}
+    >
+      <Box sx={{ width: '100%', margin: 0.75 }}>
         <LinearProgress
           variant="determinate"
-          value={value}
+          value={value / 5 * 100}
           sx={{
             borderRadius: 5,
             border: '1px solid black',
+            width: '100px',
             height: '10px',
-            backgroundColor: '#ffffff',
+            backgroundColor: 'white',
             '& .MuiLinearProgress-bar': {
-              backgroundColor: '#1D594B',
+              backgroundColor: color,
               borderRadius: 5,
             },
           }}
         />
       </Box>
-      <Box sx={{ minWidth: 35, ml: 1, position: 'relative' }}>
+      <Box sx={{
+        minWidth: 35,
+        position: 'relative',
+        display: 'flex',
+        justifyContent: 'center',
+        marginTop: 0.5,
+      }}
+      >
         <Typography
           style={{
-            fontSize: '0.60rem',
-            color: '#606060',
+            color: 'black',
+            fontSize: '14px',
             lineHeight: '1',
             fontFamily: 'Arial',
             textAlign: 'left',
@@ -44,12 +57,15 @@ LinearProgressWithLabel.propTypes = {
   value: PropTypes.number.isRequired,
   x: PropTypes.number.isRequired,
   y: PropTypes.number.isRequired,
+  color: PropTypes.string.isRequired,
 };
 
-function LinearWithValueLabel({ value, x, y }) {
+function LinearWithValueLabel({
+  value, x, y, color,
+}) {
   return (
     <Box sx={{ width: '100%' }}>
-      <LinearProgressWithLabel value={value} x={x} y={y} />
+      <LinearProgressWithLabel value={value} x={x} y={y} color={color} />
     </Box>
   );
 }

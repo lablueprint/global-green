@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useState } from 'react';
-// import styles from './page.module.css';
+import styles from './page.module.css';
 
 function Example() {
   const [userName, setUsername] = useState('');
@@ -61,20 +61,19 @@ function Example() {
     }
   };
   return (
-    <div>
-      <h1>{loading ? 'Processing' : 'Login'}</h1>
-      <form>
-        {/* eslint-disable-next-line jsx-a11y/label-has-associated-control */}
-        <label name="username">Username or Email:</label>
-        <input type="text" id="username" name="username" onChange={usernameChange} />
-        {/* eslint-disable-next-line jsx-a11y/label-has-associated-control */}
-        <label name="pass">Password:</label>
-        <input type="password" id="pass" name="pass" onChange={passwordChange} />
-        {/* <input type="email" id="email" name="email" required />
-        <input type="submit" value="Submit" /> */}
-        <button type="submit" onClick={submitLog}>Submit</button>
+    <div className={styles.exampleContainer}>
+      <form className={styles.exampleForm}>
+      <h1 className={styles.exampleTitle}>Sign In</h1>
+        <div className={styles.formGroup}>
+          <label htmlFor="username" className={styles.exampleLabel}>Username or Email:</label>
+          <input type="text" id="username" name="username" onChange={usernameChange} className={styles.exampleInput} placeholder="Enter your username" />
+        </div>
+        <div className={styles.formGroup}>
+          <label htmlFor="pass" className={styles.exampleLabel}>Password:</label>
+          <input type="password" id="pass" name="pass" onChange={passwordChange} className={styles.exampleInput} placeholder="Enter your password" />
+        </div>
+        <button type="submit" onClick={submitLog} className={styles.exampleSubmitButton}>Sign In</button>
       </form>
-
     </div>
   );
 }

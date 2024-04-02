@@ -1,12 +1,73 @@
-.wrapper {
-    text-align: center;
+.exampleContainer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between; 
+  font-family: 'Arial', sans-serif;
+  max-width: 800px; 
+  margin: 0 auto;
+  padding: 20px;
+  gap: 20px; 
 }
 
-.exampleText {
-    font-size: 50px;
+.exampleImageContainer {
+  flex: 1; 
+  text-align: left;
 }
 
-.anotherOne {
-    font-size: 20px;
-    color: green;
+.alignImage {
+  width: 100%; 
+  max-width: 100%; 
+  height: auto; 
+}
+
+.exampleForm {
+  display: flex;
+  flex-direction: column;
+  flex: 1; 
+}
+
+.exampleInput {
+  padding: 10px;
+  margin: 10px 0;
+  border: 1px solid #F5F5F5;
+  border-radius: 15px;
+  background-color: #F5F5F5;
+  display: flex;
+  padding: 12px 24px;
+  align-items: center;
+  width: 100%;
+}
+
+.exampleSubmitButton {
+  background-color: #4CAF50;
+  color: white;
+  padding: 14px 20px;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  width: 100px;
+  margin: 0 auto;
+}
+
+.exampleSubmitButton:hover {
+  background-color: #45a049;
+}
+
+.exampleLabel {
+  text-align: left;
+  display: block;
+  margin-top: 10px;
+  margin-bottom: 10px;
+  font-size: 14px;
+  color: #0D0D0D70; 
+}
+
+.exampleTitle {
+  color: #519546;
+  text-align: center;
+  font-family: "Arial";
+  font-size: 40px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: 100%;
 }

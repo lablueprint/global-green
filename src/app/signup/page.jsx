@@ -1,7 +1,6 @@
 'use client';
-
 import React, { useState } from 'react';
-// import styles from './page.module.css';
+import styles from './page.module.css';
 
 function Example() {
   const [firstName, setFirstName] = useState('');
@@ -123,52 +122,61 @@ function Example() {
     }
   };
   return (
-    <div>
-      <form>
-        <label htmlFor="firstName">
+    <div className={styles.exampleContainer}>
+      <div className={styles.exampleImageContainer}>
+        <img
+          src="signupimage.png"
+          alt= "Sign Up Image"
+          width={600}
+          height={600}
+          className={styles.alignImage} />
+      </div>
+      <form className={styles.exampleForm} onSubmit={submitLog}>
+        <h2 className={styles.exampleTitle}>Create your account</h2>
+        <label htmlFor="firstName" className={styles.exampleLabel}>
           First name:
           {' '}
           <br />
-          <input type="text" id="firstName" name="firstName" onChange={firstNameChange} />
+          <input type="text" id="firstName" name="firstName" className={styles.exampleInput} onChange={firstNameChange} placeholder="First Name" />
         </label>
         <br />
-        <label htmlFor="lastName">
+
+        <label htmlFor="lastName" className={styles.exampleLabel}>
           Last name:
           <br />
-          <input type="text" id="lastName" name="lastName" onChange={lastNameChange} />
+          <input type="text" id="lastName" name="lastName" className={styles.exampleInput} onChange={lastNameChange} placeholder="Last Name" />
           <br />
         </label>
-        {/* eslint-disable-next-line jsx-a11y/label-has-associated-control */}
-        <label type="eAddress">
+
+        <label htmlFor="email" className={styles.exampleLabel}>
           Email Address:
           <br />
-
-          <input type="email" id="email" name="email" onChange={emailChange} />
+          <input type="email" id="email" name="email" className={styles.exampleInput} onChange={emailChange} placeholder="Enter Your Email Address" />
           <br />
         </label>
-        <label htmlFor="userName">
+
+        <label htmlFor="userName" className={styles.exampleLabel}>
           Username:
           <br />
-          <input type="text" id="userName" name="userName" onChange={userNameChange} />
-          <br />
-        </label>
-        {/* eslint-disable-next-line jsx-a11y/label-has-associated-control */}
-        <label name="pass">
-          Password:
-          <br />
-          <input type="password" id="pass" name="pass" onChange={passwordChange} />
-          <br />
-        </label>
-        {/* eslint-disable-next-line jsx-a11y/label-has-associated-control */}
-        <label name="confirmPass">
-          Confirm Password:
-          <br />
-          <input type="password" id="confirmPass" name="confirmPass" onChange={confirmPasswordChange} />
+          <input type="text" id="userName" name="userName" className={styles.exampleInput} onChange={userNameChange} placeholder="Enter Your Username"/>
           <br />
         </label>
 
-        <input type="submit" value="Submit" onClick={submitLog} />
-        <br />
+        <label htmlFor="pass" className={styles.exampleLabel}>
+          Password:
+          <br />
+          <input type="password" id="pass" name="pass" className={styles.exampleInput} onChange={passwordChange} placeholder="Enter Your Password" />
+          <br />
+        </label>
+        {/* eslint-disable-next-line jsx-a11y/label-has-associated-control */}
+        <label htmlFor="confirmPass" className={styles.exampleLabel}>
+          Confirm Password:
+          <br />
+          <input type="password" id="confirmPass" name="confirmPass" className={styles.exampleInput} onChange={confirmPasswordChange} placeholder="Confirm Your Password"/>
+          <br />
+        </label>
+
+        <button type="submit" onClick={submitLog} className={styles.exampleSubmitButton}>Submit</button>
       </form>
     </div>
   );

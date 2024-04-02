@@ -1,54 +1,53 @@
 .exampleContainer {
-    display: flex;
-    justify-content: space-between; 
-    font-family: 'Arial', sans-serif;
-    max-width: 800px; 
-    margin: 0 auto;
-    padding: 20px;
-    gap: 20px; 
-    font-size:14px;
-    color:#ccc
+  display: flex;
+  justify-content: space-between; 
+  font-family: 'Arial', sans-serif;
+  max-width: 800px; 
+  margin: 0 auto;
+  padding: 20px;
+  gap: 20px; 
+  font-size:14px;
+  color:#ccc
 }
 
 .exampleInput {
-  margin: 10px 0;
-  border: 1px solid #F5F5F5;
-  border-radius: 15px;
-  width: 100%;
-  background-color: #F5F5F5;
-  display: flex;
-  padding: 12px 24px;
-  align-items: center;
-  }
+margin: 10px 0;
+border: 1px solid #F5F5F5;
+border-radius: 15px;
+width: 100%;
+background-color: #F5F5F5;
+display: flex;
+padding: 12px 24px;
+align-items: center;
+}
 
 .exampleSubmitButton {
-    background-color: #519546;
-    color: white;
-    padding: 14px 20px;
-    border: none;
-    border-radius: 10px;
-    cursor: pointer;
-    width: 100px;
-    margin: 0 auto;
+  background-color: #519546;
+  color: white;
+  padding: 14px 20px;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  width: 100px;
+  margin: 0 auto;
 }
 
 .exampleSubmitButton:hover {
-  background-color: #45a049;
+background-color: #45a049;
 }
 
 .exampleForm {
-    display: flex;
-    flex-direction: column;                                         
-    flex: 1; 
+  display: flex;
+  flex-direction: column;                                         
+  flex: 1; 
 }
 
 .exampleTitle {
-    color: #519546;
-    text-align: center;
-    font-family: "Arial";
-    font-size: 40px;
-    font-style: normal;
-    font-weight: 600;
-    line-height: 100%;
+  color: #519546;
+  text-align: center;
+  font-family: "Arial";
+  font-size: 40px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: 100%;
 }
-  

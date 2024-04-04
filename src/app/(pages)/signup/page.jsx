@@ -1,9 +1,10 @@
-"use client";
+'use client';
 
 import React, { useState, useRef } from 'react';
+import Image from 'next/image';
 import { signIn } from 'next-auth/react';
-// import styles from './page.module.css';
 import ReCAPTCHA from 'react-google-recaptcha';
+import styles from './page.module.css';
 
 function Example() {
   const [firstName, setFirstName] = useState('');
@@ -11,7 +12,7 @@ function Example() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
-  const [userName, setUserName] = useState('');=
+  const [userName, setUserName] = useState('');
   // Captcha Related
   const recaptcha = useRef(null);
   const [captchaToken, setCaptchaToken] = useState('');
@@ -28,10 +29,10 @@ function Example() {
     // and send the username and password to the backend
     // if the signup is successful, redirect to the profile page
     try {
-      const response = await fetch("/api/users/signup", {
-        method: "POST",
+      const response = await fetch('/api/users/signup', {
+        method: 'POST',
         headers: {
-          "Content-Type": "application/json",
+          'Content-Type': 'application/json',
         },
         body: JSON.stringify({
           userName, password, firstName, lastName, email, points, captchaToken,
@@ -89,35 +90,34 @@ function Example() {
     let validEntries = true;
 
     // for email input format validation
-    const regex =
-      /^([\w-]+(?:\.[\w-]+)*)@((?:[\w-]+\.)*\w[\w-]{0,66})\.([a-z]{2,6}(?:\.[a-z]{2})?)$/;
-    if (firstName === "" || lastName === "") {
+    const regex = /^([\w-]+(?:\.[\w-]+)*)@((?:[\w-]+\.)*\w[\w-]{0,66})\.([a-z]{2,6}(?:\.[a-z]{2})?)$/;
+    if (firstName === '' || lastName === '') {
       // eslint-disable-next-line no-alert
-      alert("Name is required!");
+      alert('Name is required!');
       validEntries = false;
       return;
     }
     if (!regex.test(email)) {
       // eslint-disable-next-line no-alert
-      alert("Invalid email!");
+      alert('Invalid email!');
       validEntries = false;
       return;
     }
-    if (password === "") {
+    if (password === '') {
       // eslint-disable-next-line no-alert
-      alert("Password is required!");
+      alert('Password is required!');
       validEntries = false;
       return;
     }
     if (password.length < 8) {
       // eslint-disable-next-line no-alert
-      alert("Password needs to be at least 8 characters");
+      alert('Password needs to be at least 8 characters');
       validEntries = false;
       return;
     }
     if (confirmPassword !== password) {
       // eslint-disable-next-line no-alert
-      alert("Password and confirm password fields need to match");
+      alert('Password and confirm password fields need to match');
       validEntries = false;
       return;
     }
@@ -126,19 +126,31 @@ function Example() {
     }
   };
   return (
-    <div>
-      <form>
-        <label htmlFor="firstName">
-          First name: <br />
+    <div className={styles.exampleContainer}>
+      <div className={styles.exampleImageContainer}>
+        <Image
+          src="/signupimage.png"
+          alt="Sign Up Image"
+          width={600}
+          height={600}
+          className={styles.alignImage}
+        />
+      </div>
+      <form className={styles.exampleForm}>
+        <label htmlFor="firstName" className={styles.exampleLabel}>
+          First name:
+          {' '}
+          <br />
           <input
             type="text"
             id="firstName"
             name="firstName"
             onChange={firstNameChange}
+            className={styles.exampleInput}
           />
         </label>
         <br />
-        <label htmlFor="lastName">
+        <label htmlFor="lastName" className={styles.exampleLabel}>
           Last name:
           <br />
           <input
@@ -146,17 +158,18 @@ function Example() {
             id="lastName"
             name="lastName"
             onChange={lastNameChange}
+            className={styles.exampleInput}
           />
           <br />
         </label>
         {/* eslint-disable-next-line jsx-a11y/label-has-associated-control */}
-        <label type="eAddress">
+        <label type="eAddress" className={styles.exampleLabel}>
           Email Address:
           <br />
-          <input type="email" id="email" name="email" onChange={emailChange} />
+          <input type="email" id="email" name="email" onChange={emailChange} className={styles.exampleInput} />
           <br />
         </label>
-        <label htmlFor="userName">
+        <label htmlFor="userName" className={styles.exampleLabel}>
           Username:
           <br />
           <input
@@ -164,11 +177,12 @@ function Example() {
             id="userName"
             name="userName"
             onChange={userNameChange}
+            className={styles.exampleInput}
           />
           <br />
         </label>
         {/* eslint-disable-next-line jsx-a11y/label-has-associated-control */}
-        <label name="pass">
+        <label name="pass" className={styles.exampleLabel}>
           Password:
           <br />
           <input
@@ -176,11 +190,12 @@ function Example() {
             id="pass"
             name="pass"
             onChange={passwordChange}
+            className={styles.exampleInput}
           />
           <br />
         </label>
         {/* eslint-disable-next-line jsx-a11y/label-has-associated-control */}
-        <label name="confirmPass">
+        <label name="confirmPass" className={styles.exampleLabel}>
           Confirm Password:
           <br />
           <input
@@ -188,6 +203,7 @@ function Example() {
             id="confirmPass"
             name="confirmPass"
             onChange={confirmPasswordChange}
+            className={styles.exampleInput}
           />
           <br />
         </label>
@@ -200,7 +216,7 @@ function Example() {
           />
         </div>
         <br />
-        <input type="submit" value="Submit" onClick={submitLog} />
+        <input type="submit" value="Submit" onClick={submitLog} className={styles.exampleSubmitButton} />
         <br />
       </form>
     </div>

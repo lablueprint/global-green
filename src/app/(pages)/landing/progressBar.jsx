@@ -9,9 +9,23 @@ function LinearProgressWithLabel({
 }) {
   return (
     <Box sx={{
-      display: 'flex', justifyContent: 'center', width: '100%',
+      display: 'flex',
+      justifyContent: 'space-between',
+      alignItems: 'center',
+      width: '100%',
+      padding: '0 10px',
     }}
     >
+      <Typography
+        style={{
+          color: 'black',
+          fontSize: '14px',
+          lineHeight: '1',
+          fontFamily: 'Arial',
+          textAlign: 'left',
+          flex: 1, // Allow the course name to grow flexibly
+        }}
+      />
       <Box sx={{ width: '100%', margin: 0.75 }}>
         <LinearProgress
           variant="determinate"

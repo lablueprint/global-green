@@ -9,37 +9,37 @@ const courseData = [{
   duration: '2 hrs',
   progress: 1,
   color: yellow,
-  background: '/course/course1.png', 
+  background: '/course/course1.png',
 }, {
   name: 'Eco-friendly Traveling',
   duration: '1 hr',
   progress: 2,
   color: green,
-  background: '/course/course2.png', 
+  background: '/course/course2.png',
 }, {
   name: 'Ocean Pollution',
   duration: '3 hrs',
   progress: 0,
   color: yellow,
-  background: '/course/course3.png', 
+  background: '/course/course3.png',
 }, {
   name: 'Ecosystem Conservation',
   duration: '2 hrs',
   progress: 5,
   color: blue,
-  background: '/course/course4.png', 
+  background: '/course/course4.png',
 }, {
   name: 'Climate Change',
   duration: '2 hrs',
   progress: 5,
   color: green,
-  background: '/course/course5.png', 
+  background: '/course/course5.png',
 }, {
   name: 'Sustainability Lab',
   duration: '2 hrs',
   progress: 5,
   color: blue,
-  background: '/course/course6.png', 
-}, ];
+  background: '/course/course6.png',
+}];
 
 export default courseData;

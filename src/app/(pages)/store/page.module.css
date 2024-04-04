@@ -1,0 +1,55 @@
+.storeItems{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+
+    gap: 1rem;
+    margin: 1rem;
+    padding: 1rem;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+.storeItem{
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+.storeItem img{
+    width: 14em;
+    height: 10em;
+    background-position: center;
+    background-size: contain;
+    background-repeat: no-repeat;
+    padding: 1rem;
+    background-color: lightcyan;
+}
+
+.storeItemPrice{
+    position: absolute;
+    top: 0.5rem;
+    right: 0.5rem;
+    background-color: #000;
+    color: #fff;
+    padding: 0.5rem;
+    border-radius: 0.5em;
+    
+}
+
+.storeItemDetails{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    padding: 1rem;
+    box-sizing: border-box;
+}
+
+.storeItemDetails.bought{
+    background-color: lightgray;
+}

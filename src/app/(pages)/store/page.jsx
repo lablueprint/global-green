@@ -1,10 +1,14 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Button from '@mui/material/Button';
+import { useSession } from 'next-auth/react';
 import styles from './page.module.css';
 
 function Store() {
+  const { data: session } = useSession();
+  const [seeds, setSeeds] = useState(0);
+  const [userId, setUserId] = useState(session ? session.user.id : null);
   const [currentTab, setCurrentTab] = useState('accessories');
 
   const [accessories, setAccessories] = useState([
@@ -45,29 +49,90 @@ function Store() {
 
   const [userAccessories, setUserAccessories] = useState([]);
   const [userBackgrounds, setUserBackgrounds] = useState([]);
+  const getUserDetails = async (id) => {
+    if (!id) return;
+    const response = await fetch(
+      '/api/users/me',
+      {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ id }),
+      },
+    );
 
-  function buyItem(item) {
-    if (item.price > 100) {
+    const data = await response.json();
+    console.log('data', data);
+    setUserAccessories(data.user.accessories ? data.user.accessories : []);
+    setUserBackgrounds(data.user.backgrounds ? data.user.backgrounds : []);
+    setSeeds(data.user.seeds ? data.user.seeds : 50);
+    setUserId(data.user._id);
+  };
+
+  async function updateUserDataInDB(newUserAccessories, newUserBackgrounds, newSeeds) {
+    const response = await fetch('/api/users/me/buy-item', {
+      method: 'PATCH',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        userId,
+        userAccessories: newUserAccessories,
+        userBackgrounds: newUserBackgrounds,
+        seeds: newSeeds,
+      }),
+    });
+    const res = await response.json();
+    console.log('res', res);
+
+    if (res.error) {
       // eslint-disable-next-line no-alert
-      alert('You do not have enough coins');
+      alert(res.error);
+      throw new Error(res.error);
+    }
+
+    // eslint-disable-next-line no-console
+    console.log('Update success', response.data);
+  }
+
+  useEffect(() => {
+    if (session) getUserDetails(session.user.id);
+  }, [session]);
+  function buyItem(item, type) {
+    if (item.price > seeds) {
+      // eslint-disable-next-line no-alert
+      alert('You do not have enough coins. no room for broke kidz');
     } else {
-      // eslint-disable-next-line no-alert
-      alert('Item bought');
-      setUserAccessories([...userAccessories, item]);
+      if (type === 'accessories') {
+        setUserAccessories([...userAccessories, item.name]);
+      }
+      if (type === 'background') {
+        setUserBackgrounds([...userBackgrounds, item.name]);
+      }
+      setSeeds(seeds - item.price);
+      updateUserDataInDB(
+        type === 'accessories' ? [...userAccessories, item.name] : userAccessories,
+        type === 'background' ? [...userBackgrounds, item.name] : userBackgrounds,
+        seeds - item.price,
+      );
     }
   }
 
   function storeItem(item) {
     return (
-      <div className={styles.storeItem}>
+      <div
+        className={styles.storeItem}
+        key={item.name}
+      >
         <img src={item.image} alt={item.name} />
         <div className={styles.storeItemPrice}>
           <span>{item.price}</span>
 
         </div>
-        <div className={`${styles.storeItemDetails} ${userAccessories.includes(item) ? styles.bought : ''}`}>
+        <div className={`${styles.storeItemDetails} ${userAccessories.includes(item.name) || userBackgrounds.includes(item.name) ? styles.bought : ''}`}>
           <span>{item.name}</span>
-          {userAccessories.includes(item) ? (
+          {userAccessories.includes(item.name) || userBackgrounds.includes(item.name) ? (
             <Button
               type="button"
               sx={{
@@ -90,7 +155,7 @@ function Store() {
                 fontFamily: 'inherit',
                 color: 'white',
               }}
-              onClick={() => buyItem(item)}
+              onClick={() => buyItem(item, currentTab)}
             >
               Buy
             </Button>
@@ -119,6 +184,10 @@ function Store() {
   return (
     <div className={styles.store}>
       <h1> Store</h1>
+      <h2>
+        Seeds:
+        {seeds}
+      </h2>
       <div className={styles.storeTabs}>
         <Button
           type="button"

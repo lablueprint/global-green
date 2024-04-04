@@ -6,23 +6,61 @@
 import React, { useState, useEffect } from "react";
 import Image from "next/image";
 import CheckCircleIcon from "@mui/icons-material/CheckCircle";
+import { useSession, signOut } from "next-auth/react";
 import styles from "./page.module.css";
+
 // fetches too many times and numerator
 // how to track points
 function Example() {
   const [challengesArray, setChallengesArray] = useState([]);
+
+  const { data: session } = useSession();
+  // const [isEditing, setIsEditing] = useState(false);
+  // const [profileImage, setProfileImage] = useState(defaultProfilePic);
+  const [userData, setData] = useState({});
+  const [points, setPoints] = useState(0);
+
+  const getUserDetails = async (id) => {
+    if (!id) return;
+    const response = await fetch("/api/users/me", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ id }),
+    }).catch((err) => {
+      console.log("err", err.response.data);
+    });
+
+    const data = await response.json();
+    setData(data);
+
+    setPoints(data.user.points.toString());
+    console.log("here", data);
+    console.log(data.user.points.toString());
+  };
+
+  useEffect(() => {
+    console.log("session", session);
+    if (session) getUserDetails(session.user.id);
+  }, [session]);
   async function fetchData() {
     console.log("fetched");
 
+    const res = await fetch("/api/challenges");
+    const fetchdata = await res.json();
+
+    setChallengesArray(fetchdata);
     // if (localStorage.getItem("mapChallenges")) {
     //   setChallengesArray(JSON.parse(localStorage.getItem("mapChallenges")));
     //   console.log(challengesArray);
     // } else {
     // console.log("else");
-    const res = await fetch("/api/challenges");
-    const fetchdata = await res.json();
-    console.log(fetchdata);
-    setChallengesArray(fetchdata);
+
+    // const resUser = await fetch("/api/users/login");
+    // const fetchUser = await resUser.json();
+    // console.log(fetchUser);
+
     // localStorage.setItem("mapChallenges", JSON.stringify(fetchdata));
     //  }
   }
@@ -32,7 +70,53 @@ function Example() {
     }
   }, []);
 
-  const [points, setPoints] = useState(0);
+  const updateUserData = (data) => {
+    // update the user data in the database, make sure only the first user is updated.
+    async function updateUserDataInDB() {
+      // eslint-disable-next-line no-console
+      // console.log("data", data);
+      // console.log("meow", data["users"]); // help
+
+      const response = await fetch("/api/users/me/update-points", {
+        method: "PATCH",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ points: data.points, userId: data._id }),
+      });
+      const res = await response.json();
+      // eslint-disable-next-line no-console
+      console.log("res", res);
+
+      if (res.error) {
+        // eslint-disable-next-line no-alert
+        alert(res.error);
+        throw new Error(res.error);
+      }
+
+      // eslint-disable-next-line no-console
+      console.log("Update success", response.data);
+    }
+    updateUserDataInDB();
+
+    // update the user data in the local storage
+    localStorage.setItem("userData", JSON.stringify(data));
+  };
+
+  useEffect(() => {
+    console.log("usestatepoints", points);
+    console.log("userDatawithpoints", userData);
+    handlePointsChange();
+  }, [points]);
+
+  const handlePointsChange = () => {
+    userData.points = points;
+
+    localStorage.setItem("userData", JSON.stringify(userData));
+    console.log("updatedpoints", userData.points, "statepoints", points);
+    updateUserData(userData);
+  };
+
   return (
     <>
       {/* <p>{JSON.stringify(challengesArray)}</p> */}
@@ -125,9 +209,11 @@ function Example() {
                               .innerHTML !== "Claimed"
                           ) {
                             setPoints(
-                              points +
+                              Number(points) +
                                 Number(JSON.stringify(challenge.pointsToEarn))
                             );
+                            handlePointsChange();
+
                             document.getElementById(
                               `button_${index}`
                             ).style.backgroundColor = "grey";
@@ -136,9 +222,10 @@ function Example() {
                             ).innerHTML = "Claimed";
 
                             setPoints(
-                              points +
+                              Number(points) +
                                 Number(JSON.stringify(challenge.pointsToEarn))
                             );
+                            handlePointsChange();
                           }
                         }}
                       >

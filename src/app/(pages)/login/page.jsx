@@ -1,8 +1,8 @@
 'use client';
 
 import React, { useEffect, useState } from 'react';
-import styles from './page.module.css';
 import { signIn, useSession } from 'next-auth/react';
+import styles from './page.module.css';
 
 function Example() {
   const [userName, setUsername] = useState('');
@@ -51,28 +51,30 @@ function Example() {
   }, [session]);
 
   return (
-    <div>
-      <h1>{loading ? 'Processing' : 'Login'}</h1>
-      <form>
+    <div className={styles.exampleContainer}>
+      <h1 className={styles.exampleTitle}>{loading ? 'Processing' : 'Login'}</h1>
+      <form className={styles.exampleForm}>
         {/* eslint-disable-next-line jsx-a11y/label-has-associated-control */}
-        <label name="username">Username or Email:</label>
+        <label name="username" className={styles.exampleLabel}>Username or Email:</label>
         <input
           type="text"
           id="username"
           name="username"
           onChange={usernameChange}
+          className={styles.exampleInput}
         />
         {/* eslint-disable-next-line jsx-a11y/label-has-associated-control */}
-        <label name="pass">Password:</label>
+        <label name="pass" className={styles.exampleLabel}>Password:</label>
         <input
           type="password"
           id="pass"
           name="pass"
           onChange={passwordChange}
+          className={styles.exampleInput}
         />
         {/* <input type="email" id="email" name="email" required />
         <input type="submit" value="Submit" /> */}
-        <button type="submit" onClick={submitLog}>
+        <button type="submit" onClick={submitLog} className={styles.exampleSubmitButton}>
           Submit
         </button>
       </form>

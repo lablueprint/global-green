@@ -5,15 +5,23 @@ const quizData = {
       question: 'Match the terms with their definitions',
       type: 'matching',
       terms: [
-        {term: 'Term 1', definition: 'Definition2'},
+        {term: 'Step 1', definition: 'Definition2'},
         {term: 'Term 2', definition: "Definition1"},
         {term: 'Term 3', definition: 'Definition7'},
         {term: 'Term 4', definition: 'Definition4'},
         {term: 'Term 5', definition: 'Definition5'},
         {term: 'Term 6', definition: 'Definition6'},
         {term: 'Term 7', definition: 'Definition3'},
-
       ],
+      // options: [
+      //   {term: 'Term 1'},
+      //   {term: 'Term 2'},
+      //   {term: 'Term 3'},
+      //   {term: 'Term 4'},
+      //   {term: 'Term 5'},
+      //   {term: 'Term 6'},
+      //   {term: 'Term 7'},
+      // ],
       answer: ['Definition1', 'Definition2', 'Definition3', 'Definition4','Definition5','Definition6','Definition7'],
       hint: 'Lorem ipsum dolor sit amet consectetur. Turpis quisque ac porttitor lorem elit.',
       explanation: "This is an explanation. Lorem ipsum dolor sit amet consectetur. Turpis quisque ac porttitor lorem elit."

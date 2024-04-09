@@ -11,6 +11,19 @@ import Box from '@mui/material/Box';
 function LinearProgressWithLabel({ value, x, y }) {
   return (
     <Box sx={{ display: 'flex', justifyContent: 'center', width: '100%'}}>
+      <Box sx={{ minWidth: 35, mr: -7, position: 'relative' }}>
+        <Typography
+          style={{
+            fontSize: '0.60rem',
+            color: '#606060',
+            lineHeight: '1',
+            fontFamily: 'Arial',
+            textAlign: 'right',
+          }}
+        >
+          {`${x}/${y}`}
+        </Typography>
+      </Box>
       <Box sx={{ width: '85%', mr: 0, ml: 8}}>
         <LinearProgress
           variant="determinate"

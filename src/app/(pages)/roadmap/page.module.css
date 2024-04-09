@@ -1,0 +1,54 @@
+/* Roadmap.module.css */
+.container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  .titleContainer {
+    align-self: flex-start;
+    margin: 20px;
+    margin-bottom: -40px;
+  }
+  
+  .title {
+    align-self: flex-start;
+    margin: 20px;
+  }
+  
+  .stepContainer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  .step {
+    width: 200px;
+    height: 200px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 16px;
+    font-weight: bold;
+    position: relative;
+    margin: 20px 0;
+  }
+  
+  .stepCompleted {
+    background-color: #76c893;
+    color: white;
+  }
+  
+  .stepIncomplete {
+    background-color: #ddd;
+    color: black;
+  }
+  
+  .connector {
+    height: 50px;
+    width: 2px;
+    background-color: #ddd;
+    align-self: center;
+  }
+  

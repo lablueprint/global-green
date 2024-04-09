@@ -156,27 +156,27 @@ function Quiz() {
             &#10005;
           </div>
           <div style={{
-            display: 'flex', // Makes the container a flexbox row
-            alignItems: 'flex-start', // Aligns items to the start of the flex direction
+            display: 'flex', 
+            alignItems: 'flex-start', 
           }}
           >
             <div style={{
-              display: 'flex', // Makes this child a flexbox as well
-              flexDirection: 'column', // Arranges content in a column
+              display: 'flex',
+              flexDirection: 'column', 
               fontWeight: 'bold',
               fontSize: '18px',
-              marginTop: '8px', // Space between title and the rest of the content
+              marginTop: '8px', 
               marginRight: '20px',
             }}
             >
               Hint
             </div>
             <div style={{
-              display: 'flex', // Makes this child a flexbox as well
-              flexDirection: 'column', // Arranges content in a column
+              display: 'flex', 
+              flexDirection: 'column', 
               fontSize: '12px',
               color: '#454545',
-              lineHeight: '1.4', // Adjust line height for better readability
+              lineHeight: '1.4', 
             }}
             >
               {message}

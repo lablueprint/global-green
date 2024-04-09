@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import styles from './page.module.css';
 import profileData from './profileData';
 
-function ProfileChange({ onClose }) {
+function ProfilePopup({ onClose }) {
   return (
     <div className={styles.overlay}>
       <div className={styles.popUp}>
@@ -30,4 +30,4 @@ function ProfileChange({ onClose }) {
   );
 }
 
-export default ProfileChange;
+export default ProfilePopup;

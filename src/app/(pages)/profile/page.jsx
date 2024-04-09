@@ -9,8 +9,9 @@ import defaultProfilePic from './profilepic.jpg';
 import PdfForm from './PdfForm';
 import certData from './certData';
 import courseData from '../landing/courseData';
-import ProgressBar from '../landing/progressBar';
-import ProfileChange from './profileChange';
+import ProgressBar from './progressBar';
+import ProfilePopup from './profilePopup';
+import PasswordPopup from './changePasswordPopup';
 
 function Profile() {
   const [isEditing, setIsEditing] = useState(false);
@@ -18,6 +19,7 @@ function Profile() {
   const [editedName, setEditedName] = useState('');
   const [userData, setData] = useState({});
   const [profilePopup, setProfilePopup] = useState(false);
+  const [passwordPopup, setPasswordPopup] = useState(false);
   const [currentPage, setCurrentPage] = useState(0);
 
   const { data: session } = useSession();
@@ -96,8 +98,16 @@ function Profile() {
     setProfilePopup(true);
   };
 
-  const handleClosePopUp = () => {
+  const handleChangePassword = () => {
+    setPasswordPopup(true);
+  };
+
+  const handleCloseProfile = () => {
     setProfilePopup(false);
+  };
+
+  const handleClosePassword = () => {
+    setPasswordPopup(false);
   };
 
   const handleLogout = async () => {
@@ -119,7 +129,8 @@ function Profile() {
         <div className={styles.container}>
           <div className={styles.pageName}> Profile </div>
 
-          {profilePopup && <ProfileChange onClose={handleClosePopUp} />}
+          {profilePopup && <ProfilePopup onClose={handleCloseProfile} />}
+          {passwordPopup && <PasswordPopup onClose={handleClosePassword} />}
 
           <div className={styles.container}>
             <div className={styles.profileSection}>
@@ -157,7 +168,16 @@ function Profile() {
             <div className={styles.sectionHeader}> Certificates </div>
             <div className={styles.row}>
               {displayedCertificates.map((certificate, index) => (
-                <div key={index} onClick={PdfForm.generatePdf} className={styles.certificateItem}>
+                <div
+                  key={index}
+                  onClick={PdfForm.generatePdf}
+                  className={styles.certificateItem}
+                  style={{
+                    backgroundImage: 'url("/certificate.jpg")',
+                    borderRadius: '10px',
+                    backgroundSize: 'cover',
+                  }}
+                >
                   {userData && (
                   <PdfForm
                     templatePdf="/certificate.pdf"
@@ -188,8 +208,8 @@ function Profile() {
             <div className={styles.row}>
               {courseData.map((course) => (
                 <div key={course} className={styles.courseItem}>
-                  <div>{course.name}</div>
-                  <ProgressBar value={course.progress} x={course.progress} y={5} color="green" />
+                  <div className={styles.courseName}>{course.name}</div>
+                  <ProgressBar className={styles.progressBar} value={course.progress} color="green" isPopupDisplayed={profilePopup || passwordPopup} />
                 </div>
               ))}
             </div>
@@ -205,7 +225,10 @@ function Profile() {
                 </div>
               </div>
               <div className={styles.accountCol}>
-                <div className={styles.arrow}>
+                <div
+                  className={styles.arrow}
+                  onClick={handleChangePassword}
+                >
                   {' '}
                   {'>'}
                   {' '}
@@ -214,7 +237,7 @@ function Profile() {
             </div>
             <div className={styles.accountRow}>
               <div className={styles.accountCol}>
-                <div className={styles.sectionText} style={{ color: 'orange' }}>Delete Account</div>
+                <div className={styles.sectionText} style={{ color: 'red' }}>Delete Account</div>
                 <div className={styles.subText}>
                   Permanently delete the account and remove access from all resources
                 </div>

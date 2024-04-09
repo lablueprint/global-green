@@ -1,21 +1,22 @@
 'use client';
 
 import React, { useState } from 'react';
-import Button from '@mui/material/Button';
-import ArrowForwardIcon from '@mui/icons-material/ArrowForward'; // import from Material UI Library
 import Image from 'next/image';
-import { useSession, signOut } from 'next-auth/react';
+import { useSession } from 'next-auth/react';
 import styles from './page.module.css';
 import CourseDisplay from './CourseDisplay';
+import GardenModal from './GardenModal';
 
 function LandingPage() {
   const [currentModule] = useState({ imageUrl: '/landingpageImage.png', name: 'Chinenye Eneh' });
-
+  const [isGardenModalOpen, setIsGardenModalOpen] = useState(false);
   const { data: session } = useSession();
 
   // seeing landing page banner
   return (
     <div className={styles.landingPage}>
+      {isGardenModalOpen && <GardenModal setIsGardenModalOpen={setIsGardenModalOpen} />}
+
       <div className={styles.welcome}>
         <h1>
           Welcome,
@@ -39,7 +40,12 @@ function LandingPage() {
             <div className={styles.gardenInfo}>Started on June 2024</div>
             <div className={styles.gardenInfo}>1 Plant collected</div>
             <div className={styles.gardenInfo}>3 Hours spent in total</div>
-            <div className={styles.enterGarden}>Enter Garden</div>
+            <div
+              onClick={() => setIsGardenModalOpen(true)}
+              className={styles.enterGarden}
+            >
+              Enter Garden
+            </div>
           </div>
         </div>
       </div>

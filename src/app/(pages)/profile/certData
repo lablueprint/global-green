@@ -14,6 +14,29 @@ const certData = [
     date: 'June 24, 2024',
     duration: '1 hr',
   },
+  {
+    name: 'Ecosystem Conservation',
+    date: 'June 18, 2024',
+    duration: '3hr',
+  },
+  {
+    name: 'Climate Change',
+    date: 'June 10, 2024',
+    duration: '2 hrs',
+  }, {
+    name: 'Sustainability Lab',
+    date: 'June 5, 2024',
+    duration: '2 hrs',
+  },
+  {
+    name: 'Climate Change',
+    date: 'June 10, 2024',
+    duration: '2 hrs',
+  }, {
+    name: 'Sustainability Lab',
+    date: 'June 5, 2024',
+    duration: '2 hrs',
+  },
 ];
 
 export default certData;

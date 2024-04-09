@@ -3,17 +3,17 @@ import PropTypes from 'prop-types';
 import LinearProgress from '@mui/material/LinearProgress';
 import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
+import styles from './page.module.css';
 
 function LinearProgressWithLabel({
-  value, x, y, color,
+  value, color, isPopupDisplayed,
 }) {
   return (
     <Box sx={{
       display: 'flex',
-      justifyContent: 'space-between',
+      position: 'relative',
       alignItems: 'center',
       width: '100%',
-      padding: '0 10px',
     }}
     >
       <Typography
@@ -23,17 +23,24 @@ function LinearProgressWithLabel({
           lineHeight: '1',
           fontFamily: 'Arial',
           textAlign: 'left',
-          flex: 1, // Allow the course name to grow flexibly
+          width: '100px',
         }}
       />
-      <Box sx={{ width: '100%', margin: 0.75 }}>
+      <Box
+        sx={{
+          flex: 1,
+          margin: 0.6,
+          zIndex: isPopupDisplayed ? -1 : 1,
+        }}
+        className={`${styles.progressWrapper}`}
+      >
         <LinearProgress
           variant="determinate"
           value={value / 5 * 100}
           sx={{
             borderRadius: 5,
             border: '1px solid black',
-            width: '100px',
+            width: 'calc(100% - 2px)',
             height: '10px',
             backgroundColor: 'white',
             '& .MuiLinearProgress-bar': {
@@ -43,51 +50,28 @@ function LinearProgressWithLabel({
           }}
         />
       </Box>
-      <Box sx={{
-        minWidth: 35,
-        position: 'relative',
-        display: 'flex',
-        justifyContent: 'center',
-        marginTop: 0.5,
-      }}
-      >
-        <Typography
-          style={{
-            color: 'black',
-            fontSize: '14px',
-            lineHeight: '1',
-            fontFamily: 'Arial',
-            textAlign: 'left',
-          }}
-        >
-          {`${x}/${y}`}
-        </Typography>
-      </Box>
     </Box>
   );
 }
 
 LinearProgressWithLabel.propTypes = {
   value: PropTypes.number.isRequired,
-  x: PropTypes.number.isRequired,
-  y: PropTypes.number.isRequired,
   color: PropTypes.string.isRequired,
 };
 
 function LinearWithValueLabel({
-  value, x, y, color,
+  value, color, isPopupDisplayed,
 }) {
   return (
     <Box sx={{ width: '100%' }}>
-      <LinearProgressWithLabel value={value} x={x} y={y} color={color} />
+      <LinearProgressWithLabel value={value} color={color} isPopupDisplayed={isPopupDisplayed} />
     </Box>
   );
 }
 
 LinearWithValueLabel.propTypes = {
   value: PropTypes.number.isRequired,
-  x: PropTypes.number.isRequired,
-  y: PropTypes.number.isRequired,
+  color: PropTypes.string.isRequired,
 };
 
 export default LinearWithValueLabel;

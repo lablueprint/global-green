@@ -8,6 +8,7 @@ import Matching from './Matching';
 import Quizzes from './data';
 import LinearWithValueLabel from './progressBar';
 import Results from './results';
+import Check from './checkAllThatApply';
 // import AnswerPopup from './AnswerPopup';
 
 function Quiz() {
@@ -63,6 +64,15 @@ function Quiz() {
             selectedMatches={selectedMatches}
             setSelectedMatches={setSelectedMatches}
             isAttempted={attempted}
+          />
+        );
+      case 'checkAllThatApply':
+        return (
+          <Check
+            question={question.question}
+            options={question.options}
+            selectedAnswers={Array.isArray(selectedOption) ? selectedOption : []}
+            onUpdateAnswer={setSelectedOption}
           />
         );
       default:
@@ -284,7 +294,15 @@ function Quiz() {
       && selectedMatches.every((match) => currentQuestion.terms[match.term].definition === currentQuestion.answer[match.definition]);
       handleAnswer(isCorrect, selectedMatches.map((match) => match.term).join(', '));
       setAttempted(true);
-    } else {
+    } 
+    else if (currentQuestion.type === 'checkAllThatApply') {
+      // Sort to ensure order does not affect comparison
+      const sortedSelectedOptions = selectedOption.sort();
+      const sortedCorrectAnswers = currentQuestion.answer.sort();
+      const isCorrect = JSON.stringify(sortedSelectedOptions) === JSON.stringify(sortedCorrectAnswers);
+      handleAnswer(isCorrect, sortedSelectedOptions.join(', '));
+    }
+    else {
     // console.log(currentQuestion.answer)
     // console.log(selectedOption)
       const isCorrect = selectedOption === currentQuestion.answer;

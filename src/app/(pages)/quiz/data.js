@@ -2,6 +2,14 @@ const quizData = {
   totalQuestions: 9,
   questions: [
     {
+      question: "Which of the following are renewable energy sources?",
+      options: ['Solar', 'Coal', 'Wind', 'Natural Gas'],
+      type: 'checkAllThatApply',
+      answer: ['Solar', 'Wind'],
+      hint: 'Think about sources that do not deplete over time.',
+      explanation: "Renewable energy sources are replenished naturally and include solar and wind energy."
+    },
+    {
       question: 'Match the terms with their definitions',
       type: 'matching',
       terms: [

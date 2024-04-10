@@ -10,7 +10,7 @@ import Box from '@mui/material/Box';
 // y is the total (denominator)
 function LinearProgressWithLabel({ value, x, y }) {
   return (
-    <Box sx={{ display: 'flex', justifyContent: 'center', width: '100%'}}>
+    <Box sx={{ display: 'flex', justifyContent: 'left', width: '100%'}}>
       <Box sx={{ minWidth: 35, mr: -7, position: 'relative' }}>
         <Typography
           style={{
@@ -22,9 +22,10 @@ function LinearProgressWithLabel({ value, x, y }) {
           }}
         >
           {`${x}/${y}`}
+          hi
         </Typography>
       </Box>
-      <Box sx={{ width: '85%', mr: 0, ml: 8}}>
+      <Box sx={{ width: '25%', mr: 0, ml: 8}}>
         <LinearProgress
           variant="determinate"
           value={value}

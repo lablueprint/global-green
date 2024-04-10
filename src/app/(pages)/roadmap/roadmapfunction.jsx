@@ -6,6 +6,10 @@ import LinearWithValueLabel from './progressbar';
 import styles from './page.module.css'
 import { useRouter } from 'next/navigation'
 
+const svgPathData = {
+  
+};
+
 
 function Roadmap({ title, steps }) {
   if (!Array.isArray(steps)) {
@@ -44,7 +48,8 @@ function Roadmap({ title, steps }) {
             value={totalProgress}
             x={completedSteps}
             y={totalSteps}
-      />
+            style={{ width: '50%' }} // Apply inline styling to decrease width
+            />
 
       {steps.map((step, index) => (
         <div key={step.id} className={styles.stepContainer}>    

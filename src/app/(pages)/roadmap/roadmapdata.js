@@ -4,6 +4,7 @@
 const roadmapsData = {
   'introduction': {
     title: 'Introduction',
+    hours: '?',
     steps: [
       { title: 'Introductionto the Plastics  and Recycling Course', completed: true, path: '../courses/coursepart1' },
       { title: 'Lesson 2: Where Does Plastic Come From?', completed: false, path: '../courses/coursepart1' },
@@ -15,6 +16,7 @@ const roadmapsData = {
   },
   'plastic-and-recycling': {
     title: 'Plastic and Recycling',
+    hours: '?',
     steps: [
       { title: 'Topic 1', completed: true, path: '../courses/coursepart1' },
       { title: 'Topic 2', completed: false, path: '../courses/coursepart1' },
@@ -23,6 +25,7 @@ const roadmapsData = {
   },
   'sustainability-labs': {
     title: 'Sustainability Labs',
+    hours: '?',
     steps: [
       { title: 'Topic 1', completed: true, path: '../courses/coursepart1' },
       { title: 'Topic 2', completed: false, path: '../courses/coursepart1' },
@@ -31,6 +34,7 @@ const roadmapsData = {
   },  
   'conservation-and-restoration': {
     title: 'Conservation and Restoration',
+    hours: '?',
     steps: [
       { title: 'Topic 1', completed: true, path: '../courses/coursepart1' },
       { title: 'Topic 2', completed: false, path: '../courses/coursepart1' },
@@ -39,6 +43,7 @@ const roadmapsData = {
   },
   'climate-change': {
     title: 'Climate Change',
+    hours: '?',
     steps: [
       { title: 'Topic 1', completed: true, path: '../courses/coursepart1' },
       { title: 'Topic 2', completed: false, path: '../courses/coursepart1' },
@@ -47,6 +52,7 @@ const roadmapsData = {
   },
   'eco-friendly-travel': {
     title: 'Eco-Friendly Travel',
+    hours: '?',
     steps: [
       { title: 'Topic 1', completed: true, path: '../courses/coursepart1' },
       { title: 'Topic 2', completed: false, path: '../courses/coursepart1' },
@@ -55,6 +61,7 @@ const roadmapsData = {
   },
   'ocean-pollution': {
     title: 'Ocean Pollution',
+    hours: '?',
     steps: [
       { title: 'Topic 1', completed: true, path: '../courses/coursepart1' },
       { title: 'Topic 2', completed: false, path: '../courses/coursepart1' },

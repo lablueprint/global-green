@@ -267,10 +267,17 @@ padding-bottom: 10px;
   text-align: right;
 }
 
+.pencil{
+  display: flex; 
+  justify-content: center;
+  font-size: 30px;
+  padding: 35px 0px;
+}
+
 .passPopTitle{
   font-size: 20px;
   font-weight: 550;
-  padding-bottom: 10px;
+  padding-bottom: 20px;
   text-align: center;
 }
 
@@ -278,7 +285,7 @@ padding-bottom: 10px;
   text-align: center;
   font-size: 18px;
   color: gray;
-  margin-bottom: 30px;
+  margin-bottom: 40px;
 }
 
 .passPopText{
@@ -301,6 +308,11 @@ padding-bottom: 10px;
   background-color: rgb(232, 232, 232);
   font-size: 20px;
   color: gray;
+  font-size: 20px;
+}
+
+.passInput:hover {
+  cursor: pointer;
 }
 
 .passPopButton{
@@ -310,4 +322,29 @@ padding-bottom: 10px;
   padding: 5px 20px;
   margin: 5px;
   cursor: pointer;
+}
+
+.enabled{
+  background-color: black;
+  color: white;
+}
+
+.disabled{
+  background-color: rgb(218, 217, 217);
+  border-color: rgb(218, 217, 217);
+  color: gray;
+  cursor: auto;
+}
+
+.done{
+  font-size: 18px;
+  border: 1px solid black;
+  border-radius: 20px; 
+  padding: 5px 20px; 
+  margin: 5px;
+  background-color: black;
+  color: white;
+  cursor: pointer;
+  width: 100px;
+  text-align: center;
 }

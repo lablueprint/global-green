@@ -11,7 +11,7 @@ import certData from './certData';
 import courseData from '../landing/courseData';
 import ProgressBar from './progressBar';
 import ProfilePopup from './profilePopup';
-import PasswordPopup from './changePasswordPopup';
+import PasswordPopup from './passwordPopup';
 
 function Profile() {
   const [isEditing, setIsEditing] = useState(false);
@@ -130,7 +130,13 @@ function Profile() {
           <div className={styles.pageName}> Profile </div>
 
           {profilePopup && <ProfilePopup onClose={handleCloseProfile} />}
-          {passwordPopup && <PasswordPopup onClose={handleClosePassword} />}
+          {passwordPopup
+          && (
+          <PasswordPopup
+            onClose={handleClosePassword}
+            userPassword={userData.password}
+          />
+          )}
 
           <div className={styles.container}>
             <div className={styles.profileSection}>

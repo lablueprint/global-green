@@ -34,14 +34,10 @@ function Example() {
 
     const data = await response.json();
     setData(data);
-
     setPoints(data.user.points.toString());
-    console.log("here", data);
-    console.log(data.user.points.toString());
   };
 
   useEffect(() => {
-    console.log("session", session);
     if (session) getUserDetails(session.user.id);
   }, [session]);
   async function fetchData() {
@@ -51,18 +47,6 @@ function Example() {
     const fetchdata = await res.json();
 
     setChallengesArray(fetchdata);
-    // if (localStorage.getItem("mapChallenges")) {
-    //   setChallengesArray(JSON.parse(localStorage.getItem("mapChallenges")));
-    //   console.log(challengesArray);
-    // } else {
-    // console.log("else");
-
-    // const resUser = await fetch("/api/users/login");
-    // const fetchUser = await resUser.json();
-    // console.log(fetchUser);
-
-    // localStorage.setItem("mapChallenges", JSON.stringify(fetchdata));
-    //  }
   }
   useEffect(() => {
     if (!challengesArray.length) {
@@ -71,18 +55,18 @@ function Example() {
   }, []);
 
   const updateUserData = (data) => {
-    // update the user data in the database, make sure only the first user is updated.
+    // update the user data in the database, specifically, the points values
     async function updateUserDataInDB() {
       // eslint-disable-next-line no-console
-      // console.log("data", data);
-      // console.log("meow", data["users"]); // help
-
       const response = await fetch("/api/users/me/update-points", {
         method: "PATCH",
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ points: data.points, userId: data._id }),
+        body: JSON.stringify({
+          points: data.user.points,
+          userId: data.user._id,
+        }),
       });
       const res = await response.json();
       // eslint-disable-next-line no-console
@@ -103,19 +87,38 @@ function Example() {
     localStorage.setItem("userData", JSON.stringify(data));
   };
 
-  useEffect(() => {
-    console.log("usestatepoints", points);
-    console.log("userDatawithpoints", userData);
-    handlePointsChange();
-  }, [points]);
-
-  const handlePointsChange = () => {
-    userData.points = points;
-
-    localStorage.setItem("userData", JSON.stringify(userData));
-    console.log("updatedpoints", userData.points, "statepoints", points);
+  const handlePointsChange = (updatedValue) => {
+    userData.user.points = updatedValue;
     updateUserData(userData);
+    localStorage.setItem("userData", JSON.stringify(userData));
   };
+
+  async function addPointsButton(
+    index,
+    points,
+    setPoints,
+    challenge,
+    handlePointsChange
+  ) {
+    const pointsElement = document.getElementById(`points_${index}`);
+    const buttonElement = document.getElementById(`button_${index}`);
+
+    if (pointsElement.innerHTML !== "Claimed") {
+      const pointsToAdd = Number(challenge.pointsToEarn);
+      buttonElement.style.backgroundColor = "grey";
+      pointsElement.innerHTML = "Claimed";
+
+      const updatedValue = await new Promise((resolve) => {
+        setPoints((prevPoints) => {
+          const newValue = Number(prevPoints) + Number(pointsToAdd);
+          resolve(newValue); // Resolve the Promise with the updated value
+          return newValue; // Return the updated value for immediate update
+        });
+      });
+
+      handlePointsChange(updatedValue);
+    }
+  }
 
   return (
     <>
@@ -147,7 +150,6 @@ function Example() {
                         <div
                           className={styles.progressFill}
                           style={{
-                            // width: `${(card.numerator / card.denominator) * 100}%`,
                             width: `${
                               (1 / JSON.stringify(challenge.denominator)) * 100
                             }%`,
@@ -203,31 +205,15 @@ function Example() {
                       <div
                         id={`button_${index}`}
                         className={styles.completedleafPoints}
-                        onClick={() => {
-                          if (
-                            document.getElementById(`points_${index}`)
-                              .innerHTML !== "Claimed"
-                          ) {
-                            setPoints(
-                              Number(points) +
-                                Number(JSON.stringify(challenge.pointsToEarn))
-                            );
-                            handlePointsChange();
-
-                            document.getElementById(
-                              `button_${index}`
-                            ).style.backgroundColor = "grey";
-                            document.getElementById(
-                              `points_${index}`
-                            ).innerHTML = "Claimed";
-
-                            setPoints(
-                              Number(points) +
-                                Number(JSON.stringify(challenge.pointsToEarn))
-                            );
-                            handlePointsChange();
-                          }
-                        }}
+                        onClick={() =>
+                          addPointsButton(
+                            index,
+                            points,
+                            setPoints,
+                            challenge,
+                            handlePointsChange
+                          )
+                        }
                       >
                         <div className={styles.points}>
                           <p id={`points_${index}`}>

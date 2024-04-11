@@ -21,16 +21,13 @@
     flex-direction: row;
     align-items: center;
   }
-  
-  .titleContainer {
-    align-self: flex-start;
-    margin: 20px;
-    margin-bottom: -40px;
-  }
-  
-  .title {
-    align-self: flex-start;
-    margin: 20px;
+
+  .firstStepPathContainer {
+    display: flex;
+    flex-direction: column;
+    align-items: center; /* Center align the items for a better visual appearance */
+    justify-content: center;
+    gap: 10px; /* Adjust the gap as needed */
   }
   
   .step {
@@ -66,7 +63,7 @@
   }
   
   .stepIncomplete {
-    background-color: #0D0D0D33;
+    background-color: #0D0D0D33;  
   }
 
   .stepInProgress {
@@ -78,5 +75,16 @@
     width: 2px;
     background-color: #ddd;
     align-self: center;
+  }
+
+  .titleContainer {
+    align-self: flex-start;
+    margin: 20px;
+    margin-bottom: -40px;
+  }
+  
+  .title {
+    align-self: flex-start;
+    margin: 20px;
   }
   

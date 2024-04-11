@@ -1,9 +1,25 @@
 /* Roadmap.module.css */
-.container {
+.headerContainer {
     display: flex;
     flex-direction: column;
     align-items: center;
-    background-color: red; 
+    background-color: white; 
+  }
+
+  .roadmapContainer {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    border-radius: 16px;
+    background: rgba(187, 231, 47, 0.60);
+
+    position: relative;
+  }
+
+  .stepContainer {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
   }
   
   .titleContainer {
@@ -17,16 +33,11 @@
     margin: 20px;
   }
   
-  .stepContainer {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-  }
-  
   .step {
-    width: 200px;
-    height: 200px;
+    width: 80px;
+    height: 80px;
     border-radius: 50%;
+    border: 0px;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -34,16 +45,32 @@
     font-weight: bold;
     position: relative;
     margin: 20px 0;
+
+    color: #FFF;
+    text-align: center;
+    font-size: 15px;
+
+    cursor: pointer;
+
+    z-index: 10; /* Make sure this is higher than the SVG z-index */
+
   }
+
+  /* svg {
+    z-index: 1;
+  } */
   
   .stepCompleted {
-    background-color: #76c893;
+    background-color: #95BC63;
     color: white;
   }
   
   .stepIncomplete {
-    background-color: #ddd;
-    color: black;
+    background-color: #0D0D0D33;
+  }
+
+  .stepInProgress {
+    background-color: #519546;
   }
   
   .connector {

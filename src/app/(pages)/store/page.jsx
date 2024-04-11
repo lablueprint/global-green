@@ -70,6 +70,23 @@ function Store() {
     setUserId(data.user._id);
   };
 
+  const getAllAccessories = async () => {
+    const response = await fetch('/api/data/accessories');
+    const data = await response.json();
+    setAccessories(data);
+  };
+
+  const getAllBackgrounds = async () => {
+    const response = await fetch('/api/data/backgrounds');
+    const data = await response.json();
+    setBackgrounds(data);
+  };
+
+  useEffect(() => {
+    getAllAccessories();
+    getAllBackgrounds();
+  }, []);
+
   async function updateUserDataInDB(newUserAccessories, newUserBackgrounds, newSeeds) {
     const response = await fetch('/api/users/me/buy-item', {
       method: 'PATCH',
@@ -125,23 +142,32 @@ function Store() {
         className={styles.storeItem}
         key={item.name}
       >
-        <img src={item.image} alt={item.name} />
+
+        <div className={styles.storeItemImg}>
+          {
+            (userAccessories.includes(item.name) || userBackgrounds.includes(item.name))
+            && <div className={styles.storeItemImgOverlay} />
+}
+          <img src={item.image} alt={item.name} />
+        </div>
         <div className={styles.storeItemPrice}>
           <span>{item.price}</span>
 
         </div>
-        <div className={`${styles.storeItemDetails} ${userAccessories.includes(item.name) || userBackgrounds.includes(item.name) ? styles.bought : ''}`}>
+        <div className={`${styles.storeItemDetails}`}>
           <span>{item.name}</span>
           {userAccessories.includes(item.name) || userBackgrounds.includes(item.name) ? (
             <Button
               type="button"
               sx={{
                 borderRadius: '1em',
-                backgroundColor: 'gray',
-                color: 'darkgray',
+                padding: '0.2em 1.2em',
+                backgroundColor: 'lightgray',
+                color: 'gray',
                 textTransform: 'none',
                 fontFamily: 'inherit',
               }}
+              disabled
             >
               Bought
             </Button>
@@ -150,6 +176,7 @@ function Store() {
               type="button"
               sx={{
                 borderRadius: '1em',
+                padding: '0.2em 1.2em',
                 backgroundColor: 'green',
                 textTransform: 'none',
                 fontFamily: 'inherit',

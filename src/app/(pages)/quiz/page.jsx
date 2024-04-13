@@ -1,6 +1,5 @@
 'use client';
 
-// Import necessary React components and styles
 import React, { useState } from 'react';
 import styles from './page.module.css';
 import MultipleChoiceQuiz from './MultipleChoice';
@@ -9,10 +8,11 @@ import Matching from './Matching';
 import Quizzes from './data';
 import LinearWithValueLabel from './progressBar';
 import Results from './results';
+import Check from './CheckAllThatApply';
+
 // import AnswerPopup from './AnswerPopup';
 
 function Quiz() {
-  // State hooks for quiz functionality
   const [currentQuizIndex, setCurrentQuizIndex] = useState(0);
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
   const [TotalProgress, setTotalProgress] = useState(0);
@@ -30,6 +30,8 @@ function Quiz() {
   const [skippedQuestions, setSkippedQuestions] = useState([]);
   const [showCheckButton, setShowCheckButton] = useState(true);
   const [isCurrentAnswerCorrect, setIsCurrentAnswerCorrect] = useState(null);
+  const [skipCount, setSkipCount] = useState(0);
+
 
   const currentQuiz = Quizzes;
   const currentQuestion = currentQuiz.questions[currentQuestionIndex];
@@ -61,10 +63,20 @@ function Quiz() {
       case 'matching':
         return (
           <Matching
+            question={question.question}
             terms={question.terms}
             selectedMatches={selectedMatches}
             setSelectedMatches={setSelectedMatches}
             isAttempted={attempted}
+          />
+        );
+      case 'checkAllThatApply':
+        return (
+          <Check
+            question={question.question}
+            options={question.options}
+            selectedAnswers={Array.isArray(selectedOption) ? selectedOption : []}
+            onUpdateAnswer={setSelectedOption}
           />
         );
       default:
@@ -72,10 +84,21 @@ function Quiz() {
     }
   };
 
-  function AnswerPopup({ message, onClose, isCorrect }) { // Added isCorrect prop
+  function AnswerPopup({ message, onClose, isCorrect }) {
     return (
       <div style={{
-        display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '10px',
+        display: 'flex', 
+        justifyContent: 'space-between', 
+        alignItems: 'center', 
+        width: '100%', 
+        paddingTop: '30px',
+        paddingLeft: '75px',
+        paddingBottom:'20px',
+        backgroundColor: isCurrentAnswerCorrect == null
+          ? 'white'
+            : isCurrentAnswerCorrect
+              ? '#4ECB3A'
+              : '#FFD66C'
       }}
       >
         <div style={{ textAlign: 'left', maxWidth: '300px' }}>
@@ -113,19 +136,21 @@ function Quiz() {
             {currentQuestion.explanation}
           </div>
         </div>
-        <button
-          type="button"
-          className={styles.nextButton}
-          onClick={onClose}
-          style={{ padding: '8px 16px' }}
-        >
-          Continue &gt;
-        </button>
+        <div style={{ display: 'flex', justifyContent: 'flex-end' }}>
+          <button
+            type="button"
+            className={styles.nextButton}
+            onClick={onClose}
+            style={{ padding: '8px 16px', marginRight: '80px' }}
+          >
+            Continue &gt;
+          </button>
+        </div>
       </div>
     );
   }
 
-  function HintPopup({ message, onClose }) {
+  function HintPopup({ hintMessage, onClose }) {
     return (
       <div style={{
         position: 'absolute', // could use fixed here
@@ -136,7 +161,7 @@ function Quiz() {
         backgroundColor: 'white',
         borderRadius: '8px',
         boxShadow: '0 2px 10px rgba(0, 0, 0, 0.2)',
-        zIndex: 1000, // sitting on top
+        zIndex: 1000, 
       }}
       >
         <div style={{
@@ -158,30 +183,31 @@ function Quiz() {
             &#10005;
           </div>
           <div style={{
-            display: 'flex', // Makes the container a flexbox row
-            alignItems: 'flex-start', // Aligns items to the start of the flex direction
+            display: 'flex', 
+            alignItems: 'flex-start', 
           }}
           >
             <div style={{
-              display: 'flex', // Makes this child a flexbox as well
-              flexDirection: 'column', // Arranges content in a column
+              display: 'flex',
+              flexDirection: 'column', 
               fontWeight: 'bold',
               fontSize: '18px',
-              marginTop: '8px', // Space between title and the rest of the content
+              marginTop: '8px', 
               marginRight: '20px',
             }}
             >
               Hint
             </div>
             <div style={{
-              display: 'flex', // Makes this child a flexbox as well
-              flexDirection: 'column', // Arranges content in a column
+              display: 'flex', 
+              flexDirection: 'column', 
               fontSize: '12px',
               color: '#454545',
-              lineHeight: '1.4', // Adjust line height for better readability
+              lineHeight: '1.4', 
             }}
             >
-              {message}
+              
+              {hintMessage}
             </div>
           </div>
         </div>
@@ -204,7 +230,6 @@ function Quiz() {
     setIsCurrentAnswerCorrect(null);
     setShowCheckButton(true);
     if (currentQuestion.type === 'matching') {
-      // console.log(selectedMatches)
       selectedMatches.forEach((match) => match.lineObj.remove());
       setSelectedMatches([]);
     }
@@ -257,8 +282,8 @@ function Quiz() {
       // setProgress((prevProgress) => Math.min(prevProgress + (100 / currentQuiz.questions.length), 100));
       // setPoints((prevPoints) => prevPoints + 1);
     }
-    setAttempted(true); // Mark the question as attempted
-    setSkipButton(true); // Disable the Skip button when an answer is checked
+    setAttempted(true);
+    setSkipButton(true);
   };
 
   const handleSkip = () => {
@@ -266,29 +291,27 @@ function Quiz() {
     if (!skippedQuestions.includes(currentQuestionIndex)) {
       setSkippedQuestions([...skippedQuestions, currentQuestionIndex]);
     }
-    goToNextQuestion();
+    setSkipCount(skipCount + 1);
+    goToNextQuestion()
   };
 
   // Function to check the selected answer
   const checkAnswer = (selectedOption) => {
-  // console.log(currentQuestionIndex)
     setShowCheckButton(false); // Hide the Check button
     if (currentQuestion.type === 'matching') {
-      // console.log(selectedMatches)
-      // console.log(currentQuestion.terms)
-
-      // good
-      // console.log(selectedMatches.length)
-      // console.log(currentQuestion.terms.length)
-
-      // console.log(selectedMatches.every(match => currentQuestion.terms.find(term => term.term === match.term && term.definition === match.definition)))
       const isCorrect = selectedMatches.length === currentQuestion.terms.length
       && selectedMatches.every((match) => currentQuestion.terms[match.term].definition === currentQuestion.answer[match.definition]);
       handleAnswer(isCorrect, selectedMatches.map((match) => match.term).join(', '));
       setAttempted(true);
-    } else {
-    // console.log(currentQuestion.answer)
-    // console.log(selectedOption)
+    } 
+    else if (currentQuestion.type === 'checkAllThatApply') {
+      // Sort to ensure order does not affect comparison
+      const sortedSelectedOptions = selectedOption.sort();
+      const sortedCorrectAnswers = currentQuestion.answer.sort();
+      const isCorrect = JSON.stringify(sortedSelectedOptions) === JSON.stringify(sortedCorrectAnswers);
+      handleAnswer(isCorrect, sortedSelectedOptions.join(', '));
+    }
+    else {
       const isCorrect = selectedOption === currentQuestion.answer;
       handleAnswer(isCorrect, selectedOption);
     }
@@ -301,6 +324,7 @@ function Quiz() {
   return (
     <div className={styles.container}>
       <div className={styles.quizContainer}>
+        <div className={styles.quizTitleContainer}> Quiz 3: Resin Identification Code</div>
         <div className={styles.progressbarandhintcontainer}>
           <div
             style={{
@@ -321,9 +345,42 @@ function Quiz() {
           <button type="button" className={styles.hintButton} onClick={handleHint} />
           {showHint && (
             <div className={styles.hintOverlay} onClick={handleOverlayClick}>
-              <HintPopup message={popupMessage} onClose={() => setShowHint(false)} />
+              <HintPopup hintMessage={popupMessage} onClose={() => setShowHint(false)} />
             </div>
           )}
+        </div>
+        <div className={styles.questionTypeandPointscontainer}>
+          <div
+            style={{
+              padding: '10px 20px',
+              borderRadius: '10px',
+              backgroundColor: 
+                currentQuestion.type === 'matching'
+                ? '#FFE9F0' // Example pink-red shade
+                : currentQuestion.type === 'multiple'
+                ? '#E3F8F1' // Example orange shade
+                : currentQuestion.type === 'truefalse'
+                ? '#FFE6C9' // Example purple shade
+                : currentQuestion.type === 'checkAllThatApply'
+                ? '#EDE2F7' // Example blue shade
+                : 'none',
+              // Add any other styles you need for this inner container
+            }}
+          >
+            {currentQuestion.type === 'matching'
+              ? 'Matching'
+              : currentQuestion.type === 'multiple'
+              ? 'Multiple Choice'
+              : currentQuestion.type === 'truefalse'
+              ? 'True and False'
+              : currentQuestion.type === 'checkAllThatApply'
+              ? 'Select All'
+              : ''}
+          </div>
+          {/* <div style={{padding: '10px 20px'}}> Previously Skipped </div> */}
+          {/* <div style={{padding: '10px 5px'}}> / </div> */}
+          <div style={{padding: '10px 15px', paddingRight: '5px'}}> {currentQuestion.points}</div>
+          <div style={{padding: '10px 0px'}}> points </div>
         </div>
         {/* <div className={styles.quizQuestionNumber}>Question {currentQuestionIndex + 1} of {currentQuiz.questions.length}</div> */}
         {/* <div><strong>Points: {points}</strong></div> */}
@@ -331,19 +388,16 @@ function Quiz() {
         <div
           className={styles.buttonsContainer}
           style={{
-            backgroundColor: isCurrentAnswerCorrect == null
-              ? 'white'
-              : isCurrentAnswerCorrect
-                ? '#D5EDE0'
-                : '#FFF3C0',
+            backgroundColor: 'white',
             justifyContent: currentQuestionIndex === currentQuiz.questions.length - 1 ? 'flex-end' : 'space-between',
           }}
         >
           {
           currentQuestionIndex < currentQuiz.questions.length - 1 && !disableSkipButton && (
-            <button type="button" className={styles.skipButton} onClick={handleSkip}>Skip</button>
+            <button type="button" className={styles.skipButton} onClick={handleSkip} disabled={skipCount >= 3}>   Skip ({3 - skipCount} left)
+            </button>
           )
-        }
+          }
           {showCheckButton && (
           <button
             type="button"
@@ -358,16 +412,17 @@ function Quiz() {
             Check
           </button>
           )}
-          {showAnswerPopup
-          && (
-          <AnswerPopup
-            message={popupMessage}
-            onClose={() => { setShowAnswerPopup(false); setSkipButton(false); goToNextQuestion(); }}
-            isCorrect={isCurrentAnswerCorrect}
-          />
-          )}
         </div>
-      </div>
+        
+      </div> 
+      {showAnswerPopup
+          && (
+            <AnswerPopup
+              message={popupMessage}
+              onClose={() => { setShowAnswerPopup(false); setSkipButton(false); goToNextQuestion(); }}
+              isCorrect={isCurrentAnswerCorrect}
+            />
+          )} 
     </div>
   );
 }

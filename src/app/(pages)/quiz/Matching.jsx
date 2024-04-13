@@ -4,7 +4,7 @@ import LeaderLine from 'react-leader-line';
 import styles from './page.module.css';
 
 function Matching({
-  terms, selectedMatches, setSelectedMatches, isAttempted = false,
+  question, terms, selectedMatches, setSelectedMatches, isAttempted = false,
 }) {
   const [selectedTerm, setSelectedTerm] = useState(null);
   const [selectedDefinition, setSelectedDefinition] = useState(null);
@@ -35,8 +35,8 @@ function Matching({
         document.getElementById(`answer-${selectedTerm}`),
         document.getElementById(`question-${selectedDefinition}`),
         {
-          color: '#B4B4B4',
-          size: 2,
+          color: '#6DAAE0',
+          size: 3,
           startPlug: 'behind',
           endPlug: 'behind',
           path: 'straight',
@@ -71,38 +71,29 @@ function Matching({
 
   return (
     <div>
-      <div className={styles.matchingContainer}>
-        <div className={styles.termsContainer}>
-          {terms.map((item, index) => (
-            <div
-              onClick={() => handleTermClick(index)}
-              key={`answer-${index}`}
-              id={`answer-${index}`}
-              className={`${styles.termBox} ${selectedTerm === index ? styles.selected : ''} ${isMatched(index, 'term') ? styles.matched : ''}`}
-              style={{
-                outline: isMatched(index, 'term') ? '2px solid green' : '',
-              }}
-            >
-              {item.term}
-            </div>
-          ))}
-        </div>
-        <div className={styles.definitionsContainer}>
-          {terms.map((item, index) => (
-            <div
-              onClick={() => handleDefinitionClick(index)}
-              key={`question-${index}`}
-              id={`question-${index}`}
-              className={`${styles.definitionBox} ${selectedDefinition === index ? styles.selected : ''} ${isMatched(index, 'definition') ? styles.matched : ''}`}
-              style={{
-                outline: isMatched(index, 'definition') ? '2px solid green' : '',
-              }}
-            >
-              {item.definition}
-            </div>
-          ))}
-        </div>
+      <div className={styles.questionText}>
+        <p>{question}</p>
       </div>
+        <div className={styles.matchingContainer}>
+          {terms.map((item, index) => (
+            <div className={styles.rowContainer} key={`pair-${index}`}>
+              <div
+                onClick={() => handleTermClick(index)}
+                id={`answer-${index}`}
+                className={`${styles.termBox} ${selectedTerm === index ? styles.selected : ''} ${isMatched(index, 'term') ? styles.matched : ''}`}
+              >
+                {item.term}
+              </div>
+              <div
+                onClick={() => handleDefinitionClick(index)}
+                id={`question-${index}`}
+                className={`${styles.definitionBox} ${selectedDefinition === index ? styles.selected : ''} ${isMatched(index, 'definition') ? styles.matched : ''}`}
+              >
+                {item.definition}
+              </div>
+            </div>
+          ))}
+        </div>
     </div>
   );
 }

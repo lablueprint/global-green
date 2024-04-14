@@ -12,7 +12,6 @@ function Matching({
 
   useEffect(() => {
     if (selectedTerm !== null && selectedDefinition !== null && !isAttempted) {
-      // First, remove existing lines connected to either the selected term or definition
       const updatedMatches = selectedMatches.filter((match) => {
         const isMatchedWithTerm = match.term === selectedTerm;
         const isMatchedWithDefinition = match.definition === selectedDefinition;

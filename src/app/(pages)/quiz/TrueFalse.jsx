@@ -37,8 +37,9 @@ function TrueFalse({
               onClick={() => handleSelect(option)}
               disabled={isAttempted}
               style={{
-                outline: selected === option ? '3px solid #1D594B' : '1px solid lightgrey',
-                backgroundColor: backgroundColor,
+                outline: selected === option ? '3px solid #6DAAE0' : '1px solid lightgrey',
+                backgroundColor: selected === option ? 'var(--Blue-20, #6DAAE0)' : '',
+                backgroundImage: selected === option ? 'linear-gradient(0deg, rgba(255, 255, 253, 0.80) 0%, rgba(255, 255, 253, 0.80) 100%)' : '',
                 color: isAttempted ? 'black' : 'inherit', // Keep text color black after disabling
               }}
             >

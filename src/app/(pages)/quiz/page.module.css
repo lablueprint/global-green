@@ -8,9 +8,7 @@
   justify-content: flex-start;
   background-color: white;
   position: relative;
-
-  max-width: 1150px; 
-
+  max-width: 1050px; 
 }
 
 .quizContainer {
@@ -166,23 +164,6 @@
   position: relative;
 }
 
-.hintContent {
-  display: flex;
-  flex-direction: row;
-  text-align: left;
-  justify-content: center;
-  align-items: flex-start;
-  width: 100%;
-}
-
-.hintContentColumns {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  justify-content: center;
-  width: 100%;
-}
-
 .closeButton {
   position: absolute;
   top: 10px;
@@ -209,29 +190,6 @@
 .termsContainer button:hover,
 .definitionsContainer button:hover {
   border-color: #f0ad4e;
-}
-
-.appBackground {
-  background-color: grey;
-  min-height: 100vh;
-  min-height: 100vh;
-}
-
-.resultsContainer {
-  text-align: center;
-  font-family: "Arial", sans-serif;
-  background: grey;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  height: 100vh;
-}
-
-.goodJob {
-  font-size: 1.5em;
-  margin-bottom: 20px;
-  font-weight: bold;
 }
 
 .scoreCard {
@@ -416,7 +374,7 @@
   margin-left: 150px;
   min-width: 240px;
   max-width: 500px;
-  flex-grow: 1; /* This will make the item grow and take available space */
+  flex-grow: 1; 
 }
 
 .selected {
@@ -491,4 +449,54 @@
   box-shadow: 0 0 0 2px rgba(0, 0, 0, 0.1);
 }
 
+.resultsContainer {
+  background: white;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  height: 100vh;
+  width: 80vw;
+}
 
+.x {
+  background-color: white;
+  display: flex;
+  flex-direction: column;
+  margin-left: 100px;
+}
+
+.row1 {
+  background-color: white;
+  display: flex;
+  flex-direction: row;
+}
+
+/* Add this to your CSS file */
+.scoreContainer {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  background: var(--Grey-4, rgba(13, 13, 13, 0.04));  border-radius: 10px; 
+  margin: 20px;
+  padding: 20px;
+}
+
+.summaryDetails {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  margin-right: 50px; /* Adjust as necessary */
+}
+
+.circularProgressContainer {
+  position: relative;
+  width: fit-content;
+}
+
+/* Style for the striped border at the bottom */
+.stripedBorder {
+  height: 8px;
+  background-size: cover;
+  border-radius: 0 0 10px 10px; /* Match the border radius of .scoreContainer if any */
+}

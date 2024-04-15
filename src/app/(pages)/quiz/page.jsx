@@ -368,7 +368,7 @@
                 borderRadius: '10px',
                 backgroundColor: 
                   currentQuestion.type === 'matching'
-                  ? '#FFE9F0' // Example pink-red shade
+                  ? '#FFE9F0' 
                   : currentQuestion.type === 'multiple'
                   ? '#E3F8F1' // Example orange shade
                   : currentQuestion.type === 'truefalse'

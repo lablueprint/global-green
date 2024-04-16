@@ -34,7 +34,7 @@ function Example() {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({
-          userName, password, firstName, lastName, email, points, captchaToken,
+          userName, password, firstName, lastName, email, captchaToken,
         }),
       });
       const data = await response.json();

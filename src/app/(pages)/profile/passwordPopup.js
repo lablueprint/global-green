@@ -14,12 +14,11 @@ function passwordPopup({ onClose, userPassword }) {
   const handleConfirmPasswordChange = (e) => setConfirmPassword(e.target.value);
 
   useEffect(() => {
-    console.log(userPassword);
     if (currentPassword && newPassword && confirmPassword) {
       if (newPassword === confirmPassword && newPassword !== userPassword) {
-        setCanChange(true);
-      } else {
-        setCanChange(false);
+        if (newPassword.length >= 15 || (newPassword.length >= 8 && /\d/.test(newPassword) && /[a-zA-Z]/.test(newPassword))) {
+          setCanChange(true);
+        }
       }
     } else {
       setCanChange(false);

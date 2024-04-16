@@ -24,6 +24,11 @@ function Profile() {
 
   const { data: session } = useSession();
 
+  const handleLogout = async () => {
+    await signOut();
+    window.location.href = '/login';
+  };
+
   const getUserDetails = async (id) => {
     if (!id) return;
     const response = await fetch(
@@ -64,12 +69,11 @@ function Profile() {
     }
     deleteAccountFromDB();
 
+    // logout the user
+    handleLogout();
+
     // delete the user account from the local storage
     localStorage.removeItem('userData');
-
-    // logout the user
-    await signOut();
-    window.location.href = '/login';
   };
 
   useEffect(() => {
@@ -138,11 +142,6 @@ function Profile() {
 
   const handleClosePassword = () => {
     setPasswordPopup(false);
-  };
-
-  const handleLogout = async () => {
-    await signOut();
-    window.location.href = '/login';
   };
 
   const totalPages = Math.ceil(certData.length / 3);

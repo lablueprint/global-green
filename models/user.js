@@ -13,7 +13,9 @@ const userSchema = new Schema(
     verified: { type: Boolean, default: false },
     verifyToken: { type: String },
     verifyExpires: { type: Date, default: Date.now, index: { expireAfterSeconds: 300 } },
-
+    accessories: { type: Array, default: [] },
+    backgrounds: { type: Array, default: [] },
+    seeds: { type: Number, default: 0 },
   },
   {
     timestamps: true,

@@ -1,4 +1,4 @@
-"use client";
+'use client';
 
 import React, { useState, useRef } from "react";
 import { signIn } from "next-auth/react";
@@ -6,13 +6,12 @@ import { signIn } from "next-auth/react";
 import ReCAPTCHA from "react-google-recaptcha";
 
 function Example() {
-  const [firstName, setFirstName] = useState("");
-  const [lastName, setLastName] = useState("");
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [confirmPassword, setConfirmPassword] = useState("");
-  const [userName, setUserName] = useState("");
-  const [points, setPoints] = useState(0);
+  const [firstName, setFirstName] = useState('');
+  const [lastName, setLastName] = useState('');
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [confirmPassword, setConfirmPassword] = useState('');
+  const [userName, setUserName] = useState('');
   // Captcha Related
   const recaptcha = useRef(null);
   const [captchaToken, setCaptchaToken] = useState("");
@@ -29,10 +28,10 @@ function Example() {
     // and send the username and password to the backend
     // if the signup is successful, redirect to the profile page
     try {
-      const response = await fetch("/api/users/signup", {
-        method: "POST",
+      const response = await fetch('/api/users/signup', {
+        method: 'POST',
         headers: {
-          "Content-Type": "application/json",
+          'Content-Type': 'application/json',
         },
         body: JSON.stringify({
           userName,
@@ -96,35 +95,34 @@ function Example() {
     let validEntries = true;
 
     // for email input format validation
-    const regex =
-      /^([\w-]+(?:\.[\w-]+)*)@((?:[\w-]+\.)*\w[\w-]{0,66})\.([a-z]{2,6}(?:\.[a-z]{2})?)$/;
-    if (firstName === "" || lastName === "") {
+    const regex = /^([\w-]+(?:\.[\w-]+)*)@((?:[\w-]+\.)*\w[\w-]{0,66})\.([a-z]{2,6}(?:\.[a-z]{2})?)$/;
+    if (firstName === '' || lastName === '') {
       // eslint-disable-next-line no-alert
-      alert("Name is required!");
+      alert('Name is required!');
       validEntries = false;
       return;
     }
     if (!regex.test(email)) {
       // eslint-disable-next-line no-alert
-      alert("Invalid email!");
+      alert('Invalid email!');
       validEntries = false;
       return;
     }
-    if (password === "") {
+    if (password === '') {
       // eslint-disable-next-line no-alert
-      alert("Password is required!");
+      alert('Password is required!');
       validEntries = false;
       return;
     }
     if (password.length < 8) {
       // eslint-disable-next-line no-alert
-      alert("Password needs to be at least 8 characters");
+      alert('Password needs to be at least 8 characters');
       validEntries = false;
       return;
     }
     if (confirmPassword !== password) {
       // eslint-disable-next-line no-alert
-      alert("Password and confirm password fields need to match");
+      alert('Password and confirm password fields need to match');
       validEntries = false;
       return;
     }
@@ -136,7 +134,9 @@ function Example() {
     <div>
       <form>
         <label htmlFor="firstName">
-          First name: <br />
+          First name:
+          {' '}
+          <br />
           <input
             type="text"
             id="firstName"

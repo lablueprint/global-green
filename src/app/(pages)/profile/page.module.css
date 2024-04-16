@@ -2,7 +2,7 @@
 
 .container {
 text-align: left;
-margin: 4%;
+margin: 40px 60px;
 }
 
 .pageName {
@@ -10,7 +10,6 @@ margin: 4%;
   font-size: 2em;
   margin-bottom: 40px;
   font-weight: bold;
-  padding-right: 225px; /* Adjust the padding value */
 }
 
 .sectionHeader {
@@ -24,7 +23,6 @@ padding-bottom: 10px;
 .sectionText {
   font-size: 17px;
   font-weight: 500;
-  padding: 10px 0;
 }
 
 .row {
@@ -33,6 +31,14 @@ padding-bottom: 10px;
   padding: 10px;
   flex-wrap: wrap;
   gap: 20px;
+}
+
+.subText {
+  font-size: 15px;
+  color: gray;
+  padding: 15px 0px;
+  gap: 5px;
+  margin-bottom: 20px;
 }
 
 /* top section */ 
@@ -49,7 +55,7 @@ padding-bottom: 10px;
   margin-left: 50px;
 }
 
-.preferred {
+.displayName {
   color: #a7a0a0;
   margin-bottom: 10px;
 }
@@ -65,104 +71,243 @@ padding-bottom: 10px;
 .editingName {
   border: 2px solid #ddd;
   background-color: #e8e8e8;
-  width: 200px;
   padding: 8px 10px;
   border-radius: 10px;
   font-weight: 500;
   font-size: 18px;
 }
 
-/* profile section */
+/* popup section */
 
-.accountRow {
+.overlay{
+  position: fixed; 
+  top: 0; 
+  left: 0; 
+  width: 100%; 
+  height: 100%;
+  background-color: rgba(0,0,0,0.5); 
+  backdrop-filter: blur(5px);
+  display: flex; 
+  justify-content: center; 
+  align-items: center;
+}
+
+.popUp{
+  position: absolute;
+  background-color: white;
+  border: 1px solid black;
+  padding: 50px 50px;
+  border-radius: 10px;
+}
+
+.popTop{
   display: flex;
   justify-content: space-between;
+  border-bottom: 1px solid gray;
+  margin-bottom: 10px;
+}
+
+.popTitle{
+  font-size: 20px;
+  font-weight: 550;
+  padding-bottom: 10px;
+}
+
+.popSubTitle{
+  font-size: 20px;
+  font-weight: 550;
+  padding: 20px 0px;
+}
+
+.popText{
+  font-size: 18px;
+  color: gray;
+}
+
+.popPicAll{
+  padding: 30px 20px;
+  display: grid; 
+  grid-template-columns: repeat(6, 1fr);
+}
+
+.popPic{
+  width: 100px; /* Adjust the width dynamically */
+  height: 100px;
+  border-radius: 50px;
+  background-size: cover;
+  margin: 30px 10px;
+  border: 2px solid transparent;
+  transition: border-color 0.3s ease;
+}
+
+.popPic:hover{
+  border-color: green;
+}
+
+.popBottom{
+  display: flex;
+  justify-content: right;
+}
+
+.popButton{
+  font-size: 18px;
+  border: 1px solid black;
+  border-radius: 10px;
+  padding: 2px 10px;
+  margin: 5px;
+  cursor: pointer;
+}
+
+.popClose{
+  cursor: pointer;
+  font-size: 20px;
+  font-weight: 500;
+}
+
+/* account section */
+.accountRow{
+  display: flex;
+  justify-content: space-between;
+}
+
+.arrow{
+  font-size: 25px;
+  font-weight: 300;
+  color: gray;
+  cursor: pointer;
 }
 
 /* certificate section */
 
 .certificateBox {
-  width: 200px;
-  border: 2px solid #ddd; 
   border-radius: 10px;
   text-align: left;
-  padding: 15px;
+  padding: 30px 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 175px;
+  cursor: pointer;
   }
   
-  .certificateHeader{
+.certificateItem{
+  flex: 0 0 calc(33.33% - 20px);
+}
+
+.certificateHeader{
   font-size: 20px;
   font-weight: 500;
-  border-bottom-style: dashed;
-  border-bottom-color: #ddd;
   border-bottom-width: 2px;
   padding-bottom:5px;
+  color: green;
   }
   
   .certificateName {
   margin-top: 4px;
   font-size: 18px;
   font-weight: 500;
+  border-left: 4px solid;
+  padding: 0px 10px;
+  width: 130px;
   }
   
   .certificateInfo{
   display: flex;
   font-size: 15px;
-  color: #a7a0a0;
-  padding-top: 8px;
+  color: green;
+  padding: 8px 0px;
   gap: 5px;
   }
   
-  .infoCircle {
-  padding-top: 1px;
+  .paginationDots{
+    text-align: right;
+    color: gray;
+    font-size: 60px;
+    margin: 0px 20px;
+    cursor: pointer;
+    overflow-x: scroll;
+    overflow-y: hidden;
+    white-space: nowrap;
   }
-  
 
-/* badges section */
+  .activeDot{
+    color: green;
+  }
 
-.badgesSection {
-  text-align: flex; /* This should be 'left' or 'center' if 'flex' is not intentional */
-}
+/* course progress */
 
-.badgeItem {
+.courseItem{
   display: flex;
-  flex-direction: column;
-  align-items: center;
+  flex: 0 0 calc(50% - 40px);
+  align-items: left; 
+  margin-right: 20px;
 }
 
-.badgeIcon {
-  width: 60px;
-  height: 60px;
-  border-radius: 50%;
-  background-color: #ddd;
-  margin-bottom: 10px;
+.courseName{
+  width: 50%;
 }
 
-.courseItem {
+
+/* password popup */
+
+.passPopUp{
+  position: absolute;
+  background-color: white;
+  border: 1px solid black;
+  padding: 50px 50px;
+  border-radius: 10px;
+  width: 500px;
+}
+
+.passPopClose{
+  cursor: pointer;
+  font-size: 25px;
+  font-weight: 500;
+  color: gray;
+  text-align: right;
+}
+
+.passPopTitle{
+  font-size: 20px;
+  font-weight: 550;
+  padding-bottom: 10px;
+  text-align: center;
+}
+
+.passPopSub{
+  text-align: center;
+  font-size: 18px;
+  color: gray;
+  margin-bottom: 30px;
+}
+
+.passPopText{
+  font-size: 18px;
+  color: gray;
+  margin: 10px 0;
+}
+
+.passPopBottom{
+  margin: 20px 0;
   display: flex;
-  flex-direction: column;
-  align-items: center;
-  margin: 20px; /* Adjust margin to increase/decrease space between items */
-  box-shadow: 0 3px 5px 0 rgba(0,0,0,0.2); /* Add shadow for layer effect */
-  transition: 0.3s; /* Adds a smooth transition effect */
-  border-radius: 10px; /* Rounded corners for the cards */
+  justify-content: center;
 }
 
-.courseItem:hover {
-  box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2); /* Changes the shadow on hover for a lifted effect */
+.passInput{
+  width: 100%;
+  height: 40px;
+  border-radius: 10px;
+  border-color:rgb(232,232,232);
+  background-color: rgb(232, 232, 232);
+  font-size: 20px;
+  color: gray;
 }
 
-.courseIcon {
-  width: 250px; /* Set to 100% of the parent element to fill width */
-  height: 100px; /* Adjust height to match the image */
-  margin-bottom: 10px; /* Adjust bottom margin as needed */
-  background-color: #ddd;
-  border-radius: 20px; /* Adjust border-radius to match the image */
+.passPopButton{
+  font-size: 18px;
+  border: 1px solid black;
+  border-radius: 20px;
+  padding: 5px 20px;
+  margin: 5px;
+  cursor: pointer;
 }
-
-.rowName {
-  font-size: 1em; /* Adjust the font size to match the image */
-  color: #333; /* Darken the text color a bit */
-  margin-top: -5px; /* Adjust if needed to position the text closer/further from the box */
-}
-
-

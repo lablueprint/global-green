@@ -39,6 +39,7 @@ function Profile() {
 
     const data = await response.json();
     setData(data.user);
+    console.log(userData);
     setEditedName(data.user.userName);
   };
 
@@ -187,8 +188,7 @@ function Profile() {
                   {userData && (
                   <PdfForm
                     templatePdf="/certificate.pdf"
-                    firstName={userData.firstName}
-                    lastName={userData.lastName}
+                    userName={userData.name}
                     course={certificate.name}
                     date={certificate.date}
                     duration={certificate.duration}

@@ -43,6 +43,35 @@ function Profile() {
     setEditedName(data.user.userName);
   };
 
+  const deleteAccount = async () => {
+    // delete the user account from the database
+    async function deleteAccountFromDB() {
+      const response = await fetch('/api/users/me/delete', {
+        method: 'DELETE',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ userId: session.user.id }),
+      });
+      const res = await response.json();
+      if (res.error) {
+        // eslint-disable-next-line no-alert
+        alert(res.error);
+        throw new Error(res.error);
+      }
+      // eslint-disable-next-line no-console
+      console.log('Account deleted', response.data);
+    }
+    deleteAccountFromDB();
+
+    // delete the user account from the local storage
+    localStorage.removeItem('userData');
+
+    // logout the user
+    await signOut();
+    window.location.href = '/login';
+  };
+
   useEffect(() => {
     console.log('session', session);
     if (session) getUserDetails(session.user.id);
@@ -249,7 +278,10 @@ function Profile() {
                 </div>
               </div>
               <div className={styles.accountCol}>
-                <div className={styles.arrow}>
+                <div
+                  className={styles.arrow}
+                  onClick={deleteAccount}
+                >
                   {' '}
                   {'>'}
                   {' '}

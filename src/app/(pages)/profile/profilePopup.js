@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import Image from 'next/image';
 import styles from './page.module.css';
 import profileData from './profileData';
 
@@ -17,7 +18,9 @@ function ProfilePopup({ onClose }) {
           </div>
           <div className={styles.popPicAll}>
             {profileData.map((course) => (
-              <div key={course} className={styles.popPic} style={{ backgroundImage: `url(${course.background})` }} />
+              <div key={course.name} className={styles.popPic}>
+                <Image width={100} height={100} src={course.imageSrc} alt="profile pic variation" />
+              </div>
             ))}
           </div>
         </div>

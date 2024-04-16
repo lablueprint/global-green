@@ -1,25 +1,26 @@
 // sample data for courses
 
+
 const profileData = [{
-  background: '/course/course1.png', 
+  imageSrc: 'https://i.ibb.co/F8KNQ6V/a1.png',
 }, {
-  background: '/course/course2.png', 
+  imageSrc: 'https://i.ibb.co/gRFfMJJ/a2.png',
 }, {
-  background: '/course/course3.png', 
+  imageSrc: 'https://i.ibb.co/KKkPQ14/a3.png',
 }, {
-  background: '/course/course4.png', 
+  imageSrc: 'https://i.ibb.co/yBRFQsw/a4.png',
 }, {
-  background: '/course/course5.png', 
+  imageSrc: 'https://i.ibb.co/G2jws4q/a5.png',
 }, {
-  background: '/course/course6.png', 
+  imageSrc: 'https://i.ibb.co/4JGbX8q/a6.png',
 }, {
-  background: '/course/course1.png', 
+  imageSrc: 'https://i.ibb.co/jLCsx86/a7.png',
 }, {
-  background: '/course/course2.png', 
+  imageSrc: 'https://i.ibb.co/ZYxTDTY/a8.png',
 }, {
-  background: '/course/course3.png', 
+  imageSrc: 'https://i.ibb.co/8731Lbq/a9.png',
 }, {
-  background: '/course/course4.png', 
-}, ];
+  imageSrc: 'https://i.ibb.co/55hMXX1/a10.png',
+}];
 
 export default profileData;

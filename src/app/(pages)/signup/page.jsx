@@ -1,9 +1,9 @@
 'use client';
 
-import React, { useState, useRef } from 'react';
-import { signIn } from 'next-auth/react';
+import React, { useState, useRef } from "react";
+import { signIn } from "next-auth/react";
 // import styles from './page.module.css';
-import ReCAPTCHA from 'react-google-recaptcha';
+import ReCAPTCHA from "react-google-recaptcha";
 
 function Example() {
   const [firstName, setFirstName] = useState('');
@@ -14,7 +14,7 @@ function Example() {
   const [userName, setUserName] = useState('');
   // Captcha Related
   const recaptcha = useRef(null);
-  const [captchaToken, setCaptchaToken] = useState('');
+  const [captchaToken, setCaptchaToken] = useState("");
 
   const onCaptchaChange = (token) => {
     // Set the captcha token when the user completes the reCAPTCHA
@@ -34,7 +34,13 @@ function Example() {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({
-          userName, password, firstName, lastName, email, captchaToken,
+          userName,
+          password,
+          firstName,
+          lastName,
+          email,
+          points,
+          captchaToken,
         }),
       });
       const data = await response.json();
@@ -45,23 +51,23 @@ function Example() {
         throw new Error(data.error);
       } else {
         // log the user in after signing up
-        signIn('credentials', {
+        signIn("credentials", {
           username: email,
           password,
-          callbackUrl: '/verifyemail',
+          callbackUrl: "/verifyemail",
         });
-        console.log('Signup success', response.data);
+        console.log("Signup success", response.data);
         recaptcha?.current?.reset();
       }
 
       // eslint-disable-next-line no-console
-      console.log('Signup success', response.data);
+      console.log("Signup success", response.data);
       recaptcha?.current?.reset();
     } catch (error) {
       // eslint-disable-next-line no-console
-      console.log('Signup failed', error.message);
+      console.log("Signup failed", error.message);
       // refresh the page to clear the form
-      window.location.href = '/signup';
+      window.location.href = "/signup";
     }
   };
 

@@ -17,6 +17,7 @@
     "@react-email/render": "^0.0.12",
     "@react-pdf/renderer": "^3.3.8",
     "aws-sdk": "^2.1553.0",
+    "axios": "^1.6.8",
     "bcrypt": "^5.1.1",
     "bcryptjs": "^2.4.3",
     "dotenv-webpack": "^8.0.1",

@@ -135,7 +135,7 @@ function Profile() {
           && (
           <PasswordPopup
             onClose={handleClosePassword}
-            userPassword={userData.password}
+            userName={session.user.userName}
           />
           )}
 
@@ -188,7 +188,7 @@ function Profile() {
                   {userData && (
                   <PdfForm
                     templatePdf="/certificate.pdf"
-                    userName={userData.name}
+                    userName={session.user.name}
                     course={certificate.name}
                     date={certificate.date}
                     duration={certificate.duration}

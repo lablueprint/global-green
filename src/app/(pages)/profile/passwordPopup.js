@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { FaPencilAlt, FaRegCheckCircle } from 'react-icons/fa';
+import axios from 'axios';
 import styles from './page.module.css';
 
-function passwordPopup({ onClose, userPassword }) {
+function passwordPopup({ onClose, userName }) {
   const [currentPassword, setCurrentPassword] = useState('');
   const [newPassword, setNewPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
@@ -15,7 +16,7 @@ function passwordPopup({ onClose, userPassword }) {
 
   useEffect(() => {
     if (currentPassword && newPassword && confirmPassword) {
-      if (newPassword === confirmPassword && newPassword !== userPassword) {
+      if (newPassword === confirmPassword && newPassword !== 'userPassword') {
         if (newPassword.length >= 15 || (newPassword.length >= 8 && /\d/.test(newPassword) && /[a-zA-Z]/.test(newPassword))) {
           setCanChange(true);
         }
@@ -25,8 +26,22 @@ function passwordPopup({ onClose, userPassword }) {
     }
   }, [newPassword, confirmPassword]);
 
-  const handleChangePassword = () => {
-    setSuccess(true);
+  const handleChangePassword = async () => {
+    try {
+      const response = await axios.post('/api/me/change-password', {
+        userName,
+        currentPassword,
+        newPassword,
+      });
+      if (response.data.message) {
+        setSuccess(true);
+      } else {
+        alert(response.data.error);
+      }
+    } catch (error) {
+      console.error('Password change error', error);
+      alert('An error occurred during password change');
+    }
   };
 
   return (

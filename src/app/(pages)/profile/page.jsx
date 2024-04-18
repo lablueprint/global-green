@@ -3,6 +3,7 @@
 import React, { useEffect, useState } from 'react';
 import Image from 'next/image';
 import { useSession, signOut } from 'next-auth/react';
+import { FaPencilAlt } from 'react-icons/fa';
 import styles from './page.module.css';
 import defaultProfilePic from './profilepic.jpg';
 // Assuming you have a default profile pic
@@ -26,18 +27,16 @@ function Profile() {
 
   const getUserDetails = async (id) => {
     if (!id) return;
-    const response = await fetch(
-      '/api/users/me',
-      {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ id }),
+    const response = await fetch('/api/users/me', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
       },
-    );
+      body: JSON.stringify({ id }),
+    });
 
     const data = await response.json();
+    // console.log("here", data);
     setData(data.user);
     console.log(userData);
     setEditedName(data.user.userName);
@@ -95,7 +94,7 @@ function Profile() {
     updateUserData(userData);
   };
 
-  const handleChangeProfileImage = () => {
+  const handleChangeProfileImage = (event) => {
     setProfilePopup(true);
   };
 

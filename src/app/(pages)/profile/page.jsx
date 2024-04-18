@@ -25,6 +25,11 @@ function Profile() {
   const [currIndex, setCurrIndex] = useState();
   const { data: session } = useSession();
 
+  const handleLogout = async () => {
+    await signOut();
+    window.location.href = "/login";
+  };
+
   const getUserDetails = async (id) => {
     if (!id) return;
     const response = await fetch("/api/users/me", {
@@ -39,6 +44,34 @@ function Profile() {
     setData(data.user);
     console.log(userData);
     setEditedName(data.user.userName);
+  };
+
+  const deleteAccount = async () => {
+    // delete the user account from the database
+    async function deleteAccountFromDB() {
+      const response = await fetch("/api/users/me/delete", {
+        method: "DELETE",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ userId: session.user.id }),
+      });
+      const res = await response.json();
+      if (res.error) {
+        // eslint-disable-next-line no-alert
+        alert(res.error);
+        throw new Error(res.error);
+      }
+      // eslint-disable-next-line no-console
+      console.log("Account deleted", response.data);
+    }
+    deleteAccountFromDB();
+
+    // logout the user
+    handleLogout();
+
+    // delete the user account from the local storage
+    localStorage.removeItem("userData");
   };
 
   useEffect(() => {
@@ -118,11 +151,6 @@ function Profile() {
     setPasswordPopup(false);
   };
 
-  const handleLogout = async () => {
-    await signOut();
-    window.location.href = "/login";
-  };
-
   const totalPages = Math.ceil(certData.length / 3);
   const startIndex = currentPage * 3;
   const displayedCertificates = certData.slice(startIndex, startIndex + 3);
@@ -175,6 +203,102 @@ function Profile() {
               </div>
             )}
           </div>
+
+          <div className={styles.certificateSection}>
+            <div className={styles.sectionHeader}> Certificates </div>
+            <div className={styles.row}>
+              {displayedCertificates.map((certificate, index) => (
+                <div
+                  key={index}
+                  onClick={PdfForm.generatePdf}
+                  className={styles.certificateItem}
+                  style={{
+                    backgroundImage: 'url("/certificate.jpg")',
+                    borderRadius: "10px",
+                    backgroundSize: "cover",
+                  }}
+                >
+                  {userData && (
+                    <PdfForm
+                      templatePdf="/certificate.pdf"
+                      userName={userData.name}
+                      course={certificate.name}
+                      date={certificate.date}
+                      duration={certificate.duration}
+                    />
+                  )}
+                </div>
+              ))}
+            </div>
+            <div className={styles.paginationDots}>
+              {Array.from({ length: totalPages }, (_, i) => (
+                <span
+                  key={i}
+                  className={`${styles.dot} ${
+                    i === currentPage ? styles.activeDot : ""
+                  }`}
+                  onClick={() => handlePageChange(i)}
+                >
+                  .
+                </span>
+              ))}
+            </div>
+          </div>
+          <div className={styles.coursesSection}>
+            <div className={styles.sectionHeader}>Course Progress</div>
+            <div className={styles.row}>
+              {courseData.map((course) => (
+                <div key={course} className={styles.courseItem}>
+                  <div className={styles.courseName}>{course.name}</div>
+                  <ProgressBar
+                    className={styles.progressBar}
+                    value={course.progress}
+                    color="green"
+                    isPopupDisplayed={profilePopup || passwordPopup}
+                  />
+                </div>
+              ))}
+            </div>
+          </div>
+
+          <div className={styles.accountSection}>
+            <div className={styles.sectionHeader}> Account </div>
+            <div className={styles.accountRow}>
+              <div className={styles.accountCol}>
+                <div className={styles.sectionText}>Change Password</div>
+                <div className={styles.subText}>
+                  Set a different password to login to your account
+                </div>
+              </div>
+              <div className={styles.accountCol}>
+                <div className={styles.arrow} onClick={handleChangePassword}>
+                  {" "}
+                  {">"}{" "}
+                </div>
+              </div>
+            </div>
+            <div className={styles.accountRow}>
+              <div className={styles.accountCol}>
+                <div className={styles.sectionText} style={{ color: "red" }}>
+                  Delete Account
+                </div>
+                <div className={styles.subText}>
+                  Permanently delete the account and remove access from all
+                  resources
+                </div>
+              </div>
+              <div className={styles.accountCol}>
+                <div className={styles.arrow} onClick={deleteAccount}>
+                  {" "}
+                  {">"}{" "}
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <button type="button" onClick={handleLogout}>
+            Logout
+          </button>
         </div>
       </div>
       <div className={styles.certificateSection}>

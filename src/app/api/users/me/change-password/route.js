@@ -13,6 +13,8 @@ export async function POST(request) {
       newPassword,
     } = reqBody;
 
+    console.log(reqBody);
+
     const user = await User.findOne({
       $or: [{ email: userName }, { userName }],
     });

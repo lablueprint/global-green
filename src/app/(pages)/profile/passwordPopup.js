@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import { FaPencilAlt, FaRegCheckCircle } from 'react-icons/fa';
-import axios from 'axios';
 import styles from './page.module.css';
 
 function passwordPopup({ onClose, userName }) {
@@ -28,19 +27,27 @@ function passwordPopup({ onClose, userName }) {
 
   const handleChangePassword = async () => {
     try {
-      const response = await axios.post('/api/me/change-password', {
-        userName,
-        currentPassword,
-        newPassword,
+      const response = await fetch('/api/users/me/change-password', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          userName,
+          currentPassword,
+          newPassword,
+        }),
       });
-      if (response.data.message) {
-        setSuccess(true);
+
+      const data = await response.json();
+      if (data.error) {
+        alert(data.error);
+        throw new Error(data.error);
       } else {
-        alert(response.data.error);
+        setSuccess(true);
       }
     } catch (error) {
-      console.error('Password change error', error);
-      alert('An error occurred during password change');
+      console.log('change password failed', error.message);
     }
   };
 

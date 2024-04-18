@@ -22,7 +22,9 @@ export default async function RootLayout({ children }) {
 
           <div className={styles.wrapper}>
             <NavBar />
-            <div>
+            <div
+              style={{ minWidth: '80vw' }} // TODO: I feel like we should include this? - Ryan K
+            >
               {children}
             </div>
           </div>

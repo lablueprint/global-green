@@ -8,7 +8,6 @@ import styles from './page.module.css';
 import defaultProfilePic from './profilepic.jpg';
 // Assuming you have a default profile pic
 import PdfForm from './PdfForm';
-import certData from './certData';
 import courseData from '../landing/courseData';
 import ProgressBar from './progressBar';
 import ProfilePopup from './profilePopup';
@@ -20,6 +19,7 @@ function Profile() {
   const [profileImage, setProfileImage] = useState(defaultProfilePic);
   const [editedName, setEditedName] = useState('');
   const [userData, setData] = useState({});
+  const [certData, setCertData] = useState([]);
   const [profilePopup, setProfilePopup] = useState(false);
   const [passwordPopup, setPasswordPopup] = useState(false);
   const [currentPage, setCurrentPage] = useState(0);
@@ -46,6 +46,7 @@ function Profile() {
     setData(data.user);
     console.log(userData);
     setEditedName(data.user.userName);
+    setCertData(data.user.certificates);
   };
 
   const deleteAccount = async () => {
@@ -291,7 +292,7 @@ function Profile() {
             </div>
           </div>
           <div className={styles.accountCol}>
-            <div className={styles.arrow}>
+            <div className={styles.arrow} onClick={deleteAccount}>
               {' '}
               {'>'}
               {' '}

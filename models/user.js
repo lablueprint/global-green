@@ -10,7 +10,19 @@ const userSchema = new Schema(
     profilePic: { type: String },
     rank: { type: Number },
     badges: { type: Array },
-    courses: { type: Array },
+    courses: [
+      {
+        key: { type: String, required: true },
+        currStage: { type: Number },
+        complete: { type: Boolean },
+      },
+    ],
+    certificates: [
+      {
+        key: { type: String, required: true },
+        date: { type: Date },
+      },
+    ],
     verified: { type: Boolean, default: false },
     verifyToken: { type: String },
     verifyExpires: { type: Date, default: Date.now, index: { expireAfterSeconds: 300 } },

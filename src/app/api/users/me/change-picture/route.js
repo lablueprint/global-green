@@ -8,14 +8,14 @@ export async function PATCH(request) {
     const reqBody = await request.json();
     const {
       userId,
-      newPictureUrl,
+      profilePic,
     } = reqBody;
 
-    if (!newPictureUrl) {
+    if (!profilePic) {
       return NextResponse.json({ error: 'New picture URL is required' }, { status: 400 });
     }
 
-    const user = await User.findByIdAndUpdate(userId, { pictureUrl: newPictureUrl }, { new: true }).select('-password');
+    const user = await User.findByIdAndUpdate(userId, { profilePic }, { new: true }).select('-password');
     if (!user) {
       return NextResponse.json({ error: 'User not found' }, { status: 404 });
     }

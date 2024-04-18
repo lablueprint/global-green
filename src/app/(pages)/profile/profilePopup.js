@@ -58,7 +58,7 @@ function ProfilePopup({
           <div
             className={styles.popButton}
             onClick={() => {
-              if (!currIndex) {
+              if (typeof currIndex != "number") {
                 alert("Please select an image to change your avatar to or press cancel");
               } else {
                 onClose();

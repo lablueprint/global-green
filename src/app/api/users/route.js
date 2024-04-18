@@ -4,11 +4,11 @@ import User from '../../../../models/user';
 
 export async function POST(request) {
   const {
-    firstName, lastName, email, password, userName, rank, badges, courses,
+    firstName, lastName, email, password, userName, points, badges, courses,
   } = await request.json();
   await connectMongoDB();
   await User.create({
-    firstName, lastName, email, password, userName, rank, badges, courses,
+    firstName, lastName, email, password, userName, points, badges, courses,
   });
   return NextResponse.json({ message: 'User Created' }, { status: 201 });
 }

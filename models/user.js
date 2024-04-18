@@ -7,7 +7,7 @@ const userSchema = new Schema(
     email: { type: String, required: true },
     password: { type: String },
     userName: { type: String },
-    rank: { type: Number },
+    points: { type: Number, default: 0 },
     badges: { type: Array },
     courses: [
       {
@@ -24,6 +24,7 @@ const userSchema = new Schema(
       background: { type: String },
       accessories: { type: [String] },
     },
+    seeds: { type: Number, default: 0 },
   },
   {
     timestamps: true,

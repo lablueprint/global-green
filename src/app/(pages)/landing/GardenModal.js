@@ -3,23 +3,13 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { Button } from '@mui/material';
 import styles from './page.module.css';
 
-export default function GardenModal({ setIsGardenModalOpen }) {
+export default function GardenModal({ setIsGardenModalOpen, flowers }) {
   const variant = {
     initial: { opacity: 0, scale: 0.9, y: 100 },
     animate: { opacity: 1, scale: 1.2, y: 0 },
     exit: { opacity: 0, scale: 0.9, y: 100 },
 
   };
-
-  const [flowers, setFlowers] = useState({
-    1: false,
-    2: false,
-    3: false,
-    4: false,
-    5: false,
-    6: false,
-    7: false,
-  });
 
   const [background, setBackground] = useState({
     1: false,
@@ -77,23 +67,6 @@ export default function GardenModal({ setIsGardenModalOpen }) {
     }
   }
 
-  function addToGarden() {
-    // add selected items to garden
-    selectedItems.flowers.forEach((index) => {
-      toggleFlower(index);
-    });
-    selectedItems.background.forEach((index) => {
-      toggleBackground(index);
-    });
-    selectedItems.accessories.forEach((index) => {
-      toggleAccessories(index);
-    });
-    setSelectedItems({
-      flowers: [],
-      background: [],
-      accessories: [],
-    });
-  }
 
   function accesoriesTab() {
     return (

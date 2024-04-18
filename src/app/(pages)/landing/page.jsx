@@ -10,7 +10,22 @@ import GardenModal from './GardenModal';
 function LandingPage() {
   const [currentModule] = useState({ imageUrl: '/landingpageImage.png', name: 'Chinenye Eneh' });
   const [isGardenModalOpen, setIsGardenModalOpen] = useState(false);
-  const [courseProgress, setCourseProgress] = useState([]);
+  const courseFlowerMap = {
+    'course1': 1,
+    'course2': 2,
+    'course3': 3,
+    'course4': 4,
+    'course5': 5,
+    'course6': 6
+  }
+  const [flowers, setFlowers] = useState({
+    1: false,
+    2: false,
+    3: false,
+    4: false,
+    5: false,
+    6: false
+  })
   const { data: session } = useSession();
 
   const getCourseProgress = async (id) => {
@@ -27,7 +42,14 @@ function LandingPage() {
     );
 
     const data = await response.json();
-    setCourseProgress(data.courseProgress);
+
+    const adjustFlowers = flowers;
+    data.courseProgress.forEach((course) => {
+      if (course.complete) {
+        adjustFlowers[courseFlowerMap[course.key]] = true;
+      }
+    });
+    setFlowers(adjustFlowers);
   };
 
   useEffect(() => {
@@ -37,7 +59,7 @@ function LandingPage() {
   // seeing landing page banner
   return (
     <div className={styles.landingPage}>
-      {isGardenModalOpen && <GardenModal setIsGardenModalOpen={setIsGardenModalOpen} />}
+      {isGardenModalOpen && <GardenModal setIsGardenModalOpen={setIsGardenModalOpen} flowers={flowers}/>}
 
       <div className={styles.welcome}>
         <h1>

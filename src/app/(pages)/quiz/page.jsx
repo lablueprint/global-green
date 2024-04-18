@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import styles from './page.module.css';
 import MultipleChoiceQuiz from './MultipleChoice';
 import TrueFalseQuiz from './TrueFalse';
@@ -10,8 +10,9 @@ import LinearWithValueLabel from './progressBar';
 import Results from './results';
 import Check from './checkAllThatApply';
 // import AnswerPopup from './AnswerPopup';
+/* eslint ignore-warnings */
 
-function Quiz() {
+function Quiz({ key }) {
   const [currentQuizIndex, setCurrentQuizIndex] = useState(0);
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
   const [TotalProgress, setTotalProgress] = useState(0);
@@ -30,7 +31,20 @@ function Quiz() {
   const [showCheckButton, setShowCheckButton] = useState(true);
   const [isCurrentAnswerCorrect, setIsCurrentAnswerCorrect] = useState(null);
 
-  const currentQuiz = Quizzes;
+  const getQuiz = async () => {
+    key = 'course1_quiz1';
+    const res = await fetch(`/api/quizzes?key=${encodeURIComponent(key)}`);
+    const data = await res.json();
+    return data.res.questions;
+  };
+
+  const [currentQuiz, setCurrentQuiz] = useState(Quizzes);
+  useEffect(() => {
+    getQuiz().then((res) => {
+      setCurrentQuiz({ totalQuestions: res.length, questions: res });
+    });
+  }, []);
+
   const currentQuestion = currentQuiz.questions[currentQuestionIndex];
 
   const renderQuestionComponent = (question) => {
@@ -60,7 +74,7 @@ function Quiz() {
       case 'matching':
         return (
           <Matching
-            terms={question.terms}
+            options={question.options}
             selectedMatches={selectedMatches}
             setSelectedMatches={setSelectedMatches}
             isAttempted={attempted}
@@ -166,27 +180,27 @@ function Quiz() {
             &#10005;
           </div>
           <div style={{
-            display: 'flex', 
-            alignItems: 'flex-start', 
+            display: 'flex',
+            alignItems: 'flex-start',
           }}
           >
             <div style={{
               display: 'flex',
-              flexDirection: 'column', 
+              flexDirection: 'column',
               fontWeight: 'bold',
               fontSize: '18px',
-              marginTop: '8px', 
+              marginTop: '8px',
               marginRight: '20px',
             }}
             >
               Hint
             </div>
             <div style={{
-              display: 'flex', 
-              flexDirection: 'column', 
+              display: 'flex',
+              flexDirection: 'column',
               fontSize: '12px',
               color: '#454545',
-              lineHeight: '1.4', 
+              lineHeight: '1.4',
             }}
             >
               {message}
@@ -283,26 +297,24 @@ function Quiz() {
     setShowCheckButton(false); // Hide the Check button
     if (currentQuestion.type === 'matching') {
       // console.log(selectedMatches)
-      // console.log(currentQuestion.terms)
+      // console.log(currentQuestion.options)
 
       // good
       // console.log(selectedMatches.length)
-      // console.log(currentQuestion.terms.length)
+      // console.log(currentQuestion.options.length)
 
-      // console.log(selectedMatches.every(match => currentQuestion.terms.find(term => term.term === match.term && term.definition === match.definition)))
-      const isCorrect = selectedMatches.length === currentQuestion.terms.length
-      && selectedMatches.every((match) => currentQuestion.terms[match.term].definition === currentQuestion.answer[match.definition]);
+      // console.log(selectedMatches.every(match => currentQuestion.options.find(term => term.term === match.term && term.definition === match.definition)))
+      const isCorrect = selectedMatches.length === currentQuestion.options.length
+      && selectedMatches.every((match) => currentQuestion.options[match.term].definition === currentQuestion.answer[match.definition]);
       handleAnswer(isCorrect, selectedMatches.map((match) => match.term).join(', '));
       setAttempted(true);
-    } 
-    else if (currentQuestion.type === 'checkAllThatApply') {
+    } else if (currentQuestion.type === 'checkAllThatApply') {
       // Sort to ensure order does not affect comparison
       const sortedSelectedOptions = selectedOption.sort();
       const sortedCorrectAnswers = currentQuestion.answer.sort();
       const isCorrect = JSON.stringify(sortedSelectedOptions) === JSON.stringify(sortedCorrectAnswers);
       handleAnswer(isCorrect, sortedSelectedOptions.join(', '));
-    }
-    else {
+    } else {
     // console.log(currentQuestion.answer)
     // console.log(selectedOption)
       const isCorrect = selectedOption === currentQuestion.answer;
@@ -365,11 +377,11 @@ function Quiz() {
             type="button"
             className={`${styles.checkButton} ${
               (currentQuestion.type !== 'matching' && selectedOption)
-              || (currentQuestion.type === 'matching' && selectedMatches.length === currentQuestion.terms.length)
+              || (currentQuestion.type === 'matching' && selectedMatches.length === currentQuestion.options.length)
                 ? styles.checkButtonEnabled : ''}`}
             onClick={() => checkAnswer(selectedOption)}
             disabled={currentQuestion.type !== 'matching' ? !selectedOption || attempted
-              : selectedMatches.length !== currentQuestion.terms.length || attempted}
+              : selectedMatches.length !== currentQuestion.options.length || attempted}
           >
             Check
           </button>

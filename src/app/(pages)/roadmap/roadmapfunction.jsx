@@ -1,6 +1,7 @@
 'use client'
 
 import React from 'react';
+import Image from "next/image";
 import LinearWithValueLabel from './progressbar';
 import styles from './page.module.css';
 import { useRouter } from 'next/navigation';
@@ -54,7 +55,6 @@ const svgPathData = {
   "5": {
     path: "M13.5521 148.899C6.98032 149.756 0.95798 145.124 0.100795 138.552C-0.75639 131.98 3.87618 125.958 10.4479 125.101L13.5521 148.899ZM62.5 64.5C62.5 29.1538 91.1538 0.5 126.5 0.5C161.846 0.5 190.5 29.1538 190.5 64.5C190.5 99.8462 161.846 128.5 126.5 128.5C91.1538 128.5 62.5 99.8462 62.5 64.5ZM10.4479 125.101C24.6253 123.252 47.3852 117.577 68.5185 106.725C89.7981 95.7982 107.74 80.5172 115.253 60.3171L137.747 68.6829C127.26 96.8828 103.285 115.852 79.4815 128.075C55.5315 140.373 30.0413 146.748 13.5521 148.899L10.4479 125.101Z"
   },
-  // Add more path data for each connection in your roadmap
 };
 
 function Roadmap({ title, steps }) {
@@ -79,7 +79,6 @@ function Roadmap({ title, steps }) {
             <div className={styles.title}>
               <h1>{title}</h1>
             </div>
-
             <LinearWithValueLabel
               value={totalProgress}
               x={completedSteps}
@@ -87,33 +86,19 @@ function Roadmap({ title, steps }) {
               style={{ width: '50%' }} // Apply inline styling to decrease width
               />
         </div>
-      <div className={styles.roadmapContainer}>     
-          {steps.map((step, index) => (
-            <div key={step.id} className={styles.stepContainer}>    
-              {/* Render SVG paths between steps */}
-              {index > 0 && (
-                <SVGPath
-                  id={(index).toString()}
-                  d={svgPathData[index]}
-                  completed={steps[index - 1].completed}
-                />
-              )}
 
-              {/* Step button */}
-              <button
-                type="button"
-                disabled={!step.completed}
-                className={`${styles.step} ${step.completed == 'done' ? styles.stepCompleted : styles.stepIncomplete}`}
-                onClick={() => navigateToStep(step.path)}
-              >
-                {index == 0 ? 'Intro' : index}
-              </button>  
-            </div>
-          ))}
-      </div>  
+        <div className={styles.roadmapContainer}>
+          <Image 
+          src= "/roadmap_step3.svg"
+          width ={1000}
+          height ={500}
+          />
+        </div>
 
   </>
   );
 }
 
 export default Roadmap;
+
+

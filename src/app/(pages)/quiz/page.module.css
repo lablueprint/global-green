@@ -182,7 +182,7 @@
   color: #ff0000;
 }
 
-.termsContainer button,
+.optionsContainer button,
 .definitionsContainer button {
   margin: 2px;
   border: 1px solid #ccc;
@@ -191,7 +191,7 @@
   cursor: pointer;
 }
 
-.termsContainer button:hover,
+.optionsContainer button:hover,
 .definitionsContainer button:hover {
   border-color: #f0ad4e;
 }
@@ -381,7 +381,7 @@
   /* background-color: red; */
 }
 
-.termsContainer {
+.optionsContainer {
   display: flex;
   flex-direction: column;
   width: 25%;
@@ -396,7 +396,7 @@
   /* background-color: blue; */
 }
 
-.termBox,
+.optionBox,
 .definitionBox {
   display: flex;
   align-items: center;

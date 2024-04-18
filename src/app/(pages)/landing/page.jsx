@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Image from 'next/image';
 import { useSession } from 'next-auth/react';
 import styles from './page.module.css';
@@ -10,7 +10,29 @@ import GardenModal from './GardenModal';
 function LandingPage() {
   const [currentModule] = useState({ imageUrl: '/landingpageImage.png', name: 'Chinenye Eneh' });
   const [isGardenModalOpen, setIsGardenModalOpen] = useState(false);
+  const [courseProgress, setCourseProgress] = useState([]);
   const { data: session } = useSession();
+
+  const getCourseProgress = async (id) => {
+    if (!id) return;
+    const response = await fetch(
+      '/api/users/course/progress',
+      {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ id }),
+      },
+    );
+
+    const data = await response.json();
+    setCourseProgress(data.courseProgress);
+  };
+
+  useEffect(() => {
+    if (session) getCourseProgress(session.user.id);
+  }, [session]);
 
   // seeing landing page banner
   return (

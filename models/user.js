@@ -13,6 +13,7 @@ const userSchema = new Schema(
       {
         key: { type: String, required: true },
         currStage: { type: Number },
+        complete: {type: Boolean}
       },
     ],
     verified: { type: Boolean, default: false },

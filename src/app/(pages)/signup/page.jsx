@@ -1,17 +1,10 @@
 'use client';
 
-<<<<<<< HEAD
 import React, { useState, useRef } from 'react';
 import Image from 'next/image';
 import { signIn } from 'next-auth/react';
 import ReCAPTCHA from 'react-google-recaptcha';
 import styles from './page.module.css';
-=======
-import React, { useState, useRef } from "react";
-import { signIn } from "next-auth/react";
-// import styles from './page.module.css';
-import ReCAPTCHA from "react-google-recaptcha";
->>>>>>> e1be14621abc637f63661b19d46bcc706211794a
 
 function Example() {
   const [firstName, setFirstName] = useState('');
@@ -139,7 +132,6 @@ function Example() {
   };
 
   return (
-<<<<<<< HEAD
     <div className={styles.exampleContainer}>
       <div className={styles.exampleImageContainer}>
         <Image
@@ -157,14 +149,6 @@ function Example() {
         <h1 className={styles.exampleTitle}>Create your account</h1>
         <label htmlFor="firstName" className={styles.exampleLabel}>
           First name:
-=======
-    <div>
-      <form>
-        <label htmlFor="firstName">
-          First name:
-          {' '}
-          <br />
->>>>>>> e1be14621abc637f63661b19d46bcc706211794a
           <input
             type="text"
             id="firstName"

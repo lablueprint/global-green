@@ -125,6 +125,7 @@ function Example() {
       OnSignup();
     }
   };
+
   return (
     <div className={styles.exampleContainer}>
       <div className={styles.exampleImageContainer}>
@@ -135,12 +136,14 @@ function Example() {
           height={600}
           className={styles.alignImage}
         />
+        <div className={styles.exampleGGtext}>
+          Learn about sustainability with <br /> <span className={styles.exampleGreenText}>Global Green</span> today
+        </div>
       </div>
-      <form className={styles.exampleForm}>
+      <form className={styles.exampleForm} onSubmit={submitLog}>
+        <h1 className={styles.exampleTitle}>Create your account</h1>
         <label htmlFor="firstName" className={styles.exampleLabel}>
           First name:
-          {' '}
-          <br />
           <input
             type="text"
             id="firstName"
@@ -149,10 +152,8 @@ function Example() {
             className={styles.exampleInput}
           />
         </label>
-        <br />
         <label htmlFor="lastName" className={styles.exampleLabel}>
           Last name:
-          <br />
           <input
             type="text"
             id="lastName"
@@ -160,18 +161,19 @@ function Example() {
             onChange={lastNameChange}
             className={styles.exampleInput}
           />
-          <br />
         </label>
-        {/* eslint-disable-next-line jsx-a11y/label-has-associated-control */}
-        <label type="eAddress" className={styles.exampleLabel}>
+        <label htmlFor="email" className={styles.exampleLabel}>
           Email Address:
-          <br />
-          <input type="email" id="email" name="email" onChange={emailChange} className={styles.exampleInput} />
-          <br />
+          <input
+            type="email"
+            id="email"
+            name="email"
+            onChange={emailChange}
+            className={styles.exampleInput}
+          />
         </label>
         <label htmlFor="userName" className={styles.exampleLabel}>
           Username:
-          <br />
           <input
             type="text"
             id="userName"
@@ -179,12 +181,9 @@ function Example() {
             onChange={userNameChange}
             className={styles.exampleInput}
           />
-          <br />
         </label>
-        {/* eslint-disable-next-line jsx-a11y/label-has-associated-control */}
-        <label name="pass" className={styles.exampleLabel}>
+        <label htmlFor="pass" className={styles.exampleLabel}>
           Password:
-          <br />
           <input
             type="password"
             id="pass"
@@ -192,12 +191,9 @@ function Example() {
             onChange={passwordChange}
             className={styles.exampleInput}
           />
-          <br />
         </label>
-        {/* eslint-disable-next-line jsx-a11y/label-has-associated-control */}
-        <label name="confirmPass" className={styles.exampleLabel}>
+        <label htmlFor="confirmPass" className={styles.exampleLabel}>
           Confirm Password:
-          <br />
           <input
             type="password"
             id="confirmPass"
@@ -205,21 +201,18 @@ function Example() {
             onChange={confirmPasswordChange}
             className={styles.exampleInput}
           />
-          <br />
         </label>
         <div className="pb-20px">
           <ReCAPTCHA
             size="normal"
             sitekey={process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY}
             onChange={onCaptchaChange}
-            ref={recaptcha}
           />
         </div>
-        <br />
-        <input type="submit" value="Submit" onClick={submitLog} className={styles.exampleSubmitButton} />
-        <br />
+        <input type="submit" value="Continue" className={styles.exampleSubmitButton} />
       </form>
     </div>
   );
 }
+
 export default Example;

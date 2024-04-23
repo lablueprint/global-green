@@ -51,42 +51,59 @@ function Example() {
   }, [session]);
 
   return (
-    <div className={styles.exampleContainer}>
-      <h1 className={styles.exampleTitle}>{loading ? 'Processing' : 'Login'}</h1>
-      <form className={styles.exampleForm}>
-        {/* eslint-disable-next-line jsx-a11y/label-has-associated-control */}
-        <label name="username" className={styles.exampleLabel}>Username or Email:</label>
+    <div className={styles.mainContainer}>
+      <h1 className={styles.mainTitle}>Sign In</h1>
+      <form className={styles.userForm} onSubmit={submitLog}>
+  
+        <label htmlFor="username" className={styles.userLabel}>Email:</label>
         <input
           type="text"
           id="username"
           name="username"
+          value={userName}
           onChange={usernameChange}
-          className={styles.exampleInput}
+          className={styles.userInput}
+          placeholder="Email"
         />
-        {/* eslint-disable-next-line jsx-a11y/label-has-associated-control */}
-        <label name="pass" className={styles.exampleLabel}>Password:</label>
+  
+        <label htmlFor="pass" className={styles.userLabel}>Password:</label>
         <input
           type="password"
           id="pass"
           name="pass"
+          value={password}
           onChange={passwordChange}
-          className={styles.exampleInput}
+          className={styles.userInput}
+          placeholder="Password"
         />
-        {/* <input type="email" id="email" name="email" required />
-        <input type="submit" value="Submit" /> */}
-        <button type="submit" onClick={submitLog} className={styles.exampleSubmitButton}>
-          Submit
+        
+        <a href="/forgot-password" className={styles.forgotPassword}>
+          Forgot Password?
+        </a>
+  
+        <button 
+          type="submit" 
+          className={styles.submitButton}
+        >
+          Sign in
         </button>
       </form>
-      <p>
-        Don't have an account?
-        <a href="/signup">Sign Up</a>
+  
+      <p className={styles.signUpPrompt}>
+        Don’t have an account? <a href="/signup" className={styles.signUpLink}>Create an account</a>
       </p>
-      <button type="button" onClick={() => login('google')}>
+      
+      <hr className={styles.divider} />
+  
+      <button 
+        type="button" 
+        className={styles.googleButton}
+        onClick={() => login('google')}
+      >
         Sign in with Google
       </button>
     </div>
-  );
+  );  
 }
 
 export default Example;

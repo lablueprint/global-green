@@ -166,49 +166,78 @@ function VerifyEmail() {
 
   function renderIndicator() {
     if (timeLeft === null) {
-      // CODE FROM HERE *****************************************************
-      return <div>
-      <p>
-        Your account will be deleted in
-        {' '}
-        {timeLeft}
-        {' '}
-        seconds. Please verify your email before then.
-        {' '}
-        This is to ensure that your account is secure.
-      </p>
-      <input
-        type="text"
-        value={token}
-        onChange={(e) => setToken(e.target.value)}
-        placeholder="Enter token"
-      />
-      <button type="button" onClick={handleVerifyEmail}>Verify Email</button>
-      <p>
-        Did&apos;t receive the email?
-      </p>
-      <button type="button" onClick={resendVerificationEmail} disabled={resendDisabled}>
-        {resendDisabled ? `Resend in ${cooldown} seconds` : 'Resend Verification'}
-      </button>
-    </div>
-
-    // TO HERE *****************************************************
       return (
-        <div>
-          p
+        <div className={styles.contentContainer}>
+          <h3 className={styles.verificationTitle}>Enter Verification Code</h3>
+          <p className={styles.accountDeletionNotice}>
+            We have sent a code to {userName} <br/>
+            Please enter received code to continue.
+          </p>
+  
+          <div className={styles.tokenInputContainer}>
+            {Array.from({ length: 6 }).map((_, index) => (
+              <input
+                key={index}
+                type="text" 
+                maxLength="1"
+                value={token[index] || ''} // set value to the corresponding char from the token
+                onChange={(e) => {
+                  let newToken = token.split(''); // split the token into an array of characters
+                  newToken[index] = e.target.value; // replace char at current index with the new value
+                  setToken(newToken.join('')); // updates the token state
+                }}
+                className={styles.tokenInput}
+                autoFocus={index === 0}
+                onKeyDown={(e) => {
+                  if (e.key === "Backspace" && !token[index] && index > 0) {
+                    e.preventDefault(); // preventing default backspace option
+                    const prevInput = e.target.form[index -1];
+                    prevInput.focus();
+                    prevInput.select();
+                  }
+                }}
+                onInput={(e) => {
+                  const nextInput = e.target.form[index + 1]; // find the next input field
+                  if (nextInput && e.target.value) {
+                    nextInput.focus();
+                  }
+                }}
+              />
+            ))}
+          </div>
+  
+          <div style={{ textAlign: 'center', marginTop: '20px'}}>
+            <p style={{ display: 'inline'}}>Didn't receive a code?</p>
+            <span 
+              onClick={!resendDisabled ? resendVerificationEmail : undefined} 
+              className={resendDisabled ? styles.resendTextDisabled : styles.resendText}
+              style={{ cursor: resendDisabled ? 'default' : 'pointer', marginLeft: '10px' }}
+            >
+              {resendDisabled ? `Resend in ${cooldown} seconds` : 'Click to resend'}
+            </span>
+          </div>
+  
+          <button 
+            type="button" 
+            onClick={handleVerifyEmail}
+            className={styles.verifyButton}
+          >
+            Verify your account
+          </button>
         </div>
       );
     }
     return <p>Your verification time has expired. Please sign up again.</p>;
   }
+  
   return (
     <div>
-      <h1>
+      <p>
         Welcome back
         {' '}
         {userName}
         . Please check your email for a verification code to verify your account.
-      </h1>
+      </p>
       {renderIndicator()}
       {message && <p>{message}</p>}
       {error && <p>{error}</p>}

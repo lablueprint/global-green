@@ -3,39 +3,39 @@
   align-items: center;
   justify-content: space-between;
   font-family: "Arial", sans-serif;
-  max-width: 800px;
+  max-width: 100%;
   margin: 0 auto;
   padding: 20px;
   gap: 20px;
 }
 
 .exampleImageContainer {
-  flex: 1;
   text-align: left;
 }
 
 .alignImage {
-  width: 100%;
-  max-width: 100%;
+  width: 500px;
   height: auto;
 }
 
 .exampleForm {
   display: flex;
   flex-direction: column;
-  flex: 1;
+  margin-left: 100px;
+  margin-top: 80px;
 }
 
 .exampleInput {
-  padding: 10px;
-  margin: 10px 0;
+  margin: 7px 0;
   border: 1px solid #f5f5f5;
-  border-radius: 15px;
-  background-color: #f5f5f5;
+  border-radius: 5px;
+  background-color: #f2f2f2;
   display: flex;
-  padding: 12px 24px;
+  padding: 8px 16px;
   align-items: center;
   width: 100%;
+  font-size: 16px;
+  margin-bottom: 20px;
 }
 
 .exampleSubmitButton {
@@ -46,7 +46,7 @@
   border-radius: 10px;
   cursor: pointer;
   width: 100px;
-  margin: 0 auto;
+  margin: 30px auto 0;
 }
 
 .exampleSubmitButton:hover {
@@ -56,18 +56,29 @@
 .exampleLabel {
   text-align: left;
   display: block;
-  margin-top: 10px;
-  margin-bottom: 10px;
-  font-size: 14px;
+  margin-top: 4px;
+  margin-bottom: 4x;
+  font-size: 10px;
   color: #0d0d0d70;
 }
 
 .exampleTitle {
-  color: #519546;
+  color: black;
   text-align: center;
   font-family: "Arial";
-  font-size: 40px;
-  font-style: normal;
-  font-weight: 600;
+  font-size: 30px;
+  font-weight: 400;
   line-height: 100%;
+}
+
+.exampleGGtext {
+  text-align: center;
+  margin-top: 20px;
+  font-size: 30px;
+  color: black;
+}
+
+.exampleGreenText {
+  color: #45a049;
+  font-weight: bold;
 }

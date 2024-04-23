@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useRef, useEffect, useState } from 'react';
+import React, { useRef, useEffect, useState, button } from 'react';
 import mapboxgl from 'mapbox-gl';
 import 'mapbox-gl/dist/mapbox-gl.css';
 import styles from './map.module.css';
@@ -8,7 +8,6 @@ import styles from './map.module.css';
 mapboxgl.accessToken = process.env.NEXT_PUBLIC_MAPBOX_TOKEN;
 
 function Map() {
-
   // Initialize state variables
   const [mapArray, setMapArray] = useState([]);
   const mapContainerRef = useRef(null);
@@ -96,6 +95,14 @@ function Map() {
       return () => map.remove();
     }
   }, [mapArray]);
+  const [resortIsActive, setResortIsActive] = useState(false);
+  const [labIsActive, setLabIsActive] = useState(false);
+  function labToggleButton() {
+    setLabIsActive(!labIsActive);
+  }
+  function resortToggleButton() {
+    setResortIsActive(!resortIsActive);
+  }
 
   // ref = {mapContainerRef} is callback reference for the div that contains the map
   return (
@@ -107,21 +114,32 @@ function Map() {
         <div className={styles.mainBox}>
           <div ref={mapContainerRef} className={styles.mapContainer} />
           <div className={styles.sideBar}>
+            <p className={resortIsActive ? styles.active : styles.inactive} onClick={resortToggleButton}>Resort</p>
+            <p className={labIsActive ? styles.active : styles.inactive} onClick={labToggleButton}>Lab</p>
             {
-                mapArray.map((marker) => (
-                  <div
-                    className={styles.sideBarItem}
-                    key={marker.markername}
-                    onClick={() => {
-                      CloseAllPopups();
-                      HandleMarkerClick(marker.ref);
-                      marker.ref.togglePopup();
-                    }}
-                  >
-                    <h3>{marker.markername}</h3>
-                    <p>{marker.tag}</p>
-                  </div>
-                ))
+           mapArray.map((marker) => {
+            if ((!resortIsActive && !labIsActive) ||
+             (resortIsActive && marker.tag === 'Resort') ||
+              (labIsActive && marker.tag === 'Sustainability Lab') ||
+               (labIsActive && resortIsActive && (marker.tag === 'Sustainability Lab' || marker.tag === 'Resort'))) {
+              return (
+                <div
+                  className={styles.sideBarItem}
+                  key={marker.markername}
+                  onClick={() => {
+                    CloseAllPopups();
+                    HandleMarkerClick(marker.ref);
+                    marker.ref.togglePopup();
+                  }}
+                >
+                  <h3>{marker.markername}</h3>
+                  <p>{marker.tag}</p>
+                </div>
+              );
+            } 
+            return null; // Skip rendering if the tag doesn't match
+          })
+          
               }
           </div>
         </div>
@@ -132,3 +150,4 @@ function Map() {
 }
 
 export default Map;
+

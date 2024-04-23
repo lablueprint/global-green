@@ -1,0 +1,25 @@
+// sample data for courses
+
+const profileData = [{
+  background: '/course/course1.png', 
+}, {
+  background: '/course/course2.png', 
+}, {
+  background: '/course/course3.png', 
+}, {
+  background: '/course/course4.png', 
+}, {
+  background: '/course/course5.png', 
+}, {
+  background: '/course/course6.png', 
+}, {
+  background: '/course/course1.png', 
+}, {
+  background: '/course/course2.png', 
+}, {
+  background: '/course/course3.png', 
+}, {
+  background: '/course/course4.png', 
+}, ];
+
+export default profileData;

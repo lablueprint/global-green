@@ -23,7 +23,9 @@ const options = {
         try {
           console.log('credentials', credentials);
           await connectMongoDB();
-          const user = await User.findOne({ email: credentials.username });
+          const user = await User.findOne(
+            { $or: [{ email: credentials.username }, { userName: credentials.username }] },
+          );
           if (!user) {
             return null;
           }

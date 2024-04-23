@@ -4,11 +4,11 @@ import Challenge from '../../../../models/challenges';
 
 export async function POST(request) {
   const {
-    firstName, lastName, email, password, ChallengeName, rank, badges, courses,
+    firstName, lastName, email, password, ChallengeName, points, badges, courses,
   } = await request.json();
   await connectMongoDB();
   await Challenge.create({
-    firstName, lastName, email, password, ChallengeName, rank, badges, courses,
+    firstName, lastName, email, password, ChallengeName, points, badges, courses,
   });
   return NextResponse.json({ message: 'Challenge Created' }, { status: 201 });
 }

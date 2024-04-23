@@ -1,10 +1,17 @@
 'use client';
 
+<<<<<<< HEAD
 import React, { useState, useRef } from 'react';
 import Image from 'next/image';
 import { signIn } from 'next-auth/react';
 import ReCAPTCHA from 'react-google-recaptcha';
 import styles from './page.module.css';
+=======
+import React, { useState, useRef } from "react";
+import { signIn } from "next-auth/react";
+// import styles from './page.module.css';
+import ReCAPTCHA from "react-google-recaptcha";
+>>>>>>> e1be14621abc637f63661b19d46bcc706211794a
 
 function Example() {
   const [firstName, setFirstName] = useState('');
@@ -15,7 +22,7 @@ function Example() {
   const [userName, setUserName] = useState('');
   // Captcha Related
   const recaptcha = useRef(null);
-  const [captchaToken, setCaptchaToken] = useState('');
+  const [captchaToken, setCaptchaToken] = useState("");
 
   const onCaptchaChange = (token) => {
     // Set the captcha token when the user completes the reCAPTCHA
@@ -35,7 +42,12 @@ function Example() {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({
-          userName, password, firstName, lastName, email, points, captchaToken,
+          userName,
+          password,
+          firstName,
+          lastName,
+          email,
+          captchaToken,
         }),
       });
       const data = await response.json();
@@ -46,23 +58,23 @@ function Example() {
         throw new Error(data.error);
       } else {
         // log the user in after signing up
-        signIn('credentials', {
+        signIn("credentials", {
           username: email,
           password,
-          callbackUrl: '/verifyemail',
+          callbackUrl: "/verifyemail",
         });
-        console.log('Signup success', response.data);
+        console.log("Signup success", response.data);
         recaptcha?.current?.reset();
       }
 
       // eslint-disable-next-line no-console
-      console.log('Signup success', response.data);
+      console.log("Signup success", response.data);
       recaptcha?.current?.reset();
     } catch (error) {
       // eslint-disable-next-line no-console
-      console.log('Signup failed', error.message);
+      console.log("Signup failed", error.message);
       // refresh the page to clear the form
-      window.location.href = '/signup';
+      window.location.href = "/signup";
     }
   };
 
@@ -127,6 +139,7 @@ function Example() {
   };
 
   return (
+<<<<<<< HEAD
     <div className={styles.exampleContainer}>
       <div className={styles.exampleImageContainer}>
         <Image
@@ -144,6 +157,14 @@ function Example() {
         <h1 className={styles.exampleTitle}>Create your account</h1>
         <label htmlFor="firstName" className={styles.exampleLabel}>
           First name:
+=======
+    <div>
+      <form>
+        <label htmlFor="firstName">
+          First name:
+          {' '}
+          <br />
+>>>>>>> e1be14621abc637f63661b19d46bcc706211794a
           <input
             type="text"
             id="firstName"

@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react';
 import {
   PDFDocument, rgb, StandardFonts,
 } from 'pdf-lib';
-import { AiOutlineInfoCircle } from 'react-icons/ai';
 import styles from './page.module.css';
 
 function PdfForm({
@@ -83,23 +82,20 @@ function PdfForm({
     }
   };
 
-  useEffect(() => {
-    generatePdf();
-  }, []);
-
   return (
-    <div className={styles.certificateBox} onClick={generatePdf}>
-      <div className={styles.certificateHeader}> Certificate </div>
-      <div className={styles.certificateName}>{course}</div>
-      <div className={styles.certificateInfo}>
-        <AiOutlineInfoCircle className={styles.infoCircle} />
-        <div> Date: </div>
-        <div>{date}</div>
-      </div>
-      <div className={styles.certificateInfo}>
-        <AiOutlineInfoCircle className={styles.infoCircle} />
-        <div> Duration: </div>
-        <div>{duration}</div>
+    <div>
+      <div className={styles.certificateBox} onClick={generatePdf}>
+        <div className={styles.certificateHeader}> Certificate </div>
+        <div className={styles.certificateName}>{course}</div>
+        <div className={styles.certificateInfo}>
+          <div>
+            {' '}
+            Completed on:
+            {' '}
+            {' '}
+            {date}
+          </div>
+        </div>
       </div>
     </div>
   );

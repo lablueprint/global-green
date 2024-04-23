@@ -8,6 +8,6 @@ const roadmap = roadmapdata[key];
 
 
 function climate_change() {
-        return <Roadmap title={roadmap.title} steps={roadmap.steps} />;
+        return <Roadmap course={'course_4'} title={roadmap.title} steps={roadmap.steps} />;
 }
 export default climate_change;

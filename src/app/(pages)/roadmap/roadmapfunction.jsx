@@ -3,21 +3,16 @@
 import React from 'react';
 import LinearWithValueLabel from './progressbar';
 import styles from './page.module.css';
-import roadmaps_images from './roadmaps';
-import S1 from '../../../../public/roadmap_data/course1/s1';
+import coursesRoadmaps from './roadmaps';
 
-function Roadmap({ title, steps }) {
+function Roadmap({ course, title, steps }) {
   const totalSteps = steps.length;
   const completedSteps = steps.filter(step => step.completed === 'done').length;
   const totalProgress = (completedSteps / totalSteps) * 100;
 
   console.log(completedSteps + 1)
-
-
-
-  const SvgComponent = roadmaps_images[completedSteps - 1];
-
-  console.log("Completed Steps:", completedSteps);
+  console.log(course) // outputs course_1 in console.log
+  const SvgComponent = coursesRoadmaps[course][completedSteps - 1];
 
   return (
     <div className={styles.o}>

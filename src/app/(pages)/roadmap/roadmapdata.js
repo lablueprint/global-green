@@ -1,6 +1,5 @@
 // src/app/(pages)/roadmap/roadmapsdata.js
 
-// -> fetch the path
 const roadmapsData = {
   'introduction': {
     title: 'Introduction',
@@ -15,6 +14,7 @@ const roadmapsData = {
     ],
   },
   'plastic-and-recycling': {
+    course: '1',
     title: 'Plastic and Recycling',
     hours: '?',
     steps: [
@@ -27,6 +27,7 @@ const roadmapsData = {
     ],
   },
   'sustainability-labs': {
+    course: '2',
     title: 'Sustainability Labs',
     hours: '?',
     steps: [
@@ -39,6 +40,7 @@ const roadmapsData = {
     ],
   },  
   'conservation-and-restoration': {
+    course: '3',
     title: 'Conservation and Restoration',
     hours: '?',
     steps: [
@@ -51,6 +53,7 @@ const roadmapsData = {
     ],
   },
   'climate-change': {
+    course: '4',
     title: 'Climate Change',
     hours: '?',
     steps: [
@@ -63,6 +66,7 @@ const roadmapsData = {
     ],
   },
   'eco-friendly-travel': {
+    course: '5',
     title: 'Eco-Friendly Travel',
     hours: '?',
     steps: [
@@ -75,6 +79,7 @@ const roadmapsData = {
     ],
   },
   'ocean-pollution': {
+    course: '6',
     title: 'Ocean Pollution',
     hours: '?',
     steps: [

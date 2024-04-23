@@ -1,7 +1,7 @@
 import React from 'react';
 import { useRouter } from 'next/navigation';
 
-const s2 = () => {
+const course_4_step_2 = () => {
   const router = useRouter();
 
   const handleClick = () => {
@@ -118,4 +118,4 @@ const s2 = () => {
   );
 };
 
-export default s2;
+export default course_4_step_2;

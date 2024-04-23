@@ -8,6 +8,6 @@ const roadmap = roadmapdata[key];
 
 
 function ocean_pollution() {
-        return <Roadmap title={roadmap.title} steps={roadmap.steps} />;
+        return <Roadmap course={'course_6'} title={roadmap.title} steps={roadmap.steps} />;
 }
 export default ocean_pollution;

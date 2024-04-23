@@ -8,6 +8,6 @@ const roadmap = roadmapdata[key];
 
 
 function conservation_and_restoration() {
-        return <Roadmap title={roadmap.title} steps={roadmap.steps} />;
+        return <Roadmap course={'course_3'} title={roadmap.title} steps={roadmap.steps} />;
 }
 export default conservation_and_restoration;

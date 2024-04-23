@@ -8,6 +8,6 @@ const roadmap = roadmapdata[key];
 
 
 function sustainability_labs() {
-        return <Roadmap title={roadmap.title} steps={roadmap.steps} />;
+        return <Roadmap course={'course_2'} title={roadmap.title} steps={roadmap.steps} />;
 }
 export default sustainability_labs;

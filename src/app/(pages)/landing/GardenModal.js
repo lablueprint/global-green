@@ -10,20 +10,28 @@ export default function GardenModal({ setIsGardenModalOpen, flowers }) {
     exit: { opacity: 0, scale: 0.9, y: 100 },
 
   };
+  // display all accessories and backgrounds
+  // display what is available to select
+  // display what what is selected
 
-  const [background, setBackground] = useState({
-    1: false,
-    2: false,
-    3: false,
-  });
+  // pull user's available arrays
+  // const [selectedItems, setSelectedItems] = useState([])
 
-  const [accessories, setAccessories] = useState({
-    1: false,
-    2: false,
-    3: false,
-    4: false,
-    5: false,
-  });
+
+  const [selector, setSelector] = useState({
+    "background": {
+      1: false,
+      2: false,
+      3: false,
+    },
+    "accessories": {
+      1: false,
+      2: false,
+      3: false,
+      4: false,
+      5: false,
+    }
+  })
 
   const [selectedItems, setSelectedItems] = useState({
     flowers: [],
@@ -67,11 +75,10 @@ export default function GardenModal({ setIsGardenModalOpen, flowers }) {
     }
   }
 
-
-  function accesoriesTab() {
+  function selectorTab(name) {
     return (
       <div className={styles.gardenModalEditTab}>
-        {Object.keys(accessories).map((index) => (
+        {Object.keys(selector[name]).map((index) => (
           <motion.div
             key={index}
             className={styles.gardenModalEditItem}
@@ -83,11 +90,11 @@ export default function GardenModal({ setIsGardenModalOpen, flowers }) {
               if (accessories[index]) {
                 toggleAccessories(index);
               } else {
-                addSelectedItems('accessories', index);
+                addSelectedItems(name, index);
               }
             }}
           >
-            {accessories[index]
+            {selector[name][index]
               && (
               <div
                 className={styles.gardenModalEditItemRemove}
@@ -96,75 +103,6 @@ export default function GardenModal({ setIsGardenModalOpen, flowers }) {
               </div>
               )}
 
-          </motion.div>
-        ))}
-      </div>
-    );
-  }
-
-  function backgroundTab() {
-    return (
-      <div className={styles.gardenModalEditTab}>
-        {Object.keys(background).map((index) => (
-          <motion.div
-            key={index}
-            className={styles.gardenModalEditItem}
-            style={{
-              border: selectedItems.background.includes(index) ? '4px solid green' : 'none',
-              cursor: 'pointer',
-            }}
-            onPointerDown={() => {
-              if (background[index]) {
-                toggleBackground(index);
-              } else {
-                addSelectedItems('background', index);
-              }
-            }}
-          >
-            {background[index]
-              && (
-                <div
-                  className={styles.gardenModalEditItemRemove}
-                >
-                  Remove
-                </div>
-              )}
-
-          </motion.div>
-        ))}
-      </div>
-    );
-  }
-
-  function flowersTab() {
-    return (
-      <div className={styles.gardenModalEditTab}>
-        {Object.keys(flowers).map((index) => (
-          <motion.div
-            key={index}
-            className={`${styles.gardenModalEditItem} ` + `${styles[`gardenFlower${index}`]}
-              `}
-
-            style={{
-              border: selectedItems.flowers.includes(index) ? '4px solid green' : 'none',
-              cursor: 'pointer',
-            }}
-            onPointerDown={() => {
-              if (flowers[index]) {
-                toggleFlower(index);
-              } else {
-                addSelectedItems('flowers', index);
-              }
-            }}
-          >
-            {flowers[index]
-              && (
-              <div
-                className={styles.gardenModalEditItemRemove}
-              >
-                Remove
-              </div>
-              )}
           </motion.div>
         ))}
       </div>
@@ -184,7 +122,6 @@ export default function GardenModal({ setIsGardenModalOpen, flowers }) {
               <h2 className={styles.gardenModalText}>Edit</h2>
               <div className={styles.gardenModalEditBox}>
                 <div className={styles.gardenModalEditBoxLeft}>
-
                   <div className={styles.gardenModalImageContainer}>
                     <motion.div
                       layout
@@ -268,24 +205,8 @@ export default function GardenModal({ setIsGardenModalOpen, flowers }) {
                     >
                       Background
                     </Button>
-                    <Button
-                      type="button"
-                      sx={{
-                        backgroundColor: 'transparent',
-                        fontFamily: 'inherit',
-                        textTransform: 'none',
-                        color: currentTab === 'flowers' ? 'green' : 'gray',
-                        borderBottom: currentTab === 'flowers' ? '2px solid green' : 'none',
-                      }}
-                      onClick={() => setCurrentTab('flowers')}
-                    >
-                      Flowers
-                    </Button>
                   </div>
-                  {currentTab === 'accessories' && accesoriesTab()}
-                  {currentTab === 'background' && backgroundTab()}
-                  {currentTab === 'flowers' && flowersTab()}
-
+                  {selectorTab(currentTab)}
                   <div className={styles.gardenModalButtonContainer}>
                     <Button
                       variant="contained"

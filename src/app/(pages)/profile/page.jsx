@@ -8,11 +8,10 @@ import styles from './page.module.css';
 import defaultProfilePic from './profilepic.jpg';
 // Assuming you have a default profile pic
 import PdfForm from './PdfForm';
-import courseData from '../landing/courseData';
+// import courseData from '../landing/courseData';
 import ProgressBar from './progressBar';
 import ProfilePopup from './profilePopup';
 import PasswordPopup from './passwordPopup';
-import { profileData } from './profileData';
 
 function Profile() {
   const [isEditing, setIsEditing] = useState(false);
@@ -20,10 +19,12 @@ function Profile() {
   const [editedName, setEditedName] = useState('');
   const [userData, setData] = useState({});
   const [certData, setCertData] = useState([]);
+  const [courseProgress, setCourseProgress] = useState([]);
   const [profilePopup, setProfilePopup] = useState(false);
   const [passwordPopup, setPasswordPopup] = useState(false);
   const [currentPage, setCurrentPage] = useState(0);
   const [currIndex, setCurrIndex] = useState();
+  const [courseData, setCourseData] = useState([]);
   const { data: session } = useSession();
 
   const handleLogout = async () => {
@@ -52,6 +53,7 @@ function Profile() {
     } else {
       setProfileImage(data.user.profilePic);
     }
+    setCourseProgress(data.user.courses);
   };
 
   const deleteAccount = async () => {
@@ -85,6 +87,15 @@ function Profile() {
   useEffect(() => {
     console.log('session', session);
     if (session) getUserDetails(session.user.id);
+
+    // fetch the courses data from the database
+    async function fetchCoursesData() {
+      const response = await fetch('/api/courses');
+      const data = await response.json();
+      console.log('data', data);
+      setCourseData(data.res);
+    }
+    fetchCoursesData();
   }, [session]);
 
   const updateUserDataPic = (data, newpic) => {
@@ -294,12 +305,21 @@ function Profile() {
       <div className={styles.coursesSection}>
         <div className={styles.sectionHeader}>Course Progress</div>
         <div className={styles.row}>
-          {courseData.map((course) => (
-            <div key={course.name} className={styles.courseItem}>
-              <div className={styles.courseName}>{course.name}</div>
+          { courseData && courseProgress
+          && courseData.map((course) => (
+            <div key={course.key} className={styles.courseItem}>
+              <div className={styles.courseName}>{course.label}</div>
               <ProgressBar
                 className={styles.progressBar}
-                value={course.progress}
+                value={
+                  courseProgress.find((item) => item.key === course.key)
+                    ? courseProgress.find((item) => item.key === course.key)
+                      .currStage
+                    : 0
+                }
+                maxValue={
+                  course.stages.length
+                }
                 color="green"
                 isPopupDisplayed={profilePopup || passwordPopup}
               />

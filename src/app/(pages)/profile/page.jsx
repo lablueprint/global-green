@@ -1,22 +1,22 @@
-'use client';
+"use client";
 
-import React, { useEffect, useState } from 'react';
-import Image from 'next/image';
-import { useSession, signOut } from 'next-auth/react';
-import { FaPencilAlt } from 'react-icons/fa';
-import styles from './page.module.css';
-import defaultProfilePic from './profilepic.jpg';
+import React, { useEffect, useState } from "react";
+import Image from "next/image";
+import { useSession, signOut } from "next-auth/react";
+import { FaPencilAlt } from "react-icons/fa";
+import styles from "./page.module.css";
+import defaultProfilePic from "./profilepic.jpg";
 // Assuming you have a default profile pic
-import PdfForm from './PdfForm';
+import PdfForm from "./PdfForm";
 // import courseData from '../landing/courseData';
-import ProgressBar from './progressBar';
-import ProfilePopup from './profilePopup';
-import PasswordPopup from './passwordPopup';
+import ProgressBar from "./progressBar";
+import ProfilePopup from "./profilePopup";
+import PasswordPopup from "./passwordPopup";
 
 function Profile() {
   const [isEditing, setIsEditing] = useState(false);
   const [profileImage, setProfileImage] = useState(defaultProfilePic);
-  const [editedName, setEditedName] = useState('');
+  const [editedName, setEditedName] = useState("");
   const [userData, setData] = useState({});
   const [certData, setCertData] = useState([]);
   const [courseProgress, setCourseProgress] = useState([]);
@@ -29,15 +29,15 @@ function Profile() {
 
   const handleLogout = async () => {
     await signOut();
-    window.location.href = '/login';
+    window.location.href = "/login";
   };
 
   const getUserDetails = async (id) => {
     if (!id) return;
-    const response = await fetch('/api/users/me', {
-      method: 'POST',
+    const response = await fetch("/api/users/me", {
+      method: "POST",
       headers: {
-        'Content-Type': 'application/json',
+        "Content-Type": "application/json",
       },
       body: JSON.stringify({ id }),
     });
@@ -59,10 +59,10 @@ function Profile() {
   const deleteAccount = async () => {
     // delete the user account from the database
     async function deleteAccountFromDB() {
-      const response = await fetch('/api/users/me/delete', {
-        method: 'DELETE',
+      const response = await fetch("/api/users/me/delete", {
+        method: "DELETE",
         headers: {
-          'Content-Type': 'application/json',
+          "Content-Type": "application/json",
         },
         body: JSON.stringify({ userId: session.user.id }),
       });
@@ -73,7 +73,7 @@ function Profile() {
         throw new Error(res.error);
       }
       // eslint-disable-next-line no-console
-      console.log('Account deleted', response.data);
+      console.log("Account deleted", response.data);
     }
     deleteAccountFromDB();
 
@@ -81,18 +81,18 @@ function Profile() {
     handleLogout();
 
     // delete the user account from the local storage
-    localStorage.removeItem('userData');
+    localStorage.removeItem("userData");
   };
 
   useEffect(() => {
-    console.log('session', session);
+    console.log("session", session);
     if (session) getUserDetails(session.user.id);
 
     // fetch the courses data from the database
     async function fetchCoursesData() {
-      const response = await fetch('/api/courses');
+      const response = await fetch("/api/courses");
       const data = await response.json();
-      console.log('data', data);
+      console.log("data", data);
       setCourseData(data.res);
     }
     fetchCoursesData();
@@ -100,23 +100,24 @@ function Profile() {
 
   const updateUserDataPic = (data, newpic) => {
     // update the user data in the database, make sure only the first user is updated.
-    async function updateUserDataInDB() {
+    async function updatePicDB() {
       // eslint-disable-next-line no-console
-      console.log('newpic', newpic);
-      console.log('data', data);
-      const response2 = await fetch('/api/users/me/change-picture', {
-        method: 'PATCH',
+      console.log("newpic", data.profilePic);
+      console.log("data", data);
+      const response2 = await fetch("/api/users/me/change-picture", {
+        method: "PATCH",
         headers: {
-          'Content-Type': 'application/json',
+          "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          profilePic: newpic,
+          profilePic: data.profilePic,
           userId: data._id,
         }),
       });
       const res2 = await response2.json();
       // eslint-disable-next-line no-console
-      console.log('res', res2);
+      console.log("newpic", newpic);
+      console.log("res", res2);
 
       if (res2.error) {
         // eslint-disable-next-line no-alert
@@ -124,30 +125,30 @@ function Profile() {
         throw new Error(res2.error);
       }
       // eslint-disable-next-line no-console
-      console.log('Update success', response2.data);
+      console.log("Update success", response2.data);
     }
-    updateUserDataInDB();
+    updatePicDB();
 
     // update the user data in the local storage
-    localStorage.setItem('userData', JSON.stringify(data));
+    // localStorage.setItem("userData", JSON.stringify(data));
   };
 
   const updateUserDataName = (data) => {
     // update the user data in the database, make sure only the first user is updated.
     async function updateUserDataInDB() {
       // eslint-disable-next-line no-console
-      console.log('data', data);
+      console.log("data", data);
 
-      const response = await fetch('/api/users/me/change-name', {
-        method: 'PATCH',
+      const response = await fetch("/api/users/me/change-name", {
+        method: "PATCH",
         headers: {
-          'Content-Type': 'application/json',
+          "Content-Type": "application/json",
         },
         body: JSON.stringify({ userName: data.userName, userId: data._id }),
       });
       const res = await response.json();
       // eslint-disable-next-line no-console
-      console.log('res', res);
+      console.log("res", res);
 
       if (res.error) {
         // eslint-disable-next-line no-alert
@@ -156,12 +157,12 @@ function Profile() {
       }
 
       // eslint-disable-next-line no-console
-      console.log('Update success', response.data);
+      console.log("Update success", response.data);
     }
     updateUserDataInDB();
 
     // update the user data in the local storage
-    localStorage.setItem('userData', JSON.stringify(data));
+    localStorage.setItem("userData", JSON.stringify(data));
   };
 
   const handleNameClick = () => {
@@ -175,12 +176,13 @@ function Profile() {
   const handleBlur = () => {
     setIsEditing(false);
     userData.userName = editedName;
-    localStorage.setItem('userData', JSON.stringify(userData));
-    updateUserData(userData);
+    localStorage.setItem("userData", JSON.stringify(userData));
+    updateUserDataName(userData);
   };
 
   const handleChangeProfileImage = (event) => {
     setProfilePopup(true);
+    // here's the issue
   };
 
   const handleChangeProfileIndex = (newIndex) => {
@@ -189,11 +191,11 @@ function Profile() {
 
   const handleChangeProfileSRC = (newSRC) => {
     setProfileImage(newSRC);
-    console.log('173', newSRC);
+    console.log("173", newSRC);
     userData.profilePic = newSRC;
-    localStorage.setItem('userData', JSON.stringify(userData));
+    localStorage.setItem("userData", JSON.stringify(userData));
     updateUserDataPic(userData, newSRC);
-    console.log('176');
+    console.log("176");
   };
 
   const handleChangePassword = () => {
@@ -241,7 +243,7 @@ function Profile() {
             alt="Profile"
             width={120}
             height={120}
-            style={{ borderRadius: '50%' }}
+            style={{ borderRadius: "50%" }}
             onClick={handleChangeProfileImage}
           />
           <div className={styles.name}>
@@ -272,8 +274,8 @@ function Profile() {
               className={styles.certificateItem}
               style={{
                 backgroundImage: 'url("/certificate.jpg")',
-                borderRadius: '10px',
-                backgroundSize: 'cover',
+                borderRadius: "10px",
+                backgroundSize: "cover",
               }}
             >
               {userData && (
@@ -293,7 +295,7 @@ function Profile() {
             <span
               key={i}
               className={`${styles.dot} ${
-                i === currentPage ? styles.activeDot : ''
+                i === currentPage ? styles.activeDot : ""
               }`}
               onClick={() => handlePageChange(i)}
             >
@@ -305,26 +307,25 @@ function Profile() {
       <div className={styles.coursesSection}>
         <div className={styles.sectionHeader}>Course Progress</div>
         <div className={styles.row}>
-          { courseData && courseProgress
-          && courseData.map((course) => (
-            <div key={course.key} className={styles.courseItem}>
-              <div className={styles.courseName}>{course.label}</div>
-              <ProgressBar
-                className={styles.progressBar}
-                value={
-                  courseProgress.find((item) => item.key === course.key)
-                    ? courseProgress.find((item) => item.key === course.key)
-                      .currStage
-                    : 0
-                }
-                maxValue={
-                  course.stages.length
-                }
-                color="green"
-                isPopupDisplayed={profilePopup || passwordPopup}
-              />
-            </div>
-          ))}
+          {courseData &&
+            courseProgress &&
+            courseData.map((course) => (
+              <div key={course.key} className={styles.courseItem}>
+                <div className={styles.courseName}>{course.label}</div>
+                <ProgressBar
+                  className={styles.progressBar}
+                  value={
+                    courseProgress.find((item) => item.key === course.key)
+                      ? courseProgress.find((item) => item.key === course.key)
+                          .currStage
+                      : 0
+                  }
+                  maxValue={course.stages.length}
+                  color="green"
+                  isPopupDisplayed={profilePopup || passwordPopup}
+                />
+              </div>
+            ))}
         </div>
       </div>
       <div className={styles.accountSection}>
@@ -338,15 +339,14 @@ function Profile() {
           </div>
           <div className={styles.accountCol}>
             <div className={styles.arrow} onClick={handleChangePassword}>
-              {' '}
-              {'>'}
-              {' '}
+              {" "}
+              {">"}{" "}
             </div>
           </div>
         </div>
         <div className={styles.accountRow}>
           <div className={styles.accountCol}>
-            <div className={styles.sectionText} style={{ color: 'red' }}>
+            <div className={styles.sectionText} style={{ color: "red" }}>
               Delete Account
             </div>
             <div className={styles.subText}>
@@ -356,9 +356,8 @@ function Profile() {
           </div>
           <div className={styles.accountCol}>
             <div className={styles.arrow} onClick={deleteAccount}>
-              {' '}
-              {'>'}
-              {' '}
+              {" "}
+              {">"}{" "}
             </div>
           </div>
         </div>

@@ -28,6 +28,7 @@ const userSchema = new Schema(
     accessories: { type: Array, default: [] },
     backgrounds: { type: Array, default: [] },
     seeds: { type: Number, default: 0 },
+    profilePic: { type: String },
   },
   {
     timestamps: true,

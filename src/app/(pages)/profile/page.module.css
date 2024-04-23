@@ -141,12 +141,13 @@
 }
 
 .active {
-  border: 2px solid transparent;
-  border-color: red;
+  /* border-color: red; */
+  border: 3px red solid;
 }
 
 .popPic:hover {
   border-color: green;
+  border: 3px solid;
 }
 
 .popBottom {

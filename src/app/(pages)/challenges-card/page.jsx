@@ -6,25 +6,47 @@
 import React, { useState, useEffect } from "react";
 import Image from "next/image";
 import CheckCircleIcon from "@mui/icons-material/CheckCircle";
+import { useSession, signOut } from "next-auth/react";
 import styles from "./page.module.css";
+
 // fetches too many times and numerator
 // how to track points
 function Example() {
   const [challengesArray, setChallengesArray] = useState([]);
+
+  const { data: session } = useSession();
+  // const [isEditing, setIsEditing] = useState(false);
+  // const [profileImage, setProfileImage] = useState(defaultProfilePic);
+  const [userData, setData] = useState({});
+  const [points, setPoints] = useState(0);
+
+  const getUserDetails = async (id) => {
+    if (!id) return;
+    const response = await fetch("/api/users/me", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ id }),
+    }).catch((err) => {
+      console.log("err", err.response.data);
+    });
+
+    const data = await response.json();
+    setData(data);
+    setPoints(data.user.points.toString());
+  };
+
+  useEffect(() => {
+    if (session) getUserDetails(session.user.id);
+  }, [session]);
   async function fetchData() {
     console.log("fetched");
 
-    // if (localStorage.getItem("mapChallenges")) {
-    //   setChallengesArray(JSON.parse(localStorage.getItem("mapChallenges")));
-    //   console.log(challengesArray);
-    // } else {
-    // console.log("else");
     const res = await fetch("/api/challenges");
     const fetchdata = await res.json();
-    console.log(fetchdata);
+
     setChallengesArray(fetchdata);
-    // localStorage.setItem("mapChallenges", JSON.stringify(fetchdata));
-    //  }
   }
   useEffect(() => {
     if (!challengesArray.length) {
@@ -32,7 +54,72 @@ function Example() {
     }
   }, []);
 
-  const [points, setPoints] = useState(0);
+  const updateUserData = (data) => {
+    // update the user data in the database, specifically, the points values
+    async function updateUserDataInDB() {
+      // eslint-disable-next-line no-console
+      const response = await fetch("/api/users/me/update-points", {
+        method: "PATCH",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          points: data.user.points,
+          userId: data.user._id,
+        }),
+      });
+      const res = await response.json();
+      // eslint-disable-next-line no-console
+      console.log("res", res);
+
+      if (res.error) {
+        // eslint-disable-next-line no-alert
+        alert(res.error);
+        throw new Error(res.error);
+      }
+
+      // eslint-disable-next-line no-console
+      console.log("Update success", response.data);
+    }
+    updateUserDataInDB();
+
+    // update the user data in the local storage
+    localStorage.setItem("userData", JSON.stringify(data));
+  };
+
+  const handlePointsChange = (updatedValue) => {
+    userData.user.points = updatedValue;
+    updateUserData(userData);
+    localStorage.setItem("userData", JSON.stringify(userData));
+  };
+
+  async function addPointsButton(
+    index,
+    points,
+    setPoints,
+    challenge,
+    handlePointsChange
+  ) {
+    const pointsElement = document.getElementById(`points_${index}`);
+    const buttonElement = document.getElementById(`button_${index}`);
+
+    if (pointsElement.innerHTML !== "Claimed") {
+      const pointsToAdd = Number(challenge.pointsToEarn);
+      buttonElement.style.backgroundColor = "grey";
+      pointsElement.innerHTML = "Claimed";
+
+      const updatedValue = await new Promise((resolve) => {
+        setPoints((prevPoints) => {
+          const newValue = Number(prevPoints) + Number(pointsToAdd);
+          resolve(newValue); // Resolve the Promise with the updated value
+          return newValue; // Return the updated value for immediate update
+        });
+      });
+
+      handlePointsChange(updatedValue);
+    }
+  }
+
   return (
     <>
       {/* <p>{JSON.stringify(challengesArray)}</p> */}
@@ -63,7 +150,6 @@ function Example() {
                         <div
                           className={styles.progressFill}
                           style={{
-                            // width: `${(card.numerator / card.denominator) * 100}%`,
                             width: `${
                               (1 / JSON.stringify(challenge.denominator)) * 100
                             }%`,
@@ -119,28 +205,15 @@ function Example() {
                       <div
                         id={`button_${index}`}
                         className={styles.completedleafPoints}
-                        onClick={() => {
-                          if (
-                            document.getElementById(`points_${index}`)
-                              .innerHTML !== "Claimed"
-                          ) {
-                            setPoints(
-                              points +
-                                Number(JSON.stringify(challenge.pointsToEarn))
-                            );
-                            document.getElementById(
-                              `button_${index}`
-                            ).style.backgroundColor = "grey";
-                            document.getElementById(
-                              `points_${index}`
-                            ).innerHTML = "Claimed";
-
-                            setPoints(
-                              points +
-                                Number(JSON.stringify(challenge.pointsToEarn))
-                            );
-                          }
-                        }}
+                        onClick={() =>
+                          addPointsButton(
+                            index,
+                            points,
+                            setPoints,
+                            challenge,
+                            handlePointsChange
+                          )
+                        }
                       >
                         <div className={styles.points}>
                           <p id={`points_${index}`}>

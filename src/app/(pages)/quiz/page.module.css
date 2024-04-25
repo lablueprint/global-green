@@ -1,9 +1,14 @@
 .container {
+  width: 100vw;
+  height: 100vh; 
   min-width: 100%;
   min-height: 100%;
   display: flex;
-  justify-content: center;
+  flex-direction: column;
+  justify-content: flex-start;
   background-color: white;
+  position: relative;
+  max-width: 1050px; 
 }
 
 .quizContainer {
@@ -13,23 +18,35 @@
   font-family: "Arial", sans-serif;
   display: flex;
   flex-direction: column;
-  align-items: center;
+  align-items: left;
   justify-content: center;
-  margin-top: 20px;
   width: 100%;
   height: 100%;
-  /* max-width: 1000px;
-  min-width: 500px;
-  max-height: 1000px;
-  min-height: 200px; */
+  max-width: 1000px; 
+  max-height: 600px;
   background-color: white;
   border: 0px solid black;
+
+  margin-top: 150px;
+  margin-left: 100px;
 }
 
 .quizQuestionNumber {
   font-weight: bold;
   color: black;
   text-align: left;
+}
+
+.quizTitleContainer{
+  display: flex;
+  align-items: center;  
+  justify-content: center; 
+  background-color: white;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 600;
+  color: var(--Grey-40, rgba(13, 13, 13, 0.40));
+  margin: 15px;
 }
 
 .progressbarandhintcontainer {
@@ -41,6 +58,18 @@
   width: 100%;
 }
 
+.questionTypeandPointscontainer{
+  display: flex;
+  flex-direction: row;
+  align-items: left;
+  min-width: 500px;
+  background-color: white;
+  width: 100%;
+  margin-top: 40px;
+
+  color: #0D0D0D66;
+}
+
 .buttonsContainer {
   display: flex;
   justify-content: space-between;
@@ -50,30 +79,8 @@
   padding: 0 10px;
   margin-top: auto;
   width: 100%;
-}
-
-.buttonsContainerWithBack {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  min-width: 525px;
-  background-color: white;
-  padding: 0 0px;
-}
-
-.backButton {
-  border: 1px solid grey;
-  background-color: white;
-  color: grey;
-  border-radius: 4px;
-  padding: 10px 30px;
-  transition-duration: 0.6s;
-  font-weight: bold;
-}
-
-.backButton:hover {
-  background-color: light-grey;
-  opacity: 0.5;
+  
+  margin-bottom: 50px;
 }
 
 .choiceContainer {
@@ -81,6 +88,8 @@
   flex-direction: column;
   align-items: stretch;
   width: 100%;
+  margin-top: 100px;
+  margin-bottom: 80px;
 }
 
 .choiceContainerTrueandFalse {
@@ -96,18 +105,20 @@
   justify-content: space-between;
   margin: 0;
   padding: 0;
-  margin-bottom: 10px;
+  margin: 10px;
 }
 
 .choiceButton {
-  flex-basis: calc(50% - 10px);
+  flex-basis: calc(100% - 10px);
   text-align: left;
   margin: 5px 10px;
   outline: 1px solid black;
   border-radius: 3px;
-  background-color: white;
-  padding: 10px 30px;
+  background: var(--Grey-4, rgba(13, 13, 13, 0.04));
+  padding: 15px 20px; /* Increase padding to make buttons taller and text inside have more room */
   border: none;
+
+  font-size: 20px;
 }
 
 .choiceButton:hover {
@@ -126,17 +137,19 @@
 }
 
 .hintOverlay {
-  position: absolute;
+  /* Existing styles */
+  position: fixed;
   top: 0;
   left: 0;
   right: 0;
   bottom: 0;
-  /* uncomment the line below to  */
-  /* background-color: rgba(0, 0, 0, 0.5); */
   display: flex;
   justify-content: center;
   align-items: center;
   z-index: 1000;
+
+  backdrop-filter: blur(5px); 
+  -webkit-backdrop-filter: blur(10px); 
 }
 
 .hintPopup {
@@ -149,23 +162,6 @@
   max-width: 80%;
   border-radius: 8px;
   position: relative;
-}
-
-.hintContent {
-  display: flex;
-  flex-direction: row;
-  text-align: left;
-  justify-content: center;
-  align-items: flex-start;
-  width: 100%;
-}
-
-.hintContentColumns {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  justify-content: center;
-  width: 100%;
 }
 
 .closeButton {
@@ -194,29 +190,6 @@
 .termsContainer button:hover,
 .definitionsContainer button:hover {
   border-color: #f0ad4e;
-}
-
-.appBackground {
-  background-color: grey;
-  min-height: 100vh;
-  min-height: 100vh;
-}
-
-.resultsContainer {
-  text-align: center;
-  font-family: "Arial", sans-serif;
-  background: grey;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  height: 100vh;
-}
-
-.goodJob {
-  font-size: 1.5em;
-  margin-bottom: 20px;
-  font-weight: bold;
 }
 
 .scoreCard {
@@ -329,7 +302,7 @@
   border-radius: 5px;
   padding: 5px 25px;
   transition-duration: 0.6s;
-  font-size: 10px;
+  font-size: 20px;
   font: bold;
   color: white;
 }
@@ -352,10 +325,10 @@
 .skipButton {
   background-color: white;
   border: 1px solid #b4b4b4;
-  border-radius: 5px;
-  padding: 5px 25px;
+  border-radius: 25px;
+  padding: 10px 40px;
   transition-duration: 0.6s;
-  font-size: 10px;
+  font-size: 20px;
   color: #b4b4b4;
   cursor: pointer;
   text-align: center;
@@ -369,66 +342,161 @@
   border-color: #808080;
 }
 
+/* Matching styling */
+
 .matchingContainer {
-  margin-top: 15px;
   display: flex;
-  flex-direction: row;
-  align-items: flex-start;
-  /* gap: 10px; */
-  width: calc(100% + 100px);
-  position: relative;
-  left: -20px;
-  /* background-color: red; */
+  flex-direction: column; 
+  margin-bottom: 100px;
 }
 
-.termsContainer {
+.rowContainer {
   display: flex;
-  flex-direction: column;
-  width: 25%;
-  align-items: flex-start;
-  /* background-color: green; */
-}
-.definitionsContainer {
-  display: flex;
-  flex-direction: column;
-  width: 50%;
-  align-items: flex-start;
-  /* background-color: blue; */
+  flex-direction: row;
+  align-items: center;
+  padding: 5px;
 }
 
 .termBox,
 .definitionBox {
   display: flex;
   align-items: center;
-  outline: 1px solid #b4b4b4;
+  border: 0px solid #b4b4b4;
   border-radius: 5px;
-  padding: 5px;
-  margin-bottom: 10px;
-  background-color: white;
+  background: var(--Grey-4, rgba(13, 13, 13, 0.04));
   cursor: pointer;
-  text-align: left;
-  font-size: 10px;
+  padding: 10px;
+  font-size: 20px;
 }
+
 .definitionBox {
-  min-width: 270px;
-  padding-left: 15px;
+  padding-left: 65px;
+  margin-left: 150px;
+  min-width: 240px;
+  max-width: 500px;
+  flex-grow: 1; 
 }
 
 .selected {
-  outline: 2px solid green;
-  color: black;
+  outline: 2px solid #6DAAE0;
 }
 
 .matched {
-  color: black;
+  background-color: var(--Blue-20, #6DAAE0);
+  background-Image:linear-gradient(0deg, rgba(255, 255, 253, 0.80) 0%, rgba(255, 255, 253, 0.80) 100%);
+  border-radius: 8px;
+  outline: 2px solid #6DAAE0;
 }
 
 .questionText {
-  font-size: 16px;
-  font-weight: bold;
+  font-size: 30px;
   color: #000;
-  max-width: 400px;
+  font-weight: bold;
+  /* max-width: 400px; */
   line-height: 1.6;
   margin-bottom: 20px;
   text-align: left;
+  background-color: white;
+}
+
+
+/* Check all that apply styling */
+
+.optionGridContainer {
+  background-color: white;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr); /* Creates three columns */
+  gap: 60px; /* Adjust the space between the grid items */
+  margin-bottom: 55px;
+}
+
+.optionLabel {
+  display: flex;
+  align-items: center; 
+  gap: 10px; 
+  font-size: 22px;
+  font-style: normal;
+  font-weight: 500;
+}
+
+.optionCheckbox {
+  -webkit-appearance: none; /* Remove default styling for WebKit browsers */
+  -moz-appearance: none; /* Remove default styling for Mozilla browsers */
+  appearance: none; /* Remove default styling */
+  border-radius: 9px;
+  border: 0px solid gray; /* Customizable border */
+  background-color: var(--Grey-8, rgba(13, 13, 13, 0.08));
+  width: 35px;
+  height: 35px;
+  cursor: pointer; /* Change cursor to pointer to indicate it's clickable */
+}
+
+.optionCheckbox:checked::before {
+  content: ""; /* Required for the checkmark to appear */
+  display: block;
+  position: relative;
+  left: 10px; /* Adjust these values to center the checkmark */
+  top: 5px;
+  width: 8px;
+  height: 15px;
+  border: 0px solid black;
+  border-width: 0 3px 3px 0;
+  transform: rotate(45deg); /* Tilt the checkmark */
+}
+
+.optionCheckbox:focus {
+  outline: none; /* Optional: removes the outline to clean up the appearance */
+  box-shadow: 0 0 0 2px rgba(0, 0, 0, 0.1);
+}
+
+.resultsContainer {
+  background: white;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  height: 100vh;
+  width: 80vw;
+}
+
+.x {
+  background-color: white;
+  display: flex;
+  flex-direction: column;
+  margin-left: 100px;
+}
+
+.row1 {
+  background-color: white;
+  display: flex;
+  flex-direction: row;
+}
+
+/* Add this to your CSS file */
+.scoreContainer {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  background: var(--Grey-4, rgba(13, 13, 13, 0.04));  border-radius: 10px; 
+  margin: 20px;
+  padding: 20px;
+}
+
+.summaryDetails {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  margin-right: 50px; /* Adjust as necessary */
+}
+
+.circularProgressContainer {
+  position: relative;
+  width: fit-content;
+}
+
+/* Style for the striped border at the bottom */
+.stripedBorder {
+  height: 8px;
+  background-size: cover;
+  border-radius: 0 0 10px 10px; /* Match the border radius of .scoreContainer if any */
 }

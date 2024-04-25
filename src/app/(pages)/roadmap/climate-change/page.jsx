@@ -1,5 +1,5 @@
 import Roadmap from "../roadmapfunction";
-import roadmapdata from "../roadmapdata"
+import roadmapdata from "../roadmap_data/roadmapdata"
 
 const key = 'climate-change'; // for example
 

@@ -3,7 +3,7 @@
 import React from 'react';
 import LinearWithValueLabel from './progressbar';
 import styles from './page.module.css';
-import coursesRoadmaps from './roadmaps';
+import coursesRoadmaps from './roadmap_data/roadmaps';
 
 function Roadmap({ course, title, steps }) {
   const totalSteps = steps.length;

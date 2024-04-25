@@ -11,7 +11,7 @@ function Roadmap({ course, title, steps }) {
   const totalProgress = (completedSteps / totalSteps) * 100;
 
   console.log(completedSteps + 1)
-  console.log(course) // outputs course_1 in console.log
+  console.log(course)
   const SvgComponent = coursesRoadmaps[course][completedSteps - 1];
 
   return (

@@ -5,7 +5,7 @@ const course_5_step_2 = () => {
   const router = useRouter();
 
   const handleClick = () => {
-    router.push('/courses/course_1/lesson_2');
+    router.push('/courses/course_5/lesson_2');
   };
 
   return (

@@ -33,11 +33,11 @@ function ProfilePopup({
           </div>
           <div className={styles.popPicAll}>
             {profileData.map((course, index) => (
-              <div key={index} className={styles.popPic}>
+               <div key={index}>
                 <Image
                   width={100}
                   className={
-                    index === currIndex ? styles.active : styles.inactive
+                    index === currIndex ?  styles.active : styles.popPic
                   }
                   onClick={() => {
                     highlight(index, course.imageSrc);

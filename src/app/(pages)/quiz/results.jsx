@@ -1,35 +1,28 @@
-import * as React from 'react';
+import React from 'react';
+import PropTypes from 'prop-types';
+import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import CircularProgress, { circularProgressClasses } from '@mui/material/CircularProgress';
-import Box from '@mui/material/Box';
-import StarIcon from '@mui/icons-material/Star';
-import PropTypes from 'prop-types';
-import styles from './page.module.css';
+import Button from '@mui/material/Button';
+import styles from './page.module.css'; // Assume your CSS module is set up to reflect the design
+import Image from "next/image";
 
-function CircularWithLabel({ value }) {
+
+function CircularWithLabel( {value} ) {
   return (
     <Box position="relative" display="inline-flex">
-      <CircularProgress
-        variant="determinate"
-        value={value}
-        size="100px"
-        thickness={6}
-        sx={{
-          color: '#4caf50', // progress color
-          [`& .${circularProgressClasses.circle}`]: {
-            strokeLinecap: 'round',
-          },
-          [`& .${circularProgressClasses.circle}`]: {
-            // Use this line if the above does not work
-            strokeLinecap: 'butt',
-          },
-          [`& .${circularProgressClasses.circle}`]: {
-            // This will style the track
-            opacity: 1, // You can increase this if needed
-            color: 'green', // Light grey color for the track, make sure it is visible
-          },
-        }}
-      />
+    <CircularProgress
+      variant="determinate"
+      value={value}
+      size="100px"
+      thickness={6}
+      sx={{
+        color: '#519546',
+        [`& .${circularProgressClasses.circle}`]: {
+          strokeLinecap: 'round',
+        },
+      }}
+    />
       <Box
         top={0}
         left={0}
@@ -46,7 +39,7 @@ function CircularWithLabel({ value }) {
           style={{
             fontSize: '1.2rem',
             fontWeight: 'bold',
-            color: 'black', // Text color
+            color: 'black',
           }}
         >
           {`${Math.round(value)}%`}
@@ -56,73 +49,56 @@ function CircularWithLabel({ value }) {
   );
 }
 
+
 CircularWithLabel.propTypes = {
-  value: PropTypes.number.isRequired, // Add prop validation for 'value'
+  value: PropTypes.number.isRequired,
 };
 
-function calculateXP(correctAnswers) {
-  return correctAnswers * 10; // Example: 10 XP for each correct answer
-}
-
-function Results({ points, totalQuestions }) {
+function Results({ points, totalQuestions, questionResults }) {
   const percentage = ((points / totalQuestions) * 100).toFixed(0);
+
+  // Function to render the question details. You can further customize it based on your needs.
+  const renderQuestionDetails = (results, correct) => (
+    results.filter(result => result.isCorrect === correct).map((result, index) => (
+      <div key={index} className={styles.questionDetail}>
+        <Typography variant="body1">
+          {`Question ${result.questionId + 1}: ${result.selectedAnswer}`}
+        </Typography>
+        {correct || <Button onClick={() => {/* Functionality to show solution */}}>Show Solution</Button>}
+      </div>
+    ))
+  );
   return (
     <div className={styles.resultsContainer}>
-      <h1>Quiz Results</h1>
-      <div className={styles.scoreCard}>
-        <div className={styles.progressCircle}>
-          <CircularWithLabel value={Number(percentage)} />
-        </div>
-        <div className={styles.scoreDetails}>
-          <p className={styles.goodJob}>Good Job!</p>
-          <div className={styles.normalFont}>
-            <p>
-              Out of
-              {' '}
-              <strong>{totalQuestions}</strong>
-              {' '}
-              questions, you got:
-            </p>
-            <p className={styles.correct}>
-              ✔
-              {' '}
-              <strong>
-                {points}
-              </strong>
-              {' '}
-              correct
-            </p>
-            <p className={styles.incorrect}>
-              ✘
-              {' '}
-              <strong>{totalQuestions - points}</strong>
-              {' '}
-              incorrect
-            </p>
-          </div>
-        </div>
+      <div className = {styles.x}>
+        <div style ={{textAlign: 'left', fontWeight: 'bold', fontSize: '40px', marginBottom: '20px'}}>Here's how you did...</div>
+        <div className={styles.row1}>
+              <div className={styles.scoreContainer}>
+                <div className={styles.summaryDetails}>
+                  <div style = {{fontWeight: 'bold', fontSize: '24px', marginBottom: '15px'}}> Summary </div>
+                  <div style = {{fontSize: '20px'}}>{`${points} Correct`} </div>
+                  <div style = {{fontSize: '20px'}}>{`${totalQuestions - points} Incorrect`}</div>
+                  <div style = {{fontSize: '20px'}}>{`${points} Points Earned`}</div>
+                </div>
+                <div className={styles.circularProgressContainer}>
+                  <CircularWithLabel value={Number(percentage)} />
+                <div className={styles.stripedBorder}></div>
+                </div>
+              </div>
+                <Image 
+                src= "/results_flower.svg"
+                width ={400}
+                height ={300}/>         
+              </div>
+      <div className={styles.questionResults}>
+      <div style = {{fontWeight: 'bold', fontSize: '24px', marginBottom: '15px'}}> Incorrectly Answered</div>
+        {renderQuestionDetails(questionResults, false)}
+        <div style = {{fontWeight: 'bold', fontSize: '24px', marginBottom: '15px'}}> Correctly Answered</div>
+        {renderQuestionDetails(questionResults, true)}
       </div>
-      <div className={styles.secondRow}>
-        <div className={styles.xpCard}>
-          <div className={styles.xpCardLines}>
-            <p>
-              You earned
-              <br />
-              <span className={styles.boldText}>
-                {calculateXP(points)}
-                XP
-              </span>
-              <br />
-              <StarIcon sx={{ fontSize: '3rem', color: 'grey' }} />
-            </p>
-          </div>
-        </div>
-        <div className={styles.extraMessage}>
-          <div className={styles.extraMessageLines}>
-            <span className={styles.goodJob}> Your plant collection is growing! </span>
-            <hi>Plant Image Here :)</hi>
-          </div>
-        </div>
+      <Button variant="contained" color="primary" className={styles.continueButton}>
+        Continue
+      </Button>
       </div>
     </div>
   );
@@ -131,6 +107,14 @@ function Results({ points, totalQuestions }) {
 Results.propTypes = {
   points: PropTypes.number.isRequired,
   totalQuestions: PropTypes.number.isRequired,
+  questionResults: PropTypes.arrayOf(
+    PropTypes.shape({
+      questionId: PropTypes.number.isRequired,
+      isCorrect: PropTypes.bool.isRequired,
+      selectedAnswer: PropTypes.string.isRequired,
+      // Include other properties you may need, like correctAnswer, questionText, etc.
+    })
+  ).isRequired,
 };
 
 export default Results;

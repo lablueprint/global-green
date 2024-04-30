@@ -22,10 +22,10 @@ function CourseCard({
     console.log('Course card clicked!', courseKey);
     switch (courseKey) {
       case 'plasticandrecycling':
-        router.push('/roadmap/plastic-and-recycling');
+        router.push('/roadmap/course/?courseKey=plastic-and-recycling&currStage=5');
         break;
       case 'eco-friendlytraveling':
-        router.push('/roadmap/eco-friendly-travel');
+        router.push('/roadmap/course/?courseKey=eco-friendly-travel');
         break;
       case 'oceanpollution':
         router.push('/roadmap/ocean-pollution');

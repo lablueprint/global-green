@@ -13,11 +13,11 @@ function LinearProgressWithLabel({ value, x, y }) {
           value={value}
           sx={{
             borderRadius: 5,
-            border: '1px solid black',
+            border: '0px solid black',
             height: '10px',
-            backgroundColor: '#ffffff',
+            backgroundColor: 'var(--Grey-8, rgba(13, 13, 13, 0.08))',
             '& .MuiLinearProgress-bar': {
-              backgroundColor: '#1D594B',
+              backgroundColor: 'var(--Green-100, #519546)',
               borderRadius: 5,
             },
           }}

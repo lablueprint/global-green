@@ -7,7 +7,7 @@ export async function PATCH(request) {
   try {
     const reqBody = await request.json();
     const { userId, points } = reqBody;
-    console.log("reqbody", reqBody);
+    console.log('reqbody', reqBody);
 
     if (!points) {
       return NextResponse.json({ error: 'Points must be a number and is required' }, { status: 400 });

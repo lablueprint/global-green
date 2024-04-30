@@ -5,8 +5,6 @@ import { useRouter } from 'next/navigation';
 import styles from './page.module.css';
 import ProgressBar from './progressBar';
 import convertToURL from '@/app/convertToURL';
-import { useRouter } from 'next/navigation'
-
 
 // course card component: individual course cards
 

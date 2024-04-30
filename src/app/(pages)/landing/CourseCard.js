@@ -11,7 +11,7 @@ import { useRouter } from 'next/navigation'
 // course card component: individual course cards
 
 function CourseCard({
-  progress, color, background,
+  courseKey, progress, color, background,
 }) {
   const cardStyle = {
     backgroundImage: `url(${convertToURL(background)})`,
@@ -21,24 +21,24 @@ function CourseCard({
   const router = useRouter();
 
   const handleClick = () => {
-    console.log('Course card clicked!');
-    switch (name) {
-      case 'Plastic & Recycling':
+    console.log('Course card clicked!', courseKey);
+    switch (courseKey) {
+      case 'plasticandrecycling':
         router.push('/roadmap/plastic-and-recycling');
         break;
-      case 'Eco-friendly Traveling':
+      case 'eco-friendlytraveling':
         router.push('/roadmap/eco-friendly-travel');
         break;
-      case 'Ocean Pollution':
+      case 'oceanpollution':
         router.push('/roadmap/ocean-pollution');
         break;
-      case 'Ecosystem Conservation':
+      case 'ecosystemconservation':
         router.push('/roadmap/conservation-and-restoration');
         break;
-      case 'Climate Change':
+      case 'climatechange':
         router.push('/roadmap/climate-change');
         break;
-      case 'Sustainability Lab':
+      case 'sustainabilitylab':
         router.push('/roadmap/sustainability-labs');
         break;
     }

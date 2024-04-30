@@ -36,6 +36,23 @@
     const [skipCount, setSkipCount] = useState(0);
     const [questionResults, setQuestionResults] = useState([]);
 
+    const getQuiz = async () => {
+      const key = 'course1_quiz2';
+      const res = await fetch(`/api/quizzes?key=${encodeURIComponent(key)}`);
+      const data = await res.json();
+      return data.res.questions;
+    };
+
+    const [currentQuiz, setCurrentQuiz] = useState(Quizzes);
+    useEffect(() => {
+      getQuiz().then((res) => {
+        setCurrentQuiz({ totalQuestions: res.length, questions: res });
+      });
+    }, []);
+
+    const currentQuestion = currentQuiz.questions[currentQuestionIndex];
+
+
     useEffect(() => {
       if (showAnswerPopup) {
         const timeoutId = setTimeout(() => {
@@ -51,8 +68,8 @@
     }, [showAnswerPopup, selectedMatches]); 
 
 
-    const currentQuiz = Quizzes;
-    const currentQuestion = currentQuiz.questions[currentQuestionIndex];
+    // const currentQuiz = Quizzes;
+    // const currentQuestion = currentQuiz.questions[currentQuestionIndex];
 
     const renderQuestionComponent = (question) => {
       switch (question.type) {
@@ -81,14 +98,13 @@
         case 'matching':
           return (
             <Matching
-              question={question.question}
-              terms={question.terms}
+              options={question.options}
               selectedMatches={selectedMatches}
               setSelectedMatches={setSelectedMatches}
               isAttempted={attempted}
             />
           );
-        case 'checkAllThatApply':
+        case 'checkbox':
           return (
             <Check
               question={question.question}
@@ -302,7 +318,7 @@
       if (!skippedQuestions.includes(currentQuestionIndex)) {
         setSkippedQuestions([...skippedQuestions, currentQuestionIndex]);
       }
-      setSkipCount(skipCount + 1);
+      setSkipCount(skipCount + 0);
       goToNextQuestion()
     };
 
@@ -310,9 +326,9 @@
     const checkAnswer = (selectedOption) => {
       setShowCheckButton(false); // Hide the Check button
       if (currentQuestion.type === 'matching') {
-        const isCorrect = selectedMatches.length === currentQuestion.terms.length
-        && selectedMatches.every((match) => currentQuestion.terms[match.term].definition === currentQuestion.answer[match.definition]);
-        handleAnswer(isCorrect, selectedMatches.map((match) => match.term).join(', '));
+        const isCorrect = selectedMatches.length === currentQuestion.options.length
+        && selectedMatches.every((match) => currentQuestion.options[match.option].definition === currentQuestion.answer[match.definition]);
+        handleAnswer(isCorrect, selectedMatches.map((match) => match.option).join(', '));
         setAttempted(true);
       } 
       else if (currentQuestion.type === 'checkAllThatApply') {
@@ -370,13 +386,12 @@
                   currentQuestion.type === 'matching'
                   ? '#FFE9F0' 
                   : currentQuestion.type === 'multiple'
-                  ? '#E3F8F1' // Example orange shade
+                  ? '#E3F8F1' 
                   : currentQuestion.type === 'truefalse'
-                  ? '#FFE6C9' // Example purple shade
-                  : currentQuestion.type === 'checkAllThatApply'
-                  ? '#EDE2F7' // Example blue shade
+                  ? '#FFE6C9' 
+                  : currentQuestion.type === 'checkbox'
+                  ? '#EDE2F7'
                   : 'none',
-                // Add any other styles you need for this inner container
               }}
             >
               {currentQuestion.type === 'matching'
@@ -385,7 +400,7 @@
                 ? 'Multiple Choice'
                 : currentQuestion.type === 'truefalse'
                 ? 'True and False'
-                : currentQuestion.type === 'checkAllThatApply'
+                : currentQuestion.type === 'checkbox'
                 ? 'Select All'
                 : ''}
             </div>
@@ -415,11 +430,11 @@
               type="button"
               className={`${styles.checkButton} ${
                 (currentQuestion.type !== 'matching' && selectedOption)
-                || (currentQuestion.type === 'matching' && selectedMatches.length === currentQuestion.terms.length)
+                || (currentQuestion.type === 'matching' && selectedMatches.length === currentQuestion.options.length)
                   ? styles.checkButtonEnabled : ''}`}
               onClick={() => checkAnswer(selectedOption)}
               disabled={currentQuestion.type !== 'matching' ? !selectedOption || attempted
-                : selectedMatches.length !== currentQuestion.terms.length || attempted}
+                : selectedMatches.length !== currentQuestion.options.length || attempted}
             >
               Check
             </button>

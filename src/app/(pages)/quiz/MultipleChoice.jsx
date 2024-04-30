@@ -6,7 +6,7 @@ function MultipleChoice({
   question,
   options,
   selectedAnswer = '',
-  isCorrect, // Added prop to indicate if the answer is correct
+  isCorrect,
   isAttempted = false,
   onOptionSelect,
 }) {
@@ -27,14 +27,15 @@ function MultipleChoice({
       </p>
       <div className={styles.choiceContainer}>
         {options.reduce((acc, option, index) => {
-          if (index % 2 === 0) acc.push(options.slice(index, index + 2));
+          if ((index) % 2 === 0) acc.push(options.slice(index, index + 2));
           return acc;
         }, []).map((optionPair, pairIndex) => (
           <div className={styles.choiceRow} key={pairIndex}>
             {optionPair.map((option) => {
-              let backgroundColor = 'white';
+              if (!option) return null;
+              let backgroundColor = '';
               if (isAttempted && selected === option) {
-                backgroundColor = isCorrect ? '#D5EDE0' : '#FFF3C0'; // correct, incorrect
+                backgroundColor = isCorrect ? '#D5EDE0' : '#FFF3C0';
               }
               return (
                 <button

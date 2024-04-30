@@ -21,7 +21,7 @@ function RoadmapSVG({ courseKey, currStage }) {
         fill="#519546"
         stroke="#FFFFFD"
         strokeWidth="8"
-        onClick={router.push(`/courses/${courseKey}/lesson_1`)}
+        onClick={() => router.push(`/courses/${courseKey}/lesson_1`)}
       />
       <path d="M126.947 244.598V225.238L127.555 225.622C127.257 226.262 126.787 226.87 126.147 227.446C125.507 228 124.761 228.48 123.907 228.886C123.054 229.291 122.137 229.579 121.155 229.75V225.75C122.009 225.622 122.873 225.344 123.747 224.918C124.622 224.491 125.411 223.99 126.115 223.414C126.819 222.816 127.321 222.198 127.619 221.558H131.011V244.598H126.947Z" fill="white" onClick={() => navigateToStep('/coursepart1')} />
     </g>

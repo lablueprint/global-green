@@ -12,6 +12,7 @@
   box-sizing: border-box;
 }
 
+<<<<<<< Updated upstream
 .active {
   background-color: #f00; /* Change color when active */
   color: #fff; /* Change text color when active */
@@ -35,6 +36,8 @@
   text-align: center;
 }
 
+=======
+>>>>>>> Stashed changes
 .mapContainer {
   display: flex;
   justify-content: center;

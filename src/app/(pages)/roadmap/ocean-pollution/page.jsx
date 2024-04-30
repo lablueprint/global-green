@@ -1,4 +1,4 @@
-import Roadmap from "../roadmapfunction";
+import Roadmap from "../roadmap";
 import roadmapdata from "../roadmap_data/roadmapdata"
 
 const key = 'ocean-pollution'; // for example

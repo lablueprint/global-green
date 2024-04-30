@@ -1,6 +1,7 @@
 'use client';
 
 import React from 'react';
+import { useRouter } from 'next/navigation';
 import styles from './page.module.css';
 import ProgressBar from './progressBar';
 import convertToURL from '@/app/convertToURL';
@@ -10,35 +11,35 @@ import { useRouter } from 'next/navigation'
 // course card component: individual course cards
 
 function CourseCard({
-  progress, color, background,
+  courseKey, progress, color, background,
 }) {
   const cardStyle = {
     backgroundImage: `url(${convertToURL(background)})`,
     backgroundSize: 'cover',
     backgroundPosition: 'center',
   };
-  const router = useRouter()
+  const router = useRouter();
 
   const handleClick = () => {
-    console.log('Course card clicked!');
-    switch (name) {
-      case 'Plastic & Recycling':
-        router.push('/roadmap/plastic-and-recycling')
+    console.log('Course card clicked!', courseKey);
+    switch (courseKey) {
+      case 'plasticandrecycling':
+        router.push('/roadmap/plastic-and-recycling');
         break;
-      case 'Eco-friendly Traveling':
-        router.push('/roadmap/eco-friendly-travel')
+      case 'eco-friendlytraveling':
+        router.push('/roadmap/eco-friendly-travel');
         break;
-      case 'Ocean Pollution':
-        router.push('/roadmap/ocean-pollution')
+      case 'oceanpollution':
+        router.push('/roadmap/ocean-pollution');
         break;
-      case 'Ecosystem Conservation':
-        router.push('/roadmap/conservation-and-restoration')
+      case 'ecosystemconservation':
+        router.push('/roadmap/conservation-and-restoration');
         break;
-      case 'Climate Change':
-        router.push('/roadmap/climate-change')
+      case 'climatechange':
+        router.push('/roadmap/climate-change');
         break;
-      case 'Sustainability Lab':
-        router.push('/roadmap/sustainability-labs')
+      case 'sustainabilitylab':
+        router.push('/roadmap/sustainability-labs');
         break;
     }
   };

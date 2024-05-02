@@ -125,6 +125,10 @@ const options = {
     },
 
   },
+  pages: {
+    signIn: '/login',
+  },
+
 
   debug: true,
 

@@ -18,12 +18,12 @@ function ResetPassword() {
     e.preventDefault();
 
     try {
-      const response = await fetch('api/users/forgotpassword', {
+      const response = await fetch('api/users/resetpassword', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ email }),
+        body: JSON.stringify({ newPassword }),
       });
 
       if (response.status === 400) {

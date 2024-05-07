@@ -1,11 +1,28 @@
 import React from 'react';
 
-function course1_lesson1() {
+import StickyButton from '@/app/components/StickyButton';
+import LessonNumber from '@/app/components/LessonNumber';
+import QuoteHighlight from '@/app/components/QuoteHighlight';
+import GreyBoxHighlight from '@/app/components/GreyBoxHighlight';
+
+function Course1Lesson1() {
   return (
-    <>
-        <div> Course 1 Lesson 1</div>
-    </>
+    <div
+      style={{
+        display: 'flex',
+        gap: 30,
+        flexDirection: 'column',
+        justifyContent: 'space-between',
+        padding: '15%',
+        paddingTop: '8%',
+      }}
+    >
+      <LessonNumber />
+      <QuoteHighlight />
+      <GreyBoxHighlight />
+      <StickyButton />
+    </div>
   );
 }
 
-export default course1_lesson1
+export default Course1Lesson1;

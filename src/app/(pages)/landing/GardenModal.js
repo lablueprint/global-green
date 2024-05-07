@@ -24,6 +24,9 @@ export default function GardenModal({ setIsGardenModalOpen }) {
     1: false,
     2: false,
     3: false,
+    4: false,
+    5: false,
+    6: false,
   });
 
   const [accessories, setAccessories] = useState({
@@ -32,6 +35,7 @@ export default function GardenModal({ setIsGardenModalOpen }) {
     3: false,
     4: false,
     5: false,
+    6: false,
   });
 
   const [selectedItems, setSelectedItems] = useState({
@@ -242,9 +246,9 @@ export default function GardenModal({ setIsGardenModalOpen }) {
                       )
                   )}
 
-                  {/* {Object.keys(gardenImage).map(
+                  {Object.keys(background).map(
                     (index) =>
-                    gardenImage[index] && (
+                      background[index] && (
                         <motion.div
                           key={index}
                           initial="initial"
@@ -265,7 +269,32 @@ export default function GardenModal({ setIsGardenModalOpen }) {
                     `}
                         />
                       )
-                  )} */}
+                  )}
+
+                  {Object.keys(accessories).map(
+                    (index) =>
+                    accessories[index] && (
+                        <motion.div
+                          key={index}
+                          initial="initial"
+                          animate="animate"
+                          exit="exit"
+                          layout
+                          layoutId={`gardenImage${index}`}
+                          variants={variant}
+                          transition={{
+                            duration: 1,
+                            type: "spring",
+                            stiffness: 260,
+                            damping: 20,
+                          }}
+                          className={`
+                    ${styles.gardenEditImage} 
+                    ${styles[`gardenImage${index}`]}
+                    `}
+                        />
+                      )
+                  )}
                 </AnimatePresence>
               </div>
             </div>

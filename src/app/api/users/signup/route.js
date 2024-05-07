@@ -52,7 +52,7 @@ export async function POST(request) {
       email,
       password: hashedPassword,
       verified: false,
-      verifyExpires: new Date(Date.now() + 300000),
+      verifyExpires: new Date(Date.now() + 3600000),
     });
     const savedUser = await newUser.save();
 

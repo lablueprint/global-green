@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useEffect, useState } from 'react';
-import { useSession, signOut } from 'next-auth/react';
+import { useSession, signOut, signIn } from 'next-auth/react';
 
 function VerifyEmail() {
   const [token, setToken] = useState('');
@@ -39,12 +39,11 @@ function VerifyEmail() {
     if (data.user.verified) {
       // stop all intervals
       if (intervalRef.current) clearInterval(intervalRef.current);
-      // make sure the session is updated
-      await update();
+      // relogin to get updated session
+      await signIn('credentials', { username: data.user.userName, password: data.user.password });
+
       // redirect to profile page
       window.location.href = '/profile';
-      
-      
     }
 
   }
@@ -73,14 +72,18 @@ function VerifyEmail() {
 
   const handleLogout = async () => {
     if (intervalRef.current) clearInterval(intervalRef.current);
-    if (verified) {
+    if (verified || session.user.verified) {
+      console.log('verified at handlelogut', verified);
       window.location.href = '/profile';
       return;
     }
     else {
-    if (session) {
-      await signOut();
-    }
+      if (session.user.verified) {
+        console.log('verified at handlelogut', verified);
+        alert('Your account has been verified. You can now access your profile.');
+        window.location.href = '/profile';
+        return;
+      }
     alert('Your verification time has expired. Please sign up again.');
     await signOut();
   }
@@ -169,13 +172,13 @@ function VerifyEmail() {
     () => {
       console.log('session', session);
 
-      if (session?.user?.verified) {
-        window.location.href = '/profile';
-      } 
-
       // if no user logged in, redirect to login page
       if (!session) {
-        window.location.href = '/login';
+       window.location.href = '/login';
+      }
+      if (session?.user?.verified) {
+        console.log('verified at useeffect', session.user.verified);
+        window.location.href = '/profile';
       }
       if (session?.user?.id) getUserDetails(session.user.id);
 

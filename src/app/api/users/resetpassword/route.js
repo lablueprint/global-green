@@ -12,13 +12,13 @@ export async function POST(request) {
       newPassword,
     } = reqBody;
 
-    console.log(reqBody);
-
     const user = await User.findOne({ forgetPasswordToken: token });
 
     if (!user) {
       return NextResponse.json({ error: 'Invalid token' }, { status: 400 });
     }
+
+    user.forgetPasswordToken = undefined;
     // eslint-disable-next-line no-console
     console.log('user exists');
 

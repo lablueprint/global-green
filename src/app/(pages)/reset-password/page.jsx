@@ -32,6 +32,7 @@ function ResetPassword() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    console.log(token);
 
     try {
       const response = await fetch('api/users/resetpassword', {

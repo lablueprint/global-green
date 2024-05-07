@@ -1,25 +1,23 @@
 import { NextResponse } from 'next/server';
 import bcryptjs from 'bcryptjs';
-import connectMongoDB from '../../../../../../libs/mongodb';
-import User from '../../../../../../models/user';
+import connectMongoDB from '../../../../../libs/mongodb';
+import User from '../../../../../models/user';
 
 export async function POST(request) {
   await connectMongoDB();
   try {
     const reqBody = await request.json();
     const {
-      userName,
+      token,
       newPassword,
     } = reqBody;
 
     console.log(reqBody);
 
-    const user = await User.findOne({
-      $or: [{ email: userName }, { userName }],
-    });
+    const user = await User.findOne({ forgetPasswordToken: token });
 
     if (!user) {
-      return NextResponse.json({ error: 'User does not exist' }, { status: 400 });
+      return NextResponse.json({ error: 'Invalid token' }, { status: 400 });
     }
     // eslint-disable-next-line no-console
     console.log('user exists');

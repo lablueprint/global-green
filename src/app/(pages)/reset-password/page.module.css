@@ -78,3 +78,14 @@
     font-size: 13px;
   
   }
+
+  .disabledButton {
+    background-color: gray;
+    color: white;
+  }
+  
+  .enabledButton {
+    background-color: green;
+    color: white;
+  }
+  

@@ -32,8 +32,8 @@ function ForgotPassword() {
 
       if (response.ok) {
         window.location.href = '/login';
+        alert('Email sent');
       }
-      alert('Email sent');
     } catch (error) {
       console.log('Error: ', error);
     }

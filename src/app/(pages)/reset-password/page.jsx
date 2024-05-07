@@ -1,11 +1,27 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import styles from './page.module.css';
 
 function ResetPassword() {
   const [newPassword, setNewPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
+  const [token, setToken] = useState('');
+  const [canChange, setCanChange] = useState(false);
+
+  useEffect(() => {
+    const urlParams = new URLSearchParams(window.location.search);
+    const tokenParam = urlParams.get('token');
+    if (tokenParam) {
+      setToken(tokenParam);
+    }
+
+    if (newPassword === confirmPassword) {
+      if (newPassword.length >= 15 || (newPassword.length >= 8 && /\d/.test(newPassword) && /[a-zA-Z]/.test(newPassword))) {
+        setCanChange(true);
+      }
+    }
+  }, [newPassword, confirmPassword]);
 
   const handleNewPasswordChange = (e) => {
     setNewPassword(e.target.value);
@@ -23,7 +39,7 @@ function ResetPassword() {
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ newPassword }),
+        body: JSON.stringify({ token, newPassword }),
       });
 
       if (response.status === 400) {
@@ -36,8 +52,8 @@ function ResetPassword() {
 
       if (response.ok) {
         window.location.href = '/profile';
+        alert('Email sent');
       }
-      alert('Email sent');
     } catch (error) {
       console.log('Error: ', error);
     }
@@ -70,7 +86,12 @@ function ResetPassword() {
           />
         </label>
         <div className={styles.buttonContainer}>
-          <button type="submit" className={styles.submitButton}>Reset Password</button>
+          <button
+            type="submit"
+            className={`${styles.submitButton} ${canChange ? styles.enabledButton : styles.disabledButton}`}
+          >
+            Reset Password
+          </button>
         </div>
         <a href="/login" className={styles.backToLogin}> Back to login</a>
       </form>

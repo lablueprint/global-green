@@ -102,14 +102,14 @@ export default function NavBar() {
             <PersonOutlinedIcon />
 
           </div>
-          {
+          {/* {
             currentPath === '/courses' ? ''
               : (
                 <div className={styles.profileText}>
                   {user.userName || 'Login'}
                 </div>
               )
-}
+} */}
           <div className={styles.profilePoints}>
             <TollOutlinedIcon />
             164

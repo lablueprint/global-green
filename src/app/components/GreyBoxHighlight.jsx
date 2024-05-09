@@ -2,6 +2,7 @@
 
 import { React } from 'react';
 import styles from './page.module.css';
+import Textbox from './Textbox';
 
 const data = [
   [
@@ -14,19 +15,10 @@ const data = [
   ],
 ];
 
-export default function GreyBoxHighlight() {
+export default function GreyBoxHighlight({ content }) {
   return (
     <div className={styles['grey-box-highlight']}>
-      <inline className={styles['title-text1']}>So what can we do?</inline>
-
-      {/* Map data to text here */}
-
-      <br />
-      <br />
-
-      {' '}
-      <span style={{ color: 'green' }}>  </span>
-
+      <Textbox content={content} />
     </div>
   );
 }

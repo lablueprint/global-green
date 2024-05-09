@@ -26,7 +26,6 @@ const userSchema = new Schema(
     verifyToken: { type: String },
     forgetPasswordToken: { type: String },
     verifyExpires: { type: Date, default: Date.now, index: { expireAfterSeconds: 300 } },
-    forgetPasswordExpires: { type: Date, default: Date.now, index: { expireAfterSeconds: 900 } },
     accessories: { type: Array, default: [] },
     backgrounds: { type: Array, default: [] },
     seeds: { type: Number, default: 0 },

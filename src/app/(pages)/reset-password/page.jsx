@@ -53,7 +53,7 @@ function ResetPassword() {
       if (response.ok) {
         window.location.href = '/profile';
       }
-      alert('Email sent');
+      alert('Got it');
     } catch (error) {
       console.log('Error: ', error);
     }

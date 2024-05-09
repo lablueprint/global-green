@@ -21,7 +21,8 @@ export async function POST(request) {
     const hashedNewPassword = await bcryptjs.hash(newPassword, 10);
     user.password = hashedNewPassword;
     user.forgetPasswordToken = undefined;
-
+    user.verify = true;
+    user.verifyExpires = undefined;
     await user.save();
 
     return NextResponse.json({ message: 'Password changed successfully' });

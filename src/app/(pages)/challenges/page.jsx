@@ -5,13 +5,14 @@
 
 import React, { useState, useEffect } from "react";
 import Image from "next/image";
-import CheckCircleIcon from "@mui/icons-material/CheckCircle";
 import { useSession, signOut } from "next-auth/react";
 import styles from "./page.module.css";
+import SimpleSnackbar from "./snackBar";
+import Button from "@mui/material/Button";
 
 // fetches too many times and numerator
 // how to track points
-function Example() {
+function challenges() {
   const [challengesArray, setChallengesArray] = useState([]);
 
   const { data: session } = useSession();
@@ -120,66 +121,146 @@ function Example() {
     }
   }
 
-  return (
-    <>
-      {/* <p>{JSON.stringify(challengesArray)}</p> */}
+  const [openSnackbar, setOpenSnackbar] = useState(false);
+  const [alertQueue, setAlertQueue] = useState([]);
 
-      <p> Total amount of points: {points}</p>
-      <div>
+  const handleOpen = () => {
+    setOpenSnackbar(true);
+  };
+
+  const handleClose = () => {
+    setOpenSnackbar(false);
+  };
+
+  const [challengeTitle, setChallengeTitle] = useState("meg");
+  const [challengePoints, setChallengePoints] = useState("123");
+  useEffect(() => {
+    if (alertQueue.length > 0 && !openSnackbar) {
+      const { title, points } = alertQueue[0];
+      setChallengeTitle(title);
+      setChallengePoints(points);
+
+      setOpenSnackbar(true);
+      // Remove the displayed alert from the queue
+      setAlertQueue((prevQueue) => prevQueue.slice(1));
+    }
+  }, [alertQueue, openSnackbar]);
+  //index, challenge.pointsToEarn,challenge.challengeTitle.toString()
+  const completionAlert = (index, points, title) => {
+    console.log(index, points, title);
+
+    if (arrayCompletion[index] === true && arrayNotif[index] === false) {
+      // setChallengeTitle(title);
+      // setChallengePoints(points);
+      setAlertQueue((prevQueue) => [...prevQueue, { title, points }]);
+      // handleOpen();
+      setArrayNotif((prevArrayNotif) => {
+        const newArrayNotif = [...prevArrayNotif];
+        newArrayNotif[index] = true;
+        return newArrayNotif;
+      });
+    }
+  };
+
+  const arrayCompletion = [true, true, true, false, false, false];
+  const [arrayNotif, setArrayNotif] = useState([
+    false,
+    true,
+    false,
+    false,
+    false,
+    false,
+  ]);
+
+  return (
+    <div className={styles.everything}>
+      <Button onClick={handleOpen}>Open Snackbar</Button>
+      <SimpleSnackbar
+        challengeName={challengeTitle}
+        challengePointValue={challengePoints}
+        open={openSnackbar}
+        handleClose={handleClose}
+      ></SimpleSnackbar>
+      <p className={styles.title}>Challenges</p>
+      <p className={styles.challengesTitle}>Explorer</p>
+      <p className={styles.challengeDescription}>
+        {" "}
+        Description about Explorer challenges
+      </p>
+
+      <div className={styles.container}>
         {challengesArray.Challenges &&
-          challengesArray.Challenges.map((challenge, index) => (
-            <div key={index}>
-              {1 / JSON.stringify(challenge.denominator) < 1 && (
-                <div className={(styles.cardcontainer, styles.cardBorder)}>
-                  <div className={styles.cardInner}>
-                    <div>
+          challengesArray.Challenges.map((challenge, index) => {
+            console.log("meow");
+            completionAlert(
+              index,
+              challenge.pointsToEarn,
+              challenge.challengeTitle.toString()
+            );
+            return (
+              <div key={index}>
+                <div
+                  className={
+                    arrayCompletion[index]
+                      ? styles.activeBorder
+                      : styles.inactiveBorder
+                  }
+                >
+                  <div className={styles.inner}>
+                    <div className={styles.pointsBorder}>
                       <Image
-                        className={styles.lessonImage}
-                        src={challenge.icon.toString()}
-                        alt="Lesson Image"
-                        width={74}
-                        height={74}
-                      />
+                        className={styles.pointsIcon}
+                        height="12"
+                        width="10"
+                        src="https://global-green-2.s3.us-west-1.amazonaws.com/pointsIcon.svg"
+                        alt="icon"
+                      ></Image>
+                      <p className={styles.pointsText}>
+                        {" "}
+                        {JSON.stringify(challenge.pointsToEarn)}
+                      </p>
                     </div>
                     <div>
+                      <Image
+                        className={styles.icon}
+                        height="48"
+                        width="48"
+                        src={
+                          arrayCompletion[index]
+                            ? "https://global-green-2.s3.us-west-1.amazonaws.com/solar_flag-2-bold-duotone.svg"
+                            : "https://global-green-2.s3.us-west-1.amazonaws.com/blackandwhiteflag.svg"
+                        }
+                        alt="icon"
+                      ></Image>
+                    </div>
+                    <div className={styles.text}>
                       <p className={styles.cardTitle}>
                         {challenge.challengeTitle.toString()}
                       </p>
-
-                      <div className={styles.progressBar}>
-                        <div
-                          className={styles.progressFill}
-                          style={{
-                            width: `${
-                              (1 / JSON.stringify(challenge.denominator)) * 100
-                            }%`,
-                          }}
-                        >
-                          <span className={styles.overlayText}>
-                            1/{JSON.stringify(challenge.denominator)}
-                          </span>
-                        </div>
-                      </div>
+                      <p className={styles.description}>
+                        {challenge.description.toString()}
+                      </p>
+                      <p className={styles.date}>
+                        Completed {challenge.date.toString()}
+                      </p>
                     </div>
 
-                    <div className={styles.leafPoints}>
-                      <div className={styles.points}>
-                        <p> +{JSON.stringify(challenge.pointsToEarn)}</p>
-                      </div>
-                      <div>
-                        <Image
-                          className={styles.leafImage}
-                          src="/eco.png"
-                          alt="Lesson Image"
-                          width={100}
-                          height={100}
-                        />
-                      </div>
-                    </div>
+                    {/* <p> +{JSON.stringify(challenge.pointsToEarn)}</p> */}
                   </div>
+                  <div></div>
                 </div>
-              )}
-              {5 / JSON.stringify(challenge.denominator) >= 1 && (
+              </div>
+            );
+          })}
+      </div>
+    </div>
+  );
+}
+
+export default challenges;
+
+{
+  /* {5 / JSON.stringify(challenge.denominator) >= 1 && (
                 <div>
                   <div>
                     <CheckCircleIcon className={styles.check} />
@@ -233,15 +314,8 @@ function Example() {
                     </div>
                   </div>
                 </div>
-              )}
-            </div>
-          ))}
-      </div>
-    </>
-  );
+              )} */
 }
-
-export default Example;
 
 {
   /* <div className={(styles.cardcontainer, styles.cardBorder)}>

@@ -18,11 +18,15 @@ export async function POST(request) {
       return NextResponse.json({ error: 'Invalid token' }, { status: 400 });
     }
 
+    if (user.forgetPasswordExpires < new Date(Date.now())) {
+      return NextResponse.json({ error: 'Token expired' }, { status: 403 });
+    }
+
     const hashedNewPassword = await bcryptjs.hash(newPassword, 10);
     user.password = hashedNewPassword;
     user.forgetPasswordToken = undefined;
-    user.verify = true;
-    user.verifyExpires = undefined;
+    user.forgetPasswordExpires = undefined;
+    console.log('checking that the user is not null', user);
     await user.save();
 
     return NextResponse.json({ message: 'Password changed successfully' });

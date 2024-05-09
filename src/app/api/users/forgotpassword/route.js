@@ -20,8 +20,12 @@ export async function POST(request) {
     }
 
     const hashedToken = (await bcryptjs.hash(user.id.toString(), 10)).slice(5, 13);
-    user.set({ forgetPasswordToken: hashedToken });
+    user.set({
+      forgetPasswordToken: hashedToken,
+      forgetPasswordExpires: new Date(Date.now() + 300000),
+    });
     console.log(hashedToken);
+    console.log('checking that the user is not null', user);
     await user.save();
 
     console.log(user);

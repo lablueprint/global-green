@@ -41,9 +41,13 @@ function ResetPassword() {
         },
         body: JSON.stringify({ token, newPassword }),
       });
-
+      console.log(response);
       if (response.status === 400) {
         alert('User not found');
+        return;
+      }
+      if (response.status === 403) {
+        alert('Token expired');
         return;
       }
 

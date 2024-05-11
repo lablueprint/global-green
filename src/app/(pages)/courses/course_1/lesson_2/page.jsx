@@ -4,11 +4,7 @@ import TitleHeader from '@/app/components/TitleHeader';
 import StickyButton from '@/app/components/StickyButton';
 import LessonNumber from '@/app/components/LessonNumber';
 import QuoteHighlight from '@/app/components/QuoteHighlight';
-// import GreyBoxHighlight from '@/app/components/GreyBoxHighlight';
-
-import GreyBoxHighlight from '@/app/components/courses_greybox/course_1/lesson_2/page';
-
-
+import GreyBoxHighlight from '@/app/components/GreyBoxHighlight';
 
 function Course1Lesson2() {
   return (
@@ -23,10 +19,20 @@ function Course1Lesson2() {
       }}
     >
       <LessonNumber lessonText="Lesson 2"/>
-      <TitleHeader title="Where Does Plastic Come From?" type="main" />
-      <div> image here </div>
-      <QuoteHighlight quoteText="You probably already know that plastic isn't produced in nature."/>
+      <img src="/lessons/1.png"/>
+      <TitleHeader title="Resin Identification Codes" type="main" />
+      <QuoteHighlight quoteText="Quick! Take a look around you and find the nearest plastic item. What do you notice about it?"/>
+      <div> Content </div>
+      <TitleHeader title="Plastic Identifcation" type="sub" />
+      <div> Content </div>
+      <div> Recycling image </div>
+      <div> Content </div>
       <GreyBoxHighlight />
+      <div> Content </div>
+      <div> Chart Component </div>
+      <div> Content </div>
+      <TitleHeader title="Repurposing of Plastics" type="sub" />
+      <div> Content </div>
       <StickyButton />
     </div>
   );

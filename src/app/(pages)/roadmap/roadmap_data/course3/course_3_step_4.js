@@ -1,12 +1,11 @@
 import React from 'react';
 import { useRouter } from 'next/navigation';
-import course_1_step_5 from './course_3_step_5';
 
 const course_3_step_4 = () => {
   const router = useRouter();
 
   const handleClick = () => {
-    router.push('/courses/course_1/lesson_4');
+    router.push('/courses/course_1/lesson_3');
   };
 
   return (

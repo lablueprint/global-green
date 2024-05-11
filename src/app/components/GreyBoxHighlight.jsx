@@ -18,7 +18,16 @@ const data = [
 export default function GreyBoxHighlight({ content }) {
   return (
     <div className={styles['grey-box-highlight']}>
-      <Textbox content={content} />
+      <inline className={styles['title-text1']}>So what can we do?</inline>
+
+      {/* Map data to text here */}
+
+      <br />
+      <br />
+
+      {' '}
+      <span style={{ color: 'green' }}>  </span>
+
     </div>
   );
 }

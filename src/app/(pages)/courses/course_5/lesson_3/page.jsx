@@ -1,6 +1,6 @@
 import React from 'react';
 
-function course5_lesson3() {
+function Course5Lesson3() {
   return (
     <>
         <div> Course 5 Lesson 3</div>
@@ -8,4 +8,4 @@ function course5_lesson3() {
   );
 }
 
-export default course5_lesson3
+export default Course5Lesson3

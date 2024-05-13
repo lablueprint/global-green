@@ -1,33 +1,48 @@
-import { React } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import styles from './page.module.css';
 
 function Paragraph({ paragraph }) {
   return (
     <div>
-      {paragraph.map((text, i) => (
-        <span
-          key={i}
-          className={i % 2 === 0 ? styles['black-text'] : styles['green-text']}
-        >
-          {text}
-        </span>
-      ))}
+      {paragraph.map((text, i) => {
+        // Split the text by the <green> tag
+        const parts = text.split(/(<green>.*?<\/green>)/g);
+        return (
+          <span key={i}>
+            {parts.map((part, index) =>
+              part.startsWith('<green>') ? (
+                <span key={index} className={styles['green-text']}>
+                  {part.replace(/<\/?green>/g, '')}
+                </span>
+              ) : (
+                <span key={index} className={styles['black-text']}>
+                  {part}
+                </span>
+              )
+            )}
+          </span>
+        );
+      })}
     </div>
   );
 }
+
+Paragraph.propTypes = {
+  paragraph: PropTypes.array.isRequired,
+};
 
 export default function Textbox({ content }) {
   return (
     <div>
       {content.map((paragraph, i) => (
-        <div className={styles.text} key={paragraph}>
+        <div className={styles.text} key={i}>
           <Paragraph paragraph={paragraph} />
           {i !== content.length - 1 && (
-          <>
-            <br />
-            <br />
-          </>
+            <>
+              <br />
+              <br />
+            </>
           )}
         </div>
       ))}
@@ -37,8 +52,4 @@ export default function Textbox({ content }) {
 
 Textbox.propTypes = {
   content: PropTypes.array.isRequired,
-};
-
-Paragraph.propTypes = {
-  paragraph: PropTypes.array.isRequired,
 };

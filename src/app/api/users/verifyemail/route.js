@@ -17,6 +17,7 @@ export async function POST(request) {
     user.verified = true;
     user.verifyToken = undefined;
     user.verifyExpires = undefined;
+    console.log('checking that the user is not null in verify', user);
     await user.save();
     const response = NextResponse.json({
       message: 'User verified',

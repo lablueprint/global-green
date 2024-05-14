@@ -1,14 +1,13 @@
-import React, { useState } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
-import { Button } from '@mui/material';
-import styles from './page.module.css';
+import React, { useState } from "react";
+import { motion, AnimatePresence } from "framer-motion";
+import { Button } from "@mui/material";
+import styles from "./page.module.css";
 
 export default function GardenModal({ setIsGardenModalOpen }) {
   const variant = {
     initial: { opacity: 0, scale: 0.9, y: 100 },
     animate: { opacity: 1, scale: 1.2, y: 0 },
     exit: { opacity: 0, scale: 0.9, y: 100 },
-
   };
 
   const [flowers, setFlowers] = useState({
@@ -25,6 +24,9 @@ export default function GardenModal({ setIsGardenModalOpen }) {
     1: false,
     2: false,
     3: false,
+    4: false,
+    5: false,
+    6: false,
   });
 
   const [accessories, setAccessories] = useState({
@@ -33,6 +35,7 @@ export default function GardenModal({ setIsGardenModalOpen }) {
     3: false,
     4: false,
     5: false,
+    6: false,
   });
 
   const [selectedItems, setSelectedItems] = useState({
@@ -103,26 +106,22 @@ export default function GardenModal({ setIsGardenModalOpen }) {
             key={index}
             className={styles.gardenModalEditItem}
             style={{
-              border: selectedItems.accessories.includes(index) ? '4px solid green' : 'none',
-              cursor: 'pointer',
+              border: selectedItems.accessories.includes(index)
+                ? "4px solid green"
+                : "none",
+              cursor: "pointer",
             }}
             onPointerDown={() => {
               if (accessories[index]) {
                 toggleAccessories(index);
               } else {
-                addSelectedItems('accessories', index);
+                addSelectedItems("accessories", index);
               }
             }}
           >
-            {accessories[index]
-              && (
-              <div
-                className={styles.gardenModalEditItemRemove}
-              >
-                Remove
-              </div>
-              )}
-
+            {accessories[index] && (
+              <div className={styles.gardenModalEditItemRemove}>Remove</div>
+            )}
           </motion.div>
         ))}
       </div>
@@ -137,26 +136,22 @@ export default function GardenModal({ setIsGardenModalOpen }) {
             key={index}
             className={styles.gardenModalEditItem}
             style={{
-              border: selectedItems.background.includes(index) ? '4px solid green' : 'none',
-              cursor: 'pointer',
+              border: selectedItems.background.includes(index)
+                ? "4px solid green"
+                : "none",
+              cursor: "pointer",
             }}
             onPointerDown={() => {
               if (background[index]) {
                 toggleBackground(index);
               } else {
-                addSelectedItems('background', index);
+                addSelectedItems("background", index);
               }
             }}
           >
-            {background[index]
-              && (
-                <div
-                  className={styles.gardenModalEditItemRemove}
-                >
-                  Remove
-                </div>
-              )}
-
+            {background[index] && (
+              <div className={styles.gardenModalEditItemRemove}>Remove</div>
+            )}
           </motion.div>
         ))}
       </div>
@@ -169,29 +164,28 @@ export default function GardenModal({ setIsGardenModalOpen }) {
         {Object.keys(flowers).map((index) => (
           <motion.div
             key={index}
-            className={`${styles.gardenModalEditItem} ` + `${styles[`gardenFlower${index}`]}
-              `}
-
+            className={
+              `${styles.gardenModalEditItem} ` +
+              `${styles[`gardenFlower${index}`]}
+              `
+            }
             style={{
-              border: selectedItems.flowers.includes(index) ? '4px solid green' : 'none',
-              cursor: 'pointer',
+              border: selectedItems.flowers.includes(index)
+                ? "4px solid green"
+                : "none",
+              cursor: "pointer",
             }}
             onPointerDown={() => {
               if (flowers[index]) {
                 toggleFlower(index);
               } else {
-                addSelectedItems('flowers', index);
+                addSelectedItems("flowers", index);
               }
             }}
           >
-            {flowers[index]
-              && (
-              <div
-                className={styles.gardenModalEditItemRemove}
-              >
-                Remove
-              </div>
-              )}
+            {flowers[index] && (
+              <div className={styles.gardenModalEditItemRemove}>Remove</div>
+            )}
           </motion.div>
         ))}
       </div>
@@ -199,222 +193,178 @@ export default function GardenModal({ setIsGardenModalOpen }) {
   }
 
   const [isCustomizing, setIsCustomizing] = useState(false);
-  const [currentTab, setCurrentTab] = useState('accessories'); // accessories, background, flowers
+  const [currentTab, setCurrentTab] = useState("accessories"); // accessories, background, flowers
   return (
-    <div
-      className={styles.gardenModalOverlay}
-    >
-      {
-        isCustomizing
-          ? (
-            <div className={styles.gardenModal}>
-              <h2 className={styles.gardenModalText}>Edit</h2>
-              <div className={styles.gardenModalEditBox}>
-                <div className={styles.gardenModalEditBoxLeft}>
-
-                  <div className={styles.gardenModalImageContainer}>
-                    <motion.div
-                      layout
-                      layoutId="gardenBackground"
-                      className={`${styles.gardenEditImage} ${styles.gardenBackground}`}
-                    />
-                    <motion.div
-                      animate={{
-                        rotate: 360,
-                        opacity: 1,
-                      }}
-
-                      transition={{ ease: 'linear', duration: 70, repeat: Infinity }}
-                      className={`${styles.gardenEditImage}
-            ${styles.gardenEarth}`}
-                    />
-                    <AnimatePresence>
-                      {
-              Object.keys(flowers).map((index) => (
-                flowers[index] && (
-                  <motion.div
-                    key={index}
-                    initial="initial"
-                    animate="animate"
-                    exit="exit"
-                    layout
-                    layoutId={`gardenFlower${index}`}
-                    variants={variant}
-                    transition={{
-                      duration: 1,
-                      type: 'spring',
-                      stiffness: 260,
-                      damping: 20,
-                    }}
-                    className={`
-                    ${styles.gardenEditImage} 
-                    ${styles[`gardenFlower${index}`]}
-                    `}
-                  />
-                )
-              ))
-
-            }
-                    </AnimatePresence>
-
-                  </div>
-
-                </div>
-                <div className={styles.gardenModalEditBoxRight}>
-                  <p className={styles.gardenModalText}>
-                    Customize your garden below.
-                  </p>
-                  <p className={styles.gardenModalSubtext}>
-                    Your garden is where you can see the progress of your learning journey.
-                  </p>
-                  <div className={styles.gardenModalTabs}>
-                    <Button
-                      type="button"
-                      sx={{
-                        backgroundColor: 'transparent',
-                        textTransform: 'none',
-                        fontFamily: 'inherit',
-                        color: currentTab === 'accessories' ? 'green' : 'gray',
-                        borderBottom: currentTab === 'accessories' ? '2px solid green' : 'none',
-                      }}
-                      onClick={() => setCurrentTab('accessories')}
-                    >
-                      Accessories
-                    </Button>
-                    <Button
-                      type="button"
-                      sx={{
-                        backgroundColor: 'transparent',
-                        fontFamily: 'inherit',
-                        textTransform: 'none',
-                        color: currentTab === 'background' ? 'green' : 'gray',
-                        borderBottom: currentTab === 'background' ? '2px solid green' : 'none',
-                      }}
-
-                      onClick={() => setCurrentTab('background')}
-                    >
-                      Background
-                    </Button>
-                    <Button
-                      type="button"
-                      sx={{
-                        backgroundColor: 'transparent',
-                        fontFamily: 'inherit',
-                        textTransform: 'none',
-                        color: currentTab === 'flowers' ? 'green' : 'gray',
-                        borderBottom: currentTab === 'flowers' ? '2px solid green' : 'none',
-                      }}
-                      onClick={() => setCurrentTab('flowers')}
-                    >
-                      Flowers
-                    </Button>
-                  </div>
-                  {currentTab === 'accessories' && accesoriesTab()}
-                  {currentTab === 'background' && backgroundTab()}
-                  {currentTab === 'flowers' && flowersTab()}
-
-                  <div className={styles.gardenModalButtonContainer}>
-                    <Button
-                      variant="contained"
-                      color="primary"
-                      sx={{
-                        backgroundColor: 'gray',
-                        borderRadius: '50px',
-                        textTransform: 'none',
-                        fontFamily: 'inherit',
-                      }}
-                      onClick={() => setIsCustomizing(false)}
-                    >
-                      Cancel
-                    </Button>
-                    <Button
-                      variant="contained"
-                      color="primary"
-                      sx={{
-                        backgroundColor: 'green',
-                        borderRadius: '50px',
-                        textTransform: 'none',
-                        fontFamily: 'inherit',
-                      }}
-                      onClick={() => addToGarden()}
-                      disabled={selectedItems.accessories.length === 0
-                        && selectedItems.background.length === 0
-                        && selectedItems.flowers.length === 0}
-                    >
-                      { selectedItems.accessories.length > 0
-                      || selectedItems.background.length > 0
-                       || selectedItems.flowers.length > 0
-                        ? 'Add to Garden'
-                        : 'Nothing Selected'}
-                    </Button>
-                  </div>
-                </div>
-              </div>
-
-            </div>
-          )
-          : (
-            <div className={styles.gardenModal}>
-              <h2 className={styles.gardenModalText}>Your Garden</h2>
-              <p className={styles.gardenModalText}>
-                View your garden below.
-              </p>
-              <p className={styles.gardenModalSubtext}>
-                Your garden is where you can see the progress of your learning journey.
-              </p>
+    <div className={styles.gardenModalOverlay}>
+      {isCustomizing ? (
+        <div className={styles.gardenModal}>
+          <h2 className={styles.gardenModalText}>Edit</h2>
+          <div className={styles.gardenModalEditBox}>
+            <div className={styles.gardenModalEditBoxLeft}>
               <div className={styles.gardenModalImageContainer}>
                 <motion.div
                   layout
                   layoutId="gardenBackground"
-                  className={`${styles.gardenImage} ${styles.gardenBackgroundWide}`}
+                  className={`${styles.gardenEditImage} ${styles.gardenBackground}`}
                 />
                 <motion.div
                   animate={{
                     rotate: 360,
+                    opacity: 1,
                   }}
-                  transition={{ ease: 'linear', duration: 70, repeat: Infinity }}
-                  className={`${styles.gardenImage} 
-            ${styles.gardenEarthWide}`}
+                  transition={{
+                    ease: "linear",
+                    duration: 70,
+                    repeat: Infinity,
+                  }}
+                  className={`${styles.gardenEditImage}
+            ${styles.gardenEarth}`}
                 />
                 <AnimatePresence>
-                  {
-              Object.keys(flowers).map((index) => (
-                flowers[index] && (
-                <motion.div
-                  key={index}
-                  initial="initial"
-                  animate="animate"
-                  exit="exit"
-                  variants={variant}
-                  transition={{
-                    duration: 1,
-                    type: 'spring',
-                    stiffness: 260,
-                    damping: 20,
-                  }}
-                  layout
-                  layoutId={`gardenFlower${index}`}
+                  {Object.keys(flowers).map(
+                    (index) =>
+                      flowers[index] && (
+                        <motion.div
+                          key={index}
+                          initial="initial"
+                          animate="animate"
+                          exit="exit"
+                          layout
+                          layoutId={`gardenFlower${index}`}
+                          variants={variant}
+                          transition={{
+                            duration: 1,
+                            type: "spring",
+                            stiffness: 260,
+                            damping: 20,
+                          }}
+                          className={`
+                    ${styles.gardenEditImage} 
+                    ${styles[`gardenFlower${index}`]}
+                    `}
+                        />
+                      )
+                  )}
 
-                  className={`${styles.gardenImage} ${styles[`gardenFlower${index}Wide`]}`}
-                />
-                )
-              ))
+                  {Object.keys(background).map(
+                    (index) =>
+                      background[index] && (
+                        <motion.div
+                          key={index}
+                          initial="initial"
+                          animate="animate"
+                          exit="exit"
+                          layout
+                          layoutId={`gardenImage${index}`}
+                          variants={variant}
+                          transition={{
+                            duration: 1,
+                            type: "spring",
+                            stiffness: 260,
+                            damping: 20,
+                          }}
+                          className={`
+                    ${styles.gardenEditImage} 
+                    ${styles[`gardenImage${index}`]}
+                    `}
+                        />
+                      )
+                  )}
 
-            }
+                  {Object.keys(accessories).map(
+                    (index) =>
+                    accessories[index] && (
+                        <motion.div
+                          key={index}
+                          initial="initial"
+                          animate="animate"
+                          exit="exit"
+                          layout
+                          layoutId={`gardenImage${index}`}
+                          variants={variant}
+                          transition={{
+                            duration: 1,
+                            type: "spring",
+                            stiffness: 260,
+                            damping: 20,
+                          }}
+                          className={`
+                    ${styles.gardenEditImage} 
+                    ${styles[`gardenImage${index}`]}
+                    `}
+                        />
+                      )
+                  )}
                 </AnimatePresence>
-
               </div>
+            </div>
+            <div className={styles.gardenModalEditBoxRight}>
+              <p className={styles.gardenModalText}>
+                Customize your garden below.
+              </p>
+              <p className={styles.gardenModalSubtext}>
+                Your garden is where you can see the progress of your learning
+                journey.
+              </p>
+              <div className={styles.gardenModalTabs}>
+                <Button
+                  type="button"
+                  sx={{
+                    backgroundColor: "transparent",
+                    textTransform: "none",
+                    fontFamily: "inherit",
+                    color: currentTab === "accessories" ? "green" : "gray",
+                    borderBottom:
+                      currentTab === "accessories" ? "2px solid green" : "none",
+                  }}
+                  onClick={() => setCurrentTab("accessories")}
+                >
+                  Accessories
+                </Button>
+                <Button
+                  type="button"
+                  sx={{
+                    backgroundColor: "transparent",
+                    fontFamily: "inherit",
+                    textTransform: "none",
+                    color: currentTab === "background" ? "green" : "gray",
+                    borderBottom:
+                      currentTab === "background" ? "2px solid green" : "none",
+                  }}
+                  onClick={() => setCurrentTab("background")}
+                >
+                  Background
+                </Button>
+                <Button
+                  type="button"
+                  sx={{
+                    backgroundColor: "transparent",
+                    fontFamily: "inherit",
+                    textTransform: "none",
+                    color: currentTab === "flowers" ? "green" : "gray",
+                    borderBottom:
+                      currentTab === "flowers" ? "2px solid green" : "none",
+                  }}
+                  onClick={() => setCurrentTab("flowers")}
+                >
+                  Flowers
+                </Button>
+              </div>
+              {currentTab === "accessories" && accesoriesTab()}
+              {currentTab === "background" && backgroundTab()}
+              {currentTab === "flowers" && flowersTab()}
+
               <div className={styles.gardenModalButtonContainer}>
                 <Button
                   variant="contained"
                   color="primary"
                   sx={{
-                    backgroundColor: 'gray',
-                    borderRadius: '50px',
-                    textTransform: 'none',
-                    fontFamily: 'inherit',
+                    backgroundColor: "gray",
+                    borderRadius: "50px",
+                    textTransform: "none",
+                    fontFamily: "inherit",
                   }}
-                  onClick={() => setIsGardenModalOpen(false)}
+                  onClick={() => setIsCustomizing(false)}
                 >
                   Cancel
                 </Button>
@@ -422,21 +372,106 @@ export default function GardenModal({ setIsGardenModalOpen }) {
                   variant="contained"
                   color="primary"
                   sx={{
-                    backgroundColor: 'green',
-                    borderRadius: '50px',
-                    textTransform: 'none',
-                    fontFamily: 'inherit',
+                    backgroundColor: "green",
+                    borderRadius: "50px",
+                    textTransform: "none",
+                    fontFamily: "inherit",
                   }}
-                  onClick={() => setIsCustomizing(true)}
+                  onClick={() => addToGarden()}
+                  disabled={
+                    selectedItems.accessories.length === 0 &&
+                    selectedItems.background.length === 0 &&
+                    selectedItems.flowers.length === 0
+                  }
                 >
-                  Customize
+                  {selectedItems.accessories.length > 0 ||
+                  selectedItems.background.length > 0 ||
+                  selectedItems.flowers.length > 0
+                    ? "Add to Garden"
+                    : "Nothing Selected"}
                 </Button>
-
               </div>
             </div>
-          )
-
-        }
+          </div>
+        </div>
+      ) : (
+        <div className={styles.gardenModal}>
+          <h2 className={styles.gardenModalText}>Your Garden</h2>
+          <p className={styles.gardenModalText}>View your garden below.</p>
+          <p className={styles.gardenModalSubtext}>
+            Your garden is where you can see the progress of your learning
+            journey.
+          </p>
+          <div className={styles.gardenModalImageContainer}>
+            <motion.div
+              layout
+              layoutId="gardenBackground"
+              className={`${styles.gardenImage} ${styles.gardenBackgroundWide}`}
+            />
+            <motion.div
+              animate={{
+                rotate: 360,
+              }}
+              transition={{ ease: "linear", duration: 70, repeat: Infinity }}
+              className={`${styles.gardenImage} 
+            ${styles.gardenEarthWide}`}
+            />
+            <AnimatePresence>
+              {Object.keys(flowers).map(
+                (index) =>
+                  flowers[index] && (
+                    <motion.div
+                      key={index}
+                      initial="initial"
+                      animate="animate"
+                      exit="exit"
+                      variants={variant}
+                      transition={{
+                        duration: 1,
+                        type: "spring",
+                        stiffness: 260,
+                        damping: 20,
+                      }}
+                      layout
+                      layoutId={`gardenFlower${index}`}
+                      className={`${styles.gardenImage} ${
+                        styles[`gardenFlower${index}Wide`]
+                      }`}
+                    />
+                  )
+              )}
+            </AnimatePresence>
+          </div>
+          <div className={styles.gardenModalButtonContainer}>
+            <Button
+              variant="contained"
+              color="primary"
+              sx={{
+                backgroundColor: "gray",
+                borderRadius: "50px",
+                textTransform: "none",
+                fontFamily: "inherit",
+              }}
+              onClick={() => setIsGardenModalOpen(false)}
+            >
+              Cancel
+            </Button>
+            <Button
+              variant="contained"
+              color="primary"
+              sx={{
+                backgroundColor: "green",
+                borderRadius: "50px",
+                textTransform: "none",
+                fontFamily: "inherit",
+              }}
+              onClick={() => setIsCustomizing(true)}
+            >
+              Customize
+            </Button>
+          </div>
+        </div>
+      )}
     </div>
   );
 }

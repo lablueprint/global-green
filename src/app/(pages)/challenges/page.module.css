@@ -1,0 +1,386 @@
+.everything {
+  margin: 20px;
+}
+
+.title {
+  color: var(--Grey-100, #1d1d1d);
+  font-family: "Instrument Sans";
+  font-size: 40px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: 100%;
+}
+
+.challengesTitle {
+  color: var(--Grey-100, #1d1d1d);
+  font-family: "Instrument Sans";
+  font-size: 24px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: 100%;
+}
+
+.challengesDescription {
+  color: var(--Grey-40, #9b9b9b);
+  font-family: "Instrument Sans";
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 140%;
+}
+
+.container {
+  /* justify-content: left; */
+  /* margin: 20px; */
+  /* width: 20000px; */
+  display: flex;
+  /* justify-content: space-between; */
+  flex-direction: row;
+  /* padding: 0 10px; Adjust as needed */
+  flex-wrap: wrap;
+}
+.activeBorder {
+  height: 120px;
+  width: 280px;
+  margin: 10px;
+  /* padding: 20px; */
+  justify-content: center;
+  align-items: center;
+  /* gap: 16px; */
+  border-radius: 16px;
+  border: 1px solid var(--Grey-20, #cbcbcb);
+  position: relative;
+}
+
+.inactiveBorder {
+  height: 120px;
+  width: 280px;
+  margin: 10px;
+  justify-content: center;
+  align-items: center;
+  border-radius: 16px;
+  border: 1px solid var(--Grey-20, #cbcbcb);
+  background: var(--Grey-8, #e2e2e2);
+  position: relative;
+}
+
+.inner {
+  margin: 0px;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+}
+.icon {
+  margin-top: 36px;
+  margin-bottom: 36px;
+  margin-left: 20px;
+  margin-right: 16px;
+}
+.text {
+  justify-content: center;
+  align-items: center;
+  margin-right: 20px;
+}
+
+.cardTitle {
+  margin-top: 0;
+  margin-bottom: 0;
+  color: var(--Grey-100, #1d1d1d);
+  font-family: "Instrument Sans";
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 600;
+  /* line-height: 110%; 17.6px */
+}
+
+.description {
+  margin-top: 0;
+  margin-bottom: 0;
+  color: var(--Grey-100, #1d1d1d);
+  font-family: "Instrument Sans";
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 500;
+  /* line-height: 140%; 19.6px */
+}
+
+.pointsIcon {
+  margin-left: 8px;
+  margin-right: 0px;
+}
+.pointsText {
+  color: var(--Grey-100, #1d1d1d);
+  font-family: "Instrument Sans";
+  font-size: 12px;
+  font-style: normal;
+  margin-left: 0px;
+  margin-right: 8px;
+  font-weight: 500;
+}
+.snackbarPointsIcon {
+  margin-left: 8px;
+  margin-right: 0px;
+}
+.snackbarPointsText {
+  color: var(--Grey-100, #1d1d1d);
+  font-family: "Instrument Sans";
+  font-size: 15.454px;
+  font-style: normal;
+  margin-left: 0px;
+  margin-right: 8px;
+  font-weight: 500;
+}
+.pointsBorder {
+  border-radius: 100px;
+  border: 1px solid var(--Grey-20, #cbcbcb);
+  position: absolute;
+  right: 8.333px;
+  top: 8px;
+  display: flex;
+  flex-direction: row;
+  width: 48px;
+  height: 25px;
+  align-items: center;
+  gap: 4px;
+  display: flex;
+  /* justify-content: space-between; */
+}
+.pointsBottomBorder {
+  border-radius: 100px;
+  position: absolute;
+  right: 8.333px;
+  bottom: 8px;
+  display: flex;
+  flex-direction: row;
+  width: 48px;
+  height: 25px;
+
+  margin-right: 10px;
+  align-items: center;
+  gap: 4px;
+  display: flex;
+  /* justify-content: space-between; */
+}
+.date {
+  margin-top: 0;
+  margin-bottom: 0;
+  color: #959595;
+  font-family: "Instrument Sans";
+  font-size: 12px;
+  font-style: normal;
+  font-weight: 500;
+}
+.lessonImage {
+  width: 74px;
+  height: 74px;
+  flex-shrink: 0;
+  margin-right: 40px;
+  margin-left: 20px;
+}
+.alert {
+  background: var(--Grey-4, #f5f5f5);
+}
+.alertContainer {
+  display: flex;
+  flex-direction: row;
+  width: 381px;
+  height: 100px;
+  flex-shrink: 0;
+  border-radius: 8px;
+  background: var(--Grey-4, #f5f5f5);
+  position: relative;
+  align-items: center;
+}
+.rectangle {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 12px;
+  min-height: 129px;
+  flex-shrink: 0;
+  background: #519546;
+}
+.bookIcon {
+  width: 48px;
+  height: 48px;
+  /* padding: 2px 0px 2.923px 0px; */
+  justify-content: center;
+  align-items: center;
+  flex-shrink: 0;
+  margin-left: 17px;
+  margin-right: 20px;
+  margin-top: 26px;
+  margin-bottom: 26px;
+}
+.textDiv {
+  display: flex; /* Add display flex to create a flex container */
+  flex-direction: column; /* Set flex direction to column to stack the text vertically */
+  justify-content: center;
+  margin-left: 10px; /* Adjust margin as needed */
+}
+.challengeCompletedText {
+  color: #000;
+  font-family: "Instrument Sans";
+  font-size: 18px;
+  font-style: normal;
+  font-weight: 600;
+  /* margin-top: 0; */
+  margin-bottom: 0;
+}
+
+.challengeDescriptionText {
+  color: #000;
+  margin-top: 0;
+  margin-bottom: 0;
+  font-family: "Instrument Sans";
+  font-size: 18px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 140%;
+}
+/* not needed 
+
+
+*/
+
+.leafImage {
+  width: 16.995px;
+  height: 16.992px;
+  align-items: center;
+}
+
+.leafPoints {
+  display: flex;
+  flex-direction: row;
+  padding-top: 35px;
+  align-items: center;
+  gap: 10px;
+}
+
+.completedleafPoints {
+  width: 231px;
+  height: 43px;
+  flex-shrink: 0;
+  border-radius: 16px;
+  background-color: white;
+  display: flex;
+  border: 2px solid black;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+}
+
+.points {
+  color: #000;
+
+  font-family: Inter;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: 100%; /* 16px */
+  letter-spacing: -0.32px;
+  align-items: center;
+}
+
+.overlayText {
+  margin-left: 155px;
+  color: black;
+  transform: translate(-50%, -50%);
+  color: black;
+  font-size: 14px;
+}
+.cardTitle {
+  color: #000;
+
+  font-family: Inter;
+  font-size: 18px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: 100%;
+  letter-spacing: -0.36px;
+}
+
+.completedcardTitle {
+  color: #000;
+
+  font-family: Inter;
+  font-size: 18px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: 100%;
+  letter-spacing: -0.36px;
+}
+
+.cardBorder {
+  border-radius: 30px;
+  width: 622px;
+  height: 155px;
+  border-radius: 12px;
+  border: 0.697px solid #a3a3a3;
+  background: #fff;
+  padding: 28px 33px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 10px;
+  margin: 40px;
+}
+
+.completedcardBorder {
+  border-radius: 30px;
+  width: 622px;
+  height: 155px;
+  border-radius: 12px;
+  border: 0.697px solid #a3a3a3;
+  background: #fff;
+  padding: 28px 33px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 10px;
+  background-color: #b8d1bd;
+  margin: 36px;
+}
+
+.progressBar {
+  width: 334px;
+  height: 24px;
+  background-color: #e0e0e0;
+  border-radius: 5px;
+  overflow: hidden;
+  border-radius: 16px;
+  border: 2px solid #000;
+}
+.cardcontainer {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 36px;
+}
+
+.progressFill {
+  height: 100%;
+  background-color: #b8d1bd;
+  transition: width 0.3s ease;
+  border-radius: 16px;
+}
+
+.cardInner {
+  display: flex;
+  padding: 12px 0px;
+  align-items: center;
+  gap: 40px;
+}
+
+.check {
+  transform: scale(1.5);
+  width: 43px;
+  height: 43px;
+  font-size: 43px;
+  flex-shrink: 0;
+  margin-top: -15px;
+  margin-left: 30px;
+  position: absolute;
+}

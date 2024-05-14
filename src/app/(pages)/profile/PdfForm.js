@@ -5,7 +5,7 @@ import {
 import styles from './page.module.css';
 
 function PdfForm({
-  templatePdf, firstName, lastName, course, date, duration,
+  templatePdf, userName, course, date, duration,
 }) {
   const generatePdf = async () => {
     try {
@@ -23,7 +23,7 @@ function PdfForm({
       const pages = pdfDoc.getPages();
 
       // Modify the PDF document by replacing the placeholder text with the desired name
-      const name = `${firstName} ${lastName}`;
+      const name = `${userName}`;
       const dateText = `Completed on: ${date}`;
 
       const firstPage = pages[0];

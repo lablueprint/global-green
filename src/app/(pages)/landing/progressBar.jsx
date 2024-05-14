@@ -5,7 +5,7 @@ import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
 
 function LinearProgressWithLabel({
-  value, x, y, color,
+  value, maxValue, x, y, color,
 }) {
   return (
     <Box sx={{
@@ -29,7 +29,7 @@ function LinearProgressWithLabel({
       <Box sx={{ width: '100%', margin: 0.75 }}>
         <LinearProgress
           variant="determinate"
-          value={value / 5 * 100}
+          value={(value / maxValue) * 100}
           sx={{
             borderRadius: 5,
             border: '1px solid black',
@@ -72,14 +72,21 @@ LinearProgressWithLabel.propTypes = {
   x: PropTypes.number.isRequired,
   y: PropTypes.number.isRequired,
   color: PropTypes.string.isRequired,
+  maxValue: PropTypes.number.isRequired,
 };
 
 function LinearWithValueLabel({
-  value, x, y, color,
+  value, x, y, color, maxValue,
 }) {
   return (
     <Box sx={{ width: '100%' }}>
-      <LinearProgressWithLabel value={value} x={x} y={y} color={color} />
+      <LinearProgressWithLabel
+        value={value}
+        x={x}
+        y={y}
+        color={color}
+        maxValue={maxValue}
+      />
     </Box>
   );
 }
@@ -88,6 +95,8 @@ LinearWithValueLabel.propTypes = {
   value: PropTypes.number.isRequired,
   x: PropTypes.number.isRequired,
   y: PropTypes.number.isRequired,
+  color: PropTypes.string.isRequired,
+  maxValue: PropTypes.number.isRequired,
 };
 
 export default LinearWithValueLabel;

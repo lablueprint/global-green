@@ -9,17 +9,15 @@ function Paragraph({ paragraph }) {
         const parts = text.split(/(<green>.*?<\/green>)/g);
         return (
           <span key={i}>
-            {parts.map((part, index) =>
-              part.startsWith('<green>') ? (
-                <span key={index} className={styles['green-text']}>
-                  {part.replace(/<\/?green>/g, '')}
-                </span>
-              ) : (
-                <span key={index} className={styles['black-text']}>
-                  {part}
-                </span>
-              )
-            )}
+            {parts.map((part, index) => (part.startsWith('<green>') ? (
+              <span key={index} className={styles['green-text']}>
+                {part.replace(/<\/?green>/g, '')}
+              </span>
+            ) : (
+              <span key={index} className={styles['black-text']}>
+                {part}
+              </span>
+            )))}
           </span>
         );
       })}

@@ -5,6 +5,8 @@ import styles from './page.module.css';
 import Dropdown from '@/app/components/Dropdown';
 import Textbox from '@/app/components/Textbox';
 import GreyBoxHighlight from '@/app/components/GreyBoxHighlight';
+import TextImageLeft from '@/app/components/TextImageLeft';
+import TextImageRight from '@/app/components/TextImageRight';
 
 export default function Page() {
   const text = [
@@ -67,19 +69,8 @@ export default function Page() {
       }}
       >
 
-        {/* 5. Text + Image Horizontal (Image Right) */}
-        <div className={styles['text-image-horizontal']}>
-          <div className={styles['text-part']}>
-            <inline className={styles['title-text2']}>Shredder</inline>
-            <br />
-            The shredder is the plasticsmith’s bread and butter. As the name suggests,
-            it allows one to shred pieces of plastic into more uniform pieces, which
-            makes them easier to work with and transport.
-          </div>
-          {/* TODO: Left off at image */}
-          <div className={styles['image-part']}>image goes here</div>
-        </div>
-
+        <TextImageLeft uri="hello" />
+        <TextImageRight uri="hello" />
         <Dropdown parts={dropdownData} />
         <Textbox content={text} />
         <GreyBoxHighlight content={text} />

@@ -16,7 +16,7 @@ const options = {
       name: 'Credentials',
       credentials: {
         username: { label: 'Username', type: 'text' },
-        password: { label: 'Password', type: 'password' },
+        password: { label: 'Password', type: 'password' }
       },
       async authorize(credentials) {
         console.log('trying to authorize');
@@ -29,7 +29,10 @@ const options = {
           if (!user) {
             return null;
           }
-          const isValid = await bcryptjs.compare(credentials.password, user.password);
+          // sometimes the input password is already hashed
+          console.log('during credentials authorize', user);
+          const isValid = await bcryptjs.compare(credentials.password, user.password) || credentials.password === user.password;
+          console.log('isValid', isValid);
           return isValid ? user : null;
         } catch (error) {
           console.error('Error in authorize:', error);
@@ -42,6 +45,7 @@ const options = {
   secret: process.env.JWT_SECRET,
   session: {
     strategy: 'jwt',
+    maxAge: 30 * 24 * 60 * 60,
   },
   callbacks: {
     async signIn({ user, account, profile }) {
@@ -125,6 +129,10 @@ const options = {
     },
 
   },
+  pages: {
+    signIn: '/login',
+  },
+
 
   debug: true,
 

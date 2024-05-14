@@ -13,7 +13,6 @@ export async function POST(request) {
     if (!user) {
       return NextResponse.json({ error: 'Invalid token' }, { status: 400 });
     }
-
     user.verified = true;
     user.verifyToken = undefined;
     user.verifyExpires = undefined;

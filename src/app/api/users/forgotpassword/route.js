@@ -1,3 +1,4 @@
+/* eslint-disable import/prefer-default-export */
 import { NextResponse } from 'next/server';
 import bcryptjs from 'bcryptjs';
 import connectMongoDB from '../../../../../libs/mongodb';

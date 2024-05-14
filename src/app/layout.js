@@ -25,7 +25,7 @@ export default async function RootLayout({ children }) {
           <div className={styles.wrapper}>
             <NavBar />
             <div>
-              <Suspense fallback={<Loading />}> 
+              <Suspense fallback={<Loading />}>
               {children}
               </Suspense>
             </div>

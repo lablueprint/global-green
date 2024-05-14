@@ -56,7 +56,7 @@ function Module({ modules, currentIndex, handlePrevClick, handleNextClick }) {
   );
 }
 
-function DropDown() {
+function Example() {
   const data = [
     {
       moduleName: "Course 1: Plastics and Recycling",
@@ -138,4 +138,4 @@ function DropDown() {
   );
 }
 
-export default DropDown;
+export default Example;

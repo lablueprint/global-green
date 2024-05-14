@@ -4,7 +4,7 @@ import StickyButton from '@/app/components/StickyButton';
 import LessonNumber from '@/app/components/LessonNumber';
 import QuoteHighlight from '@/app/components/QuoteHighlight';
 import Textbox from '@/app/components/Textbox';
-// import DropDown from '@/app/components/coursepart1/DropDown';
+import Dropdown from '@/app/components/Dropdown';
 
 
 const content1 = [
@@ -33,12 +33,40 @@ const content2 = [
   ]
 ];
 
+const parts = [
+  {
+    title: 'Lesson 1: Where Does Plastic Come From?',
+    content: [
+      ["Content"],
+    ],
+  },
+  {
+    title: 'Lesson 2: Resin Identification Codes',
+    content: [
+      ["Content"]
+    ],
+  },
+  {
+    title: 'Lesson 3: Plastic Pollution',
+    content: [
+      ["Content"]
+    ],
+  },
+  {
+    title: 'Lesson 4: Recycling Responsibility',
+    content: [
+      ["Content"]
+    ],
+  },
+];
+
+
 function Course1Introduction() {
   return (
     <div
       style={{
         display: 'flex',
-        gap: '30px', // Added 'px' for correct spacing
+        gap: 30,
         flexDirection: 'column',
         justifyContent: 'space-between',
         padding: '15%',
@@ -51,8 +79,7 @@ function Course1Introduction() {
       <QuoteHighlight quoteText="Plastic is all around us. It's in our kitchens, shoes, entertainment systems, vehicles, and even our clothing."/>
       <Textbox content={content1} />
       <img src="/lessons/2.png"/>
-      <div> Drop Down Menu</div>
-      {/* <DropDown /> Included the DropDown component */}
+      <Dropdown parts={parts} />
       <Textbox content={content2} />
       <StickyButton />
     </div>

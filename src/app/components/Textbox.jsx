@@ -6,7 +6,6 @@ function Paragraph({ paragraph }) {
   return (
     <div>
       {paragraph.map((text, i) => {
-        // Split the text by the <green> tag
         const parts = text.split(/(<green>.*?<\/green>)/g);
         return (
           <span key={i}>

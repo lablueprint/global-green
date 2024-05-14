@@ -15,13 +15,18 @@ export async function POST(request) {
 
 export async function GET(request) {
   await connectMongoDB();
-  const key = new URL(request.url).searchParams.get('key');
+  const courseKey = new URL(request.url).searchParams.get('courseKey');
+  const stage = new URL(request.url).searchParams.get('stage');
+  // const key = `${courseKey}_${stage}`;
+
+  const key = 'plasticandrecycling_1';
+
   try {
     const res = key ? await Quiz.findOne({ key }) : await Quiz.find();
     if (!res) {
       return NextResponse.json({ message: 'Quiz not found!' });
     }
-    return NextResponse.json({ res });
+    return NextResponse.json({ questions: res });
   } catch (error) {
     return NextResponse.json({ message: error.message });
   }

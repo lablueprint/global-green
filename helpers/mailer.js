@@ -1,3 +1,4 @@
+/* eslint-disable import/prefer-default-export */
 import bcryptjs from 'bcryptjs';
 import { Resend } from 'resend';
 import User from '../models/user';

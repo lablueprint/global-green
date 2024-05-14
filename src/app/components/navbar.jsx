@@ -212,7 +212,16 @@ export default function NavBar() {
           }`}
         >
           <div className={styles.personIcon}>
-            <PersonOutlinedIcon />
+            {user.profilePic ? (
+              <Image
+                src={user.profilePic}
+                alt="pointsIcon"
+                width={64}
+                height={64}
+              />
+            ) : (
+              <PersonOutlinedIcon />
+            )}
           </div>
           <div className={styles.profileText}>
             {currentPath === "/courses" ||
@@ -232,11 +241,11 @@ export default function NavBar() {
                 width={16}
                 height={16}
               />
-              164{" "}
+              {user.points}
               {currentPath === "/courses" ||
               collapseButton.type === KeyboardDoubleArrowRightIcon
                 ? ""
-                : "Points"}
+                : " Points"}
             </div>
           </div>
         </div>

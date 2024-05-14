@@ -68,9 +68,6 @@
     }, [showAnswerPopup, selectedMatches]); 
 
 
-    // const currentQuiz = Quizzes;
-    // const currentQuestion = currentQuiz.questions[currentQuestionIndex];
-
     const renderQuestionComponent = (question) => {
       switch (question.type) {
         case 'multiple':
@@ -318,7 +315,7 @@
       if (!skippedQuestions.includes(currentQuestionIndex)) {
         setSkippedQuestions([...skippedQuestions, currentQuestionIndex]);
       }
-      setSkipCount(skipCount + 0);
+      setSkipCount(skipCount + 1);
       goToNextQuestion()
     };
 

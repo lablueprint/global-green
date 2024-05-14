@@ -37,7 +37,12 @@ const parts = [
   {
     title: 'Lesson 1: Where Does Plastic Come From?',
     content: [
-      ["Content"],
+      [
+      "We’ll follow a plastic water bottle back in time to find out how plastic is made. Most people know that plastic is a synthetic material, meaning that it is man-made rather than naturally occurring in the world.", 
+      "But do you know what the main ‘ingredient’ in plastics is? You may be surprised to learn that the substance you pump into your car at a gas station is the core component used in plastic production. That’s right:", 
+      "vast swathes of plastic are made from fossil fuels like crude oil and natural gas. But how does a thick liquid like crude oil or, perhaps more surprisingly, gas become the pliant material we all know? Continue on to Lesson 1 to find out!",
+      "Once we understand how plastic is made, we can take a closer look into the various types of plastic and how they are used all around us."
+      ],
     ],
   },
   {
@@ -55,6 +60,7 @@ const parts = [
   {
     title: 'Lesson 4: Recycling Responsibility',
     content: [
+      ["<title>Title</title"]
       ["Content"]
     ],
   },

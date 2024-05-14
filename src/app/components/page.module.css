@@ -91,11 +91,13 @@
 .mainTitle {
   color: black;
   font-size: 28px;
+  font-size: bold;
 }
   
 .subTitle {
   color: black;
-  font-size: 18px;
+  font-size: 22px;
+  font-size: bold;
 }
 
 .listContainer {
@@ -154,5 +156,13 @@
 }
 
 .green-text {
-  color: green;
+  color: #519546;
+}
+
+.greenCenterText {
+  color: #519546;
+  font-size: 24px;
+  font-size: bold;
+  display: flex;
+  justify-content: center;
 }

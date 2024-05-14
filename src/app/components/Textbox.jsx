@@ -6,26 +6,49 @@ function Paragraph({ paragraph }) {
   return (
     <div>
       {paragraph.map((text, i) => {
-        const parts = text.split(/(<green>.*?<\/green>)/g);
+        const parts = text.split(/(<green>.*?<\/green>|<title>.*?<\/title>)/g);
         return (
           <span key={i}>
-            {parts.map((part, index) =>
-              part.startsWith('<green>') ? (
-                <span key={index} className={styles['green-text']}>
-                  {part.replace(/<\/?green>/g, '')}
-                </span>
-              ) : (
-                <span key={index} className={styles['black-text']}>
-                  {part}
-                </span>
-              )
-            )}
+            {parts.map((part, index) => {
+              if (part.startsWith('<green>')) {
+                return (
+                  <span key={index} className={styles['green-text']}>
+                    {part.replace(/<\/?green>/g, '')}
+                  </span>
+                );
+              } 
+              else if (part.startsWith('<title>')) {
+                return (
+                  <span key={index} className={styles['subTitle']}>
+                    {part.replace(/<\/?title>/g, '')}
+                  </span>
+                );
+              } 
+              else if (part.startsWith('<greenCenterText>')) {
+                return (
+                  <span key={index} className={styles['greenCenterText']}>
+                    {part.replace(/<\/?greenCenterText>/g, '')}
+                  </span>
+                );
+              } 
+              else {
+                return (
+                  <span key={index} className={styles['black-text']}>
+                    {part}
+                  </span>
+                );
+              }
+            })}
           </span>
         );
       })}
     </div>
   );
 }
+
+// Paragraph.propTypes = {
+//   paragraph: PropTypes.arrayOf(PropTypes.string).isRequired,
+// };
 
 Paragraph.propTypes = {
   paragraph: PropTypes.array.isRequired,

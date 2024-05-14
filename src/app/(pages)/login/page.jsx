@@ -45,9 +45,14 @@ function Example() {
   };
 
   useEffect(() => {
-    if (session?.user?.verified) {
-      window.location.href = '/profile';
+    if (session?.user) {
+      if (!session.user.verified)
+      {window.location.href = '/verifyemail';}
+      else
+      {window.location.href = '/profile';}
     }
+
+
   }, [session]);
 
   return (

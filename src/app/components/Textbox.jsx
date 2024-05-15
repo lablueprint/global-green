@@ -5,53 +5,46 @@ import styles from './page.module.css';
 function Paragraph({ paragraph }) {
   return (
     <div>
-      {paragraph.map((text, i) => {
-        const parts = text.split(/(<green>.*?<\/green>|<title>.*?<\/title>)/g);
-        return (
-          <span key={i}>
-            {parts.map((part, index) => {
-              if (part.startsWith('<green>')) {
-                return (
-                  <span key={index} className={styles['green-text']}>
-                    {part.replace(/<\/?green>/g, '')}
-                  </span>
-                );
-              } 
-              else if (part.startsWith('<title>')) {
-                return (
-                  <span key={index} className={styles['subTitle']}>
-                    {part.replace(/<\/?title>/g, '')}
-                  </span>
-                );
-              } 
-              else if (part.startsWith('<greenCenterText>')) {
-                return (
-                  <span key={index} className={styles['greenCenterText']}>
-                    {part.replace(/<\/?greenCenterText>/g, '')}
-                  </span>
-                );
-              } 
-              else {
-                return (
-                  <span key={index} className={styles['black-text']}>
-                    {part}
-                  </span>
-                );
-              }
-            })}
-          </span>
-        );
-      })}
+      {paragraph.map((text, i) => (
+        <span key={i}>
+          {text.split(/(<green>.*?<\/green>|<title>.*?<\/title>|<greenCenterText>.*?<\/greenCenterText>)/g).map((part, index) => {
+            if (/<green>.*<\/green>/.test(part)) {
+              return (
+                <span key={index} className={styles['green-text']}>
+                  {part.replace(/<\/?green>/g, '')}
+                </span>
+              );
+            } 
+            else if (/<title>.*<\/title>/.test(part)) {
+              return (
+                <span key={index} className={styles['subTextTitle']}>
+                  {part.replace(/<\/?title>/g, '')}
+                </span>
+              );
+            } 
+            else if (/<greenCenterText>.*<\/greenCenterText>/.test(part)) {
+              return (
+                <span key={index} className={styles['greenCenterText']}>
+                  {part.replace(/<\/?greenCenterText>/g, '')}
+                </span>
+              );
+            } 
+            else {
+              return (
+                <span key={index} className={styles['black-text']}>
+                  {part}
+                </span>
+              );
+            }
+          })}
+        </span>
+      ))}
     </div>
   );
 }
 
-// Paragraph.propTypes = {
-//   paragraph: PropTypes.arrayOf(PropTypes.string).isRequired,
-// };
-
 Paragraph.propTypes = {
-  paragraph: PropTypes.array.isRequired,
+  paragraph: PropTypes.arrayOf(PropTypes.string).isRequired,
 };
 
 export default function Textbox({ content }) {

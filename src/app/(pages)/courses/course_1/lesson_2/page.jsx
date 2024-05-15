@@ -35,19 +35,28 @@ const content1 = [
 const content2 = [
   ["<title>The Seven Plastics (7 RICS)</title>"],
   ["Depending on the item, you may find one of 7 RICs on a piece of plastic. Each number refers to a different plastic. These 7 plastics are as follows:"],
-  ["<greenCenterText>♳ Polyethylene terephthalate (PET)"],
-  ["<greenCenterText>♴ High-density polyethylene (HDPE)"],
-  ["<greenCenterText>♵ Polyvinyl chloride (PVC)"],
-  ["<greenCenterText>♶ Low-density polyethylene (LDPE)"],
-  ["<greenCenterText>♷ Polypropylene (PP)"],
-  ["<greenCenterText>♸ Polystyrene (PS)"],
-  ["<greenCenterText>♹ Mixed plastics"]
+  ["<greenCenterText>♳ Polyethylene terephthalate (PET)</greenCenterText>"],
+  ["<greenCenterText>♴ High-density polyethylene (HDPE)</greenCenterText>"],
+  ["<greenCenterText>♵ Polyvinyl chloride (PVC)</greenCenterText>"],
+  ["<greenCenterText>♶ Low-density polyethylene (LDPE)</greenCenterText>"],
+  ["<greenCenterText>♷ Polypropylene (PP)</greenCenterText>"],
+  ["<greenCenterText>♸ Polystyrene (PS)</greenCenterText>"],
+  ["<greenCenterText>♹ Mixed plastics</greenCenterText>"]
 ]
 
 const content3 = [
   ["Note that RICs 1-6 each refer to a specific type of plastic, whereas RIC 7 is less precise. RIC 7 plastic may contain various different mixtures of other plastics, which means that it is the least likely type of plastic to be recycled. So what about 1-6? What are their different properties, and what are they used for?"],
-  ["First off, the most common RIC you’ll find is, unsurprisingly, number 1: <greenText>Polyethylene terephthalate</greenText>, commonly abbreviated as PET (or PETE). This is the plastic you’ll find used to make drink containers like water and soda bottles, as well as other food containers like tubs of peanut butter and salad dressings. <greenText>In fact, over 75% of plastic water bottles in the U.S. are made from PET plastic.</greenText>"],
+  ["First off, the most common RIC you’ll find is, unsurprisingly, number 1: <green>Polyethylene terephthalate</green>, commonly abbreviated as PET (or PETE). This is the plastic you’ll find used to make drink containers like water and soda bottles, as well as other food containers like tubs of peanut butter and salad dressings. <green>In fact, over 75% of plastic water bottles in the U.S. are made from PET plastic.</green>"],
   ["Refer to the table below for the names, abbreviations, and common applications of RICs 1-6:"],
+]
+
+const content4 = [
+  ["By labeling each of these different types of plastic with RICs, consumers can refer to their local recycling regulations to see what items can and cannot be recycled in their area. While rules and regulations vary from state to state, and even county to county, <green>♳ PET and ♴ HDPE plastics are by far the most commonly recycled plastics throughout the U.S.</green>"],
+  ["<title>Repurposing of Plastics</title>"],
+  ["Once these items have been collected and properly sorted at recycling centers, they can be sold to manufacturers for reuse. What plastics are purchased and how they are repurposed will vary depending on who buys it. For example, some manufacturers may purchase only PET plastics, and each manufacturer may use the purchased materials for different purposes."],
+  ["Sometimes these plastics can be recycled for their original use, whereas other times these materials are repurposed into various other forms, <green>ranging anywhere from fibers for carpets to reusable bags, shoes, and packing materials.</green>"],
+  ["So to recap: The 7 different numbers found on consumer plastics are known as Resin Identification Codes, and each code refers to a different type of plastic. Each of these plastics (polymers) have different characteristics that make them suitable for various uses, ranging from packaging food to construction materials."],
+  ["By consulting local recycling guidelines, consumers can identify which of their household plastics can be recycled. Proper recycling on the consumer level helps to expedite the sorting process and reduce plastic waste. Once plastics have been collected and sorted, they are sold to manufacturers to be repurposed into a variety of products."]
 ]
 
 function Course1Lesson1() {
@@ -68,6 +77,9 @@ function Course1Lesson1() {
       <QuoteHighlight quoteText="Quick! Take a look around you and find the nearest plastic item. What do you notice about it?"/>
       <Textbox content={content1} />
       <GreyBoxHighlight content={content2} />
+      <Textbox content={content3} />
+      <img src="/lessons/PolymerChart.png"/>
+      <Textbox content={content4} />
       <StickyButton />
     </div>
   );

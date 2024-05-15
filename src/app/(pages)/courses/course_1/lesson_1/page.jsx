@@ -6,7 +6,6 @@ import LessonNumber from '@/app/components/LessonNumber';
 import QuoteHighlight from '@/app/components/QuoteHighlight';
 import GreyBoxHighlight from '@/app/components/GreyBoxHighlight'
 import Textbox from '@/app/components/Textbox';
-;
 
 const content1 = [
   [

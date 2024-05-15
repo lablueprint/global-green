@@ -4,6 +4,7 @@ import StickyButton from '@/app/components/StickyButton';
 import LessonNumber from '@/app/components/LessonNumber';
 import QuoteHighlight from '@/app/components/QuoteHighlight';
 import Textbox from '@/app/components/Textbox';
+import GreyBoxHighlight from '@/app/components/GreyBoxHighlight'
 import Dropdown from '@/app/components/Dropdown';
 
 
@@ -48,20 +49,19 @@ const parts = [
   {
     title: 'Lesson 2: Resin Identification Codes',
     content: [
-      ["Content"]
+      ["We will learn about the different types of consumer-grade plastics and their applications by inspecting the familiar but somewhat cryptic numbers imprinted on most consumer plastics. Understanding these Resin Identification Codes is key to making sense of plastic recycling laws and regulations in the U.S., which will be a key topic of Lesson 5: Recycling Responsibly. In this lesson, we’ll get you up to speed on what you need to know to ensure the best outcome when we make the conscious effort to recycle."]
     ],
   },
   {
     title: 'Lesson 3: Plastic Pollution',
     content: [
-      ["Content"]
+      ["But why is recycling so important? Why not just throw plastic in the trash like everything else? How does plastic waste affect ecosystems and natural environments? We’ll delve into the answers for these questions in Lesson 3: Plastic Pollution. In this lesson, we’ll seek to understand how plastic’s famous durability can wreak havoc on the natural environment, the pressing issue of plastic pollution in our oceans, and similar topics. A thorough understanding of the causes and effects of plastic pollution will equip us with the necessary information to make more sustainable, eco-friendly decisions on the individual and societal levels."]
     ],
   },
   {
     title: 'Lesson 4: Recycling Responsibility',
     content: [
-      ["<title>Title</title"]
-      ["Content"]
+      ["Lastly, in Lesson 4: Recycling Responsibility, we’ll explore alternatives to plastic, how we can reduce our plastic consumption, and innovative solutions to the growing threat of plastic pollution in our natural environment. This will bring us full-circle and help us look towards a cleaner future free of single-use plastics littering our landscapes."]
     ],
   },
 ];

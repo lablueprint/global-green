@@ -6,15 +6,11 @@ import styles from './page.module.css';
 import MultipleChoiceQuiz from './MultipleChoice';
 import TrueFalseQuiz from './TrueFalse';
 import Matching from './Matching';
-import Quizzes from './data';
 import LinearWithValueLabel from './progressBar';
 import Results from './results';
 import Check from './CheckAllThatApply';
 
-// import AnswerPopup from './AnswerPopup';
-
 function Quiz() {
-  const [currentQuizIndex, setCurrentQuizIndex] = useState(0);
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
   const [TotalProgress, setTotalProgress] = useState(0);
   const [CorrectProgress, setCorrectProgress] = useState(0);
@@ -33,51 +29,52 @@ function Quiz() {
   const [isCurrentAnswerCorrect, setIsCurrentAnswerCorrect] = useState(null);
   const [skipCount, setSkipCount] = useState(0);
   const [questionResults, setQuestionResults] = useState([]);
-  const [quizData, setQuizData] = useState([]);
 
-  // const key = `${courseKey}_${stage}`;
+  // ***IMPORTANT***
+  // change Key here to access the different quizzes in mongoDB
+  // right now the key is for the quiz corresponding to Course 1 Lesson 1
+
   const getQuiz = async () => {
-    try {
-      const response = await fetch('/api/quizzes', {
-        method: 'GET',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-      });
-      const data = await response.json();
-      return data;
-    } catch (error) {
-      console.error('Error');
-      return null;
-    }
+    const urlParams = new URLSearchParams(window.location.search);
+    const courseKey = urlParams.get('courseKey');
+    const stage = urlParams.get('stage');
+    const key = `${courseKey}_${stage}`;
+    console.log(key);
+    const res = await fetch(`/api/quizzes?key=${encodeURIComponent(key)}`);
+    const data = await res.json();
+    return data.res.questions;
   };
+
+  const [currentQuiz, setCurrentQuiz] = useState(null);
+  const [loading, setLoading] = useState(true);
+  useEffect(() => {
+    getQuiz().then((res) => {
+      setCurrentQuiz({ totalQuestions: res.length, questions: res });
+      setLoading(false);
+    });
+  }, []);
 
   useEffect(() => {
     if (showAnswerPopup) {
       const timeoutId = setTimeout(() => {
         selectedMatches.forEach((match) => {
-          // Check if the line object exists and has a position method before calling it
           if (match.lineObj && typeof match.lineObj.position === 'function') {
             match.lineObj.position();
           }
         });
-      });
+      }, 1000);
       return () => clearTimeout(timeoutId);
     }
-
-    const fetchData = async () => {
-      const data = await getQuiz();
-      setQuizData(data);
-    };
-    fetchData();
-    console.log(quizData);
   }, [showAnswerPopup, selectedMatches]);
 
-  const currentQuiz = Quizzes;
+  if (loading) {
+    return <div>Loading...</div>;
+  }
+
+  if (!currentQuiz) {
+    return <div>No quiz data available.</div>;
+  }
   const currentQuestion = currentQuiz.questions[currentQuestionIndex];
-  const first = quizData.question;
-  console.log('q', quizData);
-  console.log('r', first);
 
   const renderQuestionComponent = (question) => {
     switch (question.type) {
@@ -106,14 +103,13 @@ function Quiz() {
       case 'matching':
         return (
           <Matching
-            question={question.question}
-            terms={question.terms}
+            options={question.options}
             selectedMatches={selectedMatches}
             setSelectedMatches={setSelectedMatches}
             isAttempted={attempted}
           />
         );
-      case 'checkAllThatApply':
+      case 'checkbox':
         return (
           <Check
             question={question.question}
@@ -129,46 +125,51 @@ function Quiz() {
 
   function AnswerPopup({ message, onClose, isCorrect }) {
     return (
-      <div style={{
-        display: 'flex',
-        flexDirection: 'row',
-        alignItems: 'center',
-        justifyContent: 'space-between',
-        flexGrow: '1',
-        width: '100%',
-        padding: '30px 75px 20px',
-        backgroundColor: isCorrect ? '#e0f5d9' : '#fef8e2',
-      }}
-      >
-        <div style={{
-          textAlign: 'left',
-          flex: 1,
-          maxWidth: '300px',
+      <div
+        style={{
+          display: 'flex',
+          flexDirection: 'row',
+          alignItems: 'center',
+          justifyContent: 'space-between',
+          flexGrow: '1',
+          width: '100%',
+          padding: '30px 75px 20px',
+          backgroundColor: isCorrect ? '#e0f5d9' : '#fef8e2',
         }}
-        >
-          <div style={{
-            fontWeight: 'bold',
-            fontSize: '18px',
-            color: 'black',
+      >
+        <div
+          style={{
+            textAlign: 'left',
+            flex: 1,
+            maxWidth: '300px',
           }}
+        >
+          <div
+            style={{
+              fontWeight: 'bold',
+              fontSize: '18px',
+              color: 'black',
+            }}
           >
             {message}
             {isCorrect && (
-            <span style={{
-              fontWeight: 'bold',
-              color: '#00B353',
-              fontSize: '14px',
-              marginLeft: '20px',
-            }}
-            >
-              +10 XP 🎉
-            </span>
+              <span
+                style={{
+                  fontWeight: 'bold',
+                  color: '#00B353',
+                  fontSize: '14px',
+                  marginLeft: '20px',
+                }}
+              >
+                +10 XP 🎉
+              </span>
             )}
           </div>
-          <div style={{
-            fontSize: '12px',
-            color: '#454545',
-          }}
+          <div
+            style={{
+              fontSize: '12px',
+              color: '#454545',
+            }}
           >
             {currentQuestion.explanation}
           </div>
@@ -184,7 +185,7 @@ function Quiz() {
             backgroundColor: isCorrect ? '#62934f' : '#f8d87c',
             whiteSpace: 'nowrap',
             position: 'relative',
-            zindex: '10', /* Any value higher than the elements that might be covering the button */
+            zIndex: '10',
           }}
         >
           Continue &gt;
@@ -195,23 +196,25 @@ function Quiz() {
 
   function HintPopup({ hintMessage, onClose }) {
     return (
-      <div style={{
-        position: 'absolute',
-        top: '50%',
-        left: '50%',
-        transform: 'translate(-50%, -50%)',
-        minWidth: '300px',
-        maxWidth: '500px',
-        borderRadius: '8px',
-        backgroundColor: 'white',
-        boxShadow: '0 2px 10px rgba(0, 0, 0, 0.2)',
-        zIndex: 1000,
-      }}
-      >
-        <div style={{
-          padding: '50px',
-          position: 'relative',
+      <div
+        style={{
+          position: 'absolute',
+          top: '50%',
+          left: '50%',
+          transform: 'translate(-50%, -50%)',
+          minWidth: '300px',
+          maxWidth: '500px',
+          borderRadius: '8px',
+          backgroundColor: 'white',
+          boxShadow: '0 2px 10px rgba(0, 0, 0, 0.2)',
+          zIndex: 1000,
         }}
+      >
+        <div
+          style={{
+            padding: '50px',
+            position: 'relative',
+          }}
         >
           <div
             style={{
@@ -226,19 +229,25 @@ function Quiz() {
           >
             &#10005;
           </div>
-          <div style={{
-            display: 'flex',
-            alignItems: 'flex-start',
-          }}
-          >
-            <Image
-              src="/hint_figure.svg"
-              width={200}
-              height={200}
-            />
-            <div style={{
-              display: 'flex', flexDirection: 'column', fontSize: '14px', color: '#454545', lineHeight: '1.4', justifyContent: 'center', alignItems: 'flex-start', height: '100%', minHeight: '25vh',
+          <div
+            style={{
+              display: 'flex',
+              alignItems: 'flex-start',
             }}
+          >
+            <Image src="/hint_figure.svg" width={200} height={200} />
+            <div
+              style={{
+                display: 'flex',
+                flexDirection: 'column',
+                fontSize: '14px',
+                color: '#454545',
+                lineHeight: '1.4',
+                justifyContent: 'center',
+                alignItems: 'flex-start',
+                height: '100%',
+                minHeight: '25vh',
+              }}
             >
               <div style={{ fontWeight: 'bold', fontSize: '24px', marginBottom: '10px' }}> Hint </div>
               <div style={{ textAlign: 'left' }}>
@@ -308,14 +317,14 @@ function Quiz() {
       ...prevAnswers,
       [currentQuestionIndex]: selectedOption,
     }));
-    setShowAnswerPopup(true); // Show answer feedback popup
+    setShowAnswerPopup(true);
     setTotalProgress((prevProgress) => Math.min(prevProgress + (100 / currentQuiz.questions.length), 100));
 
     const newResult = {
       questionId: currentQuestionIndex,
       isCorrect,
       selectedAnswer: selectedOption,
-      correctAnswer: currentQuestion.answer, // You would need to have 'answer' available in your question object
+      correctAnswer: currentQuestion.answer,
     };
 
     setQuestionResults([...questionResults, newResult]);
@@ -346,9 +355,9 @@ function Quiz() {
   const checkAnswer = (selectedOption) => {
     setShowCheckButton(false); // Hide the Check button
     if (currentQuestion.type === 'matching') {
-      const isCorrect = selectedMatches.length === currentQuestion.terms.length
-        && selectedMatches.every((match) => currentQuestion.terms[match.term].definition === currentQuestion.answer[match.definition]);
-      handleAnswer(isCorrect, selectedMatches.map((match) => match.term).join(', '));
+      const isCorrect = selectedMatches.length === currentQuestion.options.length
+        && selectedMatches.every((match) => currentQuestion.options[match.option].definition === currentQuestion.answer[match.definition]);
+      handleAnswer(isCorrect, selectedMatches.map((match) => match.option).join(', '));
       setAttempted(true);
     } else if (currentQuestion.type === 'checkAllThatApply') {
       // Sort to ensure order does not affect comparison
@@ -389,9 +398,9 @@ function Quiz() {
           />
           <button type="button" className={styles.hintButton} onClick={handleHint} />
           {showHint && (
-          <div className={styles.hintOverlay} onClick={handleOverlayClick}>
-            <HintPopup hintMessage={popupMessage} onClose={() => setShowHint(false)} />
-          </div>
+            <div className={styles.hintOverlay} onClick={handleOverlayClick}>
+              <HintPopup hintMessage={popupMessage} onClose={() => setShowHint(false)} />
+            </div>
           )}
         </div>
         <div className={styles.questionTypeandPointscontainer}>
@@ -400,16 +409,15 @@ function Quiz() {
               padding: '10px 20px',
               borderRadius: '10px',
               backgroundColor:
-                  currentQuestion.type === 'matching'
-                    ? '#FFE9F0'
-                    : currentQuestion.type === 'multiple'
-                      ? '#E3F8F1' // Example orange shade
-                      : currentQuestion.type === 'truefalse'
-                        ? '#FFE6C9' // Example purple shade
-                        : currentQuestion.type === 'checkAllThatApply'
-                          ? '#EDE2F7' // Example blue shade
-                          : 'none',
-              // Add any other styles you need for this inner container
+                currentQuestion.type === 'matching'
+                  ? '#FFE9F0'
+                  : currentQuestion.type === 'multiple'
+                    ? '#E3F8F1'
+                    : currentQuestion.type === 'truefalse'
+                      ? '#FFE6C9'
+                      : currentQuestion.type === 'checkbox'
+                        ? '#EDE2F7'
+                        : 'none',
             }}
           >
             {currentQuestion.type === 'matching'
@@ -418,7 +426,7 @@ function Quiz() {
                 ? 'Multiple Choice'
                 : currentQuestion.type === 'truefalse'
                   ? 'True and False'
-                  : currentQuestion.type === 'checkAllThatApply'
+                  : currentQuestion.type === 'checkbox'
                     ? 'Select All'
                     : ''}
           </div>
@@ -450,17 +458,17 @@ function Quiz() {
                 left)
               </button>
             )
-            }
+          }
           {showCheckButton && (
             <button
               type="button"
               className={`${styles.checkButton} ${
                 (currentQuestion.type !== 'matching' && selectedOption)
-                || (currentQuestion.type === 'matching' && selectedMatches.length === currentQuestion.terms.length)
+                  || (currentQuestion.type === 'matching' && selectedMatches.length === currentQuestion.options.length)
                   ? styles.checkButtonEnabled : ''}`}
               onClick={() => checkAnswer(selectedOption)}
               disabled={currentQuestion.type !== 'matching' ? !selectedOption || attempted
-                : selectedMatches.length !== currentQuestion.terms.length || attempted}
+                : selectedMatches.length !== currentQuestion.options.length || attempted}
             >
               Check
             </button>
@@ -468,13 +476,13 @@ function Quiz() {
         </div>
       </div>
       {showAnswerPopup
-            && (
-              <AnswerPopup
-                message={popupMessage}
-                onClose={() => { setShowAnswerPopup(false); setSkipButton(false); goToNextQuestion(); }}
-                isCorrect={isCurrentAnswerCorrect}
-              />
-            )}
+        && (
+          <AnswerPopup
+            message={popupMessage}
+            onClose={() => { setShowAnswerPopup(false); setSkipButton(false); goToNextQuestion(); }}
+            isCorrect={isCurrentAnswerCorrect}
+          />
+        )}
     </div>
   );
 }

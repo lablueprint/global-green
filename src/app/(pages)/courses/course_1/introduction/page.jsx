@@ -19,8 +19,8 @@ const content1 = [
     'But what exactly is plastic, where does it come from, and how has it managed to so radically transform the world we live in since it was first created in the early 20th century?',
   ],
   [
-    'If you find yourself asking questions like these, you’re in the right place!',
-    'Over the span of this <green>Plastics and Recycling course</green>, we’re going to take a deep dive into a variety of topics relating to the history, manufacture, applications, and hazards of plastic in our world today.',
+    "If you find yourself asking questions like these, you’re in the right place! ",
+    "Over the span of this <green>Plastics and Recycling course</green>, we’re going to take a deep dive into a variety of topics relating to the history, manufacture, applications, and hazards of plastic in our world today."
   ],
   [
     'By the end of this course, you’ll have the tools you need to understand the origins, benefits, and hazards of the modern world’s reliance on plastic.',

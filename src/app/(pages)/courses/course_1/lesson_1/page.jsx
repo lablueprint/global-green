@@ -12,8 +12,8 @@ import Textbox from '@/app/components/Textbox';
 const content1 = [
   [
     'Unlike the cellulose in plants or the wood used to make paper, plastic is a wholly synthetic, or man-made, material.',
-    'But that begs the question: just what is plastic, and how is it made?',
-    'You may be surprised to discover <green>that the main resource that goes into synthesizing plastic is fossil fuels.</green>',
+    ' But that begs the question: just what is plastic, and how is it made?',
+    ' You may be surprised to discover <green>that the main resource that goes into synthesizing plastic is fossil fuels.</green>',
   ],
   [
     '<title>Hold on-fossil fuels?</title>',
@@ -23,8 +23,8 @@ const content1 = [
 const content2 = [
   [
     'Like the fuel we fill up the gas tanks of our cars with? Yes! Despite very different appearances,',
-    '<green>the vast majority of consumer plastics in the world are made from fossil fuels, especially crude oil.</green>',
-    'But how does crude oil become a disposable bottle you can drink water from?',
+    '<green> the vast majority of consumer plastics in the world are made from fossil fuels, especially crude oil.</green>',
+    ' But how does crude oil become a disposable bottle you can drink water from?',
   ],
   [
     'The answer, perhaps unsurprisingly, can get a little technical. That’s why we’re going to follow that plastic water bottle back in time so that we can follow its journey from the Earth’s crust to our homes.',
@@ -40,7 +40,7 @@ const content3 = [
 ];
 
 const content4 = [
-  ['The pellets are then shipped to a manufacturing facility. Importantly, spillage of these pellets occurs at every point of the plastic-making process, and this exacerbates the issue of plastic pollution. Proper handling and shipping of these materials is necessary to prevent these long-lasting pellets from making their way into our ecosystems!'],
+  ['The pellets are then shipped to a manufacturing facility. Importantly, spillage of these pellets occurs at every point of the plastic-making process, and this exacerbates the issue of plastic pollution. Proper handling and shipping of these materials is necessary to prevent these long-lasting pellets from making their way into our ecosystems! '],
   ['Once these pellets arrive at a manufacturing facility, they are melted down into a workable liquid that can be molded into various shapes and sizes. That means that the solid piece of plastic that composes our humble water bottle is actually made from many of these pellets melted together.'],
 ];
 

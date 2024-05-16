@@ -31,7 +31,7 @@ function Paragraph({ paragraph }) {
             } 
             else {
               return (
-                <span key={index} className={styles['black-text']}>
+                <span key={index} className={styles['text']}>
                   {part}
                 </span>
               );
@@ -55,7 +55,6 @@ export default function Textbox({ content }) {
           <Paragraph paragraph={paragraph} />
           {i !== content.length - 1 && (
             <>
-              <br />
               <br />
             </>
           )}

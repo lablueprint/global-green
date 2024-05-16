@@ -1,6 +1,7 @@
-'use client'
+'use client';
 
 import { React } from 'react';
+import PropTypes from 'prop-types';
 import styles from './page.module.css';
 
 export default function TitleHeader({ title, type }) {
@@ -10,3 +11,8 @@ export default function TitleHeader({ title, type }) {
     </div>
   );
 }
+
+TitleHeader.propTypes = {
+  title: PropTypes.string.isRequired,
+  type: PropTypes.string.isRequired,
+};

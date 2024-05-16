@@ -9,8 +9,12 @@ export default function TextImageLeft({ contentArray }) {
       <img src={contentArray[0].image} alt="test" className={styles['image-part']} />
       <div className={styles['text-part']}>
         <br />
-          <Textbox content={contentArray[0].text} />
+        <Textbox content={contentArray[0].text} />
       </div>
     </div>
   );
 }
+
+TextImageLeft.propTypes = {
+  contentArray: PropTypes.array.isRequired,
+};

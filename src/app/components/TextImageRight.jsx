@@ -8,11 +8,13 @@ export default function TextImageRight({ contentArray }) {
     <div className={styles['text-image-horizontal']}>
       <div className={styles['text-part']}>
         <br />
-          <Textbox content={contentArray[0].text} />
+        <Textbox content={contentArray[0].text} />
       </div>
       <img src={contentArray[0].image} alt="test" className={styles['image-part']} />
     </div>
   );
 }
 
-
+TextImageRight.propTypes = {
+  contentArray: PropTypes.array.isRequired,
+};

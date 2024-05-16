@@ -1,6 +1,7 @@
 'use client';
 
 import { React } from 'react';
+import PropTypes from 'prop-types';
 import styles from './page.module.css';
 import Textbox from './Textbox';
 
@@ -11,3 +12,6 @@ export default function GreyBoxHighlight({ content }) {
     </div>
   );
 }
+GreyBoxHighlight.propTypes = {
+  content: PropTypes.array.isRequired,
+};

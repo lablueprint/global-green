@@ -110,6 +110,7 @@ function CourseDisplay() {
       <div className={styles.courseLayout}>
         {filteredData.map((course) => (
           <CourseCard
+            key={course.key}
             courseKey={`${course.key}`}
             duration={course.stages.length}
             progress={course.progress}

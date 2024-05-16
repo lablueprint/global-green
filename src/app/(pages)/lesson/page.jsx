@@ -39,11 +39,14 @@ function CoursePage({ params, searchParams }) {
     console.log('checking user access', data.user.courses);
     const userCourseRecord = data.user.courses.find((course) => course.key === courseKey);
     // if user doesnt have the course, they can only access stage 1
+    console.log('userCourseRecord', userCourseRecord);
     if (!userCourseRecord) {
-      if (stage === 1) {
+      console.log('user doesnt have course');
+      console.log('stage', stage);
+      if (Number(stage) === 1) {
         setHasAccess(true);
       }
-    } else if (stage <= userCourseRecord.currStage) {
+    } else if (Number(stage) <= Number(userCourseRecord.currStage)) {
       setHasAccess(true);
     }
 

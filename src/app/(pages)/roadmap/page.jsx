@@ -1,9 +1,9 @@
 // src/app/(pages)/roadmap/page.jsx
 
-"use client";
+'use client';
 
-import React from "react";
-import { useRouter } from "next/navigation";
+import React from 'react';
+import { useRouter } from 'next/navigation';
 
 function RoadmapsIndexPage() {
   const router = useRouter();
@@ -13,65 +13,53 @@ function RoadmapsIndexPage() {
       <ul>
         <button
           type="button"
-          onClick={() => router.push("/roadmap/course/?courseKey=introduction")}
+          onClick={() => router.push('/roadmap/course/?courseKey=introduction')}
         >
-          {" "}
+          {' '}
           Introduction
         </button>
         <button
           type="button"
-          onClick={() =>
-            router.push("/roadmap/course/?courseKey=plastic-and-recycling")
-          }
+          onClick={() => router.push('/roadmap/course/?courseKey=plastic-and-recycling')}
         >
-          {" "}
+          {' '}
           Plastic and Recycling
         </button>
         <button
           type="button"
-          onClick={() =>
-            router.push("/roadmap/course/?courseKey=sustainability-labs")
-          }
+          onClick={() => router.push('/roadmap/course/?courseKey=sustainability-labs')}
         >
-          {" "}
+          {' '}
           Sustainability Labs
         </button>
         <button
           type="button"
-          onClick={() =>
-            router.push(
-              "/roadmap/course/?courseKey=conservation-and-restoration"
-            )
-          }
+          onClick={() => router.push(
+            '/roadmap/course/?courseKey=conservation-and-restoration',
+          )}
         >
-          {" "}
+          {' '}
           Conservation and Restoration
         </button>
         <button
           type="button"
-          onClick={() =>
-            router.push("/roadmap/course/?courseKey=climate-change")
-          }
+          onClick={() => router.push('/roadmap/course/?courseKey=climate-change')}
         >
-          {" "}
+          {' '}
           Climate Change
         </button>
         <button
           type="button"
-          onClick={() =>
-            router.push("/roadmap/course/?courseKey=eco-friendly-travel")
-          }
+          onClick={() => router.push('/roadmap/course/?courseKey=eco-friendly-travel')}
         >
-          {" "}
+          {' '}
           Eco-Friendly Travel
         </button>
         <button
           type="button"
-          onClick={() =>
-            router.push("/roadmap/course/?courseKey=ocean-pollution")
-          }
+          onClick={() => router.push('/roadmap/course/?courseKey=ocean-pollution')}
         >
-          {" "}
+          {' '}
           Ocean Pollution
         </button>
       </ul>

@@ -11,6 +11,9 @@ export default function Loading() {
         marginTop: "-50px",
         marginLeft: "-50px",
     }
+    const centerText={
+      marginLeft:"90px"
+    }
   return (
     <div style={center}>
           <motion.div
@@ -20,8 +23,9 @@ export default function Loading() {
         }}
         transition={{ ease: "linear", duration: 5, repeat: Infinity }}
       >
-        <Image  width="150" height="100" src={convertToURL("earth.png")} />
+        <Image  width="300" height="200" src={convertToURL("earth.png")} />
       </motion.div>
+      <p style={centerText}>Loading...</p>
       {/* Loading
       <Image width="1000" height="500" src={convertToURL("earth.png")} /> */}
     </div>

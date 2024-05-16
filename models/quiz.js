@@ -11,7 +11,7 @@ const quizSchema = new Schema(
     key: { type: String, required: true },
     label: { type: String, required: true },
     questions: [{
-      type: { type: String, required: true, enum: ['matching', 'truefalse', 'multiple'] },
+      type: { type: String, required: true, enum: ['matching', 'truefalse', 'multiple', 'selectall', 'checkbox'] },
       question: { type: String, required: true },
       options: { type: mongoose.SchemaTypes.Mixed, required: true },
       answer: { type: mongoose.SchemaTypes.Mixed, required: true },

@@ -137,7 +137,7 @@ export default function NavBar() {
             variant="outlined"
             onClick={collapseNavBar}
             className={styles.button}
-            class="close"
+            // class="close"
           >
             {collapseButton}
           </Button>

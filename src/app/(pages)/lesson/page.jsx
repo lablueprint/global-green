@@ -1,16 +1,21 @@
 'use client';
 
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
+import { useSession } from 'next-auth/react';
 import PlasticAndRecycling from '@/app/components/courses/plasticandrecycling/page';
 import ClimateChange from '@/app/components/courses/climatechange/page';
 import OceanPollution from '@/app/components/courses/oceanpollution/page';
 import EcoSystemConservation from '@/app/components/courses/ecosystemconservation/page';
 import EcoFriendlyTravelling from '@/app/components/courses/eco-friendlytraveling/page';
 import SustainabilityLab from '@/app/components/courses/sustainabilitylab/page';
+import Loading from '../loading';
 
 function CoursePage({ params, searchParams }) {
   const { courseKey, stage } = searchParams;
+  const { data: session } = useSession();
+  const [hasAccess, setHasAccess] = useState(false);
+  const [loading, setLoading] = useState(true);
 
   const courseToShow = {
     plasticandrecycling: <PlasticAndRecycling stage={stage} />,
@@ -21,11 +26,46 @@ function CoursePage({ params, searchParams }) {
     sustainabilitylabs: <SustainabilityLab stage={stage} />,
   };
 
+  const checkUserHasAccess = async (id) => {
+    if (!id) return;
+    const response = await fetch('/api/users/me', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ id }),
+    });
+    const data = await response.json();
+    console.log('checking user access', data.user.courses);
+    const userCourseRecord = data.user.courses.find((course) => course.key === courseKey);
+    // if user doesnt have the course, they can only access stage 1
+    if (!userCourseRecord) {
+      if (stage === 1) {
+        setHasAccess(true);
+      }
+    } else if (stage <= userCourseRecord.currStage) {
+      setHasAccess(true);
+    }
+
+    setLoading(false);
+  };
+
   const router = useRouter();
 
   const backToRoadmap = () => {
     router.push(`/roadmap/course?courseKey=${courseKey}`);
   };
+
+  useEffect(
+    () => {
+      if (session) checkUserHasAccess(session.user.id);
+    },
+    [session],
+  );
+
+  if (loading) {
+    return <Loading />;
+  }
 
   return (
     <div>
@@ -35,7 +75,7 @@ function CoursePage({ params, searchParams }) {
       {' '}
       <button type="button" onClick={backToRoadmap}>Back to Roadmap</button>
       <div>
-        {courseToShow[courseKey]}
+        {hasAccess ? courseToShow[courseKey] : 'You do not have access to this course yet'}
       </div>
     </div>
   );

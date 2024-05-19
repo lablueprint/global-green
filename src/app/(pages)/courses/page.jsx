@@ -44,8 +44,7 @@ function CoursesIndexPage() {
 
   return (
     <div style={containerStyle}>
-      <h1 style={headerStyle}>Courses</h1>
-      <h1 style={headerStyle}>designers lmk whats wrong with each lesson so i can fix :0</h1>
+      <h1 style={headerStyle}>Courses Directory</h1>
       <ul style={listStyle}>
         <li style={listItemStyle}>
           <h2 style={courseHeaderStyle}>Course 1</h2>

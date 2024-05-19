@@ -10,24 +10,31 @@
 }
 
 .title {
+    display: flex;
     color: #000;
     font-family: 'Instrument Sans', sans-serif;
     font-size: 40px;
-    font-style: normal;
     font-weight: 600;
     line-height: 100%;
     margin-top: 40px;
     margin-bottom: 20px;
+    /* background-color: red; */
 }
 
 .seedsTitle {
     color: #000;
     font-family: 'Instrument Sans', sans-serif;
-    font-size: 25px;
+    font-size: 20px;
     font-style: normal;
     font-weight: 300;
-    line-height: 100%;
-    margin-bottom: 30px;
+    margin-left: 20px;
+    margin-top: 6px;
+}
+
+.seedsTitle img {
+    margin-left: 5px;
+    vertical-align: middle; 
+    height: 1em;
 }
 
 .storeItems {
@@ -39,7 +46,6 @@
     margin-top: 5px;
     padding: 1rem;
     border-radius: 5px;
-
     background-color: white;
 }
 
@@ -90,16 +96,13 @@
     padding: 0.3rem;
     border-radius: 0.75em;
     font-size: 100px;
-
     font-family: "Instrument Sans";
     font-size: 10px;
     font-style: normal;
     font-weight: 500;
-    line-height: 140%; /* 14px */
-  }
+    line-height: 140%;
+}
   
-  
-
 .storeItemDetails {
     display: flex;
     flex-direction: row;

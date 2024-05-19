@@ -120,10 +120,10 @@ function Store() {
           <span style={{ display: 'inline-flex', alignItems: 'center' }}>
             {item.price}
             <img
-              src="/store/points_logo.svg"
+              src="/store/seeds_logo.svg"
               alt="icon"
-              width="16"
-              height="16"
+              width="10px"
+              height="10px"
               style={{ marginLeft: '4px' }}
             />
           </span>
@@ -195,23 +195,21 @@ function Store() {
     return (
       <div className={styles.storeItems}>
         {backgrounds.map((item) => storeItem(item))}
-      </div>
+      </div>  
     );
   }
 
   return (
     <div className={styles.store}>
-      <div className={styles.title}> Store</div>
-        <div className={styles.seedsTitle}>  
-              {seeds}
-              <img
-                src="/store/points_logo.svg"
-                alt="icon"
-                width="25"
-                height="25"
-                style={{ marginLeft: '10px' }}
-              />
+      <div className={styles.title}> 
+        Store
+        <div className={styles.seedsTitle}>
+          {seeds}
+          <img
+            src="/store/seeds_logo_title.svg"
+          />
         </div>
+      </div>
       <div className={styles.storeTabs}>
         <Button
           type="button"

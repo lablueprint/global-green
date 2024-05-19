@@ -11,21 +11,21 @@ function LandingPage() {
   const [currentModule] = useState({ imageUrl: '/landingpageImage.png', name: 'Chinenye Eneh' });
   const [isGardenModalOpen, setIsGardenModalOpen] = useState(false);
   const courseFlowerMap = {
-    'course1': 1,
-    'course2': 2,
-    'course3': 3,
-    'course4': 4,
-    'course5': 5,
-    'course6': 6
-  }
+    course1: 1,
+    course2: 2,
+    course3: 3,
+    course4: 4,
+    course5: 5,
+    course6: 6,
+  };
   const [flowers, setFlowers] = useState({
     1: false,
     2: false,
     3: false,
     4: false,
     5: false,
-    6: false
-  })
+    6: false,
+  });
   const { data: session } = useSession();
 
   const getCourseProgress = async (id) => {
@@ -59,8 +59,8 @@ function LandingPage() {
   // seeing landing page banner
   return (
     <div className={styles.landingPage}>
-      {isGardenModalOpen && <GardenModal setIsGardenModalOpen={setIsGardenModalOpen} flowers={flowers}/>}
-
+      {isGardenModalOpen
+      && <GardenModal setIsGardenModalOpen={setIsGardenModalOpen} flowers={flowers} />}
       <div className={styles.welcome}>
         <h1>
           Welcome,
@@ -79,6 +79,7 @@ function LandingPage() {
             style={{ borderRadius: '10px' }}
           />
           {/* going to garden */}
+          {/* TODO: Figure out how to get garden info? */}
           <div className={styles.garden}>
             <h2>Your Garden</h2>
             <div className={styles.gardenInfo}>Started on June 2024</div>

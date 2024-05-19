@@ -1,21 +1,15 @@
 import React, { useState, useEffect } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
+import { motion } from 'framer-motion';
 import { Button } from '@mui/material';
 import PropTypes from 'prop-types';
 import ModalWelcome from './ModalWelcome';
 import styles from './page.module.css';
+import GardenImage from './GardenImage';
 
 export default function GardenModal({
   setIsGardenModalOpen, flowers, backgroundOptions = ['bg1', 'bg2', 'bg3'], accessoryOptions = ['acc1', 'acc2', 'acc3', 'acc4'],
 }) {
-  const variant = {
-    initial: { opacity: 0, scale: 0.9, y: 100 },
-    animate: { opacity: 1, scale: 1.2, y: 0 },
-    exit: { opacity: 0, scale: 0.9, y: 100 },
-
-  };
   // Next steps:
-  // - Factor out the garden visualization (from here + modal welcome, near identical)
   // add accessory and background images to local storage + make model to connect with string rep
   // initialize states w user values and update
 
@@ -30,6 +24,7 @@ export default function GardenModal({
     accessories: [],
   });
 
+  // TODO: delete this function
   useEffect(() => {
     console.log(gardenState);
   }, [gardenState]);
@@ -117,49 +112,7 @@ export default function GardenModal({
               <h2 className={styles.gardenModalText}>Edit</h2>
               <div className={styles.gardenModalEditBox}>
                 <div className={styles.gardenModalEditBoxLeft}>
-                  <div className={styles.gardenModalImageContainer}>
-                    <motion.div
-                      layout
-                      layoutId="gardenBackground"
-                      className={`${styles.gardenEditImage} ${styles.gardenBackground}`}
-                    />
-                    <motion.div
-                      animate={{
-                        rotate: 360,
-                        opacity: 1,
-                      }}
-                      transition={{ ease: 'linear', duration: 70, repeat: Infinity }}
-                      className={`${styles.gardenEditImage} ${styles.gardenEarth}`}
-                    />
-                    <AnimatePresence>
-                      {
-                        Object.keys(flowers).map((index) => (
-                          flowers[index] && (
-                            <motion.div
-                              key={index}
-                              initial="initial"
-                              animate="animate"
-                              exit="exit"
-                              layout
-                              layoutId={`gardenFlower${index}`}
-                              variants={variant}
-                              transition={{
-                                duration: 1,
-                                type: 'spring',
-                                stiffness: 260,
-                                damping: 20,
-                              }}
-                              className={`
-                              ${styles.gardenEditImage} 
-                              ${styles[`gardenFlower${index}`]}
-                              `}
-                            />
-                          )
-                        ))
-
-                      }
-                    </AnimatePresence>
-                  </div>
+                  <GardenImage status="edit" flowers={flowers} />
                 </div>
                 <div className={styles.gardenModalEditBoxRight}>
                   <p className={styles.gardenModalText}>

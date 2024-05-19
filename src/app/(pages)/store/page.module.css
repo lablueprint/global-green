@@ -1,7 +1,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Instrument+Sans:ital,wght@0,400..700;1,400..700&display=swap');
 
 .storeContainer {
-    width: 100%;
+    width: 90%;
 }
 
 .store {
@@ -46,12 +46,11 @@
 .storeItems {
     display: flex;
     flex-wrap: wrap;
+    justify-content: space-between;
     gap: 5rem;
     margin-top: 30px;
     border-radius: 5px;
     background-color: white;
-    width: 100%;
-    background-color: blue;
 }
 
 .storeItem {
@@ -98,8 +97,8 @@
     right: 0.5rem;
     color: black;
     border: 1px solid #CBCBCB;
-    padding: 0.3rem;
-    border-radius: 0.75em;
+    padding: 0.1rem 0.5rem; /* 1rem for top-bottom, 2rem for left-right */
+    border-radius: 2em;
     font-size: 100px;
     font-family: 'Instrument Sans', sans-serif; 
     font-size: 10px;

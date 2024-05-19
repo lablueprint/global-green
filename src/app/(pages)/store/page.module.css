@@ -97,7 +97,7 @@
     right: 0.5rem;
     color: black;
     border: 1px solid #CBCBCB;
-    padding: 0.1rem 0.5rem; /* 1rem for top-bottom, 2rem for left-right */
+    padding: 0.1rem 0.5rem;
     border-radius: 2em;
     font-size: 100px;
     font-family: 'Instrument Sans', sans-serif; 

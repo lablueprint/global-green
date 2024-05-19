@@ -219,7 +219,6 @@ function Store() {
               fontStyle: 'normal',
               fontWeight: '600',
               lineHeight: '110%',      
-              marginRight: '15px',
               '&:hover': {
                 backgroundColor: 'transparent', 
                 color: currentTab === 'accessories' ? '#519546' : '#9B9B9B', 

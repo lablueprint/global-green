@@ -180,14 +180,8 @@ function Store() {
   function accesoriesTab() {
     return (
       <div className={styles.storeItems}>
-        {accessories.map((item, index) => (
-          <React.Fragment key={item.name}>
-            <div style={{ margin: '0 50px 10px 10px' }}>
-              {storeItem(item)}
-            </div>
-          </React.Fragment>
-        ))}
-      </div>
+        {accessories.map((item) => storeItem(item))}
+      </div>  
     );
   }
 
@@ -200,67 +194,69 @@ function Store() {
   }
 
   return (
-    <div className={styles.store}>
-      <div className={styles.title}> 
-        Store
-        <div className={styles.seedsTitle}>
-          {seeds}
-          <img
-            src="/store/seeds_logo_title.svg"
-          />
+    <div className={styles.storeContainer}>
+      <div className={styles.store}>
+        <div className={styles.title}> 
+          Store
+          <div className={styles.seedsTitle}>
+            {seeds}
+            <img
+              src="/store/seeds_logo_title.svg"
+            />
+          </div>
         </div>
-      </div>
-      <div className={styles.storeTabs}>
-        <Button
-          type="button"
-          sx={{
-            borderRadius: 0,
-            backgroundColor: 'transparent',
-            textTransform: 'none',
-            fontFamily: 'Instrument Sans',
-            color: currentTab === 'accessories' ? '#519546' : '#9B9B9B',
-            borderBottom: currentTab === 'accessories' ? '2px solid #519546' : 'none',
-            fontSize: '20px',
-            fontStyle: 'normal',
-            fontWeight: '600',
-            lineHeight: '110%',      
-            marginRight: '15px',
-            '&:hover': {
-              backgroundColor: 'transparent', 
-              color: currentTab === 'accessories' ? '#519546' : '#9B9B9B', 
-              borderBottom: currentTab === 'accessories' ? '2px solid #519546' : 'none', 
-            },
-          }}
-          onClick={() => setCurrentTab('accessories')}
-        >
-          Accessories
-        </Button>
-        <Button
-          type="button"
-          sx={{
-            borderRadius: 0,
-            backgroundColor: 'transparent',
-            textTransform: 'none',
-            fontFamily: 'Instrument Sans',
-            color: currentTab === 'background' ? '#519546' : '#9B9B9B',
-            borderBottom: currentTab === 'background' ? '2px solid #519546' : '1px solid lightgrey',
-            fontSize: '20px',
-            fontStyle: 'normal',
-            fontWeight: '600',
-            lineHeight: '110%',   
-            '&:hover': {
+        <div className={styles.storeTabs}>
+          <Button
+            type="button"
+            sx={{
+              borderRadius: 0,
               backgroundColor: 'transparent',
+              textTransform: 'none',
+              fontFamily: 'Instrument Sans',
+              color: currentTab === 'accessories' ? '#519546' : '#9B9B9B',
+              borderBottom: currentTab === 'accessories' ? '2px solid #519546' : 'none',
+              fontSize: '20px',
+              fontStyle: 'normal',
+              fontWeight: '600',
+              lineHeight: '110%',      
+              marginRight: '15px',
+              '&:hover': {
+                backgroundColor: 'transparent', 
+                color: currentTab === 'accessories' ? '#519546' : '#9B9B9B', 
+                borderBottom: currentTab === 'accessories' ? '2px solid #519546' : 'none', 
+              },
+            }}
+            onClick={() => setCurrentTab('accessories')}
+          >
+            Accessories
+          </Button>
+          <Button
+            type="button"
+            sx={{
+              borderRadius: 0,
+              backgroundColor: 'transparent',
+              textTransform: 'none',
+              fontFamily: 'Instrument Sans',
               color: currentTab === 'background' ? '#519546' : '#9B9B9B',
-              borderBottom: currentTab === 'background' ? '2px solid #519546' : '1px solid lightgrey', 
-            },
-          }}
-          onClick={() => setCurrentTab('background')}
-        >
-          Background
-        </Button>
+              borderBottom: currentTab === 'background' ? '2px solid #519546' : '1px solid lightgrey',
+              fontSize: '20px',
+              fontStyle: 'normal',
+              fontWeight: '600',
+              lineHeight: '110%',   
+              '&:hover': {
+                backgroundColor: 'transparent',
+                color: currentTab === 'background' ? '#519546' : '#9B9B9B',
+                borderBottom: currentTab === 'background' ? '2px solid #519546' : '1px solid lightgrey', 
+              },
+            }}
+            onClick={() => setCurrentTab('background')}
+          >
+            Background
+          </Button>
+        </div>
+        {currentTab === 'accessories' && accesoriesTab()}
+        {currentTab === 'background' && backgroundTab()}
       </div>
-      {currentTab === 'accessories' && accesoriesTab()}
-      {currentTab === 'background' && backgroundTab()}
     </div>
   );
 }

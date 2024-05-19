@@ -11,44 +11,12 @@ function Store() {
   const [userId, setUserId] = useState(session ? session.user.id : null);
   const [currentTab, setCurrentTab] = useState('accessories');
 
-  const [accessories, setAccessories] = useState([
-    {
-      name: 'Item 1',
-      price: 10,
-      image: '/curiousgeorge.png',
-    },
-    {
-      name: 'Item 2',
-      price: 15,
-      image: '/curiousgeorge.png',
-    },
-    {
-      name: 'Item 3',
-      price: 20,
-      image: '/curiousgeorge.png',
-    },
-  ]);
-
-  const [backgrounds, setBackgrounds] = useState([
-    {
-      name: 'Item 4',
-      price: 10,
-      image: '/curiousgeorge.png',
-    },
-    {
-      name: 'Item 5',
-      price: 15,
-      image: '/curiousgeorge.png',
-    },
-    {
-      name: 'Item 6',
-      price: 20,
-      image: '/curiousgeorge.png',
-    },
-  ]);
-
+  const [accessories, setAccessories] = useState([]);
+  const [backgrounds, setBackgrounds] = useState([]);
+  
   const [userAccessories, setUserAccessories] = useState([]);
   const [userBackgrounds, setUserBackgrounds] = useState([]);
+  
   const getUserDetails = async (id) => {
     if (!id) return;
     const response = await fetch(
@@ -104,22 +72,20 @@ function Store() {
     console.log('res', res);
 
     if (res.error) {
-      // eslint-disable-next-line no-alert
       alert(res.error);
       throw new Error(res.error);
     }
 
-    // eslint-disable-next-line no-console
     console.log('Update success', response.data);
   }
 
   useEffect(() => {
     if (session) getUserDetails(session.user.id);
   }, [session]);
+
   function buyItem(item, type) {
     if (item.price > seeds) {
-      // eslint-disable-next-line no-alert
-      alert('You do not have enough coins. no room for broke kidz');
+      alert('You do not have enough coins.');
     } else {
       if (type === 'accessories') {
         setUserAccessories([...userAccessories, item.name]);
@@ -147,12 +113,20 @@ function Store() {
           {
             (userAccessories.includes(item.name) || userBackgrounds.includes(item.name))
             && <div className={styles.storeItemImgOverlay} />
-}
+          }
           <img src={item.image} alt={item.name} />
         </div>
         <div className={styles.storeItemPrice}>
-          <span>{item.price}</span>
-
+          <span style={{ display: 'inline-flex', alignItems: 'center' }}>
+            {item.price}
+            <img
+              src="/store/points_logo.svg"
+              alt="icon"
+              width="16"
+              height="16"
+              style={{ marginLeft: '4px' }}
+            />
+          </span>
         </div>
         <div className={`${styles.storeItemDetails}`}>
           <span>{item.name}</span>
@@ -176,11 +150,22 @@ function Store() {
               type="button"
               sx={{
                 borderRadius: '1em',
-                padding: '0.2em 1.2em',
-                backgroundColor: 'green',
-                textTransform: 'none',
+                padding: '0.45em 2em',
+                backgroundColor: '#519546',
                 fontFamily: 'inherit',
                 color: 'white',
+                textAlign: 'center',
+                fontFamily: 'Instrument Sans',
+                fontSize: '16px',
+                fontStyle: 'normal',
+                fontWeight: '500',
+                lineHeight: '110%',
+                textTransform: 'none',
+                '&:hover': {
+                  backgroundColor: '#519546', 
+                  color: 'white',
+                  opacity: 0.9,
+                },
               }}
               onClick={() => buyItem(item, currentTab)}
             >
@@ -195,7 +180,14 @@ function Store() {
   function accesoriesTab() {
     return (
       <div className={styles.storeItems}>
-        {accessories.map((item) => storeItem(item))}
+        {accessories.map((item, index) => (
+          <React.Fragment key={item.name}>
+            <div style={{ margin: '0 50px 10px 10px' }}>
+              {storeItem(item)}
+            </div>
+            {(index + 1) % 3 === 0 && <div style={{ flexBasis: '100%' }} />}
+          </React.Fragment>
+        ))}
       </div>
     );
   }
@@ -210,11 +202,17 @@ function Store() {
 
   return (
     <div className={styles.store}>
-      <h1> Store</h1>
-      <h2>
-        Seeds:
-        {seeds}
-      </h2>
+      <div className={styles.title}> Store</div>
+        <div className={styles.seedsTitle}>  
+              {seeds}
+              <img
+                src="/store/points_logo.svg"
+                alt="icon"
+                width="25"
+                height="25"
+                style={{ marginLeft: '10px' }}
+              />
+        </div>
       <div className={styles.storeTabs}>
         <Button
           type="button"
@@ -222,9 +220,19 @@ function Store() {
             borderRadius: 0,
             backgroundColor: 'transparent',
             textTransform: 'none',
-            fontFamily: 'inherit',
-            color: currentTab === 'accessories' ? 'green' : 'gray',
-            borderBottom: currentTab === 'accessories' ? '2px solid green' : 'none',
+            fontFamily: 'Instrument Sans',
+            color: currentTab === 'accessories' ? '#519546' : '#9B9B9B',
+            borderBottom: currentTab === 'accessories' ? '2px solid #519546' : 'none',
+            fontSize: '20px',
+            fontStyle: 'normal',
+            fontWeight: '600',
+            lineHeight: '110%',      
+            marginRight: '15px',
+            '&:hover': {
+              backgroundColor: 'transparent', 
+              color: currentTab === 'accessories' ? '#519546' : '#9B9B9B', 
+              borderBottom: currentTab === 'accessories' ? '2px solid #519546' : 'none', 
+            },
           }}
           onClick={() => setCurrentTab('accessories')}
         >
@@ -235,10 +243,19 @@ function Store() {
           sx={{
             borderRadius: 0,
             backgroundColor: 'transparent',
-            fontFamily: 'inherit',
             textTransform: 'none',
-            color: currentTab === 'background' ? 'green' : 'gray',
-            borderBottom: currentTab === 'background' ? '2px solid green' : 'none',
+            fontFamily: 'Instrument Sans',
+            color: currentTab === 'background' ? '#519546' : '#9B9B9B',
+            borderBottom: currentTab === 'background' ? '2px solid #519546' : '1px solid lightgrey',
+            fontSize: '20px',
+            fontStyle: 'normal',
+            fontWeight: '600',
+            lineHeight: '110%',   
+            '&:hover': {
+              backgroundColor: 'transparent',
+              color: currentTab === 'background' ? '#519546' : '#9B9B9B',
+              borderBottom: currentTab === 'background' ? '2px solid #519546' : '1px solid lightgrey', 
+            },
           }}
           onClick={() => setCurrentTab('background')}
         >

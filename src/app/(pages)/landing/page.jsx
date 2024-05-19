@@ -20,8 +20,9 @@ function LandingPage() {
       <div className={styles.welcome}>
         <h1>
           Welcome,
+          {' '}
+          <span className={styles.userName}>{session.user.userName}</span>
         </h1>
-        <h1 className={styles.userName}>{session.user.name}</h1>
       </div>
       <div className={styles.banner}>
         <div className={styles.imageGarden}>

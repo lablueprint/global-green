@@ -1,20 +1,20 @@
-import { Inter } from "next/font/google";
-import "./globals.css";
-import { getServerSession } from "next-auth";
-import SessionProvider from "./components/SessionProvider";
-import NavBar from "./components/navbar";
-import styles from "./page.module.css";
-import Loading from "./(pages)/loading";
-
-const inter = Inter({ subsets: ["latin"] });
-
-export const metadata = {
-  title: "Global Green Web App",
-  description: "Web-based educational game",
-};
+import { Inter } from 'next/font/google';
+import './globals.css';
+import { getServerSession } from 'next-auth';
+import React, { Suspense } from 'react';
+import SessionProvider from './components/SessionProvider';
+import NavBar from './components/navbar';
+import styles from './page.module.css';
+import Loading from './(pages)/loading';
 
 /* eslint react/prop-types: 0 */
-import React, { Suspense } from 'react';
+
+const inter = Inter({ subsets: ['latin'] });
+
+export const metadata = {
+  title: 'Global Green Web App',
+  description: 'Web-based educational game',
+};
 
 export default async function RootLayout({ children }) {
   const session = await getServerSession();
@@ -24,9 +24,11 @@ export default async function RootLayout({ children }) {
         <SessionProvider session={session}>
           <div className={styles.wrapper}>
             <NavBar />
-            <div>
-              <Suspense fallback={<Loading />}> 
-              {children}
+            <div
+              style={{ minWidth: '80vw' }} // TODO: I feel like we should include this? - Ryan K [OK this is good]
+            >
+              <Suspense fallback={<Loading />}>
+                {children}
               </Suspense>
             </div>
           </div>

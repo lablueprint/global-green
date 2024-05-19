@@ -4,20 +4,20 @@ import LeaderLine from 'react-leader-line';
 import styles from './page.module.css';
 
 function Matching({
-  question, terms, selectedMatches, setSelectedMatches, isAttempted = false,
+  options, selectedMatches, setSelectedMatches, isAttempted = false,
 }) {
-  const [selectedTerm, setSelectedTerm] = useState(null);
+  const [selectedOption, setSelectedOption] = useState(null);
   const [selectedDefinition, setSelectedDefinition] = useState(null);
   const [matchedPairs, setMatchedPairs] = useState([]);
 
   useEffect(() => {
-    if (selectedTerm !== null && selectedDefinition !== null && !isAttempted) {
+    if (selectedOption !== null && selectedDefinition !== null && !isAttempted) {
       const updatedMatches = selectedMatches.filter((match) => {
-        const isMatchedWithTerm = match.term === selectedTerm;
+        const isMatchedWithOption = match.option === selectedOption;
         const isMatchedWithDefinition = match.definition === selectedDefinition;
 
-        // If the current match involves either the selected term or definition, remove the line
-        if (isMatchedWithTerm || isMatchedWithDefinition) {
+        // If the current match involves either the selected option or definition, remove the line
+        if (isMatchedWithOption || isMatchedWithDefinition) {
           match.lineObj.remove(); // Remove the line visually
           return false; // Exclude this match from the updated array
         }
@@ -27,11 +27,11 @@ function Matching({
 
       // update the state to reflect the removal of any existing matches
       setSelectedMatches(updatedMatches);
-      setMatchedPairs(updatedMatches.map(({ term, definition }) => ({ term, definition })));
+      setMatchedPairs(updatedMatches.map(({ option, definition }) => ({ option, definition })));
 
       // create a new line and match
       const line = new LeaderLine(
-        document.getElementById(`answer-${selectedTerm}`),
+        document.getElementById(`answer-${selectedOption}`),
         document.getElementById(`question-${selectedDefinition}`),
         {
           color: '#6DAAE0',
@@ -43,22 +43,22 @@ function Matching({
       );
 
       const newMatch = {
-        term: selectedTerm,
+        option: selectedOption,
         definition: selectedDefinition,
         lineObj: line,
       };
 
       setSelectedMatches((prevMatches) => [...prevMatches, newMatch]);
-      setMatchedPairs((prevPairs) => [...prevPairs, { term: selectedTerm, definition: selectedDefinition }]);
+      setMatchedPairs((prevPairs) => [...prevPairs, { option: selectedOption, definition: selectedDefinition }]);
 
       // Reset selections
-      setSelectedTerm(null);
+      setSelectedOption(null);
       setSelectedDefinition(null);
     }
-  }, [selectedTerm, selectedDefinition, setSelectedMatches, isAttempted, selectedMatches]);
+  }, [selectedOption, selectedDefinition, setSelectedMatches, isAttempted, selectedMatches]);
 
-  const handleTermClick = (index) => {
-    setSelectedTerm(index);
+  const handleOptionClick = (index) => {
+    setSelectedOption(index);
   };
 
   const handleDefinitionClick = (index) => {
@@ -71,24 +71,32 @@ function Matching({
   return (
     <div>
       <div className={styles.questionText}>
-        <p>{question}</p>
+        {/* <p>{question}</p> */}
       </div>
         <div className={styles.matchingContainer}>
-          {terms.map((item, index) => (
+          {options.map((item, index) => (
             <div className={styles.rowContainer} key={`pair-${index}`}>
               <div
-                onClick={() => handleTermClick(index)}
+                onClick={() => handleOptionClick(index)}
+                key={`answer-${index}`}
                 id={`answer-${index}`}
-                className={`${styles.termBox} ${selectedTerm === index ? styles.selected : ''} ${isMatched(index, 'term') ? styles.matched : ''}`}
+                className={`${styles.optionBox} ${selectedOption === index ? styles.selected : ''} ${isMatched(index, 'option') ? styles.matched : ''}`}
+                style={{
+                  outline: isMatched(index, 'option') ? '2px solid green' : '',
+                }}
               >
-                {item.term}
+                {item}
               </div>
               <div
                 onClick={() => handleDefinitionClick(index)}
+                key={`question-${index}`}
                 id={`question-${index}`}
                 className={`${styles.definitionBox} ${selectedDefinition === index ? styles.selected : ''} ${isMatched(index, 'definition') ? styles.matched : ''}`}
+                style={{
+                  outline: isMatched(index, 'definition') ? '2px solid green' : '',
+                }}
               >
-                {item.definition}
+                {item}
               </div>
             </div>
           ))}
@@ -98,12 +106,12 @@ function Matching({
 }
 
 Matching.propTypes = {
-  terms: PropTypes.arrayOf(PropTypes.shape({
-    term: PropTypes.string.isRequired,
+  options: PropTypes.arrayOf(PropTypes.shape({
+    option: PropTypes.string.isRequired,
     definition: PropTypes.string.isRequired,
   })).isRequired,
   selectedMatches: PropTypes.arrayOf(PropTypes.shape({
-    term: PropTypes.number.isRequired,
+    option: PropTypes.number.isRequired,
     definition: PropTypes.number.isRequired,
     lineObj: PropTypes.instanceOf(LeaderLine),
   })).isRequired,

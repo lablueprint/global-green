@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useEffect, useState } from 'react';
-import { useSession, signOut } from 'next-auth/react';
+import { useSession, signOut, signIn } from 'next-auth/react';
 
 function VerifyEmail() {
   const [token, setToken] = useState('');
@@ -14,7 +14,8 @@ function VerifyEmail() {
   const [resendDisabled, setResendDisabled] = useState(true);
   const [cooldown, setCooldown] = useState(60); // 60 seconds cooldown
   const intervalRef = React.useRef();
-  const { data: session } = useSession();
+  const { data: session, update } = useSession();
+  const [verified, setVerified] = useState(false);
 
   async function fetchUpdatedUserDetails(id) {
     if (!id) return;
@@ -33,6 +34,18 @@ function VerifyEmail() {
       setError(data.error);
     }
     setExpiresAt(new Date(data.user.verifyExpires));
+    setVerified(data.user.verified);
+    console.log('data at verifyemail', data);
+    if (data.user.verified) {
+      // stop all intervals
+      if (intervalRef.current) clearInterval(intervalRef.current);
+      // relogin to get updated session
+      await signIn('credentials', { username: data.user.userName, password: data.user.password });
+
+      // redirect to profile page
+      window.location.href = '/profile';
+    }
+
   }
   const handleVerifyEmail = async () => {
     try {
@@ -49,7 +62,8 @@ function VerifyEmail() {
       } else {
         setMessage(data.message);
         await fetchUpdatedUserDetails(session.user.id);
-        window.location.href = '/profile';
+
+        
       }
     } catch (err) {
       setError(err.message);
@@ -57,9 +71,23 @@ function VerifyEmail() {
   };
 
   const handleLogout = async () => {
-    await signOut();
+    if (intervalRef.current) clearInterval(intervalRef.current);
+    if (verified || session.user.verified) {
+      console.log('verified at handlelogut', verified);
+      window.location.href = '/profile';
+      return;
+    }
+    else {
+      if (session.user.verified) {
+        console.log('verified at handlelogut', verified);
+        alert('Your account has been verified. You can now access your profile.');
+        window.location.href = '/profile';
+        return;
+      }
     alert('Your verification time has expired. Please sign up again.');
-    window.location.href = '/signup';
+    await signOut();
+  }
+
   };
 
   const updateTimer = () => {
@@ -70,6 +98,8 @@ function VerifyEmail() {
         setTimeLeft(0);
         clearInterval(intervalRef.current); // Assuming you have a ref for this interval as well
         handleLogout();
+        
+        
       } else {
         setTimeLeft(Math.round(diff / 1000));
       }
@@ -141,6 +171,15 @@ function VerifyEmail() {
   useEffect(
     () => {
       console.log('session', session);
+
+      // if no user logged in, redirect to login page
+      if (!session) {
+       window.location.href = '/login';
+      }
+      if (session?.user?.verified) {
+        console.log('verified at useeffect', session.user.verified);
+        window.location.href = '/profile';
+      }
       if (session?.user?.id) getUserDetails(session.user.id);
 
       // make sure only one interval is running at a time

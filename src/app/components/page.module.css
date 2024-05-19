@@ -1,0 +1,195 @@
+@import url('https://fonts.googleapis.com/css2?family=Instrument+Sans:ital,wght@0,400..700;1,400..700&display=swap');
+
+.lesson-container {
+  display: flex;
+  gap: 30px;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 15%;
+  padding-top: 8%;
+  /* max-width: 700px; */
+}
+
+.sticky-button {
+  background-color: #1d1d1d;
+  color: white;
+  border: none;
+  border-radius: 20px;
+  cursor: pointer;
+  display: inline-block;
+  width: auto;
+  font-weight: bold;
+  padding-top: 1%;
+  padding-bottom: 1%;
+  padding-right: 1.5%;
+  padding-left: 1.5%;
+  width: fit-content;
+}
+    
+.sticky-button:disabled {
+  background-color: #f6f6f6;
+  color: #aeaeae;
+  cursor: default;
+}
+    
+.grey-box-highlight {
+  background-color: #f0f0f0;
+  padding: 4%;
+  border-radius: 5px;
+  line-height: 200%;
+}
+  
+.title-text1 {
+  font-weight: bold;
+  font-size: large;
+}
+    
+.lesson-number {
+  padding: 8px 16px;
+  color: var(--Grey-60, rgba(13, 13, 13, 0.60));
+  font-weight: 500;
+  background-color: #dcf5d6;
+  width: fit-content;
+  border-radius: 8px;
+  font-size: smaller;
+  margin-bottom: -30px;
+}
+    
+.quote-highlight {
+  border-left: 3.5px solid #365f2f;
+  margin-left: 0;
+  padding-left: 1.75%;
+  color: #2F2F2F;
+  font-family: 'Instrument Sans', sans-serif;
+  font-size: 24px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: 130%;
+}
+    
+.text-image-horizontal {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-direction: row; 
+}
+  
+.title-text2 {
+  font-weight: bold;
+  font-size: large;
+  line-height: 200%;
+}
+  
+.text {
+  font-size: 18px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 170%;
+  font-family: 'Instrument Sans', sans-serif;
+  color: #2F2F2F;
+}
+    
+.text-part {
+  margin-right: 1%;
+  padding: 2%;
+  border: 0px solid black;
+  min-width: 69%;
+  max-width: 69%;
+  font-weight: 600;
+  font-size: smaller;
+  line-height: 140%;
+}
+    
+.image-part {
+  border: 0px solid black;
+  min-height: 100%;
+  min-width: 30%;
+  max-width: 30%;
+}
+
+.mainTitle {
+  color: black;
+  font-family: "Instrument Sans";
+  font-size: 32px;
+  font-style: normal;
+  font-weight: 575;
+  line-height: 130%;
+  margin-bottom: 0px;
+}
+
+.subTextTitle {
+  color: #2f2f2f;
+  font-size: 22px;
+  font-size: bold;
+  font-weight: 700;
+}
+  
+.subTitle {
+  color: #2f2f2f;
+  font-size: 22px;
+  font-size: bold;
+  font-weight: 700;
+}
+
+.listContainer {
+  background-color: #E2E2E2;
+  padding: 20px;
+  border: 1px solid #ccc;
+  margin: 20px;
+  border-radius: 8px;
+}
+  
+.content {
+  font-family: 'Arial', sans-serif;
+  line-height: 1.6;
+  color: #333;
+}
+  
+.content p {
+  margin-bottom: 16px; 
+}
+  
+.content strong {
+  color: black;
+}
+
+.dropdown-container {
+  border-bottom: 1px solid #bbb;
+}
+
+.dropdown-button {
+  width: 100%;
+  padding: 2.75%;
+  padding-left: 5%;
+  padding-right: 5%;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  border: none;
+  background-color: white;
+  border-top: 1px solid #bbb;
+}
+
+.dropdown-title {
+  font-size: 17px;
+  font-weight: bolder;
+}
+
+.dropdown-content {
+  padding: 5%;
+  padding-top: 1.5%;
+  padding-bottom: 4%;
+}
+
+.green-text {
+  color: #519546;
+}
+
+.greenCenterText {
+  color: #519546;
+  font-size: 24px;
+  font-size: bold;
+  display: flex;
+  justify-content: center;
+}

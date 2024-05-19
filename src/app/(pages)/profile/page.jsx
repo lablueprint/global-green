@@ -3,7 +3,6 @@
 import React, { useEffect, useState } from 'react';
 import Image from 'next/image';
 import { useSession, signOut } from 'next-auth/react';
-import { FaPencilAlt } from 'react-icons/fa';
 import styles from './page.module.css';
 import defaultProfilePic from './profilepic.jpg';
 // Assuming you have a default profile pic
@@ -210,9 +209,13 @@ function Profile() {
     setPasswordPopup(false);
   };
 
-  const totalPages = Math.ceil(certData.length / 3);
+  console.log('certData', certData);
   const startIndex = currentPage * 3;
-  const displayedCertificates = certData.slice(startIndex, startIndex + 3);
+  const displayedCertificates = certData.slice(
+    startIndex,
+    startIndex + 3,
+  );
+  const totalPages = Math.ceil(displayedCertificates.length / 3);
 
   const handlePageChange = (page) => {
     setCurrentPage(page);

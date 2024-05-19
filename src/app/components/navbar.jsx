@@ -2,6 +2,7 @@
 
 import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
+import Image from 'next/image';
 import PersonOutlinedIcon from '@mui/icons-material/PersonOutlined';
 import ClassIcon from '@mui/icons-material/Class';
 import FlagOutlinedIcon from '@mui/icons-material/FlagOutlined';
@@ -9,12 +10,21 @@ import ShoppingBagOutlinedIcon from '@mui/icons-material/ShoppingBagOutlined';
 import LocationOnOutlinedIcon from '@mui/icons-material/LocationOnOutlined';
 import TollOutlinedIcon from '@mui/icons-material/TollOutlined';
 import PublicOutlinedIcon from '@mui/icons-material/PublicOutlined';
+import KeyboardArrowLeftIcon from '@mui/icons-material/KeyboardArrowLeft';
+import KeyboardDoubleArrowLeftIcon from '@mui/icons-material/KeyboardDoubleArrowLeft';
+import KeyboardDoubleArrowRightIcon from '@mui/icons-material/KeyboardDoubleArrowRight';
+import Button from '@mui/material/Button';
 
 import { useSession, signOut } from 'next-auth/react';
 import styles from './navbar.module.css';
 
 function NavLink({
-  href, children, icon, isActive, setCurrentPath, currentPath,
+  href,
+  children,
+  icon,
+  isActive,
+  setCurrentPath,
+  currentPath,
 }) {
   return (
     <Link
@@ -23,8 +33,7 @@ function NavLink({
       style={{ textDecoration: 'none' }}
     >
       <div
-        className={`${styles.link} ${isActive ? styles.active : ''} ${currentPath === '/courses' ? styles.mini : ''}`}
-
+        className={`${styles.link} ${isActive ? styles.active : ''}`}
       >
         {icon}
         {children}
@@ -64,27 +73,25 @@ export default function NavBar() {
       text: 'Map',
       icon: <LocationOnOutlinedIcon />,
     },
-
   ];
   const getUserDetails = async (id) => {
     if (!id) return;
-    const response = await fetch(
-      '/api/users/me',
-      {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ id }),
+    const response = await fetch('/api/users/me', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
       },
-    );
+      body: JSON.stringify({ id }),
+    });
 
     const data = await response.json();
     console.log('data', data);
     setUser(data.user);
+    console.log('user', user);
   };
 
   useEffect(() => {
+    console.log('session', session);
     if (session) getUserDetails(session.user.id);
   }, [session]);
 
@@ -94,31 +101,75 @@ export default function NavBar() {
     }
   }, []);
 
+  function collapseNavBar() {
+    if (collapseButton.type === KeyboardDoubleArrowLeftIcon) {
+      setCollapseButton(<KeyboardDoubleArrowRightIcon />);
+      // document.getElementById("navbar").style = styles.mini;
+    } else {
+      setCollapseButton(<KeyboardDoubleArrowLeftIcon />);
+      document.getElementById('navbar').style.display = '';
+    }
+  }
+
+  const [collapseButton, setCollapseButton] = useState(
+    <KeyboardDoubleArrowLeftIcon />,
+  );
+
   return (
-    <div className={`${styles.navbar} ${currentPath === '/courses' ? styles.mini : ''}`}>
+    <div
+      id="navbar"
+      className={`${styles.navbar} ${collapseButton.type === KeyboardDoubleArrowRightIcon
+        || collapseButton.type === KeyboardDoubleArrowRightIcon
+        ? styles.mini
+        : ''
+      }`}
+    >
       <div className={styles.navcomp}>
-        <div className={`${styles.profileWrapper} ${currentPath === '/courses' ? styles.mini : ''}`}>
-          <div className={styles.personIcon}>
-            <PersonOutlinedIcon />
-
+        <div
+          className={`${styles.navlinks} ${
+            currentPath === '/courses'
+            || collapseButton.type === KeyboardDoubleArrowRightIcon
+              ? styles.mini
+              : ''
+          }`}
+        >
+          <Button
+            variant="outlined"
+            onClick={collapseNavBar}
+            className={styles.button}
+            // class="close"
+          >
+            {collapseButton}
+          </Button>
+          <div className={styles.ggLogoAndText}>
+            <NavLink
+              href="/"
+              icon={(
+                <Image
+                  width={
+                    collapseButton.type === KeyboardDoubleArrowRightIcon
+                      ? 62
+                      : 47
+                  }
+                  height={
+                   collapseButton.type === KeyboardDoubleArrowRightIcon
+                     ? 62
+                     : 47
+                  }
+                  alt="gg Logo"
+                  src="https://global-green-2.s3.us-west-1.amazonaws.com/globalgreenlogo.png"
+                />
+              )}
+              isActive={currentPath === '/'}
+              setCurrentPath={setCurrentPath}
+              currentPath={currentPath}
+            >
+              {currentPath === '/courses'
+              || collapseButton.type === KeyboardDoubleArrowRightIcon
+                ? ''
+                : 'Global Green Scholar'}
+            </NavLink>
           </div>
-          {
-            currentPath === '/courses' ? ''
-              : (
-                <div className={styles.profileText}>
-                  {user.userName || 'Login'}
-                </div>
-              )
-}
-          <div className={styles.profilePoints}>
-            <TollOutlinedIcon />
-            164
-            {' '}
-            {currentPath === '/courses' ? '' : 'Points'}
-          </div>
-
-        </div>
-        <div className={`${styles.navlinks} ${currentPath === '/courses' ? styles.mini : ''}`}>
           {navlinks.map((link) => (
             <NavLink
               key={link.href}
@@ -128,21 +179,63 @@ export default function NavBar() {
               setCurrentPath={setCurrentPath}
               currentPath={currentPath}
             >
-              {link.text}
+              {/* {link.text} */}
+              {collapseButton.type === KeyboardDoubleArrowRightIcon ? (
+                ''
+              ) : (
+                <p>{link.text}</p>
+              )}
             </NavLink>
           ))}
         </div>
-        <div className={`${styles.GGScholar} ${currentPath === '/courses' ? styles.mini : ''}`}>
-
-          <NavLink
-            href="/"
-            icon={<PublicOutlinedIcon />}
-            isActive={currentPath === '/'}
-            setCurrentPath={setCurrentPath}
-            currentPath={currentPath}
-          >
-            {currentPath === '/courses' ? '' : 'GG Scholar'}
-          </NavLink>
+        <div
+          className={`${styles.GGScholar} ${
+            collapseButton.type === KeyboardDoubleArrowRightIcon
+              ? styles.mini
+              : ''
+          }`}
+        />
+        <div
+          className={`${styles.profileWrapper} ${
+            collapseButton.type === KeyboardDoubleArrowRightIcon
+              ? styles.mini
+              : ''
+          }`}
+        >
+          <div className={styles.personIcon}>
+            {user.profilePic ? (
+              <Image
+                src={user.profilePic}
+                alt="pointsIcon"
+                width={64}
+                height={64}
+              />
+            ) : (
+              <PersonOutlinedIcon />
+            )}
+          </div>
+          <div className={styles.profileText}>
+            {currentPath.includes('/lesson')
+            || collapseButton.type === KeyboardDoubleArrowRightIcon ? (
+                ''
+              ) : (
+                <div className={styles.usernameText}>
+                  {user.userName || 'Login'}
+                </div>
+              )}
+            <div className={styles.profilePoints}>
+              <Image
+                src="https://global-green-2.s3.us-west-1.amazonaws.com/pointsIcon.svg"
+                alt="pointsIcon"
+                width={16}
+                height={16}
+              />
+              {user.points}
+              {collapseButton.type === KeyboardDoubleArrowRightIcon
+                ? ''
+                : ' Points'}
+            </div>
+          </div>
         </div>
       </div>
     </div>

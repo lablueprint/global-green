@@ -9,13 +9,28 @@ const userSchema = new Schema(
     userName: { type: String },
     points: { type: Number, default: 0 },
     badges: { type: Array },
-    courses: { type: Array },
-    verified: { type: Boolean, default: false },
+    courses: [
+      {
+        key: { type: String, required: true },
+        currStage: { type: Number },
+        complete: { type: Boolean },
+      },
+    ],
+    certificates: [
+      {
+        key: { type: String, required: true },
+        date: { type: Date },
+      },
+    ],
+    verified: { type: Boolean },
     verifyToken: { type: String },
-    verifyExpires: { type: Date, default: Date.now, index: { expireAfterSeconds: 300 } },
+    forgetPasswordToken: { type: String },
+    forgetPasswordExpires: { type: Date },
+    verifyExpires: { type: Date, index: { expireAfterSeconds: 300 } },
     accessories: { type: Array, default: [] },
     backgrounds: { type: Array, default: [] },
     seeds: { type: Number, default: 0 },
+    profilePic: { type: String },
   },
   {
     timestamps: true,

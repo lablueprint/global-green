@@ -13,16 +13,16 @@ const userSchema = new Schema(
       {
         key: { type: String, required: true },
         currStage: { type: Number },
-        complete: {type: Boolean}
+        complete: { type: Boolean },
       },
     ],
     verified: { type: Boolean, default: false },
     verifyToken: { type: String },
     verifyExpires: { type: Date, default: Date.now, index: { expireAfterSeconds: 300 } },
     accessories: { type: [String] },
-    backgrounds: { type: [String] },
+    backgrounds: { type: [String], default: 'background1' },
     garden: {
-      background: { type: String },
+      background: { type: String, default: 'background1' },
       accessories: { type: [String] },
     },
     seeds: { type: Number, default: 0 },

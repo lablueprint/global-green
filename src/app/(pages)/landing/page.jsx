@@ -10,6 +10,10 @@ import GardenModal from './GardenModal';
 function LandingPage() {
   const [currentModule] = useState({ imageUrl: '/landingpageImage.png', name: 'Chinenye Eneh' });
   const [isGardenModalOpen, setIsGardenModalOpen] = useState(false);
+
+  // TODO: replace this mapping method
+  // better naming scheme - either as global variables since local to track which indexes
+  // move garden state to redux to make the operations easier
   const courseFlowerMap = {
     course1: 1,
     course2: 2,
@@ -26,12 +30,17 @@ function LandingPage() {
     5: false,
     6: false,
   });
+  const [gardenState, setGardenState] = useState({
+    background: 'background1',
+    accessories: [],
+  });
+
   const { data: session } = useSession();
 
-  const getCourseProgress = async (id) => {
+  const getCoursesInfo = async (id) => {
     if (!id) return;
     const response = await fetch(
-      '/api/users/course/progress',
+      '/api/users/me',
       {
         method: 'POST',
         headers: {
@@ -42,25 +51,54 @@ function LandingPage() {
     );
 
     const data = await response.json();
+    const { user } = data;
 
+    // set the flowers based on progress
     const adjustFlowers = flowers;
-    data.courseProgress.forEach((course) => {
+    user.courses.forEach((course) => {
       if (course.complete) {
         adjustFlowers[courseFlowerMap[course.key]] = true;
       }
     });
     setFlowers(adjustFlowers);
+
+    // set the garden based on the user selection
+    if (user.garden && user.garden.background) {
+      setGardenState(user.garden);
+    }
   };
 
   useEffect(() => {
-    if (session) getCourseProgress(session.user.id);
+    if (session) getCoursesInfo(session.user.id);
   }, [session]);
+
+  const updateGardenState = async (id) => {
+    // update the user's garden state
+    await fetch('/api/users/me/update-garden', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ id, garden: gardenState }),
+    });
+  };
+
+  useEffect(() => {
+    updateGardenState(session.user.id);
+  }, [gardenState]);
 
   // seeing landing page banner
   return (
     <div className={styles.landingPage}>
       {isGardenModalOpen
-      && <GardenModal setIsGardenModalOpen={setIsGardenModalOpen} flowers={flowers} />}
+      && (
+      <GardenModal
+        setIsGardenModalOpen={setIsGardenModalOpen}
+        flowers={flowers}
+        gardenState={gardenState}
+        setGardenState={setGardenState}
+      />
+      )}
       <div className={styles.welcome}>
         <h1>
           Welcome,

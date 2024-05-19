@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { motion } from 'framer-motion';
 import { Button } from '@mui/material';
 import PropTypes from 'prop-types';
@@ -7,33 +7,25 @@ import styles from './page.module.css';
 import GardenImage from './GardenImage';
 
 export default function GardenModal({
-  setIsGardenModalOpen, flowers, backgroundOptions = ['bg1', 'bg2', 'bg3'], accessoryOptions = ['acc1', 'acc2', 'acc3', 'acc4'],
+  setIsGardenModalOpen, flowers, gardenState, setGardenState,
 }) {
-  // Next steps:
-  // add accessory and background images to local storage + make model to connect with string rep
-  // initialize states w user values and update
-
-  // initialize states by inputting user data
-
   // Official state of user garden
   // mb replace this w a function to update the user state??
   const [isCustomizing, setIsCustomizing] = useState(false);
   const [currentTab, setCurrentTab] = useState('accessories'); // accessories, background
-  const [gardenState, setGardenState] = useState({
-    background: '',
-    accessories: [],
-  });
 
-  // TODO: delete this function
-  useEffect(() => {
-    console.log(gardenState);
-  }, [gardenState]);
+  // TODO: need to add restrictions from adding items that haven't been bought yet
+  // check user backgrounds and accessories and compare with the options
+
+  // TODO: come up with a better method of storing these constants
+  const accessoryOptions = ['accessories1', 'accessories2', 'accessories3', 'accessories4'];
+  const backgroundOptions = ['background1', 'background2', 'background3', 'background4'];
 
   // State to track items selected in menu
-  const [selector, setSelector] = useState({
-    background: '',
-    accessories: [],
-  });
+  const [selector, setSelector] = useState(null);
+  useEffect(() => {
+    setSelector(gardenState);
+  }, []);
 
   function selectBackground(val) {
     setSelector((prevSelector) => ({
@@ -58,11 +50,12 @@ export default function GardenModal({
     return selector.accessories.includes(val);
   }
 
-  function applySelections() {
+  async function applySelections() {
     setGardenState(() => ({
       background: selector.background,
       accessories: selector.accessories,
     }));
+    setIsCustomizing(false);
   }
 
   // object to associate appropriate functions with tab category
@@ -80,7 +73,7 @@ export default function GardenModal({
         {options.map((item) => (
           <motion.div
             key={item}
-            className={styles.gardenModalEditItem}
+            className={`${styles.gardenModalEditItem} ${styles[`${item}`]}`}
             style={{
               border: isSelected(item) ? '4px solid green' : 'none',
               cursor: 'pointer',
@@ -199,7 +192,10 @@ export default function GardenModal({
 
 GardenModal.propTypes = {
   setIsGardenModalOpen: PropTypes.func.isRequired,
-  flowers: PropTypes.arrayOf(PropTypes.string).isRequired,
-  backgroundOptions: PropTypes.arrayOf(PropTypes.string).isRequired,
-  accessoryOptions: PropTypes.arrayOf(PropTypes.string).isRequired,
+  flowers: PropTypes.objectOf(PropTypes.bool).isRequired,
+  gardenState: PropTypes.shape({
+    background: PropTypes.string,
+    accessories: PropTypes.arrayOf(PropTypes.string),
+  }).isRequired,
+  setGardenState: PropTypes.func.isRequired,
 };

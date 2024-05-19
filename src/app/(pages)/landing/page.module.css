@@ -242,15 +242,16 @@
     background-repeat: no-repeat;
     border-radius: 20px;
   }
+  /* TODO: replace this with the correct background */
   .gardenBackground {
-    background-image: url('/garden/background.png');
+    background-image: url('/backgrounds/background1.png');
   }
   .gardenBackgroundWide {
     width: 600px;
     height: 300px;
     background-size: cover;
     border-radius: 20px;
-    background-image: url('/garden/background.png');
+    background-image: url('/backgrounds/background1.png');
   }
   .gardenEarth {
     width: 250px;
@@ -365,6 +366,35 @@
     height: 100px;
     background-image: url('/garden/flower7.png');
   }
+
+  .accessories1 {
+    width: 90px;
+    height: 60px;
+    background-image: url('/accessories/accessory1.png');
+  }
+
+  .accessories2 {
+    width: 100px;
+    height: 50px;
+    background-image: url('/accessories/accessory2.png');
+  }
+
+  .accessories3 {
+    width: 90px;
+    height: 80px;
+    background-image: url('/accessories/accessory3.png');
+  }
+
+  .accessories4 {
+    width: 100px;
+    height: 100px;
+    background-image: url('/accessories/accessory4.png');
+  }
+
+  .background1 {
+    background-image: url('/backgrounds/background1.png');
+  }
+
 }
 
 .gardenModalEditBox{

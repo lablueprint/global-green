@@ -52,6 +52,6 @@ export default function ModalWelcome({
 
 ModalWelcome.propTypes = {
   setIsGardenModalOpen: PropTypes.func.isRequired,
-  flowers: PropTypes.arrayOf(PropTypes.string).isRequired,
+  flowers: PropTypes.objectOf(PropTypes.bool).isRequired,
   setIsCustomizing: PropTypes.func.isRequired,
 };

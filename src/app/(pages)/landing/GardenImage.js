@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import PropTypes from 'prop-types';
 import styles from './page.module.css';
@@ -9,11 +9,8 @@ export default function GardenImage({ status, flowers }) {
     animate: { opacity: 1, scale: 1.2, y: 0 },
     exit: { opacity: 0, scale: 0.9, y: 100 },
   };
-  const [isView, setIsView] = useState(status === 'view');
+  const isView = status === 'view';
 
-  useEffect(() => {
-    setIsView(status === 'view');
-  }, [status]);
   const containerClass = styles.gardenModalImageContainer;
   const backgroundClass = isView
     ? `${styles.gardenImage} ${styles.gardenBackgroundWide}`
@@ -61,5 +58,5 @@ export default function GardenImage({ status, flowers }) {
 
 GardenImage.propTypes = {
   status: PropTypes.string.isRequired,
-  flowers: PropTypes.arrayOf(PropTypes.string).isRequired,
+  flowers: PropTypes.objectOf(PropTypes.bool).isRequired,
 };

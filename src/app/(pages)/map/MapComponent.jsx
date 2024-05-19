@@ -109,10 +109,9 @@ function MapComponent() {
 
   // ref = {mapContainerRef} is callback reference for the div that contains the map
   return (
-    <div ref={mapContainerRef} className={styles.mapContainer}>
+    <div className={styles.mainBox}>
+      <div ref={mapContainerRef} className={styles.mapContainer} />
       <div className={styles.sideBar}>
-        <p className={resortIsActive ? styles.active : styles.inactive} onClick={resortToggleButton}>Resort</p>
-        <p className={labIsActive ? styles.active : styles.inactive} onClick={labToggleButton}>Lab</p>
         {mapArray.map((marker) => {
           if (
             (!resortIsActive && !labIsActive) ||

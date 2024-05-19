@@ -367,6 +367,8 @@
     background-image: url('/garden/flower7.png');
   }
 
+  /* TODO: display the background and accessory images to the GardenImage by adding styling */
+
   .accessories1 {
     width: 90px;
     height: 60px;

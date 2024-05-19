@@ -15,7 +15,8 @@ export default function GardenModal({
   const [currentTab, setCurrentTab] = useState('accessories'); // accessories, background
 
   // TODO: need to add restrictions from adding items that haven't been bought yet
-  // check user backgrounds and accessories and compare with the options
+  // check user backgrounds and accessories (maybe new api route or from user object)
+  // and compare with the options arrays below to either add a gray overlay or not
 
   // TODO: come up with a better method of storing these constants
   const accessoryOptions = ['accessories1', 'accessories2', 'accessories3', 'accessories4'];

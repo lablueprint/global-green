@@ -30,6 +30,7 @@ function LandingPage() {
     5: false,
     6: false,
   });
+  // TODO: potentially move this and the update functions to a redux state
   const [gardenState, setGardenState] = useState({
     background: 'background1',
     accessories: [],
@@ -63,6 +64,7 @@ function LandingPage() {
     setFlowers(adjustFlowers);
 
     // set the garden based on the user selection
+    // TODO: add more checks for if a user field exists! some accounts don't have some fields
     if (user.garden && user.garden.background) {
       setGardenState(user.garden);
     }

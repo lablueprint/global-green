@@ -375,10 +375,19 @@ function Quiz() {
     return <Results points={points} totalQuestions={currentQuiz.questions.length} questionResults={questionResults} />;
   }
 
+  const urlParams = new URLSearchParams(window.location.search);
+  const num = urlParams.get('stage');
+
   return (
     <div className={styles.container}>
       <div className={styles.quizContainer}>
-        <div className={styles.quizTitleContainer}> Quiz 3: Resin Identification Code</div>
+        <div className={styles.quizTitleContainer}>
+          {' '}
+          Quiz
+          {' '}
+          {' '}
+          {num}
+        </div>
         <div className={styles.progressbarandhintcontainer}>
           <div
             style={{

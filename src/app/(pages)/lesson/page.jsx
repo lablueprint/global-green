@@ -59,6 +59,10 @@ function CoursePage({ params, searchParams }) {
     router.push(`/roadmap/course?courseKey=${courseKey}`);
   };
 
+  const goToQuiz = () => {
+    router.push(`quiz?courseKey=${courseKey}&stage=${stage}`);
+  };
+
   useEffect(
     () => {
       if (session) checkUserHasAccess(session.user.id);
@@ -80,6 +84,7 @@ function CoursePage({ params, searchParams }) {
       <div>
         {hasAccess ? courseToShow[courseKey] : 'You do not have access to this course yet'}
       </div>
+      <button type="button" onClick={goToQuiz}>Go to Quiz</button>
     </div>
   );
 }

@@ -16,9 +16,10 @@
     font-style: normal;
     font-weight: 600;
     line-height: 100%;
-    margin-top: 110px;
+    margin-top: 40px;
     margin-bottom: 20px;
 }
+
 .seedsTitle {
     color: #000;
     font-family: 'Instrument Sans', sans-serif;
@@ -26,7 +27,7 @@
     font-style: normal;
     font-weight: 300;
     line-height: 100%;
-    margin-bottom: 40px;
+    margin-bottom: 30px;
 }
 
 .storeItems {
@@ -35,9 +36,11 @@
     justify-content: flex-start;
     gap: 2rem;
     margin: 1rem;
-    margin-top: 45px;
+    margin-top: 5px;
     padding: 1rem;
     border-radius: 5px;
+
+    background-color: white;
 }
 
 .storeItem {
@@ -56,8 +59,8 @@
 
 .storeItemImg {
     position: relative;
-    width: 15em;
-    height: 15em;
+    width: 12em;
+    height: 12em;
     padding: 1rem;
     background-color: #e4eef6;
     border-radius: 1em;

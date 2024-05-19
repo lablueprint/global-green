@@ -185,7 +185,6 @@ function Store() {
             <div style={{ margin: '0 50px 10px 10px' }}>
               {storeItem(item)}
             </div>
-            {(index + 1) % 3 === 0 && <div style={{ flexBasis: '100%' }} />}
           </React.Fragment>
         ))}
       </div>

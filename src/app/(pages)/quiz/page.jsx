@@ -22,7 +22,6 @@ function Quiz() {
   const [popupMessage, setPopupMessage] = useState('');
   const [selectedOption, setSelectedOption] = useState('');
   const [showHint, setShowHint] = useState(false);
-  const [hasHint, setHasHint] = useState(true);
   const [disableSkipButton, setSkipButton] = useState(false);
   const [selectedMatches, setSelectedMatches] = useState([]);
   const [skippedQuestions, setSkippedQuestions] = useState([]);
@@ -406,8 +405,7 @@ function Quiz() {
             x={currentQuestionIndex + 1}
             y={currentQuiz.questions.length}
           />
-          {hasHint
-          && <button type="button" className={styles.hintButton} onClick={handleHint} />}
+          {num !== '6' ? <button type="button" className={styles.hintButton} onClick={handleHint} /> : ''}
           {showHint && (
             <div className={styles.hintOverlay} onClick={handleOverlayClick}>
               <HintPopup hintMessage={popupMessage} onClose={() => setShowHint(false)} />

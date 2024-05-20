@@ -115,14 +115,6 @@ function Quiz() {
           />
         );
       case 'checkbox':
-        return (
-          <Check
-            question={question.question}
-            options={question.options}
-            selectedAnswers={Array.isArray(selectedOption) ? selectedOption : []}
-            onUpdateAnswer={setSelectedOption}
-          />
-        );
       case 'selectall':
         return (
           <Check
@@ -454,7 +446,7 @@ function Quiz() {
                     ? '#E3F8F1'
                     : currentQuestion.type === 'truefalse'
                       ? '#FFE6C9'
-                      : currentQuestion.type === 'checkbox'
+                      : currentQuestion.type === 'checkbox' || currentQuestion.type === 'selectall'
                         ? '#EDE2F7'
                         : 'none',
             }}
@@ -465,7 +457,7 @@ function Quiz() {
                 ? 'Multiple Choice'
                 : currentQuestion.type === 'truefalse'
                   ? 'True and False'
-                  : currentQuestion.type === 'checkbox'
+                  : currentQuestion.type === 'checkbox' || currentQuestion.type === 'selectall'
                     ? 'Select All'
                     : ''}
           </div>

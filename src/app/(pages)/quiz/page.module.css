@@ -375,6 +375,7 @@
   min-width: 240px;
   max-width: 500px;
   flex-grow: 1; 
+  text-align: left;
 }
 
 .selected {

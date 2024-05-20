@@ -6,16 +6,12 @@ import SessionProvider from './components/SessionProvider';
 import NavBar from './components/navbar';
 import styles from './page.module.css';
 import Loading from './(pages)/loading';
-
 /* eslint react/prop-types: 0 */
-
 const inter = Inter({ subsets: ['latin'] });
-
 export const metadata = {
   title: 'Global Green Web App',
   description: 'Web-based educational game',
 };
-
 export default async function RootLayout({ children }) {
   const session = await getServerSession();
   return (

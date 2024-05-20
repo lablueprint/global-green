@@ -1,9 +1,9 @@
-"use client";
+'use client';
 
-import React from "react";
-import LinearWithValueLabel from "./progressbar";
-import styles from "./page.module.css";
-import RoadmapSVG from "./roadmapSVG";
+import React from 'react';
+import LinearWithValueLabel from './progressbar';
+import styles from './page.module.css';
+import RoadmapSVG from './roadmapSVG';
 
 function Roadmap({
   courseKey,
@@ -12,7 +12,6 @@ function Roadmap({
   courseInfo = "Plastic is all around us. It's in our kitchens, shoes, entertainment systems, vehicles, and even our clothing. Lorem ipsum...",
 }) {
   const totalProgress = (currStage / 6) * 100;
-
   return (
     <div className={styles.o}>
       <div className={styles.headerContainer}>
@@ -29,7 +28,7 @@ function Roadmap({
           value={totalProgress}
           x={currStage}
           y={6}
-          style={{ width: "50%" }}
+          style={{ width: '50%' }}
         />
         <div className={styles.courseInformation}>{courseInfo}</div>
       </div>
@@ -41,5 +40,4 @@ function Roadmap({
     </div>
   );
 }
-
 export default Roadmap;

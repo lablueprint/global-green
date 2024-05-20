@@ -8,9 +8,8 @@
   height: 100vh;
   padding: 20px;
   box-sizing: border-box;
-  overflow: hidden; 
-  padding-left: 2.5em;
-  margin-left: 2.5em; 
+  overflow: hidden;
+  padding-left: 4em;
 }
 
 /* Header container for the title and description */
@@ -41,7 +40,9 @@
   align-items: flex-start;
   padding: 10px;
   width: 100%;
-  height: calc(100vh - 140px); /* Adjust height to account for the header and padding */
+  height: calc(
+    100vh - 140px
+  ); /* Adjust height to account for the header and padding */
   box-sizing: border-box;
   overflow-x: hidden;
   overflow-y: hidden; /* Prevent vertical scrolling */
@@ -92,7 +93,7 @@
 
 .sideBarItemSelected {
   background-color: #e2edf7;
-  border: 2px solid #6DAAE0;
+  border: 2px solid #6daae0;
 }
 
 /* Marker modal styling */
@@ -108,7 +109,7 @@
 }
 
 .markerModalTagSustainabilityLab {
-  background-color: #FFD39F;
+  background-color: #ffd39f;
   border-radius: 10px;
   padding: 6px 13px;
   font-weight: 400;
@@ -116,7 +117,7 @@
 }
 
 .markerModalTagResort {
-  background-color: #A0D8B3;
+  background-color: #a0d8b3;
   border-radius: 10px;
   padding: 6px 13px;
   font-weight: 400;
@@ -147,8 +148,6 @@
   padding-left: 0.5em;
 }
 
-
-
 /* Sidebar item styling */
 .sideBarItem {
   display: flex;
@@ -169,7 +168,7 @@
 }
 
 .sideBarItem:hover {
-  border: 2px solid #6DAAE0; 
+  border: 2px solid #6daae0;
 }
 
 /* Marker modal styling */
@@ -185,7 +184,7 @@
 }
 
 .markerModalTagSustainabilityLab {
-  background-color: #FFD39F;
+  background-color: #ffd39f;
   border-radius: 10px;
   padding: 6px 13px;
   font-weight: 400;
@@ -193,7 +192,7 @@
 }
 
 .markerModalTagResort {
-  background-color: #A0D8B3;
+  background-color: #a0d8b3;
   border-radius: 10px;
   padding: 6px 13px;
   font-weight: 400;
@@ -222,7 +221,7 @@
 }
 .sideBarItemSelected {
   background-color: #e2edf7;
-  border: 2px solid #6DAAE0;
+  border: 2px solid #6daae0;
 }
 
 .markerModalLink:focus {

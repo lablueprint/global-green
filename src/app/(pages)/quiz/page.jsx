@@ -385,7 +385,7 @@ function Quiz() {
 
       handleAnswer(isCorrect, JSON.stringify(matchedPairs));
       setAttempted(true);
-    } else if (currentQuestion.type === 'checkAllThatApply') {
+    } else if (currentQuestion.type === 'checkbox' || currentQuestion.type === 'selectall') {
       // Sort to ensure order does not affect comparison
       const sortedSelectedOptions = selectedOption.sort();
       const sortedCorrectAnswers = currentQuestion.answer.sort();
@@ -395,6 +395,7 @@ function Quiz() {
       const isCorrect = selectedOption === currentQuestion.answer;
       handleAnswer(isCorrect, selectedOption);
     }
+    setShowCheckButton(false);
   };
 
   if (showResults) {

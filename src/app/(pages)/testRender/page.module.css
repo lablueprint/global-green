@@ -1,0 +1,88 @@
+.sticky-button {
+  background-color: #1d1d1d;
+  color: white;
+  border: none;
+  border-radius: 20px;
+  cursor: pointer;
+  display: inline-block;
+  width: auto;
+  font-weight: bold;
+  padding-top: 1%;
+  padding-bottom: 1%;
+  padding-right: 1.5%;
+  padding-left: 1.5%;
+  width: fit-content;
+}
+  
+.sticky-button:disabled {
+  background-color: #f6f6f6;
+  color: #aeaeae;
+  cursor: default;
+}
+  
+.grey-box-highlight {
+  background-color: #f0f0f0;
+  padding: 4%;
+  border-radius: 5px;
+  font-weight: 600;
+  font-size: smaller;
+  line-height: 200%;
+}
+
+.title-text1 {
+  font-weight: bold;
+  font-size: large;
+}
+  
+.lesson-number {
+  padding: 1.75%;
+  padding-top: 1%;
+  padding-bottom: 1%;
+  color: grey;
+  font-weight: 600;
+  background-color: #dcf5d6;
+  width: fit-content;
+  border-radius: 8px;
+  font-size: smaller;
+}
+  
+.quote-highlight {
+  border-left: 3.5px solid #365f2f;
+  margin-left: 0;
+  padding-left: 4%;
+  font-weight: 600;
+  font-size: large;
+}
+  
+.text-image-horizontal {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.title-text2 {
+  font-weight: bold;
+  font-size: large;
+  line-height: 200%;
+}
+  
+.text-part {
+  font-weight: 600;
+  font-size: smaller;
+  line-height: 140%;
+}
+  
+.text-part {
+  margin-right: 1%;
+  padding: 2%;
+  border: 1px solid black;
+  min-width: 69%;
+  max-width: 69%;
+}
+  
+.image-part {
+  border: 1px solid black;
+  min-height: 100%;
+  min-width: 30%;
+  max-width: 30%;
+}

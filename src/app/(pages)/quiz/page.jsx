@@ -22,7 +22,6 @@ function Quiz() {
   const [popupMessage, setPopupMessage] = useState("");
   const [selectedOption, setSelectedOption] = useState("");
   const [showHint, setShowHint] = useState(false);
-  const [hasHint, setHasHint] = useState(true);
   const [disableSkipButton, setSkipButton] = useState(false);
   const [selectedMatches, setSelectedMatches] = useState([]);
   const [skippedQuestions, setSkippedQuestions] = useState([]);
@@ -30,6 +29,7 @@ function Quiz() {
   const [isCurrentAnswerCorrect, setIsCurrentAnswerCorrect] = useState(null);
   const [skipCount, setSkipCount] = useState(0);
   const [questionResults, setQuestionResults] = useState([]);
+  const [matchedPairs, setMatchedPairs] = useState({});
 
   // ***IMPORTANT***
   // change Key here to access the different quizzes in mongoDB
@@ -104,13 +104,22 @@ function Quiz() {
       case "matching":
         return (
           <Matching
+            question={question.question}
             options={question.options}
+            answers={question.answer}
             selectedMatches={selectedMatches}
             setSelectedMatches={setSelectedMatches}
+            matchedPairs={matchedPairs}
+            setMatchedPairs={setMatchedPairs}
             isAttempted={attempted}
           />
         );
+<<<<<<< HEAD
       case "checkbox":
+=======
+      case 'checkbox':
+      case 'selectall':
+>>>>>>> bee745e022979c575a5308ae88eedf468bc38a5a
         return (
           <Check
             question={question.question}
@@ -378,7 +387,22 @@ function Quiz() {
     goToNextQuestion();
   };
 
+  if (currentQuestion.type === 'matching') {
+    console.log(`Matched Pairs: ${matchedPairs}`);
+    console.log(`Options${currentQuestion.options}`);
+    console.log(`Answers ${currentQuestion.answer}`);
+  }
+
+  function transformToMatchedPairs(options, answers) {
+    const matchedPairs = {};
+    options.forEach((option, index) => {
+      matchedPairs[option] = answers[index];
+    });
+    return matchedPairs;
+  }
+
   // Function to check the selected answer
+<<<<<<< HEAD
   const checkAnswer = (selectedOption) => {
     setShowCheckButton(false); // Hide the Check button
     if (currentQuestion.type === "matching") {
@@ -395,6 +419,18 @@ function Quiz() {
       );
       setAttempted(true);
     } else if (currentQuestion.type === "checkAllThatApply") {
+=======
+  const checkAnswer = () => {
+    if (currentQuestion.type === 'matching') {
+      const correctPairs = transformToMatchedPairs(currentQuestion.options, currentQuestion.answer);
+
+      const isCorrect = Object.keys(matchedPairs).length === Object.keys(correctPairs).length
+        && Object.keys(matchedPairs).every((key) => matchedPairs[key] === correctPairs[key]);
+
+      handleAnswer(isCorrect, JSON.stringify(matchedPairs));
+      setAttempted(true);
+    } else if (currentQuestion.type === 'checkbox' || currentQuestion.type === 'selectall') {
+>>>>>>> bee745e022979c575a5308ae88eedf468bc38a5a
       // Sort to ensure order does not affect comparison
       const sortedSelectedOptions = selectedOption.sort();
       const sortedCorrectAnswers = currentQuestion.answer.sort();
@@ -406,6 +442,7 @@ function Quiz() {
       const isCorrect = selectedOption === currentQuestion.answer;
       handleAnswer(isCorrect, selectedOption);
     }
+    setShowCheckButton(false);
   };
 
   if (showResults) {
@@ -444,6 +481,7 @@ function Quiz() {
             x={currentQuestionIndex + 1}
             y={currentQuiz.questions.length}
           />
+<<<<<<< HEAD
           {hasHint && (
             <button
               type="button"
@@ -451,6 +489,9 @@ function Quiz() {
               onClick={handleHint}
             />
           )}
+=======
+          {num !== '6' ? <button type="button" className={styles.hintButton} onClick={handleHint} /> : ''}
+>>>>>>> bee745e022979c575a5308ae88eedf468bc38a5a
           {showHint && (
             <div className={styles.hintOverlay} onClick={handleOverlayClick}>
               <HintPopup
@@ -466,6 +507,7 @@ function Quiz() {
               padding: "10px 20px",
               borderRadius: "10px",
               backgroundColor:
+<<<<<<< HEAD
                 currentQuestion.type === "matching"
                   ? "#FFE9F0"
                   : currentQuestion.type === "multiple"
@@ -486,6 +528,28 @@ function Quiz() {
               : currentQuestion.type === "checkbox"
               ? "Select All"
               : ""}
+=======
+                currentQuestion.type === 'matching'
+                  ? '#FFE9F0'
+                  : currentQuestion.type === 'multiple'
+                    ? '#E3F8F1'
+                    : currentQuestion.type === 'truefalse'
+                      ? '#FFE6C9'
+                      : currentQuestion.type === 'checkbox' || currentQuestion.type === 'selectall'
+                        ? '#EDE2F7'
+                        : 'none',
+            }}
+          >
+            {currentQuestion.type === 'matching'
+              ? 'Matching'
+              : currentQuestion.type === 'multiple'
+                ? 'Multiple Choice'
+                : currentQuestion.type === 'truefalse'
+                  ? 'True and False'
+                  : currentQuestion.type === 'checkbox' || currentQuestion.type === 'selectall'
+                    ? 'Select All'
+                    : ''}
+>>>>>>> bee745e022979c575a5308ae88eedf468bc38a5a
           </div>
           {/* <div style={{padding: '10px 20px'}}> Previously Skipped </div> */}
           {/* <div style={{padding: '10px 5px'}}> / </div> */}

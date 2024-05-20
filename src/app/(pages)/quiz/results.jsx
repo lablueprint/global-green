@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 import React from "react";
 import PropTypes from "prop-types";
 import Box from "@mui/material/Box";
@@ -9,6 +10,20 @@ import Button from "@mui/material/Button";
 import Image from "next/image";
 import LinearWithValueLabel from "./progressBar";
 import styles from "./page.module.css"; // Assume your CSS module is set up to reflect the design
+=======
+'use client';
+
+import React from 'react';
+import PropTypes from 'prop-types';
+import Box from '@mui/material/Box';
+import Typography from '@mui/material/Typography';
+import CircularProgress, { circularProgressClasses } from '@mui/material/CircularProgress';
+import Button from '@mui/material/Button';
+import Image from 'next/image';
+import { useRouter } from 'next/navigation';
+import { useSession } from 'next-auth/react';
+import styles from './page.module.css'; // Assume your CSS module is set up to reflect the design
+>>>>>>> bee745e022979c575a5308ae88eedf468bc38a5a
 
 function CircularWithLabel({ value }) {
   return (
@@ -59,6 +74,7 @@ function Results({ points, totalQuestions, questionResults }) {
   const percentage = ((points / totalQuestions) * 100).toFixed(0);
 
   // Function to render the question details. You can further customize it based on your needs.
+<<<<<<< HEAD
   const renderQuestionDetails = (results, correct) =>
     results
       .filter((result) => result.isCorrect === correct)
@@ -71,6 +87,73 @@ function Results({ points, totalQuestions, questionResults }) {
           <p className={styles.questionDetail}> {result.questionText}</p>
         </div>
       ));
+=======
+  const renderQuestionDetails = (results, correct) => (
+    results.filter((result) => result.isCorrect === correct).map((result, index) => (
+      <div key={index} className={styles.questionDetail}>
+        <Typography variant="body1">
+          {`Question ${result.questionId + 1}: ${result.selectedAnswer}`}
+        </Typography>
+      </div>
+    ))
+  );
+
+  const router = useRouter();
+  const { data: session } = useSession();
+  const urlParams = new URLSearchParams(window.location.search);
+  const courseKey = urlParams.get('courseKey');
+  const currStage = parseInt(urlParams.get('stage'), 10);
+  console.log(currStage);
+
+  const changeProgress = async (userId, newStage, complete) => {
+    try {
+      const response = await fetch('/api/users/me/change-progress', {
+        method: 'PATCH',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          userId,
+          courseKey,
+          currStage: newStage,
+          complete,
+        }),
+      });
+
+      if (!response.ok) {
+        const errorData = await response.json();
+        console.error('Error updating course progress:', errorData.error);
+      } else {
+        const responseData = await response.json();
+        console.log('Course progress updated successfully:', responseData);
+      }
+    } catch (error) {
+      console.error('Error updating course progress:', error);
+    }
+  };
+
+  const handleContinue = () => {
+  // router.push(`/quiz?courseKey=${courseKey}&stage=${currStage + 1}`);
+    router.push(`/roadmap/course?courseKey=${courseKey}`);
+    if (percentage >= 60) {
+      let newStage = currStage + 1;
+      if (currStage === 6) {
+        newStage = 6;
+      }
+      const complete = newStage === 6;
+      changeProgress(session.user.id, newStage, complete);
+      console.log('good');
+      console.log(newStage);
+    // update the backend
+    // userid = user id
+    // course key = coursekey
+    // currStage = currStage
+    // complete is true if currStage = 7
+    }
+    console.log('k');
+  };
+
+>>>>>>> bee745e022979c575a5308ae88eedf468bc38a5a
   return (
     <div className={styles.resultsContainer}>
       <div className={styles.quizTitleContainer}>Results</div>
@@ -133,6 +216,7 @@ function Results({ points, totalQuestions, questionResults }) {
           </div>
           <Image src="/results_flower.svg" width={400} height={300} />
         </div>
+<<<<<<< HEAD
         <Button
           variant="contained"
           color="primary"
@@ -179,6 +263,15 @@ function Results({ points, totalQuestions, questionResults }) {
             {" "}
             Correctly Answered {points}/{totalQuestions}
           </div>
+=======
+        <div className={styles.continueButton} onClick={handleContinue}>
+          Continue
+        </div>
+        <div className={styles.questionResults}>
+          <div style={{ fontWeight: 'bold', fontSize: '24px', marginBottom: '15px' }}> Incorrectly Answered</div>
+          {renderQuestionDetails(questionResults, false)}
+          <div style={{ fontWeight: 'bold', fontSize: '24px', marginBottom: '15px' }}> Correctly Answered</div>
+>>>>>>> bee745e022979c575a5308ae88eedf468bc38a5a
           {renderQuestionDetails(questionResults, true)}
         </div>
       </div>

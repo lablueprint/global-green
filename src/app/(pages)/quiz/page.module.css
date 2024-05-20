@@ -501,7 +501,16 @@
   border-radius: 0 0 10px 10px; /* Match the border radius of .scoreContainer if any */
 }
 
-.questionDetail{
-  border: 2px black solid; 
-  border-radius: 2px;
+.continueButtonContainer{
+  display: flex;
+  justify-content: flex-end;
+}
+
+.continueButton{
+  width: 100px;
+  border-radius: 20px;
+  background-color: green;
+  color: white;
+  text-align: center;
+  padding: 10px 5px;
 }

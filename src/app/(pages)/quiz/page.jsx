@@ -29,6 +29,7 @@ function Quiz() {
   const [isCurrentAnswerCorrect, setIsCurrentAnswerCorrect] = useState(null);
   const [skipCount, setSkipCount] = useState(0);
   const [questionResults, setQuestionResults] = useState([]);
+  const [matchedPairs, setMatchedPairs] = useState({});
 
   // ***IMPORTANT***
   // change Key here to access the different quizzes in mongoDB
@@ -103,13 +104,26 @@ function Quiz() {
       case 'matching':
         return (
           <Matching
+            question={question.question}
             options={question.options}
+            answers={question.answer}
             selectedMatches={selectedMatches}
             setSelectedMatches={setSelectedMatches}
+            matchedPairs={matchedPairs}
+            setMatchedPairs={setMatchedPairs}
             isAttempted={attempted}
           />
         );
       case 'checkbox':
+        return (
+          <Check
+            question={question.question}
+            options={question.options}
+            selectedAnswers={Array.isArray(selectedOption) ? selectedOption : []}
+            onUpdateAnswer={setSelectedOption}
+          />
+        );
+      case 'selectall':
         return (
           <Check
             question={question.question}
@@ -355,13 +369,29 @@ function Quiz() {
     goToNextQuestion();
   };
 
+  if (currentQuestion.type === 'matching') {
+    console.log(`Matched Pairs: ${matchedPairs}`);
+    console.log(`Options${currentQuestion.options}`);
+    console.log(`Answers ${currentQuestion.answer}`);
+  }
+
+  function transformToMatchedPairs(options, answers) {
+    const matchedPairs = {};
+    options.forEach((option, index) => {
+      matchedPairs[option] = answers[index];
+    });
+    return matchedPairs;
+  }
+
   // Function to check the selected answer
-  const checkAnswer = (selectedOption) => {
-    setShowCheckButton(false); // Hide the Check button
+  const checkAnswer = () => {
     if (currentQuestion.type === 'matching') {
-      const isCorrect = selectedMatches.length === currentQuestion.options.length
-        && selectedMatches.every((match) => currentQuestion.options[match.option].definition === currentQuestion.answer[match.definition]);
-      handleAnswer(isCorrect, selectedMatches.map((match) => match.option).join(', '));
+      const correctPairs = transformToMatchedPairs(currentQuestion.options, currentQuestion.answer);
+
+      const isCorrect = Object.keys(matchedPairs).length === Object.keys(correctPairs).length
+        && Object.keys(matchedPairs).every((key) => matchedPairs[key] === correctPairs[key]);
+
+      handleAnswer(isCorrect, JSON.stringify(matchedPairs));
       setAttempted(true);
     } else if (currentQuestion.type === 'checkAllThatApply') {
       // Sort to ensure order does not affect comparison

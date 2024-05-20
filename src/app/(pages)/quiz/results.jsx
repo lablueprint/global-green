@@ -1,3 +1,5 @@
+'use client';
+
 import React from 'react';
 import PropTypes from 'prop-types';
 import Box from '@mui/material/Box';
@@ -5,6 +7,8 @@ import Typography from '@mui/material/Typography';
 import CircularProgress, { circularProgressClasses } from '@mui/material/CircularProgress';
 import Button from '@mui/material/Button';
 import Image from 'next/image';
+import { useRouter } from 'next/navigation';
+import { useSession } from 'next-auth/react';
 import styles from './page.module.css'; // Assume your CSS module is set up to reflect the design
 
 function CircularWithLabel({ value }) {
@@ -65,6 +69,62 @@ function Results({ points, totalQuestions, questionResults }) {
       </div>
     ))
   );
+
+  const router = useRouter();
+  const { data: session } = useSession();
+  const urlParams = new URLSearchParams(window.location.search);
+  const courseKey = urlParams.get('courseKey');
+  const currStage = parseInt(urlParams.get('stage'), 10);
+  console.log(currStage);
+
+  const changeProgress = async (userId, newStage, complete) => {
+    try {
+      const response = await fetch('/api/users/me/change-progress', {
+        method: 'PATCH',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          userId,
+          courseKey,
+          currStage: newStage,
+          complete,
+        }),
+      });
+
+      if (!response.ok) {
+        const errorData = await response.json();
+        console.error('Error updating course progress:', errorData.error);
+      } else {
+        const responseData = await response.json();
+        console.log('Course progress updated successfully:', responseData);
+      }
+    } catch (error) {
+      console.error('Error updating course progress:', error);
+    }
+  };
+
+  const handleContinue = () => {
+  // router.push(`/quiz?courseKey=${courseKey}&stage=${currStage + 1}`);
+    router.push(`/roadmap/course?courseKey=${courseKey}`);
+    if (percentage >= 60) {
+      let newStage = currStage + 1;
+      if (currStage === 6) {
+        newStage = 6;
+      }
+      const complete = newStage === 6;
+      changeProgress(session.user.id, newStage, complete);
+      console.log('good');
+      console.log(newStage);
+    // update the backend
+    // userid = user id
+    // course key = coursekey
+    // currStage = currStage
+    // complete is true if currStage = 7
+    }
+    console.log('k');
+  };
+
   return (
     <div className={styles.resultsContainer}>
       <div className={styles.x}>
@@ -96,15 +156,15 @@ function Results({ points, totalQuestions, questionResults }) {
             height={300}
           />
         </div>
+        <div className={styles.continueButton} onClick={handleContinue}>
+          Continue
+        </div>
         <div className={styles.questionResults}>
           <div style={{ fontWeight: 'bold', fontSize: '24px', marginBottom: '15px' }}> Incorrectly Answered</div>
           {renderQuestionDetails(questionResults, false)}
           <div style={{ fontWeight: 'bold', fontSize: '24px', marginBottom: '15px' }}> Correctly Answered</div>
           {renderQuestionDetails(questionResults, true)}
         </div>
-        <Button variant="contained" color="primary" className={styles.continueButton}>
-          Continue
-        </Button>
       </div>
     </div>
   );

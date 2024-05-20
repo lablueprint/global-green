@@ -24,7 +24,7 @@ function CourseRoadmap({ params, searchParams }) {
     const data = await response.json();
     const userCourseRecord = data.user.courses.find((course) => course.key === courseKey);
     // sustainability labs needs 2 or more completed courses to unlock
-    if (courseKey === 'sustainabilitylabs') {
+    if (courseKey === 'sustainabilitylab') {
       const completedCourses = data.user.courses.filter((course) => course.currStage >= 6);
       console.log('completedCourses', completedCourses);
       if (completedCourses.length >= 2) {

@@ -1,108 +1,38 @@
 'use client';
 
-import React, { useState } from 'react';
-import Button from '@mui/material/Button';
-import KeyboardArrowLeftIcon from '@mui/icons-material/KeyboardArrowLeft';
-import KeyboardArrowRightIcon from '@mui/icons-material/KeyboardArrowRight';
-import Image from 'next/image';
+import React from 'react';
+import { useRouter } from 'next/navigation';
+import { BsArrowLeft } from 'react-icons/bs';
+import Course4Introduction from './lessons/introduction';
+import Course4Lesson1 from './lessons/lesson1';
+import Course4Lesson2 from './lessons/lesson2';
+import Course4Lesson3 from './lessons/lesson3';
+import Course4Lesson4 from './lessons/lesson4';
+import styles from '../page.module.css';
 
-import styles from './page.module.css';
+function ClimateChange({ courseKey, stage }) {
+  const router = useRouter();
+  const nextLesson = () => { router.push(`/lesson/?courseKey=${courseKey}&stage=${Number(stage) + 1}`); };
+  const nextQuiz = () => { router.push(`/quiz/?courseKey=${courseKey}&stage=${Number(stage)}`); };
+  const backToRoadmap = () => { router.push(`/roadmap/course?courseKey=${courseKey}`); };
 
-function Module({
-  modules, currentIndex, handlePrevClick, handleNextClick,
-}) {
-  const currentModule = modules[currentIndex];
-
-  return (
-    <div className={(styles.wrapper, styles.font)}>
-      <link
-        rel="stylesheet"
-        href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;700&display=swap"
-      />
-      <h1>{currentModule.moduleName}</h1>
-      <h2>{currentModule.lessonTitle}</h2>
-      <p>{currentModule.text}</p>
-      <Image
-        className={styles.lessonImage}
-        src={currentModule.imageUrl}
-        alt="Lesson Image"
-        width={500}
-        height={500}
-      />
-      <div>
-        {currentIndex != 0 && (
-          <Button
-            className={styles.previousButton}
-            variant="outlined"
-            onClick={handlePrevClick}
-            disabled={currentIndex === 0}
-          >
-            <KeyboardArrowLeftIcon />
-            Previous
-          </Button>
-        )}
-
-        {currentIndex !== modules.length - 1 && (
-          <Button
-            className={styles.nextButton}
-            variant="outlined"
-            onClick={handleNextClick}
-            disabled={currentIndex === modules.length - 1}
-          >
-            Next
-            <KeyboardArrowRightIcon />
-          </Button>
-        )}
-      </div>
-    </div>
-  );
-}
-
-export default function ClimateChange() {
-  const data = [
-    {
-      moduleName: 'ClimateChange',
-      lessonTitle:
-        'Lesson 1: Introduction to the Plastics and Recycling Course',
-      text: 'Plastic is all around us. It’s in our kitchens, shoes, entertainment systems, vehicles, and even our clothing. It is versatile—it can be light yet durable or soft and malleable—and there is virtually no industry in the world that doesn’t have some application for plastic. Chances are that you can see multiple pieces of one plastic or another in your immediate surroundings. Given its ubiquity, it can be easy to take such an abundance of plastic for granted. But what exactly is plastic, where does it come from, and how has it managed to so radically transform the world we live in since it was first created in the early 20th century? If you find yourself asking questions like these, you’re in the right place! Over the span of this Plastics and Recycling course, we’re going to take a deep dive into a variety of topics relating to the history, manufacture, applications, and hazards of plastic in our world today.',
-      imageUrl: '/curiousgeorge.png',
-    },
-    {
-      moduleName: 'ClimateChange',
-      lessonTitle: 'Lesson 2: Where Does Plastic Come From?',
-      text: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Lorem ipsum dolor sit amet, consectetur adipiscing elit. ',
-      imageUrl: '/tuxedosam.webp',
-    },
-    {
-      moduleName: 'ClimateChange',
-      lessonTitle: 'Lesson 3: Resin Identification Codes',
-      text: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum',
-      imageUrl: '/clifford.webp',
-    },
+  const lessons = [
+    <Course4Introduction handleNext={nextLesson} />,
+    <Course4Lesson1 handleNext={nextQuiz} />,
+    <Course4Lesson2 handleNext={nextQuiz} />,
+    <Course4Lesson3 handleNext={nextQuiz} />,
+    <Course4Lesson4 handleNext={nextQuiz} />,
   ];
 
-  const [currentIndex, setCurrentIndex] = React.useState(0);
-
-  const handlePrevClick = () => {
-    if (currentIndex > 0) {
-      setCurrentIndex(currentIndex - 1);
-    }
-  };
-
-  const handleNextClick = () => {
-    if (currentIndex < data.length - 1) {
-      setCurrentIndex(currentIndex + 1);
-    }
-  };
-
   return (
-    <div className={styles.moduleContainer}>
-      <Module
-        modules={data}
-        currentIndex={currentIndex}
-        handlePrevClick={handlePrevClick}
-        handleNextClick={handleNextClick}
-      />
+    <div>
+      <div onClick={backToRoadmap} className={styles['roadmap-button']}>
+        <BsArrowLeft size="2%" color="black" />
+        <div>Climate Change</div>
+      </div>
+      {lessons[stage - 1]}
     </div>
   );
 }
+
+export default ClimateChange;

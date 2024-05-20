@@ -34,7 +34,7 @@ function CourseCard({
         router.push('/roadmap/course/?courseKey=climatechange');
         break;
       case 'sustainabilitylab':
-        router.push('/roadmap/course/?courseKey=sustainabilitylabs');
+        router.push('/roadmap/course/?courseKey=sustainabilitylab');
         break;
     }
   };

@@ -1,8 +1,8 @@
 /* whole page */
 
 .container {
-text-align: left;
-margin: 40px 60px;
+  text-align: left;
+  margin: 40px 60px;
 }
 
 .pageName {
@@ -13,11 +13,11 @@ margin: 40px 60px;
 }
 
 .sectionHeader {
-font-size: 25px;
-font-weight: 600;
-margin: 20px 0;
-border-bottom: 1.5px solid #ddd;
-padding-bottom: 10px;
+  font-size: 25px;
+  font-weight: 600;
+  margin: 20px 0;
+  border-bottom: 1.5px solid #ddd;
+  padding-bottom: 10px;
 }
 
 .sectionText {
@@ -41,10 +41,10 @@ padding-bottom: 10px;
   margin-bottom: 20px;
 }
 
-/* top section */ 
+/* top section */
 
 .profileSection {
-  display: flex; 
+  display: flex;
   align-items: center;
   margin-bottom: 50px;
 }
@@ -79,20 +79,20 @@ padding-bottom: 10px;
 
 /* popup section */
 
-.overlay{
-  position: fixed; 
-  top: 0; 
-  left: 0; 
-  width: 100%; 
+.overlay {
+  position: fixed;
+  top: 0;
+  left: 110px;
+  width: 100%;
   height: 100%;
-  background-color: rgba(0,0,0,0.5); 
+  background-color: rgba(0, 0, 0, 0.5);
   backdrop-filter: blur(5px);
-  display: flex; 
-  justify-content: center; 
+  display: flex;
+  justify-content: center;
   align-items: center;
 }
 
-.popUp{
+.popUp {
   position: absolute;
   background-color: white;
   border: 1px solid black;
@@ -100,37 +100,37 @@ padding-bottom: 10px;
   border-radius: 10px;
 }
 
-.popTop{
+.popTop {
   display: flex;
   justify-content: space-between;
   border-bottom: 1px solid gray;
   margin-bottom: 10px;
 }
 
-.popTitle{
+.popTitle {
   font-size: 20px;
   font-weight: 550;
   padding-bottom: 10px;
 }
 
-.popSubTitle{
+.popSubTitle {
   font-size: 20px;
   font-weight: 550;
   padding: 20px 0px;
 }
 
-.popText{
+.popText {
   font-size: 18px;
   color: gray;
 }
 
-.popPicAll{
+.popPicAll {
   padding: 30px 20px;
-  display: grid; 
+  display: grid;
   grid-template-columns: repeat(6, 1fr);
 }
 
-.popPic{
+.popPic {
   width: 100px; /* Adjust the width dynamically */
   height: 100px;
   border-radius: 50px;
@@ -140,16 +140,26 @@ padding-bottom: 10px;
   transition: border-color 0.3s ease;
 }
 
-.popPic:hover{
-  border-color: green;
+.active {
+  width: 100px; /* Adjust the width dynamically */
+  height: 100px;
+  border-radius: 54px;
+  background-size: cover;
+  margin: 30px 10px;
+  border: 5px solid green;
+  transition: border-color 0.3s ease;
 }
 
-.popBottom{
+.popPic:hover {
+  opacity: 0.5;
+}
+
+.popBottom {
   display: flex;
   justify-content: right;
 }
 
-.popButton{
+.popButton {
   font-size: 18px;
   border: 1px solid black;
   border-radius: 10px;
@@ -158,19 +168,19 @@ padding-bottom: 10px;
   cursor: pointer;
 }
 
-.popClose{
+.popClose {
   cursor: pointer;
   font-size: 20px;
   font-weight: 500;
 }
 
 /* account section */
-.accountRow{
+.accountRow {
   display: flex;
   justify-content: space-between;
 }
 
-.arrow{
+.arrow {
   font-size: 25px;
   font-weight: 300;
   color: gray;
@@ -188,69 +198,68 @@ padding-bottom: 10px;
   justify-content: space-between;
   height: 175px;
   cursor: pointer;
-  }
-  
-.certificateItem{
+}
+
+.certificateItem {
   flex: 0 0 calc(33.33% - 20px);
 }
 
-.certificateHeader{
+.certificateHeader {
   font-size: 20px;
   font-weight: 500;
   border-bottom-width: 2px;
-  padding-bottom:5px;
+  padding-bottom: 5px;
   color: green;
-  }
-  
-  .certificateName {
+}
+
+.certificateName {
   margin-top: 4px;
   font-size: 18px;
   font-weight: 500;
   border-left: 4px solid;
   padding: 0px 10px;
   width: 130px;
-  }
-  
-  .certificateInfo{
+}
+
+.certificateInfo {
   display: flex;
   font-size: 15px;
   color: green;
   padding: 8px 0px;
   gap: 5px;
-  }
-  
-  .paginationDots{
-    text-align: right;
-    color: gray;
-    font-size: 60px;
-    margin: 0px 20px;
-    cursor: pointer;
-    overflow-x: scroll;
-    overflow-y: hidden;
-    white-space: nowrap;
-  }
+}
 
-  .activeDot{
-    color: green;
-  }
+.paginationDots {
+  text-align: right;
+  color: gray;
+  font-size: 60px;
+  margin: 0px 20px;
+  cursor: pointer;
+  overflow-x: scroll;
+  overflow-y: hidden;
+  white-space: nowrap;
+}
+
+.activeDot {
+  color: green;
+}
 
 /* course progress */
 
-.courseItem{
+.courseItem {
   display: flex;
   flex: 0 0 calc(50% - 40px);
-  align-items: left; 
+  align-items: left;
   margin-right: 20px;
 }
 
-.courseName{
+.courseName {
   width: 50%;
 }
 
-
 /* password popup */
 
-.passPopUp{
+.passPopUp {
   position: absolute;
   background-color: white;
   border: 1px solid black;
@@ -259,7 +268,7 @@ padding-bottom: 10px;
   width: 500px;
 }
 
-.passPopClose{
+.passPopClose {
   cursor: pointer;
   font-size: 25px;
   font-weight: 500;
@@ -267,47 +276,84 @@ padding-bottom: 10px;
   text-align: right;
 }
 
-.passPopTitle{
+.pencil {
+  display: flex;
+  justify-content: center;
+  font-size: 30px;
+  padding: 35px 0px;
+}
+
+.passPopTitle {
   font-size: 20px;
   font-weight: 550;
-  padding-bottom: 10px;
+  padding-bottom: 20px;
   text-align: center;
 }
 
-.passPopSub{
+.passPopSub {
   text-align: center;
   font-size: 18px;
   color: gray;
-  margin-bottom: 30px;
+  margin-bottom: 40px;
 }
 
-.passPopText{
+.passPopText {
   font-size: 18px;
   color: gray;
   margin: 10px 0;
 }
 
-.passPopBottom{
+.passPopBottom {
   margin: 20px 0;
   display: flex;
   justify-content: center;
 }
 
-.passInput{
+.passInput {
   width: 100%;
   height: 40px;
   border-radius: 10px;
-  border-color:rgb(232,232,232);
+  border-color: rgb(232, 232, 232);
   background-color: rgb(232, 232, 232);
   font-size: 20px;
   color: gray;
+  font-size: 20px;
 }
 
-.passPopButton{
+.passInput:hover {
+  cursor: pointer;
+}
+
+.passPopButton {
   font-size: 18px;
   border: 1px solid black;
   border-radius: 20px;
   padding: 5px 20px;
   margin: 5px;
   cursor: pointer;
+}
+
+.enabled {
+  background-color: black;
+  color: white;
+}
+
+.disabled {
+  background-color: rgb(218, 217, 217);
+  border-color: rgb(218, 217, 217);
+  color: gray;
+  cursor: auto;
+}
+
+.done {
+  font-size: 18px;
+  border: 1px solid black;
+  border-radius: 20px;
+  padding: 5px 20px;
+  margin: 5px;
+  background-color: black;
+  color: white;
+  cursor: pointer;
+  width: 100px;
+  text-align: center;
 }

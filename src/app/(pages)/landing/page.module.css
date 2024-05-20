@@ -3,34 +3,34 @@
 .landingPage {
   display: flex;
   flex-direction: column;
-  align-items: left; 
+  align-items: left;
   padding: 70px;
 }
 
-.userName{
+.userName {
   color: green;
 }
 
-.welcome{
-  display: flex; 
+.welcome {
+  display: flex;
   gap: 5px;
   flex-direction: row;
 }
 
-.imageGarden{
+.imageGarden {
   display: flex;
   gap: 40px;
 }
 
 /* going to the garden */
-.garden{
+.garden {
   padding: 30px 40px;
   border-radius: 15px;
   background-color: rgb(237, 234, 234);
   width: 400px;
 }
 
-.gardenInfo{
+.gardenInfo {
   font-size: 18px;
   color: gray;
   margin: 2px;
@@ -56,7 +56,7 @@
 }
 
 /* course layout */
-.courseLayout{
+.courseLayout {
   display: flex;
   flex-wrap: wrap;
   gap: 20px;
@@ -90,18 +90,17 @@
   color: green;
 }
 
-.active::after{
-  content: ''; 
+.active::after {
+  content: "";
   display: block;
   border-bottom: 2px solid green;
   margin-top: 5px;
 }
 
-
 /* course cards */
-.courseCard{
+.courseCard {
   cursor: pointer;
-  display: flex; 
+  display: flex;
   flex-direction: column;
   flex: 0 0 250px;
   justify-content: space-between;
@@ -110,21 +109,21 @@
   height: 150px;
 }
 
-.courseName{
-  font-weight: 500; 
+.courseName {
+  font-weight: 500;
   font-size: 20px;
   width: 120px;
   border-left: 4px solid;
   padding: 0px 10px;
 }
 
-.bottomBar{
+.bottomBar {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
 }
 
-.courseDuration{
+.courseDuration {
   border-radius: 10px;
   width: 40px;
   text-align: center;
@@ -134,35 +133,34 @@
 
 /* responsiveness */
 @media (max-width: 800px) {
-  .imageGarden{
-    display: flex; 
+  .imageGarden {
+    display: flex;
     flex-direction: column;
   }
 
   .image {
-    width: 90%; 
+    width: 90%;
     max-width: 700px;
     height: auto;
   }
-  
-  .garden{
+
+  .garden {
     width: 90%;
     max-width: 400px;
     font-size: 14px;
   }
 
-  .gardenInfo{
+  .gardenInfo {
     width: 100%;
     font-size: 12px;
   }
 
   .enterGarden {
-    width: 100px; 
-    padding: 5px; 
+    width: 100px;
+    padding: 5px;
     font-size: 14px;
   }
 }
-
 
 /* garden related css */
 .gardenModalOverlay {
@@ -189,7 +187,7 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  .gardenModalText{
+  .gardenModalText {
     text-align: left;
     width: 100%;
   }
@@ -201,7 +199,7 @@
     color: gray;
   }
 
-  .gardenModalButtonContainer{
+  .gardenModalButtonContainer {
     display: flex;
     width: 100%;
 
@@ -211,7 +209,7 @@
     gap: 10px;
   }
 
-  .gardenModalImageContainer{
+  .gardenModalImageContainer {
     position: relative;
     width: 600px;
     height: 300px;
@@ -220,7 +218,7 @@
     overflow: hidden;
   }
 
-  .gardenImage{
+  .gardenImage {
     position: absolute;
     top: 0;
     left: 0;
@@ -230,9 +228,8 @@
     background-size: contain;
     border-radius: 0%;
     background-repeat: no-repeat;
-    
   }
-  .gardenEditImage{
+  .gardenEditImage {
     position: absolute;
     top: 0;
     left: 0;
@@ -243,21 +240,76 @@
     border-radius: 20px;
   }
   .gardenBackground {
-    background-image: url('/garden/background.png');
+    background-image: url("https://global-green-2.s3.us-west-1.amazonaws.com/background3.png");
   }
   .gardenBackgroundWide {
     width: 600px;
     height: 300px;
     background-size: cover;
     border-radius: 20px;
-    background-image: url('/garden/background.png');
+    background-image: url("https://global-green-2.s3.us-west-1.amazonaws.com/background3.png");
+  }
+
+  .gardenBackground2 {
+    background-image: url("https://global-green-2.s3.us-west-1.amazonaws.com/background2.png");
+  }
+  .gardenBackground2Wide {
+    width: 600px;
+    height: 300px;
+    background-size: cover;
+    border-radius: 20px;
+    background-image: url("https://global-green-2.s3.us-west-1.amazonaws.com/background2.png");
+  }
+
+  .gardenBackground3 {
+    background-image: url("https://global-green-2.s3.us-west-1.amazonaws.com/background3.png");
+  }
+  .gardenBackground3Wide {
+    width: 600px;
+    height: 300px;
+    background-size: cover;
+    border-radius: 20px;
+    background-image: url("https://global-green-2.s3.us-west-1.amazonaws.com/background3.png");
+  }
+
+  .gardenBackground4 {
+    background-image: url("https://global-green-2.s3.us-west-1.amazonaws.com/background3.png");
+  }
+  .gardenBackground4Wide {
+    width: 600px;
+    height: 300px;
+    background-size: cover;
+    border-radius: 20px;
+    background-image: url("https://global-green-2.s3.us-west-1.amazonaws.com/background4.png");
+  }
+
+  .gardenBackground5 {
+    background-image: url("https://global-green-2.s3.us-west-1.amazonaws.com/background5.png");
+  }
+  .gardenBackgroundWide5 {
+    width: 600px;
+    height: 300px;
+    background-size: cover;
+    border-radius: 20px;
+    background-image: url("https://global-green-2.s3.us-west-1.amazonaws.com/background5.png");
+  }
+
+  .gardenBackground6 {
+    background-image: url("https://global-green-2.s3.us-west-1.amazonaws.com/background6.png");
+  }
+  .gardenBackground6Wide {
+    width: 600px;
+    height: 300px;
+    background-size: cover;
+    border-radius: 20px;
+    background-image: url("https://global-green-2.s3.us-west-1.amazonaws.com/background6.png");
   }
   .gardenEarth {
     width: 250px;
     height: 250px;
     top: 125px;
     left: 50px;
-    background-image: url('/garden/earth.png');
+    background-image: url("https://global-green-2.s3.us-west-1.amazonaws.com/earth.png");
     z-index: 10;
   }
   .gardenEarthWide {
@@ -265,16 +317,15 @@
     height: 250px;
     top: 190px;
     left: 175px;
-    background-image: url('/garden/earth.png');
+    background-image: url("https://global-green-2.s3.us-west-1.amazonaws.com/earth.png");
     z-index: 10;
   }
   .gardenFlower1 {
     top: 100px;
     left: 100px;
-    
     width: 40px;
     height: 100px;
-    background-image: url('/garden/flower1.png');
+    background-image: url("https://global-green-2.s3.us-west-1.amazonaws.com/flower1.png");
   }
   .gardenFlower1Wide {
     top: 150px;
@@ -282,14 +333,14 @@
     width: 50px;
     height: 80px;
 
-    background-image: url('/garden/flower1.png');
+    background-image: url("https://global-green-2.s3.us-west-1.amazonaws.com/flower1.png");
   }
   .gardenFlower2 {
     top: 70px;
     left: 200px;
     width: 100px;
     height: 100px;
-    background-image: url('/garden/flower2.png');
+    background-image: url("https://global-green-2.s3.us-west-1.amazonaws.com/flower2.png");
   }
 
   .gardenFlower2Wide {
@@ -297,7 +348,7 @@
     left: 350px;
     width: 60px;
     height: 60px;
-    background-image: url('/garden/flower2.png');
+    background-image: url("https://global-green-2.s3.us-west-1.amazonaws.com/flower2.png");
   }
 
   .gardenFlower3 {
@@ -305,7 +356,7 @@
     left: 250px;
     width: 100px;
     height: 100px;
-    background-image: url('/garden/flower3.png');
+    background-image: url("https://global-green-2.s3.us-west-1.amazonaws.com/flower3.png");
   }
 
   .gardenFlower3Wide {
@@ -313,7 +364,7 @@
     left: 270px;
     width: 60px;
     height: 80px;
-    background-image: url('/garden/flower3.png');
+    background-image: url("https://global-green-2.s3.us-west-1.amazonaws.com/flower3.png");
   }
 
   .gardenFlower4 {
@@ -321,7 +372,7 @@
     left: 50px;
     width: 100px;
     height: 100px;
-    background-image: url('/garden/flower4.png');
+    background-image: url("https://global-green-2.s3.us-west-1.amazonaws.com/flower4.png");
   }
 
   .gardenFlower4Wide {
@@ -329,7 +380,7 @@
     left: 160px;
     width: 80px;
     height: 80px;
-    background-image: url('/garden/flower4.png');
+    background-image: url("https://global-green-2.s3.us-west-1.amazonaws.com/flower4.png");
   }
   .gardenFlower5 {
     top: 75px;
@@ -337,37 +388,37 @@
     width: 100px;
     height: 100px;
 
-    background-image: url('/garden/flower5.png');
+    background-image: url("https://global-green-2.s3.us-west-1.amazonaws.com/flower5.png");
   }
   .gardenFlower5Wide {
     top: 120px;
     left: 300px;
     width: 80px;
     height: 80px;
-    background-image: url('/garden/flower5.png');
+    background-image: url("https://global-green-2.s3.us-west-1.amazonaws.com/flower1.png");
   }
   .gardenFlower6 {
     top: 60px;
     left: 90px;
     width: 100px;
     height: 100px;
-    background-image: url('/garden/flower6.png');
+    background-image: url("https://global-green-2.s3.us-west-1.amazonaws.com/flower6.png");
   }
   .gardenFlower6Wide {
     top: 130px;
     left: 240px;
     width: 50px;
     height: 80px;
-    background-image: url('/garden/flower6.png');
+    background-image: url("https://global-green-2.s3.us-west-1.amazonaws.com/flower6.png");
   }
   .gardenFlower7 {
     width: 100px;
     height: 100px;
-    background-image: url('/garden/flower7.png');
+    background-image: url("https://global-green-2.s3.us-west-1.amazonaws.com/flower7.png");
   }
 }
 
-.gardenModalEditBox{
+.gardenModalEditBox {
   display: flex;
   flex-direction: row;
   align-items: flex-start;
@@ -375,7 +426,7 @@
   width: 100%;
   gap: 10px;
 
-  .gardenModalEditBoxLeft{
+  .gardenModalEditBoxLeft {
     display: flex;
     flex-direction: column;
     align-items: flex-start;
@@ -383,17 +434,16 @@
     height: 100%;
     gap: 10px;
   }
-  .gardenModalEditBoxRight{
+  .gardenModalEditBoxRight {
     display: flex;
     flex-direction: column;
     align-items: flex-start;
     justify-content: flex-start;
     gap: 10px;
   }
- 
 }
 
-.gardenModalEditTab{
+.gardenModalEditTab {
   /* 3 columns infinity  */
   display: flex;
   flex-direction: row;
@@ -404,11 +454,10 @@
   height: 250px;
 
   overflow-y: auto;
-  
 
   gap: 10px;
 }
-.gardenModalEditItem{
+.gardenModalEditItem {
   display: flex;
   align-items: center;
   justify-content: center;
@@ -420,11 +469,9 @@
   background-position: center;
   background-size: contain;
   background-repeat: no-repeat;
-  
-
 }
 
-.gardenModalEditItemRemove{
+.gardenModalEditItemRemove {
   display: flex;
   align-items: center;
   justify-content: center;

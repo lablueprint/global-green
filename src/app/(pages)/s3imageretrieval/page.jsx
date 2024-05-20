@@ -3,23 +3,21 @@
 "use client";
 
 import React from "react";
-// import AWS from "aws-sdk";
 import Image from "next/image";
-import styles from "./page.module.css";
-
+import convertToURL from "@/app/convertToURL";
 
 // if you just want publicly accessible images that you can use the
 // convertToURL to retrieve images from the bucket
 
 function s3imageretrieval() {
-  const imageSrc = convertToURL("Logo.png");
+  const imageSrc = convertToURL("a1.png");
 
   return (
-    <div className={styles.daniel}>
-      <div className={styles.exampleText}>test aws</div>
+    <div>
+      <div>test aws</div>
       <Image width="100" height="100" src={imageSrc} alt="megan" />
       <br />
-      <div className={styles.anotherOne}>2nd Example!</div>
+      <div>Example!</div>
     </div>
   );
 }

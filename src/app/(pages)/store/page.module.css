@@ -1,71 +1,125 @@
-.storeItems{
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: flex-start;
+@import url("https://fonts.googleapis.com/css2?family=Instrument+Sans:ital,wght@0,400..700;1,400..700&display=swap");
 
-    gap: 5rem;
-    margin: 1rem;
-    padding: 1rem;
-
-    border-radius: 5px;
+.storeContainer {
+  width: 90%;
+  margin-bottom: 50px;
 }
 
-.storeItem{
-    position: relative;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 0.5rem;
+.store {
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
+  justify-content: flex-start;
+  margin-left: 10%;
+  background-color: white;
 }
 
-.storeItem img{
-    width: 100%;
-    height: 100%;
-    object-fit: contain;
-}
-.storeItemImg{
-    position: relative;
-    width: 10em;
-    height: 10em;
-    padding: 1rem;
-    background-color: lightgray;
-    border-radius: 1em;
-}
-.storeItemImgOverlay{
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(0, 0, 0, 0.4);
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    z-index: 1;
-    transition: opacity 0.5s;
-    border-radius: 1em;
-}
-.storeItemPrice{
-    position: absolute;
-    top: 0.5rem;
-    right: 0.5rem;
-    color: black;
-    border: 1px solid gray;
-    padding: 0.3rem;
-    border-radius: 0.5em;
-    font-size: small;
-
-    
+.title {
+  display: flex;
+  justify-content: space-between;
+  color: #000;
+  font-family: "Instrument Sans", sans-serif;
+  font-size: 40px;
+  font-weight: 600;
+  line-height: 100%;
+  margin-top: 40px;
+  margin-bottom: 20px;
+  width: 100%;
+  background-color: white;
 }
 
-.storeItemDetails{
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    align-items: center;
-    width: 100%;
-    padding: 0.2rem;
-    box-sizing: border-box;
-    font-weight: bold;
+.seedsTitle {
+  color: #000;
+  font-family: "Instrument Sans", sans-serif;
+  font-size: 20px;
+  font-style: normal;
+  font-weight: 300;
+  margin-left: 20%;
+  margin-top: 0.5%;
 }
 
+.seedsTitle img {
+  margin-left: 5px;
+  vertical-align: middle;
+  height: 1em;
+}
+
+.storeItems {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 5rem;
+  margin-top: 30px;
+  border-radius: 5px;
+  background-color: white;
+}
+
+.storeItem {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.storeItem img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+.storeItemImg {
+  position: relative;
+  width: 12em;
+  height: 12em;
+  padding: 1rem;
+  background-color: #e4eef6;
+  border-radius: 1em;
+}
+
+.storeItemImgOverlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.3);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1;
+  transition: opacity 0.5s;
+  border-radius: 1em;
+}
+
+.storeItemPrice {
+  position: absolute;
+  top: 0.5rem;
+  right: 0.5rem;
+  color: black;
+  border: 1px solid #cbcbcb;
+  padding: 0.1rem 0.5rem;
+  border-radius: 2em;
+  font-size: 100px;
+  font-family: "Instrument Sans", sans-serif;
+  font-size: 10px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 140%;
+}
+
+.storeItemDetails {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  padding: 0.2rem;
+  box-sizing: border-box;
+  color: var(--Grey-100, #1d1d1d);
+  font-family: "Instrument Sans", sans-serif;
+  font-size: 20px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: 110%;
+}

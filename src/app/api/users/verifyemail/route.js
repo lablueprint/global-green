@@ -13,10 +13,10 @@ export async function POST(request) {
     if (!user) {
       return NextResponse.json({ error: 'Invalid token' }, { status: 400 });
     }
-
     user.verified = true;
     user.verifyToken = undefined;
     user.verifyExpires = undefined;
+    console.log('checking that the user is not null in verify', user);
     await user.save();
     const response = NextResponse.json({
       message: 'User verified',

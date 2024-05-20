@@ -7,7 +7,6 @@
   justify-content: space-between;
   padding: 15%;
   padding-top: 8%;
-  /* max-width: 700px; */
 }
 
 .sticky-button {
@@ -172,7 +171,8 @@
 }
 
 .dropdown-title {
-  font-size: 17px;
+  font-family: 'Instrument Sans', sans-serif;
+  font-size: 20px;
   font-weight: bolder;
 }
 

@@ -18,12 +18,12 @@ function CoursePage({ params, searchParams }) {
   const [loading, setLoading] = useState(true);
 
   const courseToShow = {
-    plasticandrecycling: <PlasticAndRecycling stage={stage} />,
-    climatechange: <ClimateChange stage={stage} />,
-    oceanpollution: <OceanPollution stage={stage} />,
-    conservationandrestoration: <EcoSystemConservation stage={stage} />,
-    'eco-friendlytravel': <EcoFriendlyTravelling stage={stage} />,
-    sustainabilitylabs: <SustainabilityLab stage={stage} />,
+    plasticandrecycling: <PlasticAndRecycling courseKey={courseKey} stage={stage} />,
+    climatechange: <ClimateChange courseKey={courseKey} stage={stage} />,
+    oceanpollution: <OceanPollution courseKey={courseKey} stage={stage} />,
+    conservationandrestoration: <EcoSystemConservation courseKey={courseKey} stage={stage} />,
+    'eco-friendlytravel': <EcoFriendlyTravelling courseKey={courseKey} stage={stage} />,
+    sustainabilitylab: <SustainabilityLab courseKey={courseKey} stage={stage} />,
   };
 
   const checkUserHasAccess = async (id) => {
@@ -72,14 +72,7 @@ function CoursePage({ params, searchParams }) {
 
   return (
     <div>
-      {courseKey}
-      {' '}
-      {stage}
-      {' '}
-      <button type="button" onClick={backToRoadmap}>Back to Roadmap</button>
-      <div>
-        {hasAccess ? courseToShow[courseKey] : 'You do not have access to this course yet'}
-      </div>
+      {hasAccess ? courseToShow[courseKey] : 'You do not have access to this course yet'}
     </div>
   );
 }

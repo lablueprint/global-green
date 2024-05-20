@@ -6,13 +6,52 @@ import { useSession, signOut } from 'next-auth/react';
 import { FaPencilAlt } from 'react-icons/fa';
 import styles from './page.module.css';
 import defaultProfilePic from './profilepic.jpg';
-// Assuming you have a default profile pic
 import PdfForm from './PdfForm';
 import certData from './certData';
 import courseData from '../landing/courseData';
 import ProgressBar from './progressBar';
 import ProfilePopup from './profilePopup';
 import PasswordPopup from './changePasswordPopup';
+
+function formatDate(dateString) {
+  const date = new Date(dateString);
+  const options = { year: 'numeric', month: 'long', day: 'numeric', timeZone: 'UTC' };
+  return new Intl.DateTimeFormat('en-US', options).format(date);
+}
+
+function CertificatePopup({ certificate, username, onClose, onDownload }) {
+  console.log(formatDate(certificate.date));
+  return (
+    <div className={styles.overlay}>
+      <div className={styles.popUp}>
+        <div className={styles.popTop}>
+          <div className={styles.popTitle}>Certificate</div>
+          <div className={styles.popClose} onClick={onClose}>x</div>
+        </div>
+        <div className={styles.popContent}>
+          <Image
+            src="/popupcertificate.svg"
+            alt="Certificate Preview"
+            width={668}
+            height={516}
+          />
+          <div className={styles.popMiddle}>
+            <div className={styles.popupCertificateName}>{username}</div>
+            <div className={styles.popupCertificateInfo}>has successfully completed</div>
+            <div className={styles.popupCertificateCourseName}>{certificate.name}</div>
+            <div className={styles.popupCompletion}><span>Completed on </span>
+            <strong>{formatDate(certificate.date)}</strong></div>
+          </div>
+          <div className={styles.popBottom}>
+            <button className={`${styles.popButton} ${styles.cancelButton}`} onClick={onClose}>Cancel</button>
+            <button className={`${styles.popButton} ${styles.downloadButton}`} onClick={() => onDownload(certificate)}>Download PDF</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
+
 
 function Profile() {
   const [isEditing, setIsEditing] = useState(false);
@@ -22,60 +61,45 @@ function Profile() {
   const [profilePopup, setProfilePopup] = useState(false);
   const [passwordPopup, setPasswordPopup] = useState(false);
   const [currentPage, setCurrentPage] = useState(0);
+  const [showPopup, setShowPopup] = useState(false);
+  const [selectedCertificate, setSelectedCertificate] = useState(null);
 
   const { data: session } = useSession();
 
-  const getUserDetails = async (id) => {
-    if (!id) return;
-    const response = await fetch('/api/users/me', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({ id }),
-    });
-
-    const data = await response.json();
-    // console.log("here", data);
-    setData(data.user);
-    setEditedName(data.user.userName);
-  };
-
   useEffect(() => {
-    console.log('session', session);
-    if (session) getUserDetails(session.user.id);
+    if (session) {
+      const getUserDetails = async () => {
+        const response = await fetch('/api/users/me', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ id: session.user.id }),
+        });
+        const data = await response.json();
+        if (data.user) {
+          setData(data.user);
+          setEditedName(data.user.userName);
+        }
+      };
+      getUserDetails();
+    }
   }, [session]);
-
-  const updateUserData = (data) => {
-    // update the user data in the database, make sure only the first user is updated.
-    async function updateUserDataInDB() {
-      // eslint-disable-next-line no-console
-      console.log('data', data);
-
+  
+  const updateUserData = (newData) => {
+    const updateUserDataInDB = async () => {
       const response = await fetch('/api/users/me/change-name', {
         method: 'PATCH',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ userName: data.userName, userId: data.id }),
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ userName: newData.userName, userId: newData.id }),
       });
       const res = await response.json();
-      // eslint-disable-next-line no-console
-      console.log('res', res);
-
-      if (res.error) {
-        // eslint-disable-next-line no-alert
+      if (!res.error) {
+        setData(newData);
+        localStorage.setItem('userData', JSON.stringify(newData));
+      } else {
         alert(res.error);
-        throw new Error(res.error);
       }
-
-      // eslint-disable-next-line no-console
-      console.log('Update success', response.data);
-    }
+    };
     updateUserDataInDB();
-
-    // update the user data in the local storage
-    localStorage.setItem('userData', JSON.stringify(data));
   };
 
   const handleNameClick = () => {
@@ -122,6 +146,29 @@ function Profile() {
     setCurrentPage(page);
   };
 
+  const handleCertificateClick = (event, certificate) => {
+    event.preventDefault();  
+    event.stopPropagation(); 
+    setSelectedCertificate(certificate);
+    setShowPopup(true);
+  };
+
+  const handleDownloadPdf = (certificate) => {
+    const pdfUrl = `/certificate.pdf`;
+    fetch(pdfUrl)
+      .then(response => response.blob())
+      .then(blob => {
+        const url = window.URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = `${certificate.name}.pdf`;
+        document.body.appendChild(a);
+        a.click();
+        a.remove();
+        window.URL.revokeObjectURL(url);
+      })
+      .catch(e => console.error('Download error:', e));
+  };
   return (
     userData
       ? (
@@ -130,6 +177,15 @@ function Profile() {
 
           {profilePopup && <ProfilePopup onClose={handleCloseProfile} />}
           {passwordPopup && <PasswordPopup onClose={handleClosePassword} />}
+
+          {showPopup && (
+            <CertificatePopup
+            certificate={selectedCertificate}
+            username={editedName}
+            onClose={() => setShowPopup(false)}
+            onDownload={handleDownloadPdf}
+          />
+          )}
 
           <div className={styles.container}>
             <div className={styles.profileSection}>
@@ -168,13 +224,13 @@ function Profile() {
             <div className={styles.row}>
               {displayedCertificates.map((certificate, index) => (
                 <div
-                  key={index}
-                  onClick={PdfForm.generatePdf}
-                  className={styles.certificateItem}
-                  style={{
-                    backgroundImage: 'url("/certificate.jpg")',
-                    borderRadius: '10px',
-                    backgroundSize: 'cover',
+                key={index}
+                onClick={(e) => handleCertificateClick(e, certificate)}
+                className={styles.certificateItem}
+                style={{
+                  backgroundImage: 'url("/certificate.jpg")',
+                  borderRadius: '10px',
+                  backgroundSize: 'cover',
                   }}
                 >
                   {userData && (

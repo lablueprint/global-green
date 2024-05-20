@@ -73,15 +73,20 @@ function MapComponent() {
       const mapmarkers = mapArray.map((marker) => {
         const markerpopup = new mapboxgl.Popup().setHTML(
           `
-        <div class=${styles.markerModal}>
-          <h3>${marker.markername}</h3>
-          <p class= ${styles.markerModalTag}>${marker.tag}</p>
-          <p>${marker.description}</p>
-          <a class=${styles.markerModalLink} href=${marker.link}>Learn More &boxbox;</a>
-        </div>
-        `,
+            <div class=${styles.markerModal}>
+              <h3>${marker.markername}</h3>
+              <p class=${marker.tag === 'Sustainability Lab' ? styles.markerModalTagSustainabilityLab : styles.markerModalTagResort}>${marker.tag}</p>
+              <p>${marker.description}</p>
+              <a class=${styles.markerModalLink} href=${marker.link}>
+                Learn More
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.5" class="bi bi-box-arrow-up-right" viewBox="0 0 16 16" style="vertical-align: middle; margin-left: 5px; position: relative; top: 0.5px;">
+                  <path fill-rule="evenodd" d="M8.636 3.5a.5.5 0 0 0-.5-.5H1.5A1.5 1.5 0 0 0 0 4.5v10A1.5 1.5 0 0 0 1.5 16h10a1.5 1.5 0 0 0 1.5-1.5V7.864a.5.5 0 0 0-1 0V14.5a.5.5 0 0 1-.5.5h-10a.5.5 0 0 1-.5-.5v-10a.5.5 0 0 1 .5-.5h6.636a.5.5 0 0 0 .5-.5"/>
+                  <path fill-rule="evenodd" d="M16 .5a.5.5 0 0 0-.5-.5h-5a.5.5 0 0 0 0 1h3.793L6.146 9.146a.5.5 0 1 0 .708.708L15 1.707V5.5a.5.5 0 0 0 1 0z"/>
+                </svg>
+              </a>
+            </div>
+          `,
         );
-
         const newMarker = new mapboxgl.Marker({ color: 'black' })
           .setLngLat(marker.longlat)
           .setPopup(markerpopup)

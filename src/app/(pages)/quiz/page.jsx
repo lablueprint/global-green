@@ -22,6 +22,7 @@ function Quiz() {
   const [popupMessage, setPopupMessage] = useState('');
   const [selectedOption, setSelectedOption] = useState('');
   const [showHint, setShowHint] = useState(false);
+  const [hasHint, setHasHint] = useState(true);
   const [disableSkipButton, setSkipButton] = useState(false);
   const [selectedMatches, setSelectedMatches] = useState([]);
   const [skippedQuestions, setSkippedQuestions] = useState([]);
@@ -269,8 +270,12 @@ function Quiz() {
   };
 
   const handleHint = () => {
-    setPopupMessage(currentQuestion.hint || 'This is a hint for the question.');
-    setShowHint(true);
+    if (currentQuestion.hint) {
+      setPopupMessage(currentQuestion.hint);
+      setShowHint(true);
+    }
+    // setPopupMessage(currentQuestion.hint || 'This is a hint for the question.');
+    // setShowHint(true);
   };
 
   const goToNextQuestion = () => {
@@ -382,11 +387,7 @@ function Quiz() {
     <div className={styles.container}>
       <div className={styles.quizContainer}>
         <div className={styles.quizTitleContainer}>
-          {' '}
-          Quiz
-          {' '}
-          {' '}
-          {num - 1}
+          {num === '6' ? 'Final Quiz' : `Quiz ${num - 1}`}
         </div>
         <div className={styles.progressbarandhintcontainer}>
           <div
@@ -405,7 +406,8 @@ function Quiz() {
             x={currentQuestionIndex + 1}
             y={currentQuiz.questions.length}
           />
-          <button type="button" className={styles.hintButton} onClick={handleHint} />
+          {hasHint
+          && <button type="button" className={styles.hintButton} onClick={handleHint} />}
           {showHint && (
             <div className={styles.hintOverlay} onClick={handleOverlayClick}>
               <HintPopup hintMessage={popupMessage} onClose={() => setShowHint(false)} />

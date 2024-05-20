@@ -386,7 +386,7 @@ function Quiz() {
           Quiz
           {' '}
           {' '}
-          {num}
+          {num - 1}
         </div>
         <div className={styles.progressbarandhintcontainer}>
           <div

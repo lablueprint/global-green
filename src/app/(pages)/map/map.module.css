@@ -94,7 +94,7 @@
   flex-direction: column;
   justify-content: flex-start;
   align-items: flex-start;
-  width: 100%;
+  width: 50em; /* Increase the width as desired */
   height: 100%;
   padding: 10px;
   box-sizing: border-box;
@@ -133,4 +133,12 @@
   margin: 0;
   color: #797979;
   padding-left: 1em;
+}
+.sideBarItemSelected {
+  background-color: #e2edf7;
+  border: 2px solid #6DAAE0;
+}
+
+.markerModalLink:focus {
+  outline: none;
 }

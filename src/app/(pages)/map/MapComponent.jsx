@@ -12,18 +12,19 @@ function MapComponent() {
   const [mapArray, setMapArray] = useState([]);
   const mapContainerRef = useRef(null);
   const mapRef = useRef(null);
+  const [selectedMarker, setSelectedMarker] = useState(null);
 
   // Function to handle what happens when a marker or sidebar item is clicked
   function HandleMarkerClick(marker) {
-    // Center map on marker
     if (mapRef.current) {
       mapRef.current.flyTo({
         center: marker._lngLat,
         zoom: 12,
       });
     }
+    setSelectedMarker(marker);
   }
-
+  
   function CloseAllPopups() {
     mapArray.map((marker) => {
       if (marker.ref.getPopup().isOpen()) {
@@ -126,7 +127,9 @@ function MapComponent() {
           ) {
             return (
               <div
-                className={styles.sideBarItem}
+              className={`${styles.sideBarItem} ${
+                selectedMarker === marker.ref ? styles.sideBarItemSelected : ''
+              }`}
                 key={marker.markername}
                 onClick={() => {
                   CloseAllPopups();

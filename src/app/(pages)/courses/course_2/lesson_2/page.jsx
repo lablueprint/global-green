@@ -7,7 +7,8 @@ import LessonNumber from '@/app/components/LessonNumber';
 import QuoteHighlight from '@/app/components/QuoteHighlight';
 import Textbox from '@/app/components/Textbox';
 import GreyBoxHighlight from '@/app/components/GreyBoxHighlight';
-import Dropdown from '@/app/components/Dropdown';
+import styles from '../../page.module.css';
+
 
 const content1 = [
   ['In the distant past we’ve gone through a stone age and a bronze age, and now many have argued that we are in the middle of a wholly new era: the plastic age.'],
@@ -52,12 +53,12 @@ function Course2Lesson2() {
       <TitleHeader title="Becoming a Plasticsmith at the Sustainability Lab" type="main" />
       <QuoteHighlight quoteText="Be it a blacksmith forging a sword or a carpenter building a table, humans have been crafting tools and items for thousands of years." />
       <Textbox content={content1} />
-      <img src="/lessons/14.jpg" />
+      <img className={styles.roundBorder} src="/lessons/14.jpg" />
       <Textbox content={content2} />
-      <img src="/lessons/15.jpg" />
+      <img className={styles.roundBorder} src="/lessons/15.jpg" />
       <Textbox content={content3} />
       <GreyBoxHighlight content={content4} />
-      <img src="/lessons/16.jpg" />
+      <img className={styles.roundBorder} src="/lessons/16.jpg" />
       <Textbox content={content5} />
       <StickyButton text="Go to quiz" callback={() => { console.log('Go to quiz 2'); }} />
     </div>

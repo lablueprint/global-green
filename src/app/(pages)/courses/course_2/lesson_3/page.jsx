@@ -7,6 +7,8 @@ import LessonNumber from '@/app/components/LessonNumber';
 import QuoteHighlight from '@/app/components/QuoteHighlight';
 import Textbox from '@/app/components/Textbox';
 import TextImageLeft from '@/app/components/TextImageLeft';
+import styles from '../../page.module.css';
+
 
 const content1 = [
   ['Thanks to our friends at the Precious Plastic Academy, a variety of machines and tools are purchasable by small businesses and individuals. Or, if you’re handy enough, you can even build them yourself! These machines each fill a specific need within the plastic remanufacturing process, and through skilled use the budding plasticsmith or sustainability lab can create all kinds of goods from plastic debris.'],
@@ -70,7 +72,7 @@ function Course2Lesson3() {
     >
       <LessonNumber lessonText="Lesson 3" />
       <TitleHeader title="Meet the Machines with Precious Plastic" type="main" />
-      <img src="/lessons/1.png" />
+      <img className={styles.roundBorder} src="/lessons/1.png" />
       <QuoteHighlight quoteText="Now that we know what a plasticsmith does, let’s take a quick look at the marvelous machines that make it all possible." />
       <Textbox content={content1} />
       <TitleHeader title="Precious Plastic Machines" type="sub" />

@@ -8,6 +8,7 @@ import LessonNumber from '@/app/components/LessonNumber';
 import QuoteHighlight from '@/app/components/QuoteHighlight';
 import GreyBoxHighlight from '@/app/components/GreyBoxHighlight';
 import Textbox from '@/app/components/Textbox';
+import styles from '../../page.module.css';
 
 const content1 = [
   [
@@ -67,19 +68,20 @@ function Course1Lesson1() {
         justifyContent: 'space-between',
         padding: '15%',
         paddingTop: '8%',
+
       }}
     >
       <LessonNumber lessonText="Lesson 1" />
       <TitleHeader title="Where does Plastic Come From?" type="main" />
-      <img src="/lessons/1.png" />
+      <img className={styles.roundBorder} src="/lessons/1.png" />
       <QuoteHighlight quoteText="You probably already know that plastic isn't produced in nature." />
       <Textbox content={content1} />
       <Textbox content={content2} />
       <GreyBoxHighlight content={content3} />
-      <img src="/lessons/3.png" />
+      <img className={styles.roundBorder} src="/lessons/3.png" />
       <GreyBoxHighlight content={content4} />
       <Textbox content={content5} />
-      <img src="/lessons/4.png" />
+      <img className={styles.roundBorder} src="/lessons/4.png" />
       <GreyBoxHighlight content={content6} />
       <StickyButton text="Go to quiz" callback={() => { console.log('Go to quiz 1'); }} />
     </div>

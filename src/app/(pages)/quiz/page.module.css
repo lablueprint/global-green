@@ -374,12 +374,7 @@
   margin-left: 150px;
   min-width: 240px;
   max-width: 500px;
-<<<<<<< HEAD
   flex-grow: 1;
-=======
-  flex-grow: 1; 
-  text-align: left;
->>>>>>> bee745e022979c575a5308ae88eedf468bc38a5a
 }
 
 .selected {
@@ -544,20 +539,3 @@
   background-size: cover;
   border-radius: 0 0 10px 10px; /* Match the border radius of .scoreContainer if any */
 }
-<<<<<<< HEAD
-=======
-
-.continueButtonContainer{
-  display: flex;
-  justify-content: flex-end;
-}
-
-.continueButton{
-  width: 100px;
-  border-radius: 20px;
-  background-color: green;
-  color: white;
-  text-align: center;
-  padding: 10px 5px;
-}
->>>>>>> bee745e022979c575a5308ae88eedf468bc38a5a

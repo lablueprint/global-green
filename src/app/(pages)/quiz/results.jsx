@@ -1,29 +1,19 @@
-<<<<<<< HEAD
-import React from "react";
-import PropTypes from "prop-types";
-import Box from "@mui/material/Box";
-import Typography from "@mui/material/Typography";
-import CircularProgress, {
-  circularProgressClasses,
-} from "@mui/material/CircularProgress";
-import Button from "@mui/material/Button";
-import Image from "next/image";
-import LinearWithValueLabel from "./progressBar";
-import styles from "./page.module.css"; // Assume your CSS module is set up to reflect the design
-=======
 'use client';
 
 import React from 'react';
 import PropTypes from 'prop-types';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
-import CircularProgress, { circularProgressClasses } from '@mui/material/CircularProgress';
+import CircularProgress, {
+  circularProgressClasses,
+} from '@mui/material/CircularProgress';
 import Button from '@mui/material/Button';
 import Image from 'next/image';
-import { useRouter } from 'next/navigation';
 import { useSession } from 'next-auth/react';
+import { useRouter } from 'next/navigation';
+import LinearWithValueLabel from './progressBar';
+
 import styles from './page.module.css'; // Assume your CSS module is set up to reflect the design
->>>>>>> bee745e022979c575a5308ae88eedf468bc38a5a
 
 function CircularWithLabel({ value }) {
   return (
@@ -34,9 +24,9 @@ function CircularWithLabel({ value }) {
         size="100px"
         thickness={6}
         sx={{
-          color: "#519546",
+          color: '#519546',
           [`& .${circularProgressClasses.circle}`]: {
-            strokeLinecap: "round",
+            strokeLinecap: 'round',
           },
         }}
       />
@@ -54,9 +44,9 @@ function CircularWithLabel({ value }) {
           variant="caption"
           component="div"
           style={{
-            fontSize: "1.2rem",
-            fontWeight: "bold",
-            color: "black",
+            fontSize: '1.2rem',
+            fontWeight: 'bold',
+            color: 'black',
           }}
         >
           {`${Math.round(value)}%`}
@@ -74,29 +64,22 @@ function Results({ points, totalQuestions, questionResults }) {
   const percentage = ((points / totalQuestions) * 100).toFixed(0);
 
   // Function to render the question details. You can further customize it based on your needs.
-<<<<<<< HEAD
-  const renderQuestionDetails = (results, correct) =>
-    results
-      .filter((result) => result.isCorrect === correct)
-      .map((result, index) => (
-        <div key={index} className={styles.questionBox}>
-          <p className={styles.questionNumber}>{`Question ${
+  const renderQuestionDetails = (results, correct) => results
+    .filter((result) => result.isCorrect === correct)
+    .map((result, index) => (
+      <div key={index} className={styles.questionBox}>
+        <p className={styles.questionNumber}>
+          {`Question ${
             result.questionId + 1
-          }: `}</p>
+          }: `}
+        </p>
 
-          <p className={styles.questionDetail}> {result.questionText}</p>
-        </div>
-      ));
-=======
-  const renderQuestionDetails = (results, correct) => (
-    results.filter((result) => result.isCorrect === correct).map((result, index) => (
-      <div key={index} className={styles.questionDetail}>
-        <Typography variant="body1">
-          {`Question ${result.questionId + 1}: ${result.selectedAnswer}`}
-        </Typography>
+        <p className={styles.questionDetail}>
+          {' '}
+          {result.questionText}
+        </p>
       </div>
-    ))
-  );
+    ));
 
   const router = useRouter();
   const { data: session } = useSession();
@@ -153,19 +136,18 @@ function Results({ points, totalQuestions, questionResults }) {
     console.log('k');
   };
 
->>>>>>> bee745e022979c575a5308ae88eedf468bc38a5a
   return (
     <div className={styles.resultsContainer}>
       <div className={styles.quizTitleContainer}>Results</div>
       <div className={styles.progressbarandhintcontainer}>
         <div
           style={{
-            position: "absolute",
-            cursor: "pointer",
-            fontSize: "12px",
-            color: "#454545",
+            position: 'absolute',
+            cursor: 'pointer',
+            fontSize: '12px',
+            color: '#454545',
           }}
-          onClick={() => console.log("bye bye")}
+          onClick={() => console.log('bye bye')}
         >
           &#10005;
         </div>
@@ -178,11 +160,11 @@ function Results({ points, totalQuestions, questionResults }) {
       <div className={styles.x}>
         <div
           style={{
-            textAlign: "left",
-            fontWeight: "bold",
-            fontSize: "40px",
-            marginBottom: "15px",
-            marginTop: "60px",
+            textAlign: 'left',
+            fontWeight: 'bold',
+            fontSize: '40px',
+            marginBottom: '15px',
+            marginTop: '60px',
           }}
         >
           Here's how you did...
@@ -192,22 +174,30 @@ function Results({ points, totalQuestions, questionResults }) {
             <div className={styles.summaryDetails}>
               <div
                 style={{
-                  fontWeight: "bold",
-                  fontSize: "24px",
-                  marginBottom: "15px",
-                  width: "300px",
+                  fontWeight: 'bold',
+                  fontSize: '24px',
+                  marginBottom: '15px',
+                  width: '300px',
                 }}
               >
-                {" "}
-                Summary{" "}
+                {' '}
+                Summary
+                {' '}
               </div>
-              <div style={{ fontSize: "20px" }}>{`${points} Correct`} </div>
-              <div style={{ fontSize: "20px" }}>{`${
-                totalQuestions - points
-              } Incorrect`}</div>
+              <div style={{ fontSize: '20px' }}>
+                {`${points} Correct`}
+                {' '}
+              </div>
+              <div style={{ fontSize: '20px' }}>
+                {`${
+                  totalQuestions - points
+                } Incorrect`}
+              </div>
               <div
-                style={{ fontSize: "20px" }}
-              >{`${points} Points Earned`}</div>
+                style={{ fontSize: '20px' }}
+              >
+                {`${points} Points Earned`}
+              </div>
             </div>
             <div className={styles.circularProgressContainer}>
               <CircularWithLabel value={Number(percentage)} />
@@ -216,62 +206,61 @@ function Results({ points, totalQuestions, questionResults }) {
           </div>
           <Image src="/results_flower.svg" width={400} height={300} />
         </div>
-<<<<<<< HEAD
         <Button
           variant="contained"
           color="primary"
           className={styles.continueButton}
           style={{
-            borderRadius: "40px",
-            background: "var(--Green-100, #519546)",
-            marginBottom: "60px",
-            marginTop: "60px",
-            display: "flex",
-            width: "160px",
-            padding: "12px 32px",
-            justifyContent: "center",
-            alignItems: "center",
-            gap: "8px",
-            position: "relative",
-            right: "0px",
-            marginLeft: "auto",
-            marginRight: "80px",
+            borderRadius: '40px',
+            background: 'var(--Green-100, #519546)',
+            marginBottom: '60px',
+            marginTop: '60px',
+            display: 'flex',
+            width: '160px',
+            padding: '12px 32px',
+            justifyContent: 'center',
+            alignItems: 'center',
+            gap: '8px',
+            position: 'relative',
+            right: '0px',
+            marginLeft: 'auto',
+            marginRight: '80px',
           }}
+          onClick={handleContinue}
         >
           Continue
         </Button>
         <div className={styles.questionResults}>
           <div
             style={{
-              fontWeight: "bold",
-              fontSize: "24px",
-              marginBottom: "15px",
+              fontWeight: 'bold',
+              fontSize: '24px',
+              marginBottom: '15px',
             }}
           >
-            {" "}
-            Incorrectly Answered {totalQuestions - points}/{totalQuestions}
+            {' '}
+            Incorrectly Answered
+            {' '}
+            {totalQuestions - points}
+            /
+            {totalQuestions}
           </div>
 
           {renderQuestionDetails(questionResults, false)}
           <div
             style={{
-              fontWeight: "bold",
-              fontSize: "24px",
-              marginBottom: "15px",
+              fontWeight: 'bold',
+              fontSize: '24px',
+              marginBottom: '15px',
             }}
           >
-            {" "}
-            Correctly Answered {points}/{totalQuestions}
+            {' '}
+            Correctly Answered
+            {' '}
+            {points}
+            /
+            {totalQuestions}
           </div>
-=======
-        <div className={styles.continueButton} onClick={handleContinue}>
-          Continue
-        </div>
-        <div className={styles.questionResults}>
-          <div style={{ fontWeight: 'bold', fontSize: '24px', marginBottom: '15px' }}> Incorrectly Answered</div>
-          {renderQuestionDetails(questionResults, false)}
-          <div style={{ fontWeight: 'bold', fontSize: '24px', marginBottom: '15px' }}> Correctly Answered</div>
->>>>>>> bee745e022979c575a5308ae88eedf468bc38a5a
           {renderQuestionDetails(questionResults, true)}
         </div>
       </div>
@@ -289,7 +278,7 @@ Results.propTypes = {
       selectedAnswer: PropTypes.string.isRequired,
       questionText: PropTypes.string.isRequired,
       // Include other properties you may need, like correctAnswer, questionText, etc.
-    })
+    }),
   ).isRequired,
 };
 

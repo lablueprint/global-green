@@ -7,6 +7,15 @@ import styles from './page.module.css';
 function PdfForm({
   templatePdf, userName, course, date, duration,
 }) {
+  const temp = new Date(date);
+  const formattedDate = temp.toLocaleDateString('en-US', {
+    year: 'numeric',
+    month: 'long',
+    day: 'numeric',
+  });
+
+  const formattedCourse = 'Climate Change';
+
   const generatePdf = async () => {
     try {
       // Fetch the template PDF from the provided URL
@@ -24,7 +33,7 @@ function PdfForm({
 
       // Modify the PDF document by replacing the placeholder text with the desired name
       const name = `${userName}`;
-      const dateText = `Completed on: ${date}`;
+      const dateText = `Completed on: ${formattedDate}`;
 
       const firstPage = pages[0];
       const { width, height } = firstPage.getSize();
@@ -46,7 +55,7 @@ function PdfForm({
       const courseWidth = helveticaFont.widthOfTextAtSize(course, 30);
       const courseX = (width - courseWidth) / 2;
 
-      firstPage.drawText(course, {
+      firstPage.drawText(formattedCourse, {
         x: courseX,
         y: height / 2 - 110,
         size: 30,
@@ -86,14 +95,14 @@ function PdfForm({
     <div>
       <div className={styles.certificateBox} onClick={generatePdf}>
         <div className={styles.certificateHeader}> Certificate </div>
-        <div className={styles.certificateName}>{course}</div>
+        <div className={styles.certificateName}>{formattedCourse}</div>
         <div className={styles.certificateInfo}>
           <div>
             {' '}
             Completed on:
             {' '}
             {' '}
-            {date}
+            {formattedDate}
           </div>
         </div>
       </div>

@@ -59,6 +59,10 @@ function CoursePage({ params, searchParams }) {
     router.push(`/roadmap/course?courseKey=${courseKey}`);
   };
 
+  // const goToQuiz = () => {
+  //   router.push(`quiz?courseKey=${courseKey}&stage=${stage}`);
+  // };
+
   useEffect(
     () => {
       if (session) checkUserHasAccess(session.user.id);

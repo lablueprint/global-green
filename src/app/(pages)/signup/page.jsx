@@ -1,11 +1,9 @@
 'use client';
-
 import React, { useState, useRef } from 'react';
 import Image from 'next/image';
 import { signIn } from 'next-auth/react';
 import ReCAPTCHA from 'react-google-recaptcha';
 import styles from './page.module.css';
-
 function Example() {
   const [firstName, setFirstName] = useState('');
   const [lastName, setLastName] = useState('');
@@ -16,14 +14,12 @@ function Example() {
   // Captcha Related
   const recaptcha = useRef(null);
   const [captchaToken, setCaptchaToken] = useState("");
-
   const onCaptchaChange = (token) => {
     // Set the captcha token when the user completes the reCAPTCHA
     if (token) {
       setCaptchaToken(token);
     }
   };
-
   const OnSignup = async () => {
     // signup function. This will call upon /api/users/signup
     // and send the username and password to the backend
@@ -44,7 +40,6 @@ function Example() {
         }),
       });
       const data = await response.json();
-
       if (data.error) {
         // eslint-disable-next-line no-alert
         alert(data.error);
@@ -59,7 +54,6 @@ function Example() {
         console.log("Signup success", response.data);
         recaptcha?.current?.reset();
       }
-
       // eslint-disable-next-line no-console
       console.log("Signup success", response.data);
       recaptcha?.current?.reset();
@@ -70,7 +64,6 @@ function Example() {
       window.location.href = "/signup";
     }
   };
-
   const firstNameChange = (e) => {
     setFirstName(e.target.value);
   };
@@ -89,11 +82,9 @@ function Example() {
   const confirmPasswordChange = (e) => {
     setConfirmPassword(e.target.value);
   };
-
   const submitLog = (event) => {
     event.preventDefault();
     let validEntries = true;
-
     // for email input format validation
     const regex = /^([\w-]+(?:\.[\w-]+)*)@((?:[\w-]+\.)*\w[\w-]{0,66})\.([a-z]{2,6}(?:\.[a-z]{2})?)$/;
     if (firstName === '' || lastName === '') {
@@ -130,7 +121,6 @@ function Example() {
       OnSignup();
     }
   };
-
   return (
     <div className={styles.exampleContainer}>
       <div className={styles.exampleImageContainer}>
@@ -219,5 +209,4 @@ function Example() {
     </div>
   );
 }
-
 export default Example;

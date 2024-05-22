@@ -14,7 +14,6 @@ import KeyboardArrowLeftIcon from '@mui/icons-material/KeyboardArrowLeft';
 import KeyboardDoubleArrowLeftIcon from '@mui/icons-material/KeyboardDoubleArrowLeft';
 import KeyboardDoubleArrowRightIcon from '@mui/icons-material/KeyboardDoubleArrowRight';
 import Button from '@mui/material/Button';
-
 import { useSession, signOut } from 'next-auth/react';
 import styles from './navbar.module.css';
 
@@ -41,12 +40,10 @@ function NavLink({
     </Link>
   );
 }
-
 export default function NavBar() {
   const [currentPath, setCurrentPath] = useState('');
   const { data: session } = useSession();
   const [user, setUser] = useState({});
-
   const navlinks = [
     {
       href: '/landing',
@@ -83,78 +80,50 @@ export default function NavBar() {
       },
       body: JSON.stringify({ id }),
     });
-
     const data = await response.json();
     console.log('data', data);
     setUser(data.user);
     console.log('user', user);
   };
-
   useEffect(() => {
     console.log('session', session);
     if (session) getUserDetails(session.user.id);
   }, [session]);
-
   useEffect(() => {
     if (typeof window !== 'undefined') {
       setCurrentPath(window.location.pathname);
     }
   }, []);
-
-  function collapseNavBar() {
-    if (collapseButton.type === KeyboardDoubleArrowLeftIcon) {
-      setCollapseButton(<KeyboardDoubleArrowRightIcon />);
-      // document.getElementById("navbar").style = styles.mini;
-    } else {
-      setCollapseButton(<KeyboardDoubleArrowLeftIcon />);
-      document.getElementById('navbar').style.display = '';
-    }
-  }
-
-  const [collapseButton, setCollapseButton] = useState(
-    <KeyboardDoubleArrowLeftIcon />,
-  );
-
   return (
     <div
       id="navbar"
-      className={`${styles.navbar} ${collapseButton.type === KeyboardDoubleArrowRightIcon
-        || collapseButton.type === KeyboardDoubleArrowRightIcon
-        ? styles.mini
-        : ''
-      }`}
+      className={`${styles.navbar}`}
+      style={{
+        display:
+          currentPath === '/login'
+          || currentPath === '/signup'
+          || currentPath === '/verifyemail'
+          || currentPath === '/forgot-password'
+            ? 'none'
+            : 'flex',
+      }}
     >
       <div className={styles.navcomp}>
         <div
           className={`${styles.navlinks} ${
             currentPath === '/courses'
-            || collapseButton.type === KeyboardDoubleArrowRightIcon
-              ? styles.mini
-              : ''
           }`}
         >
-          <Button
-            variant="outlined"
-            onClick={collapseNavBar}
-            className={styles.button}
-            // class="close"
-          >
-            {collapseButton}
-          </Button>
           <div className={styles.ggLogoAndText}>
             <NavLink
-              href="/"
+              href="/landing"
               icon={(
                 <Image
                   width={
-                    collapseButton.type === KeyboardDoubleArrowRightIcon
-                      ? 62
-                      : 47
+                    47
                   }
                   height={
-                   collapseButton.type === KeyboardDoubleArrowRightIcon
-                     ? 62
-                     : 47
+                   47
                   }
                   alt="gg Logo"
                   src="https://global-green-2.s3.us-west-1.amazonaws.com/globalgreenlogo.png"
@@ -164,10 +133,7 @@ export default function NavBar() {
               setCurrentPath={setCurrentPath}
               currentPath={currentPath}
             >
-              {currentPath === '/courses'
-              || collapseButton.type === KeyboardDoubleArrowRightIcon
-                ? ''
-                : 'Global Green Scholar'}
+              Global Green Scholar
             </NavLink>
           </div>
           {navlinks.map((link) => (
@@ -180,27 +146,15 @@ export default function NavBar() {
               currentPath={currentPath}
             >
               {/* {link.text} */}
-              {collapseButton.type === KeyboardDoubleArrowRightIcon ? (
-                ''
-              ) : (
-                <p>{link.text}</p>
-              )}
+              <p>{link.text}</p>
             </NavLink>
           ))}
         </div>
         <div
-          className={`${styles.GGScholar} ${
-            collapseButton.type === KeyboardDoubleArrowRightIcon
-              ? styles.mini
-              : ''
-          }`}
+          className={`${styles.GGScholar}`}
         />
         <div
-          className={`${styles.profileWrapper} ${
-            collapseButton.type === KeyboardDoubleArrowRightIcon
-              ? styles.mini
-              : ''
-          }`}
+          className={`${styles.profileWrapper} `}
         >
           <div className={styles.personIcon}>
             {user.profilePic ? (
@@ -215,14 +169,9 @@ export default function NavBar() {
             )}
           </div>
           <div className={styles.profileText}>
-            {currentPath.includes('/lesson')
-            || collapseButton.type === KeyboardDoubleArrowRightIcon ? (
-                ''
-              ) : (
-                <div className={styles.usernameText}>
-                  {user.userName || 'Login'}
-                </div>
-              )}
+            <div className={styles.usernameText}>
+              {user.userName || 'Login'}
+            </div>
             <div className={styles.profilePoints}>
               <Image
                 src="https://global-green-2.s3.us-west-1.amazonaws.com/pointsIcon.svg"
@@ -231,9 +180,7 @@ export default function NavBar() {
                 height={16}
               />
               {user.points}
-              {collapseButton.type === KeyboardDoubleArrowRightIcon
-                ? ''
-                : ' Points'}
+              {' Points'}
             </div>
           </div>
         </div>
@@ -241,7 +188,6 @@ export default function NavBar() {
     </div>
   );
 }
-
 /* return (
     <div className={styles.navbar}>
         <div className={styles.navcomp}>

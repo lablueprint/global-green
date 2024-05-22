@@ -5,9 +5,7 @@ import { useRouter } from 'next/navigation';
 import styles from './page.module.css';
 import ProgressBar from './progressBar';
 import convertToURL from '@/app/convertToURL';
-
 // course card component: individual course cards
-
 function CourseCard({
   courseKey, progress, color, background,
 }) {
@@ -17,7 +15,6 @@ function CourseCard({
     backgroundPosition: 'center',
   };
   const router = useRouter();
-
   const handleClick = () => {
     console.log('Course card clicked!', courseKey);
     switch (courseKey) {
@@ -41,7 +38,6 @@ function CourseCard({
         break;
     }
   };
-
   // code for cours name, duration, and progress bar
   return (
     <div className={styles.courseCard} style={cardStyle} onClick={handleClick}>
@@ -65,5 +61,4 @@ function CourseCard({
     </div>
   );
 }
-
 export default CourseCard;

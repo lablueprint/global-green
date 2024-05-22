@@ -10,7 +10,7 @@ function LinearProgressWithLabel({
   return (
     <Box sx={{
       display: 'flex',
-      justifyContent: 'space-between',
+      justifyContent: 'center',
       alignItems: 'center',
       width: '100%',
       padding: '0 10px',
@@ -21,29 +21,30 @@ function LinearProgressWithLabel({
           color: 'black',
           fontSize: '14px',
           lineHeight: '1',
-          fontFamily: 'Arial',
           textAlign: 'left',
+          textWrap: 'nowrap',
           flex: 1, // Allow the course name to grow flexibly
         }}
-      />
+      >
+        {`${x === y ? 'Completed' : `${Math.ceil((maxValue - value) * 0.3) === 1 ? `${Math.ceil((maxValue - value) * 0.3)} hr left` : `${Math.ceil((maxValue - value) * 0.3)} hrs left`}`}`}
+      </Typography>
       <Box sx={{ width: '100%', margin: 0.75 }}>
         <LinearProgress
           variant="determinate"
           value={(value / maxValue) * 100}
           sx={{
             borderRadius: 5,
-            border: '1px solid black',
-            width: '100px',
+            width: '150px',
             height: '10px',
-            backgroundColor: 'white',
+            backgroundColor: 'lightgrey',
             '& .MuiLinearProgress-bar': {
-              backgroundColor: color,
+              backgroundColor: 'green',
               borderRadius: 5,
             },
           }}
         />
       </Box>
-      <Box sx={{
+      {/* <Box sx={{
         minWidth: 35,
         position: 'relative',
         display: 'flex',
@@ -62,11 +63,10 @@ function LinearProgressWithLabel({
         >
           {`${x}/${y}`}
         </Typography>
-      </Box>
+      </Box> */}
     </Box>
   );
 }
-
 LinearProgressWithLabel.propTypes = {
   value: PropTypes.number.isRequired,
   x: PropTypes.number.isRequired,
@@ -74,7 +74,6 @@ LinearProgressWithLabel.propTypes = {
   color: PropTypes.string.isRequired,
   maxValue: PropTypes.number.isRequired,
 };
-
 function LinearWithValueLabel({
   value, x, y, color, maxValue,
 }) {
@@ -90,7 +89,6 @@ function LinearWithValueLabel({
     </Box>
   );
 }
-
 LinearWithValueLabel.propTypes = {
   value: PropTypes.number.isRequired,
   x: PropTypes.number.isRequired,
@@ -98,5 +96,4 @@ LinearWithValueLabel.propTypes = {
   color: PropTypes.string.isRequired,
   maxValue: PropTypes.number.isRequired,
 };
-
 export default LinearWithValueLabel;

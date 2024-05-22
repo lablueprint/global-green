@@ -4,14 +4,12 @@ import React, { useState, useEffect } from 'react';
 import { useSession } from 'next-auth/react';
 import CourseCard from './CourseCard';
 import styles from './page.module.css';
-
 // course display: seeing all courses, incomplete, complete courses
 function CourseDisplay() {
   const [courseData, setCourseData] = useState([]);
   const [courseProgress, setCourseProgress] = useState([]);
   const [filter, setFilter] = useState('all');
   const { data: session } = useSession();
-
   const [filteredData, setFilteredData] = useState([]);
   async function fetchCoursesData() {
     const response = await fetch('/api/courses');
@@ -19,7 +17,6 @@ function CourseDisplay() {
     console.log('api courses', data);
     setCourseData(data.res);
   }
-
   const filterData = (filterX) => {
     console.log('filterX', filterX);
     console.log('courseData', courseData);
@@ -48,7 +45,6 @@ function CourseDisplay() {
     });
     setFilteredData(tempFilteredData);
   };
-
   const getUserDetails = async (id) => {
     console.log('id', id);
     if (!id) return;
@@ -59,13 +55,11 @@ function CourseDisplay() {
       },
       body: JSON.stringify({ id }),
     });
-
     const data = await response.json();
     setCourseProgress(data.user.courses);
     filterData('all');
     console.log('filteredData', filteredData);
   };
-
   useEffect(
     () => {
       console.log('session', session);
@@ -74,7 +68,6 @@ function CourseDisplay() {
     },
     [session, courseData],
   );
-
   return (
     <div className={styles.courseContainer}>
       <div className={styles.courseToggle}>
@@ -122,5 +115,4 @@ function CourseDisplay() {
     </div>
   );
 }
-
 export default CourseDisplay;

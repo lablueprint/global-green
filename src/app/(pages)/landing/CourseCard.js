@@ -11,8 +11,6 @@ function CourseCard({
 }) {
   const cardStyle = {
     backgroundImage: `url(${convertToURL(background)})`,
-    backgroundSize: 'cover',
-    backgroundPosition: 'center',
   };
   const router = useRouter();
   const handleClick = () => {
@@ -40,14 +38,9 @@ function CourseCard({
   };
   // code for cours name, duration, and progress bar
   return (
-    <div className={styles.courseCard} style={cardStyle} onClick={handleClick}>
-      <div className={styles.courseName}>
-        {/* {name} */}
-      </div>
+    <div className={styles.courseCard}>
+      <div className={styles.courseCardImage} style={cardStyle} onClick={handleClick} />
       <div className={styles.bottomBar}>
-        <div className={styles.courseDuration} style={{ backgroundColor: color }}>
-          2 h
-        </div>
         <div className={styles.progressBar}>
           <ProgressBar
             value={progress}

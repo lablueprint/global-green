@@ -80,15 +80,7 @@ function CourseDisplay() {
         >
           All Courses
         </div>
-        <div
-          className={filter === 'incomplete' ? styles.active : ''}
-          onClick={() => {
-            setFilter('incomplete');
-            filterData('incomplete');
-          }}
-        >
-          Incomplete
-        </div>
+
         <div
           className={filter === 'completed' ? styles.active : ''}
           onClick={() => {
@@ -97,6 +89,15 @@ function CourseDisplay() {
           }}
         >
           Complete
+        </div>
+        <div
+          className={filter === 'incomplete' ? styles.active : ''}
+          onClick={() => {
+            setFilter('incomplete');
+            filterData('incomplete');
+          }}
+        >
+          Incomplete
         </div>
       </div>
       {/* displaying all of the courses */}

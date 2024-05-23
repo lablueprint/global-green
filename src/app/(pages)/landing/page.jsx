@@ -31,16 +31,18 @@ function LandingPage() {
             className={styles.image}
             src={currentModule.imageUrl}
             alt="landing page Image"
-            width={600}
-            height={300}
+            width={500}
+            height={230}
             style={{ borderRadius: '10px' }}
           />
           {/* going to garden */}
           <div className={styles.garden}>
             <h2>Your Garden</h2>
-            <div className={styles.gardenInfo}>Started on June 2024</div>
-            <div className={styles.gardenInfo}>1 Plant collected</div>
-            <div className={styles.gardenInfo}>3 Hours spent in total</div>
+            <div className={styles.gardenInfoContainer}>
+              <div className={styles.gardenInfo}>Started on June 2024</div>
+              <div className={styles.gardenInfo}>1 Plant collected</div>
+              <div className={styles.gardenInfo}>3 Hours spent in total</div>
+            </div>
             <div
               onClick={() => setIsGardenModalOpen(true)}
               className={styles.enterGarden}

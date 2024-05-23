@@ -4,9 +4,18 @@
   display: flex;
   flex-direction: column;
   align-items: left;
-  padding: 70px;
-}
+  padding: 1em 5em;
+  box-sizing: border-box;
 
+}
+.progressContainer{
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 20px;
+  margin-bottom: 20px;
+}
 .userName {
   color: green;
 }
@@ -15,6 +24,12 @@
   display: flex;
   gap: 5px;
   flex-direction: row;
+
+
+}
+
+.welcome h1 {
+  font-weight: normal;
 }
 
 .imageGarden {
@@ -24,10 +39,22 @@
 
 /* going to the garden */
 .garden {
-  padding: 30px 40px;
+  box-sizing: border-box;
+  padding: 20px;
   border-radius: 15px;
   background-color: rgb(237, 234, 234);
-  width: 400px;
+  width: 100%;
+  height: 230px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 10px;
+}
+
+.garden h2 {
+  margin: 4px;
+
 }
 
 .gardenInfo {
@@ -59,7 +86,7 @@
 .courseLayout {
   display: flex;
   flex-wrap: wrap;
-  gap: 20px;
+  gap: 30px;
 }
 
 /* course toggle */
@@ -102,20 +129,25 @@
   cursor: pointer;
   display: flex;
   flex-direction: column;
-  flex: 0 0 250px;
-  justify-content: space-between;
+  justify-content: flex-start;
+  align-items: center;
   border-radius: 10px;
-  padding: 20px;
-  height: 150px;
+  box-sizing: border-box;
+  width: 292px;
+  height: 218px;
+
+
 }
 
-.courseName {
-  font-weight: 500;
-  font-size: 20px;
-  width: 120px;
-  border-left: 4px solid;
-  padding: 0px 10px;
+.courseCardImage {
+  margin: 0;
+  height: 188px;
+  width: 292px;
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
 }
+
 
 .bottomBar {
   display: flex;
@@ -125,7 +157,6 @@
 
 .courseDuration {
   border-radius: 10px;
-  width: 40px;
   text-align: center;
   font-size: 14px;
   padding: 2px 5px;
@@ -145,9 +176,11 @@
   }
 
   .garden {
-    width: 90%;
-    max-width: 400px;
-    font-size: 14px;
+    max-width: 200px;
+    box-sizing: border-box;
+    max-height: 250px;
+    margin: 0;
+    padding: 10px;
   }
 
   .gardenInfo {
@@ -157,8 +190,11 @@
 
   .enterGarden {
     width: 100px;
-    padding: 5px;
-    font-size: 14px;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+
+    
   }
 }
 

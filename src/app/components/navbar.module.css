@@ -49,14 +49,6 @@
   cursor: pointer;
 }
 
-.profileWrapper.mini {
-  box-sizing: border-box;
-  /* width: 100%; */
-  align-items: center;
-  display: flex;
-  flex-direction: column;
-  padding: 0.5em;
-}
 .profileText {
   display: flex;
   flex-direction: column;
@@ -98,33 +90,11 @@
   display: flex;
   flex-direction: row;
   align-items: center;
+  justify-content: flex-start;
   gap: 0.5em;
   border-radius: 0.5em;
   text-decoration: none !important;
-  justify-content: center;
 }
-
-.link.mini {
-  text-align: left;
-  width: 52px;
-  /* background-color: #d9d9d9; */
-  background-color: inherit;
-  color: black;
-  cursor: pointer;
-  font-weight: 620;
-  padding-left: 12px;
-  padding-right: 12px;
-  margin-top: 16px;
-  box-sizing: border-box;
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  gap: 0.5em;
-  border-radius: 0.5em;
-  text-decoration: none !important;
-  justify-content: center;
-}
-
 .navlinks {
   display: flex;
   flex-direction: column;
@@ -135,24 +105,6 @@
   cursor: pointer;
 }
 
-.navlinks.mini {
-  row-gap: 16px;
-  padding: 16px;
-
-  align-items: center;
-}
-
-.link.mini {
-  flex-direction: column;
-  padding: 0em;
-  /* width: 100%; */
-}
-
-.link.mini:hover,
-.link.mini.active {
-  /* background-color: inherit; */
-  background: var(--Grey-8, #e2e2e2);
-}
 
 .link:hover,
 .link.active {
@@ -171,15 +123,7 @@
   font-size: 1.2em;
   color: green;
 }
-.GGScholar.mini {
-  width: 100%;
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  justify-content: center;
-  text-align: center;
-  box-sizing: border-box;
-}
+
 
 .ggLogoAndText {
   margin-bottom: 100px;

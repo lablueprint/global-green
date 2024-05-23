@@ -1,0 +1,88 @@
+/* Roadmap.module.css */
+.o {
+  margin-left: 60px;
+  background-color: white;
+}
+.headerContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background-color: white;
+}
+.roadmapContainer {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  border-radius: 16px;
+  margin-left: 40px;
+}
+.stepContainer {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+.firstStepPathContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+}
+.step {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  border: 0px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 16px;
+  font-weight: bold;
+  position: relative;
+  margin: 20px 0;
+  color: #fff;
+  text-align: center;
+  font-size: 15px;
+  cursor: pointer;
+  z-index: 10; /* Make sure this is higher than the SVG z-index */
+}
+.stepCompleted {
+  background-color: #95bc63;
+  color: white;
+}
+.stepIncomplete {
+  background-color: #0d0d0d33;
+}
+.stepInProgress {
+  background-color: #519546;
+}
+.connector {
+  height: 50px;
+  width: 2px;
+  background-color: #ddd;
+  align-self: center;
+}
+.titleContainer {
+  align-self: flex-start;
+  margin: 40px;
+  margin-bottom: -50px;
+  background-color: white;
+  color: #7f7a7a;
+}
+.title {
+  align-self: flex-start;
+  margin: 40px;
+  background-color: white;
+}
+.courseInformation {
+  color: #7f7a7a;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 140%; /* 22.4px */
+  align-self: flex-start;
+  margin: 20px;
+  margin-left: 40px;
+  margin-top: 35px;
+  max-width: 500px;
+}

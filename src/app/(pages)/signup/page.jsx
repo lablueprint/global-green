@@ -1,10 +1,9 @@
 'use client';
-
-import React, { useState, useRef } from "react";
-import { signIn } from "next-auth/react";
-// import styles from './page.module.css';
-import ReCAPTCHA from "react-google-recaptcha";
-
+import React, { useState, useRef } from 'react';
+import Image from 'next/image';
+import { signIn } from 'next-auth/react';
+import ReCAPTCHA from 'react-google-recaptcha';
+import styles from './page.module.css';
 function Example() {
   const [firstName, setFirstName] = useState('');
   const [lastName, setLastName] = useState('');
@@ -15,14 +14,12 @@ function Example() {
   // Captcha Related
   const recaptcha = useRef(null);
   const [captchaToken, setCaptchaToken] = useState("");
-
   const onCaptchaChange = (token) => {
     // Set the captcha token when the user completes the reCAPTCHA
     if (token) {
       setCaptchaToken(token);
     }
   };
-
   const OnSignup = async () => {
     // signup function. This will call upon /api/users/signup
     // and send the username and password to the backend
@@ -43,7 +40,6 @@ function Example() {
         }),
       });
       const data = await response.json();
-
       if (data.error) {
         // eslint-disable-next-line no-alert
         alert(data.error);
@@ -58,7 +54,6 @@ function Example() {
         console.log("Signup success", response.data);
         recaptcha?.current?.reset();
       }
-
       // eslint-disable-next-line no-console
       console.log("Signup success", response.data);
       recaptcha?.current?.reset();
@@ -69,7 +64,6 @@ function Example() {
       window.location.href = "/signup";
     }
   };
-
   const firstNameChange = (e) => {
     setFirstName(e.target.value);
   };
@@ -88,11 +82,9 @@ function Example() {
   const confirmPasswordChange = (e) => {
     setConfirmPassword(e.target.value);
   };
-
   const submitLog = (event) => {
     event.preventDefault();
     let validEntries = true;
-
     // for email input format validation
     const regex = /^([\w-]+(?:\.[\w-]+)*)@((?:[\w-]+\.)*\w[\w-]{0,66})\.([a-z]{2,6}(?:\.[a-z]{2})?)$/;
     if (firstName === '' || lastName === '') {
@@ -130,84 +122,89 @@ function Example() {
     }
   };
   return (
-    <div>
-      <form>
-        <label htmlFor="firstName">
+    <div className={styles.exampleContainer}>
+      <div className={styles.exampleImageContainer}>
+        <Image
+          src="/signupimage.png"
+          alt="Sign Up Image"
+          width={600}
+          height={600}
+          className={styles.alignImage}
+        />
+        <div className={styles.exampleGGtext}>
+          Learn about sustainability with <br /> <span className={styles.exampleGreenText}>Global Green</span> today
+        </div>
+      </div>
+      <form className={styles.exampleForm} onSubmit={submitLog}>
+        <h1 className={styles.exampleTitle}>Create your account</h1>
+        <label htmlFor="firstName" className={styles.exampleLabel}>
           First name:
-          {' '}
-          <br />
           <input
             type="text"
             id="firstName"
             name="firstName"
             onChange={firstNameChange}
+            className={styles.exampleInput}
           />
         </label>
-        <br />
-        <label htmlFor="lastName">
+        <label htmlFor="lastName" className={styles.exampleLabel}>
           Last name:
-          <br />
           <input
             type="text"
             id="lastName"
             name="lastName"
             onChange={lastNameChange}
+            className={styles.exampleInput}
           />
-          <br />
         </label>
-        {/* eslint-disable-next-line jsx-a11y/label-has-associated-control */}
-        <label type="eAddress">
+        <label htmlFor="email" className={styles.exampleLabel}>
           Email Address:
-          <br />
-          <input type="email" id="email" name="email" onChange={emailChange} />
-          <br />
+          <input
+            type="email"
+            id="email"
+            name="email"
+            onChange={emailChange}
+            className={styles.exampleInput}
+          />
         </label>
-        <label htmlFor="userName">
+        <label htmlFor="userName" className={styles.exampleLabel}>
           Username:
-          <br />
           <input
             type="text"
             id="userName"
             name="userName"
             onChange={userNameChange}
+            className={styles.exampleInput}
           />
-          <br />
         </label>
-        {/* eslint-disable-next-line jsx-a11y/label-has-associated-control */}
-        <label name="pass">
+        <label htmlFor="pass" className={styles.exampleLabel}>
           Password:
-          <br />
           <input
             type="password"
             id="pass"
             name="pass"
             onChange={passwordChange}
+            className={styles.exampleInput}
           />
-          <br />
         </label>
-        {/* eslint-disable-next-line jsx-a11y/label-has-associated-control */}
-        <label name="confirmPass">
+        <label htmlFor="confirmPass" className={styles.exampleLabel}>
           Confirm Password:
-          <br />
           <input
             type="password"
             id="confirmPass"
             name="confirmPass"
             onChange={confirmPasswordChange}
+            className={styles.exampleInput}
           />
-          <br />
         </label>
         <div className="pb-20px">
           <ReCAPTCHA
             size="normal"
             sitekey={process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY}
             onChange={onCaptchaChange}
-            ref={recaptcha}
           />
         </div>
-        <br />
-        <input type="submit" value="Submit" onClick={submitLog} />
-        <br />
+        <input type="submit" value="Continue" className={styles.exampleSubmitButton} />
       </form>
     </div>
   );

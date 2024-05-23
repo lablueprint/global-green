@@ -1,144 +1,119 @@
 .navbar {
-    position: sticky;
-    background-color: #d9d9d9;
-    height: 100vh;
-    max-width: 20vw;
-    min-width: 20vw;
-    z-index: 100;
-    top: 0;
-    left: 0;
+  position: sticky;
+  background: var(--Grey-4, #f5f5f5);
+  height: 100vh;
+  max-width: 20vw;
+  min-width: 20vw;
+  /* width: 284px; */
+  z-index: 100;
+  top: 0;
+  left: 0;
 }
-
 .navbar.mini {
-    max-width: 10vw;
-    min-width: 10vw;
+  max-width: 6vw;
+  min-width: 6vw;
+  /* width: 48px; */
 }
 .navcomp {
-    width: 100%;
-    height: 100%;
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    justify-content: space-between;
-    text-align:left;
-    font-family: 'Work Sans', sans-serif;
-    padding: 0.5em;
-    box-sizing: border-box;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  /* align-items: flex-start; */
+  justify-content: space-between;
+  text-align: left;
+  font-family: "Work Sans", sans-serif;
+  /* padding: 0.5em; */
+  box-sizing: border-box;
 }
-
 .personIcon {
-    border-radius: 50%;
-    height: 5em;
-    width: 5em;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    background-color: white;
+  border-radius: 50%;
+  width: 64px;
+  height: 64px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: white;
 }
-
-.profileWrapper{
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    justify-content: center;
-    
-    gap: 1em;
-    padding: 2em;
-    cursor: pointer;
+.profileWrapper {
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  align-items: center;
+  justify-content: center;
+  gap: 1em;
+  padding: 2em;
+  cursor: pointer;
 }
-
-.profileWrapper.mini{
-    box-sizing: border-box;
-    width: 100%;
-    align-items: center;
-
-    padding: 0.5em;
+.profileText {
+  display: flex;
+  flex-direction: column;
 }
-
 .profilePoints {
-    display: flex;
-    flex-direction: row;
-    gap: 1em;
-    align-items: center;
-    justify-content: flex-start;
-    cursor: pointer;
+  color: var(--Grey-40, #9b9b9b);
+  font-family: "Instrument Sans";
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 600;
+  /* line-height: 110%;  */
 }
-.profileText{
-    font-size: 1.2em;
-    font-weight: 600;
-    cursor: pointer;
-
+.usernameText {
+  color: var(--Grey-100, #1d1d1d);
+  font-family: "Instrument Sans";
+  font-size: 18px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: 110%;
 }
-.navlinks{
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    justify-content: flex-start;
-    gap: 1em;
-    padding: 1em;
-    cursor: pointer;
-
+.button {
+  align-items: center;
+  justify-content: center;
 }
 .link {
-
-    text-align:left;
-    background-color: #d9d9d9;
-    color: black;
-    cursor: pointer;
-    font-weight: 620;
-    padding: 1em;
-    box-sizing: border-box;
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    gap: 0.5em;
-    border-radius: 0.5em;
-
-    text-decoration: none !important; 
+  text-align: left;
+  width: 212px;
+  /* background-color: #D9D9D9; */
+  background-color: inherit;
+  color: black;
+  cursor: pointer;
+  font-weight: 620;
+  padding-left: 12px;
+  padding-right: 12px;
+  margin-top: 5px;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 0.5em;
+  border-radius: 0.5em;
+  text-decoration: none !important;
 }
-
-.navlinks.mini{
-    gap: 1em;
-    padding: 0;
-    justify-content: center;
-    align-items: center;
-    width: 100%;
+.navlinks {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  /* gap: 1em; */
+  padding: 1em;
+  cursor: pointer;
 }
-
-.link.mini {
-    flex-direction: column;
-    padding: 0em;
-    width: 100%;
+.link:hover,
+.link.active {
+  /* background-color: #F0F0F0; */
+  background: var(--Grey-8, #e2e2e2);
+  color: green;
+  text-decoration: none !important;
 }
-    
-.link.mini:hover, .link.mini.active {
-    background-color: inherit;
-    
-}
-    
-.link:hover, .link.active {
-    background-color: #f0f0f0;
-    color: green;
-    text-decoration: none !important;
-    
-}
-
-
 .GGScholar {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: flex-start;
-    margin-top: 30px; 
-    font-size: 1.2em; 
-    color: green;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: flex-start;
+  margin-top: 30px;
+  font-size: 1.2em;
+  color: green;
 }
-.GGScholar.mini {
-    width: 100%;
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: center;
-    text-align: center;
-    box-sizing: border-box;
+.ggLogoAndText {
+  margin-bottom: 100px;
 }

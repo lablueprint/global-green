@@ -1,25 +1,27 @@
 // sample data for courses
+import convertToURL from "@/app/convertToURL";
+
 
 const profileData = [{
-  background: '/course/course1.png', 
+  imageSrc: convertToURL("a1.png"),
 }, {
-  background: '/course/course2.png', 
+  imageSrc: convertToURL("a2.png"),
 }, {
-  background: '/course/course3.png', 
+  imageSrc: convertToURL("a3.png"),
 }, {
-  background: '/course/course4.png', 
+  imageSrc:convertToURL("a4.png"),
 }, {
-  background: '/course/course5.png', 
+  imageSrc: convertToURL("a5.png"),
 }, {
-  background: '/course/course6.png', 
+  imageSrc: convertToURL("a6.png"),
 }, {
-  background: '/course/course1.png', 
+  imageSrc: convertToURL("a7.png"),
 }, {
-  background: '/course/course2.png', 
+  imageSrc: convertToURL("a8.png"),
 }, {
-  background: '/course/course3.png', 
+  imageSrc: convertToURL("a9.png"),
 }, {
-  background: '/course/course4.png', 
-}, ];
+  imageSrc: convertToURL("a10.png"),
+}];
 
 export default profileData;

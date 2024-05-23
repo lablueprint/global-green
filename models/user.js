@@ -16,16 +16,25 @@ const userSchema = new Schema(
         complete: { type: Boolean },
       },
     ],
+    certificates: [
+      {
+        key: { type: String, required: true },
+        date: { type: Date },
+      },
+    ],
     verified: { type: Boolean, default: false },
     verifyToken: { type: String },
     verifyExpires: { type: Date, default: Date.now, index: { expireAfterSeconds: 300 } },
-    accessories: { type: [String] },
-    backgrounds: { type: [String], default: 'background1' },
+    forgetPasswordToken: { type: String },
+    forgetPasswordExpires: { type: Date },
+    accessories: { type: [String], default: [] },
+    backgrounds: { type: [String], default: [] },
     garden: {
       background: { type: String, default: 'background1' },
       accessories: { type: [String] },
     },
     seeds: { type: Number, default: 0 },
+    profilePic: { type: String },
   },
   {
     timestamps: true,

@@ -1,90 +1,229 @@
-
-.wrapper {
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-start;
-    align-items: flex-start;
-    width: 100%;
-    height: 100%;
-    border: 1px solid #ccc;
-    padding: 20px;
-    margin: 10px;
-    box-shadow: 0 2px 3px #ccc;
-    box-sizing: border-box;
+/* Main container for the page */
+.pageContainer {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+  width: 100%;
+  height: 100vh;
+  padding: 20px;
+  box-sizing: border-box;
+  overflow: hidden;
+  padding-left: 4em;
 }
 
-
-.mapContainer {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    width: 1200px;
-    height: 600px;
-    z-index: 100;
-    box-sizing: border-box;
+/* Header container for the title and description */
+.header {
+  width: 100%;
+  max-width: 1200px;
+  margin-bottom: 20px;
 }
 
+/* Title styling */
+.title {
+  text-align: left;
+  margin-bottom: 10px;
+}
+
+/* Description text styling */
+.exampleText {
+  text-align: left;
+  margin-bottom: 20px;
+  width: 100%;
+}
+
+/* Main box containing the map and sidebar */
 .mainBox {
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    align-items: flex-start;
-    border: 1px solid #ccc;
-    padding: 10px;
-    margin: 10px;
-    width: 100%;
-    height: 100%;
-    box-shadow: 0 2px 3px #ccc;
-    box-sizing: border-box;
-  }
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: flex-start;
+  padding: 10px;
+  width: 100%;
+  height: calc(
+    100vh - 140px
+  ); /* Adjust height to account for the header and padding */
+  box-sizing: border-box;
+  overflow-x: hidden;
+  overflow-y: hidden; /* Prevent vertical scrolling */
+}
 
+/* Map container styling */
+.mapContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 70%;
+  height: 100%; /* Ensure it fills the remaining height */
+  z-index: 100;
+  box-sizing: border-box;
+  margin-right: 20px;
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+/* Sidebar styling */
 .sideBar {
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-start;
-    align-items: flex-start;
-    width: 100%;
-    height: 100%;
-    box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: flex-start;
+  width: 30%;
+  height: 100%; /* Ensure it fills the remaining height */
+  box-sizing: border-box;
+  padding-left: 20px;
 }
 
+/* Sidebar item styling */
 .sideBarItem {
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-start;
-    align-items: flex-start;
-    width: 90%;
-    height: 100%;
-
-    border-radius: 5px;
-    border: 1px solid #ccc;
-    padding: 10px;
-    margin: 10px;
-    box-shadow: 0 2px 3px #ccc;
-    box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: flex-start;
+  width: 100%;
+  padding: 0.8em;
+  margin: 0.5em 0;
+  background-color: #f5f5f5;
+  border-radius: 5px;
+  box-sizing: border-box;
+  font-size: 14px;
+  line-height: 1.2;
+  min-height: 80px;
 }
 
+.sideBarItemSelected {
+  background-color: #e2edf7;
+  border: 2px solid #6daae0;
+}
+
+/* Marker modal styling */
 .markerModal {
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-start;
-    align-items: flex-start;
-    width: 100%;
-    height: 100%;
-    padding: 10px;
-    box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: flex-start;
+  width: 50em; /* Increase the width as desired */
+  height: 100%;
+  padding: 10px;
+  box-sizing: border-box;
 }
 
-.markerModalTag {
-    background-color: #dfdcdc;
-    border-radius: 10px;
-    padding: 6px 13px;
-    font-weight: 400;
-    margin: 0;
+.markerModalTagSustainabilityLab {
+  background-color: #ffd39f;
+  border-radius: 10px;
+  padding: 6px 13px;
+  font-weight: 400;
+  margin: 0;
 }
 
-.markerModalLink{
-    margin-top: 2px;
-    color: blue;
-    text-decoration: none;
+.markerModalTagResort {
+  background-color: #a0d8b3;
+  border-radius: 10px;
+  padding: 6px 13px;
+  font-weight: 400;
+  margin: 0;
+}
+
+.markerModalLink {
+  margin-top: 2px;
+  color: #787878;
+  text-decoration: none;
+  font-size: 1.1em;
+}
+
+.markerModalLink:focus {
+  outline: none;
+}
+
+/* Sidebar item header styling */
+.sideBarItem h3 {
+  padding-left: 0.5em;
+  margin-bottom: 0.2em;
+}
+
+/* Sidebar item paragraph styling */
+.sideBarItem p {
+  margin: 0;
+  color: #797979;
+  padding-left: 0.5em;
+}
+
+/* Sidebar item styling */
+.sideBarItem {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: flex-start;
+  width: 100%;
+  padding: 1em;
+  margin: 0.5em 0;
+  background-color: #f5f5f5;
+  border-radius: 5px;
+  box-sizing: border-box;
+  font-size: 14px;
+  line-height: 1.2;
+  min-height: 80px;
+  position: relative;
+  transition: border 0.1s ease;
+}
+
+.sideBarItem:hover {
+  border: 2px solid #6daae0;
+}
+
+/* Marker modal styling */
+.markerModal {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: flex-start;
+  width: 50em; /* Increase the width as desired */
+  height: 100%;
+  padding: 10px;
+  box-sizing: border-box;
+}
+
+.markerModalTagSustainabilityLab {
+  background-color: #ffd39f;
+  border-radius: 10px;
+  padding: 6px 13px;
+  font-weight: 400;
+  margin: 0;
+}
+
+.markerModalTagResort {
+  background-color: #a0d8b3;
+  border-radius: 10px;
+  padding: 6px 13px;
+  font-weight: 400;
+  margin: 0;
+}
+
+.markerModalLink {
+  margin-top: 2px;
+  color: #787878;
+  text-decoration: none;
+  font-size: 1.1em;
+}
+
+/* Sidebar item header styling */
+.sideBarItem h3 {
+  padding-left: 0.9em;
+  transform: translateY(-60%);
+}
+
+/* Sidebar item paragraph styling */
+.sideBarItem p {
+  margin: 0;
+  color: #797979;
+  padding-left: 0.9em;
+  transform: translateY(-50%);
+}
+.sideBarItemSelected {
+  background-color: #e2edf7;
+  border: 2px solid #6daae0;
+}
+
+.markerModalLink:focus {
+  outline: none;
 }

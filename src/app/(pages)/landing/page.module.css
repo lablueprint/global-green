@@ -43,6 +43,10 @@
   align-items: flex-start;
   gap: 10px;
 }
+
+.garden h2 {
+  margin: 4px;
+}
 .garden h2 {
   margin: 4px;
 }
@@ -108,13 +112,14 @@
   cursor: pointer;
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
+  justify-content: flex-start;
   align-items: center;
   border-radius: 10px;
   box-sizing: border-box;
   width: 292px;
   height: 218px;
 }
+
 .courseCardImage {
   margin: 0;
   height: 188px;
@@ -123,6 +128,7 @@
   background-repeat: no-repeat;
   background-position: center;
 }
+
 .bottomBar {
   display: flex;
   flex-direction: row;
@@ -147,6 +153,11 @@
     height: auto;
   }
   .garden {
+    max-width: 200px;
+    box-sizing: border-box;
+    max-height: 250px;
+    margin: 0;
+    padding: 10px;
     max-width: 200px;
     box-sizing: border-box;
     max-height: 250px;

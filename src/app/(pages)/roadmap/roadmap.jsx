@@ -1,5 +1,10 @@
 'use client';
+'use client';
 
+import React from 'react';
+import LinearWithValueLabel from './progressbar';
+import styles from './page.module.css';
+import RoadmapSVG from './roadmapSVG';
 import React from 'react';
 import LinearWithValueLabel from './progressbar';
 import styles from './page.module.css';
@@ -18,16 +23,20 @@ function Roadmap({
         <div className={styles.titleContainer}>
           <p>
             Courses &gt;
-            {title}
+            {' '}
+            {courseKeyToTitle[courseKey]}
           </p>
         </div>
         <div className={styles.title}>
-          <h1>{title}</h1>
+          <h1>
+            {courseKeyToTitle[courseKey]}
+          </h1>
         </div>
         <LinearWithValueLabel
           value={totalProgress}
           x={currStage - 1}
           y={6}
+          style={{ width: '50%' }}
           style={{ width: '50%' }}
         />
         <div className={styles.courseInformation}>{courseInfo}</div>

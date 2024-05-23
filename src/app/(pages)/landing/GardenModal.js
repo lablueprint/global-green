@@ -7,7 +7,7 @@ import styles from './page.module.css';
 import GardenImage from './GardenImage';
 
 export default function GardenModal({
-  setIsGardenModalOpen, flowers, gardenState, setGardenState,
+  setIsGardenModalOpen, flowers, accessories, backgrounds, gardenState, setGardenState,
 }) {
   // Official state of user garden
   // mb replace this w a function to update the user state??
@@ -19,8 +19,6 @@ export default function GardenModal({
   // and compare with the options arrays below to either add a gray overlay or not
 
   // TODO: come up with a better method of storing these constants
-  const accessoryOptions = ['accessories1', 'accessories2', 'accessories3', 'accessories4'];
-  const backgroundOptions = ['background1', 'background2', 'background3', 'background4'];
 
   // State to track items selected in menu
   const [selector, setSelector] = useState(null);
@@ -60,6 +58,9 @@ export default function GardenModal({
   }
 
   // object to associate appropriate functions with tab category
+  const backgroundOptions = backgrounds || [];
+  const accessoryOptions = accessories || [];
+
   const tabObject = {
     background: [backgroundOptions, backgroundIsSelected, selectBackground],
     accessories: [accessoryOptions, accessoryIsSelected, selectAccessories],
@@ -74,7 +75,7 @@ export default function GardenModal({
         {options.map((item) => (
           <motion.div
             key={item}
-            className={`${styles.gardenModalEditItem} ${styles[`${item}`]}`}
+            className={`${styles.gardenModalEditItem} ${styles[`${currentTab}${item}`]}`}
             style={{
               border: isSelected(item) ? '4px solid green' : 'none',
               cursor: 'pointer',
@@ -194,6 +195,8 @@ export default function GardenModal({
 GardenModal.propTypes = {
   setIsGardenModalOpen: PropTypes.func.isRequired,
   flowers: PropTypes.objectOf(PropTypes.bool).isRequired,
+  accessories: PropTypes.arrayOf(PropTypes.string).isRequired,
+  backgrounds: PropTypes.arrayOf(PropTypes.string).isRequired,
   gardenState: PropTypes.shape({
     background: PropTypes.string,
     accessories: PropTypes.arrayOf(PropTypes.string),

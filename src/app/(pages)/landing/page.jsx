@@ -35,6 +35,8 @@ function LandingPage() {
     background: 'background1',
     accessories: [],
   });
+  const [accessories, setAccessories] = useState([]);
+  const [backgrounds, setBackgrounds] = useState([]);
 
   const { data: session } = useSession();
 
@@ -62,6 +64,9 @@ function LandingPage() {
       }
     });
     setFlowers(adjustFlowers);
+
+    setAccessories(user.accessories);
+    setBackgrounds(user.backgrounds);
 
     // set the garden based on the user selection
     // TODO: add more checks for if a user field exists! some accounts don't have some fields
@@ -97,6 +102,8 @@ function LandingPage() {
       <GardenModal
         setIsGardenModalOpen={setIsGardenModalOpen}
         flowers={flowers}
+        accessories={accessories}
+        backgrounds={backgrounds}
         gardenState={gardenState}
         setGardenState={setGardenState}
       />

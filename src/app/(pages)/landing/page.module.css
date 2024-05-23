@@ -352,30 +352,42 @@
     background-image: url("https://global-green-2.s3.us-west-1.amazonaws.com/flower7.png");
   }
 
-  /* TODO: display the background and accessory images to the GardenImage by adding styling */
+  /* TODO: display the background and accessories images to the GardenImage by adding styling */
 
-  .accessories1 {
+  .accessoriesBush {
     width: 90px;
     height: 60px;
-    background-image: url('/accessories/accessory1.png');
+    background-image: url("https://global-green-2.s3.us-west-1.amazonaws.com/Bushes.png");
   }
 
-  .accessories2 {
+  .accessoriesTurbines {
     width: 100px;
     height: 50px;
-    background-image: url('/accessories/accessory2.png');
+    background-image: url("https://global-green-2.s3.us-west-1.amazonaws.com/Turbines.png");
   }
 
-  .accessories3 {
+  .accessoriesPlant {
     width: 90px;
     height: 80px;
-    background-image: url('/accessories/accessory3.png');
+    background-image: url("https://global-green-2.s3.us-west-1.amazonaws.com/Plant.png");
   }
 
-  .accessories4 {
+  .accessoriesTent {
     width: 100px;
     height: 100px;
-    background-image: url('/accessories/accessory4.png');
+    background-image: url("https://global-green-2.s3.us-west-1.amazonaws.com/Tent.png");
+  }
+
+  .accessoriesTools {
+    width: 100px;
+    height: 100px;
+    background-image: url("https://global-green-2.s3.us-west-1.amazonaws.com/Tools.png");
+  }
+
+  .accessoriesMushrooms {
+    width: 100px;
+    height: 100px;
+    background-image: url("https://global-green-2.s3.us-west-1.amazonaws.com/Mushrooms.png");
   }
 
   .background1 {

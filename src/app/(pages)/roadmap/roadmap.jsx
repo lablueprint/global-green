@@ -11,7 +11,7 @@ function Roadmap({
   currStage,
   courseInfo = "Plastic is all around us. It's in our kitchens, shoes, entertainment systems, vehicles, and even our clothing. Lorem ipsum...",
 }) {
-  const totalProgress = (currStage / 6) * 100;
+  const totalProgress = ((currStage - 1) / 6) * 100;
   return (
     <div className={styles.o}>
       <div className={styles.headerContainer}>
@@ -26,7 +26,7 @@ function Roadmap({
         </div>
         <LinearWithValueLabel
           value={totalProgress}
-          x={currStage}
+          x={currStage - 1}
           y={6}
           style={{ width: '50%' }}
         />

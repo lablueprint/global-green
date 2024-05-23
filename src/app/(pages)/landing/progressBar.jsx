@@ -82,7 +82,7 @@ function LinearWithValueLabel({
       <LinearProgressWithLabel
         value={value}
         x={x}
-        y={y}
+        y={7}
         color={color}
         maxValue={maxValue}
       />

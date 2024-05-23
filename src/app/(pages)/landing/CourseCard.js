@@ -21,13 +21,13 @@ function CourseCard({
       case 'plasticandrecycling':
         router.push('/roadmap/course/?courseKey=plasticandrecycling');
         break;
-      case 'eco-friendlytraveling':
+      case 'eco-friendlytravel':
         router.push('/roadmap/course/?courseKey=eco-friendlytravel');
         break;
       case 'oceanpollution':
         router.push('/roadmap/course/?courseKey=oceanpollution');
         break;
-      case 'ecosystemconservation':
+      case 'conservationandrestoration':
         router.push('/roadmap/course/?courseKey=conservationandrestoration');
         break;
       case 'climatechange':
@@ -51,7 +51,7 @@ function CourseCard({
         <div className={styles.progressBar}>
           <ProgressBar
             value={progress}
-            maxValue={6}
+            maxValue={7}
             x={progress}
             y={6}
             color={color}

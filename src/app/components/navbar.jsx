@@ -14,7 +14,6 @@ import KeyboardArrowLeftIcon from '@mui/icons-material/KeyboardArrowLeft';
 import KeyboardDoubleArrowLeftIcon from '@mui/icons-material/KeyboardDoubleArrowLeft';
 import KeyboardDoubleArrowRightIcon from '@mui/icons-material/KeyboardDoubleArrowRight';
 import Button from '@mui/material/Button';
-
 import { useSession, signOut } from 'next-auth/react';
 import styles from './navbar.module.css';
 
@@ -41,12 +40,10 @@ function NavLink({
     </Link>
   );
 }
-
 export default function NavBar() {
   const [currentPath, setCurrentPath] = useState('');
   const { data: session } = useSession();
   const [user, setUser] = useState({});
-
   const navlinks = [
     {
       href: '/landing',
@@ -83,24 +80,20 @@ export default function NavBar() {
       },
       body: JSON.stringify({ id }),
     });
-
     const data = await response.json();
     console.log('data', data);
     setUser(data.user);
     console.log('user', user);
   };
-
   useEffect(() => {
     console.log('session', session);
     if (session) getUserDetails(session.user.id);
   }, [session]);
-
   useEffect(() => {
     if (typeof window !== 'undefined') {
       setCurrentPath(window.location.pathname);
     }
   }, []);
-
   return (
     <div
       id="navbar"
@@ -114,7 +107,6 @@ export default function NavBar() {
             ? 'none'
             : 'flex',
       }}
-
     >
       <div className={styles.navcomp}>
         <div
@@ -124,7 +116,7 @@ export default function NavBar() {
         >
           <div className={styles.ggLogoAndText}>
             <NavLink
-              href="/"
+              href="/landing"
               icon={(
                 <Image
                   width={
@@ -196,7 +188,6 @@ export default function NavBar() {
     </div>
   );
 }
-
 /* return (
     <div className={styles.navbar}>
         <div className={styles.navcomp}>

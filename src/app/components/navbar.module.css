@@ -9,7 +9,6 @@
   top: 0;
   left: 0;
 }
-
 .navbar.mini {
   max-width: 6vw;
   min-width: 6vw;
@@ -27,7 +26,6 @@
   /* padding: 0.5em; */
   box-sizing: border-box;
 }
-
 .personIcon {
   border-radius: 50%;
   width: 64px;
@@ -37,7 +35,6 @@
   align-items: center;
   background-color: white;
 }
-
 .profileWrapper {
   display: flex;
   flex-direction: row;
@@ -53,7 +50,6 @@
   display: flex;
   flex-direction: column;
 }
-
 .profilePoints {
   color: var(--Grey-40, #9b9b9b);
   font-family: "Instrument Sans";
@@ -74,22 +70,22 @@
   align-items: center;
   justify-content: center;
 }
-
 .link {
   text-align: left;
   width: 212px;
-  /* background-color: #d9d9d9; */
+  /* background-color: #D9D9D9; */
   background-color: inherit;
   color: black;
   cursor: pointer;
   font-weight: 620;
   padding-left: 12px;
   padding-right: 12px;
-  margin-top: 16px;
+  margin-top: 5px;
   box-sizing: border-box;
   display: flex;
   flex-direction: row;
   align-items: center;
+  justify-content: flex-start;
   justify-content: flex-start;
   gap: 0.5em;
   border-radius: 0.5em;
@@ -105,15 +101,13 @@
   cursor: pointer;
 }
 
-
 .link:hover,
 .link.active {
-  /* background-color: #f0f0f0; */
+  /* background-color: #F0F0F0; */
   background: var(--Grey-8, #e2e2e2);
   color: green;
   text-decoration: none !important;
 }
-
 .GGScholar {
   display: flex;
   flex-direction: row;
@@ -123,7 +117,6 @@
   font-size: 1.2em;
   color: green;
 }
-
 
 .ggLogoAndText {
   margin-bottom: 100px;

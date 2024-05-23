@@ -1,5 +1,10 @@
 'use client';
+'use client';
 
+import React from 'react';
+import LinearWithValueLabel from './progressbar';
+import styles from './page.module.css';
+import RoadmapSVG from './roadmapSVG';
 import React from 'react';
 import LinearWithValueLabel from './progressbar';
 import styles from './page.module.css';
@@ -42,6 +47,7 @@ function Roadmap({
           x={currStage}
           y={6}
           style={{ width: '50%' }}
+          style={{ width: '50%' }}
         />
         <div className={styles.courseInformation}>{courseInfo}</div>
       </div>
@@ -53,5 +59,4 @@ function Roadmap({
     </div>
   );
 }
-
 export default Roadmap;

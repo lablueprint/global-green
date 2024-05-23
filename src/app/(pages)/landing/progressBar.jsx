@@ -11,6 +11,7 @@ function LinearProgressWithLabel({
     <Box sx={{
       display: 'flex',
       justifyContent: 'center',
+      justifyContent: 'center',
       alignItems: 'center',
       width: '100%',
       padding: '0 10px',
@@ -22,6 +23,7 @@ function LinearProgressWithLabel({
           fontSize: '14px',
           lineHeight: '1',
           textAlign: 'left',
+          textWrap: 'nowrap',
           textWrap: 'nowrap',
           flex: 1, // Allow the course name to grow flexibly
         }}
@@ -36,15 +38,19 @@ function LinearProgressWithLabel({
           sx={{
             borderRadius: 5,
             width: '150px',
+            width: '150px',
             height: '10px',
             backgroundColor: 'lightgrey',
+            backgroundColor: 'lightgrey',
             '& .MuiLinearProgress-bar': {
+              backgroundColor: 'green',
               backgroundColor: 'green',
               borderRadius: 5,
             },
           }}
         />
       </Box>
+      {/* <Box sx={{
       {/* <Box sx={{
         minWidth: 35,
         position: 'relative',
@@ -68,7 +74,6 @@ function LinearProgressWithLabel({
     </Box>
   );
 }
-
 LinearProgressWithLabel.propTypes = {
   value: PropTypes.number.isRequired,
   x: PropTypes.number.isRequired,
@@ -76,7 +81,6 @@ LinearProgressWithLabel.propTypes = {
   color: PropTypes.string.isRequired,
   maxValue: PropTypes.number.isRequired,
 };
-
 function LinearWithValueLabel({
   value, x, y, color, maxValue,
 }) {
@@ -92,7 +96,6 @@ function LinearWithValueLabel({
     </Box>
   );
 }
-
 LinearWithValueLabel.propTypes = {
   value: PropTypes.number.isRequired,
   x: PropTypes.number.isRequired,
@@ -100,5 +103,4 @@ LinearWithValueLabel.propTypes = {
   color: PropTypes.string.isRequired,
   maxValue: PropTypes.number.isRequired,
 };
-
 export default LinearWithValueLabel;

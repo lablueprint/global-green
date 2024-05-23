@@ -11,12 +11,10 @@ function LandingPage() {
   const [currentModule] = useState({ imageUrl: '/landingpageImage.png', name: 'Chinenye Eneh' });
   const [isGardenModalOpen, setIsGardenModalOpen] = useState(false);
   const { data: session } = useSession();
-
   // seeing landing page banner
   return (
     <div className={styles.landingPage}>
       {isGardenModalOpen && <GardenModal setIsGardenModalOpen={setIsGardenModalOpen} />}
-
       <div className={styles.welcome}>
         <h1>
           Welcome,
@@ -56,5 +54,4 @@ function LandingPage() {
     </div>
   );
 }
-
 export default LandingPage;

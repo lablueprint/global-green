@@ -285,9 +285,8 @@ function Profile() {
                 <PdfForm
                   templatePdf="/certificate.pdf"
                   userName={userData.userName}
-                  course={certificate.name}
+                  course={certificate.key}
                   date={certificate.date}
-                  duration={certificate.duration}
                 />
               )}
             </div>

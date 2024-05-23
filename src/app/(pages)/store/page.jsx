@@ -4,6 +4,7 @@ import React, { useState, useEffect } from 'react';
 import Button from '@mui/material/Button';
 import { useSession } from 'next-auth/react';
 import styles from './page.module.css';
+import ChallengeBadge from '@/app/components/snackBar';
 
 function Store() {
   const { data: session } = useSession();
@@ -13,10 +14,13 @@ function Store() {
 
   const [accessories, setAccessories] = useState([]);
   const [backgrounds, setBackgrounds] = useState([]);
-  
+
   const [userAccessories, setUserAccessories] = useState([]);
   const [userBackgrounds, setUserBackgrounds] = useState([]);
-  
+
+  const [visitStoreBadge, setVisitStoreBadge] = useState(false);
+  const [firstBuyBadge, setFirstBuyBadge] = useState(false);
+  const [buyThreeAccessoriesBadge, setBuyThreeAccessoriesBadge] = useState(false);
   const getUserDetails = async (id) => {
     if (!id) return;
     const response = await fetch(
@@ -36,6 +40,25 @@ function Store() {
     setUserBackgrounds(data.user.backgrounds ? data.user.backgrounds : []);
     setSeeds(data.user.seeds ? data.user.seeds : 50);
     setUserId(data.user._id);
+
+    if (data.user.badges) {
+      const badge = data.user.badges.find((badge) => badge === 'visitStore');
+      if (!badge) {
+        const response = await fetch('/api/users/me/add-badge', {
+          method: 'PATCH',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            userId: data.user._id,
+            badge: 'visitStore',
+          }),
+        });
+        const res = await response.json();
+        console.log('res', res);
+        setVisitStoreBadge(true);
+      }
+    }
   };
 
   const getAllAccessories = async () => {
@@ -88,12 +111,39 @@ function Store() {
       alert('You do not have enough coins.');
     } else {
       if (type === 'accessories') {
+        if (userAccessories.length === 0) {
+          const response = fetch('/api/users/me/add-badge', {
+            method: 'PATCH',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+              userId,
+              badge: 'firstBuy',
+            }),
+          });
+          setFirstBuyBadge(true);
+        } else if (userAccessories.length === 2) {
+          const response = fetch('/api/users/me/add-badge', {
+            method: 'PATCH',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+              userId,
+              badge: 'buyThreeAccessories',
+            }),
+          });
+          setBuyThreeAccessoriesBadge(true);
+        }
+
         setUserAccessories([...userAccessories, item.name]);
       }
       if (type === 'background') {
         setUserBackgrounds([...userBackgrounds, item.name]);
       }
       setSeeds(seeds - item.price);
+
       updateUserDataInDB(
         type === 'accessories' ? [...userAccessories, item.name] : userAccessories,
         type === 'background' ? [...userBackgrounds, item.name] : userBackgrounds,
@@ -104,76 +154,96 @@ function Store() {
 
   function storeItem(item) {
     return (
-      <div
-        className={styles.storeItem}
-        key={item.name}
-      >
+      <>
+        <ChallengeBadge
+          challengeName="Visit the store"
+          challengePointValue="20"
+          open={visitStoreBadge}
+          handleClose={() => setVisitStoreBadge(false)}
+        />
+        <ChallengeBadge
+          challengeName="Buy your first accessory"
+          challengePointValue="20"
+          open={firstBuyBadge}
+          handleClose={() => setFirstBuyBadge(false)}
+        />
+        <ChallengeBadge
+          challengeName="Buy three accessories"
+          challengePointValue="20"
+          open={buyThreeAccessoriesBadge}
+          handleClose={() => setBuyThreeAccessoriesBadge(false)}
+        />
+        <div
+          className={styles.storeItem}
+          key={item.name}
+        >
 
-        <div className={styles.storeItemImg}>
-          {
+          <div className={styles.storeItemImg}>
+            {
             (userAccessories.includes(item.name) || userBackgrounds.includes(item.name))
             && <div className={styles.storeItemImgOverlay} />
           }
-          <img src={item.image} alt={item.name} />
-        </div>
-        <div className={styles.storeItemPrice}>
-          <span style={{ display: 'inline-flex', alignItems: 'center' }}>
-            {item.price}
-            <img
-              src="/store/seeds_logo.svg"
-              alt="icon"
-              width="10px"
-              height="10px"
-              style={{ marginLeft: '4px' }}
-            />
-          </span>
-        </div>
-        <div className={`${styles.storeItemDetails}`}>
-          <span>{item.name}</span>
-          {userAccessories.includes(item.name) || userBackgrounds.includes(item.name) ? (
-            <Button
-              type="button"
-              sx={{
-                borderRadius: '1em',
-                padding: '0.2em 1.2em',
-                backgroundColor: 'lightgray',
-                color: 'gray',
-                textTransform: 'none',
-                fontFamily: 'inherit',
-              }}
-              disabled
-            >
-              Bought
-            </Button>
-          ) : (
-            <Button
-              type="button"
-              sx={{
-                borderRadius: '1em',
-                padding: '0.45em 2em',
-                backgroundColor: '#519546',
-                fontFamily: 'inherit',
-                color: 'white',
-                textAlign: 'center',
-                fontFamily: 'Instrument Sans',
-                fontSize: '16px',
-                fontStyle: 'normal',
-                fontWeight: '500',
-                lineHeight: '110%',
-                textTransform: 'none',
-                '&:hover': {
-                  backgroundColor: '#519546', 
+            <img src={item.image} alt={item.name} />
+          </div>
+          <div className={styles.storeItemPrice}>
+            <span style={{ display: 'inline-flex', alignItems: 'center' }}>
+              {item.price}
+              <img
+                src="/store/seeds_logo.svg"
+                alt="icon"
+                width="10px"
+                height="10px"
+                style={{ marginLeft: '4px' }}
+              />
+            </span>
+          </div>
+          <div className={`${styles.storeItemDetails}`}>
+            <span>{item.name}</span>
+            {userAccessories.includes(item.name) || userBackgrounds.includes(item.name) ? (
+              <Button
+                type="button"
+                sx={{
+                  borderRadius: '1em',
+                  padding: '0.2em 1.2em',
+                  backgroundColor: 'lightgray',
+                  color: 'gray',
+                  textTransform: 'none',
+                  fontFamily: 'inherit',
+                }}
+                disabled
+              >
+                Bought
+              </Button>
+            ) : (
+              <Button
+                type="button"
+                sx={{
+                  borderRadius: '1em',
+                  padding: '0.45em 2em',
+                  backgroundColor: '#519546',
+                  fontFamily: 'inherit',
                   color: 'white',
-                  opacity: 0.9,
-                },
-              }}
-              onClick={() => buyItem(item, currentTab)}
-            >
-              Buy
-            </Button>
-          )}
+                  textAlign: 'center',
+                  fontFamily: 'Instrument Sans',
+                  fontSize: '16px',
+                  fontStyle: 'normal',
+                  fontWeight: '500',
+                  lineHeight: '110%',
+                  textTransform: 'none',
+                  '&:hover': {
+                    backgroundColor: '#519546',
+                    color: 'white',
+                    opacity: 0.9,
+                  },
+                }}
+                onClick={() => buyItem(item, currentTab)}
+              >
+                Buy
+              </Button>
+            )}
+          </div>
         </div>
-      </div>
+      </>
     );
   }
 
@@ -181,7 +251,7 @@ function Store() {
     return (
       <div className={styles.storeItems}>
         {accessories.map((item) => storeItem(item))}
-      </div>  
+      </div>
     );
   }
 
@@ -189,14 +259,14 @@ function Store() {
     return (
       <div className={styles.storeItems}>
         {backgrounds.map((item) => storeItem(item))}
-      </div>  
+      </div>
     );
   }
 
   return (
     <div className={styles.storeContainer}>
       <div className={styles.store}>
-        <div className={styles.title}> 
+        <div className={styles.title}>
           Store
           <div className={styles.seedsTitle}>
             {seeds}
@@ -218,11 +288,11 @@ function Store() {
               fontSize: '20px',
               fontStyle: 'normal',
               fontWeight: '600',
-              lineHeight: '110%',      
+              lineHeight: '110%',
               '&:hover': {
-                backgroundColor: 'transparent', 
-                color: currentTab === 'accessories' ? '#519546' : '#9B9B9B', 
-                borderBottom: currentTab === 'accessories' ? '2px solid #519546' : 'none', 
+                backgroundColor: 'transparent',
+                color: currentTab === 'accessories' ? '#519546' : '#9B9B9B',
+                borderBottom: currentTab === 'accessories' ? '2px solid #519546' : 'none',
               },
             }}
             onClick={() => setCurrentTab('accessories')}
@@ -241,11 +311,11 @@ function Store() {
               fontSize: '20px',
               fontStyle: 'normal',
               fontWeight: '600',
-              lineHeight: '110%',   
+              lineHeight: '110%',
               '&:hover': {
                 backgroundColor: 'transparent',
                 color: currentTab === 'background' ? '#519546' : '#9B9B9B',
-                borderBottom: currentTab === 'background' ? '2px solid #519546' : '1px solid lightgrey', 
+                borderBottom: currentTab === 'background' ? '2px solid #519546' : '1px solid lightgrey',
               },
             }}
             onClick={() => setCurrentTab('background')}

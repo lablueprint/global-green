@@ -6,9 +6,9 @@
 import React, { useState, useEffect } from "react";
 import Image from "next/image";
 import { useSession, signOut } from "next-auth/react";
-import styles from "./page.module.css";
-import SimpleSnackbar from "./snackBar";
 import Button from "@mui/material/Button";
+import styles from "./page.module.css";
+import SimpleSnackbar from "../../components/snackBar";
 import DisplayChallengesCards from "./DisplayChallengesCards";
 
 // fetches too many times and numerator
@@ -100,7 +100,7 @@ function challenges() {
     points,
     setPoints,
     challenge,
-    handlePointsChange
+    handlePointsChange,
   ) {
     const pointsElement = document.getElementById(`points_${index}`);
     const buttonElement = document.getElementById(`button_${index}`);
@@ -144,11 +144,11 @@ function challenges() {
     <div className={styles.everything}>
       <Button onClick={handleOpen}>Open Snackbar</Button>
       <SimpleSnackbar
-        challengeName={"meow"}
-        challengePointValue={"393"}
+        challengeName="meow"
+        challengePointValue="393"
         open={openSnackbar}
         handleClose={handleClose}
-      ></SimpleSnackbar>
+      />
 
       <p className={styles.title}>Challenges</p>
 

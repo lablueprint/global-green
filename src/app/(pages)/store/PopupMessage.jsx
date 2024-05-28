@@ -13,7 +13,7 @@ const PopupMessage = ({ message, itemName, itemImage, onClose }) => {
         </div>
         {itemImage && <img src={itemImage} alt="Item purchased" className={styles.itemImage} />}
         <div className={styles.PopupButtons}>
-            <button className={styles.AddLaterButton}>Add Later </button>
+            <button className={styles.AddLaterButton} onClick={onClose}>Add Later </button>
             <button className={styles.AddToGardenButton}> Add to Garden </button>
         </div>
       </div>

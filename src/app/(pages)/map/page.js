@@ -35,7 +35,7 @@ export default function Page() {
     console.log('data', data);
 
     if (data.user.badges) {
-      const badge = data.user.badges.find((badge) => badge === 'visitMap');
+      const badge = data.user.badges.find((badge) => badge.key === 'visitMap');
       if (!badge) {
         const response = await fetch('/api/users/me/add-badge', {
           method: 'PATCH',

@@ -77,7 +77,7 @@ function DisplayChallengesCardsTest(props) {
                         {badge.key}
                       </p>
                       <p className={styles.date}>
-                        Completed {badge.date ? badge.date : "sometime ago"}
+                        Completed {badge.date ? new Date(badge.date).toLocaleDateString() : "N/A"}
                       </p>
                     </div>
                   </div>

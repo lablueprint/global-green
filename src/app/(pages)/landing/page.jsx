@@ -38,7 +38,7 @@ function LandingPage() {
   const handleOpenGardenModal = () => {
     setIsGardenModalOpen(true);
     if (user.badges) {
-      const badge = user.badges.find((badge) => badge === 'visitGarden');
+      const badge = user.badges.find((badge) => badge.key === 'visitGarden');
       if (!badge) {
         const response = fetch('/api/users/me/add-badge', {
           method: 'PATCH',

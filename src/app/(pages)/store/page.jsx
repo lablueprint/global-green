@@ -19,8 +19,11 @@ function Store() {
   const [userBackgrounds, setUserBackgrounds] = useState([]);
 
   const [visitStoreBadge, setVisitStoreBadge] = useState(false);
-  const [firstBuyBadge, setFirstBuyBadge] = useState(false);
+  const [buyOneAccessoryBadge, setBuyOneAccessoryBadge] = useState(false);
   const [buyThreeAccessoriesBadge, setBuyThreeAccessoriesBadge] = useState(false);
+  const [buySixAccessoriesBadge, setBuySixAccessoriesBadge] = useState(false);
+  const [buyOneBackgroundBadge, setBuyOneBackgroundBadge] = useState(false);
+  const [buyThreeBackgroundsBadge, setBuyThreeBackgroundsBadge] = useState(false);
   const getUserDetails = async (id) => {
     if (!id) return;
     const response = await fetch(
@@ -119,10 +122,10 @@ function Store() {
             },
             body: JSON.stringify({
               userId,
-              badge: 'firstBuy',
+              badge: 'buyOneAccessory',
             }),
           });
-          setFirstBuyBadge(true);
+          setBuyOneAccessoryBadge(true);
         } else if (userAccessories.length === 2) {
           const response = fetch('/api/users/me/add-badge', {
             method: 'PATCH',
@@ -135,11 +138,49 @@ function Store() {
             }),
           });
           setBuyThreeAccessoriesBadge(true);
+        } else if (userAccessories.length === 5) {
+          const response = fetch('/api/users/me/add-badge', {
+            method: 'PATCH',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+              userId,
+              badge: 'buySixAccessories',
+            }),
+          });
+          setBuySixAccessoriesBadge(true);
         }
 
         setUserAccessories([...userAccessories, item.name]);
       }
       if (type === 'background') {
+        if (userBackgrounds.length === 0) {
+          const response = fetch('/api/users/me/add-badge', {
+            method: 'PATCH',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+              userId,
+              badge: 'buyOneBackground',
+            }),
+          });
+          setBuyOneBackgroundBadge(true);
+        } else if (userBackgrounds.length === 2) {
+          const response = fetch('/api/users/me/add-badge', {
+            method: 'PATCH',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+              userId,
+              badge: 'buyThreeBackgrounds',
+            }),
+          });
+          setBuyThreeBackgroundsBadge(true);
+        }
+
         setUserBackgrounds([...userBackgrounds, item.name]);
       }
       setSeeds(seeds - item.price);
@@ -164,14 +205,32 @@ function Store() {
         <ChallengeBadge
           challengeName="Buy your first accessory"
           challengePointValue="20"
-          open={firstBuyBadge}
-          handleClose={() => setFirstBuyBadge(false)}
+          open={buyOneAccessoryBadge}
+          handleClose={() => setBuyOneAccessoryBadge(false)}
         />
         <ChallengeBadge
           challengeName="Buy three accessories"
           challengePointValue="20"
           open={buyThreeAccessoriesBadge}
           handleClose={() => setBuyThreeAccessoriesBadge(false)}
+        />
+        <ChallengeBadge
+          challengeName="Buy six accessories"
+          challengePointValue="20"
+          open={buySixAccessoriesBadge}
+          handleClose={() => setBuySixAccessoriesBadge(false)}
+        />
+        <ChallengeBadge
+          challengeName="Buy your first background"
+          challengePointValue="20"
+          open={buyOneBackgroundBadge}
+          handleClose={() => setBuyOneBackgroundBadge(false)}
+        />
+        <ChallengeBadge
+          challengeName="Buy three backgrounds"
+          challengePointValue="20"
+          open={buyThreeBackgroundsBadge}
+          handleClose={() => setBuyThreeBackgroundsBadge(false)}
         />
         <div
           className={styles.storeItem}

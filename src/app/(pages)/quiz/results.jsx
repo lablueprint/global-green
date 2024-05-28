@@ -150,7 +150,7 @@ function Results({
   };
 
   const [courseProgress, setCourseProgress] = useState({});
-  const [userBadges, setUserBadges] = useState({});
+  const [userBadges, setUserBadges] = useState([]);
 
   const getUserDetails = async (id) => {
     if (!id) return;

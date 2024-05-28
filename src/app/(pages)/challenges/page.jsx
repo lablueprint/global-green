@@ -10,6 +10,7 @@ import Button from "@mui/material/Button";
 import styles from "./page.module.css";
 import SimpleSnackbar from "../../components/snackBar";
 import DisplayChallengesCards from "./DisplayChallengesCards";
+import DisplayChallengesCardsTest from "./DisplayChallengesCardsTest";
 
 // fetches too many times and numerator
 // how to track points
@@ -20,7 +21,8 @@ function challenges() {
   // const [isEditing, setIsEditing] = useState(false);
   // const [profileImage, setProfileImage] = useState(defaultProfilePic);
   const [userData, setData] = useState({});
-  const [points, setPoints] = useState(0);
+  const [seeds, setSeeds] = useState(0);
+  const [badges, setBadges] = useState([]);
 
   const getUserDetails = async (id) => {
     if (!id) return;
@@ -36,7 +38,8 @@ function challenges() {
 
     const data = await response.json();
     setData(data);
-    setPoints(data.user.points.toString());
+    setSeeds(data.user.seeds.toString());
+    setBadges(data.user.badges);
   };
 
   useEffect(() => {
@@ -134,7 +137,7 @@ function challenges() {
 
   const arrayCompletionExplorer = [true, true, true, false, false, false];
 
-  const arrayCompletionGardener = [true, true, true, false, false, false];
+  const arrayCompletionGardener = [true, true, false, false, false, false];
 
   const arrayCompletionScholar = [true, true, true, false, false, false];
 
@@ -151,7 +154,11 @@ function challenges() {
       />
 
       <p className={styles.title}>Challenges</p>
-
+      <DisplayChallengesCardsTest
+        challengeTypeFilter="Test"
+        challengeDescription="Description about Explorer challenges"
+        badges={badges}
+      />
       <DisplayChallengesCards
         challengeTypeFilter="Explorer"
         challengeDescription="Description about Explorer challenges"

@@ -10,8 +10,9 @@ import styles from "./page.module.css";
 
 // fetches too many times and numerator
 // how to track points
-function DisplayChallengesCards(props) {
+function DisplayChallengesCardsTest(props) {
   const [challengesArray, setChallengesArray] = useState([]);
+  const { challengeTypeFilter, challengeDescription, badges } = props;
 
   async function fetchData() {
     console.log("fetched");
@@ -29,22 +30,20 @@ function DisplayChallengesCards(props) {
 
   return (
     <div>
-      <p className={styles.challengesTitle}>{props.challengeTypeFilter}</p>
+      <p className={styles.challengesTitle}>{challengeTypeFilter}</p>
       <p className={styles.challengeDescription}>
-        {props.challengeDescription}
+        {challengeDescription}
       </p>
       <div className={styles.container}>
         <div className={styles.container}>
-          {challengesArray.Challenges
-            && challengesArray.Challenges.filter(
-              (challenge) => challenge.challengeType === props.challengeTypeFilter,
-            ).map((challenge, index) => (
+          {
+            badges.map((badge, index) => (
               <div key={index}>
                 <div
                   className={
-                      props.array[index]
-                        ? styles.activeBorder
-                        : styles.inactiveBorder
+                    badge.key
+                      ? styles.activeBorder
+                      : styles.inactiveBorder
                     }
                 >
                   <div className={styles.inner}>
@@ -58,7 +57,7 @@ function DisplayChallengesCards(props) {
                       />
                       <p className={styles.pointsText}>
                         {" "}
-                        {JSON.stringify(challenge.pointsToEarn)}
+                        {JSON.stringify(20)}
                       </p>
                     </div>
                     <div>
@@ -66,34 +65,31 @@ function DisplayChallengesCards(props) {
                         className={styles.icon}
                         height="48"
                         width="48"
-                        src={
-                          props.array[index]
-                            ? challenge.icon
-                            : challenge.blackandwhiteicon
-                          }
+                        src="https://global-green-2.s3.us-west-1.amazonaws.com/solar_flag-2-bold-duotone.svg"
                         alt="icon"
                       />
                     </div>
                     <div className={styles.text}>
                       <p className={styles.cardTitle}>
-                        {challenge.challengeTitle.toString()}
+                        {badge.key}
                       </p>
                       <p className={styles.description}>
-                        {challenge.description.toString()}
+                        {badge.key}
                       </p>
                       <p className={styles.date}>
-                        Completed {challenge.date.toString()}
+                        Completed {badge.date ? badge.date : "sometime ago"}
                       </p>
                     </div>
                   </div>
                   <div />
                 </div>
               </div>
-            ))}
+            ))
+}
         </div>
       </div>
     </div>
   );
 }
 
-export default DisplayChallengesCards;
+export default DisplayChallengesCardsTest;

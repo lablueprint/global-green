@@ -60,6 +60,7 @@ export default function ChallengeBadge({
             </p>
           </div>
         </Alert>
+
       </Snackbar>
     </div>
   );

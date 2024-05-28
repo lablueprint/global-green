@@ -45,7 +45,7 @@ function Store() {
     setUserId(data.user._id);
 
     if (data.user.badges) {
-      const badge = data.user.badges.find((badge) => badge === 'visitStore');
+      const badge = data.user.badges.find((badge) => badge.key === 'visitStore');
       if (!badge) {
         const response = await fetch('/api/users/me/add-badge', {
           method: 'PATCH',

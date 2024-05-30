@@ -4,6 +4,7 @@ import React, { useState, useEffect } from 'react';
 import Button from '@mui/material/Button';
 import { useSession } from 'next-auth/react';
 import styles from './page.module.css';
+import Popup from './PopupMessage.jsx';
 
 function Store() {
   const { data: session } = useSession();
@@ -16,7 +17,25 @@ function Store() {
   
   const [userAccessories, setUserAccessories] = useState([]);
   const [userBackgrounds, setUserBackgrounds] = useState([]);
+  const [showPopup, setShowPopup] = useState(false);
+  const [popupMessage, setPopupMessage] = useState('');
+  const [popupItemName, setPopupItemName] = useState('');
+  const [popupItemImage, setPopupItemImage] = useState('');
+
+  useEffect(() => {
+    function handleClickOutside(event) {
+      const popupElement = document.getElementById('popup');
+      if (showPopup && popupElement && !popupElement.contains(event.target)) {
+        setShowPopup(false);
+      }
+    }
   
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, [showPopup]);
+    
   const getUserDetails = async (id) => {
     if (!id) return;
     const response = await fetch(
@@ -83,6 +102,13 @@ function Store() {
     if (session) getUserDetails(session.user.id);
   }, [session]);
 
+  function showPopupMessage(message, itemName, itemImage) {
+    setPopupMessage(message);
+    setPopupItemName(itemName);
+    setPopupItemImage(itemImage);
+    setShowPopup(true);
+  }
+
   function buyItem(item, type) {
     if (item.price > seeds) {
       alert('You do not have enough coins.');
@@ -99,8 +125,10 @@ function Store() {
         type === 'background' ? [...userBackgrounds, item.name] : userBackgrounds,
         seeds - item.price,
       );
+      showPopupMessage("Congrats! You just bought", item.name, item.image);
     }
   }
+  
 
   function storeItem(item) {
     return (
@@ -256,6 +284,14 @@ function Store() {
         {currentTab === 'accessories' && accesoriesTab()}
         {currentTab === 'background' && backgroundTab()}
       </div>
+      {showPopup && (
+        <Popup 
+          message="Congrats! You just bought" 
+          itemName={popupItemName} 
+          itemImage={popupItemImage} 
+          onClose={() => setShowPopup(false)} 
+        />
+      )}
     </div>
   );
 }

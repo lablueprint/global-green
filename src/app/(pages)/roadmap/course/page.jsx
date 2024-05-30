@@ -64,7 +64,6 @@ function CourseRoadmap({ params, searchParams }) {
       courseKey={courseKey}
       title={courseKey}
       currStage={currStage}
-      //currStage={7}
       courseInfo={`This is the course information for ${courseKey}`}
     />
   );

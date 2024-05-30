@@ -1,6 +1,7 @@
 'use client';
 
 import React, { useEffect, useState } from 'react';
+import Image from 'next/image';
 import { signIn, useSession } from 'next-auth/react';
 import styles from './page.module.css';
 
@@ -56,10 +57,18 @@ function Example() {
   }, [session]);
 
   return (
+    <>
+    <div className={styles.topLeft}> 
+      <Image
+          src="/logo.svg"
+          width={50}
+          height={50}
+        />
+        <span>Global Green Scholar</span>
+    </div>
     <div className={styles.mainContainer}>
       <h1 className={styles.mainTitle}>Sign In</h1>
       <form className={styles.userForm} onSubmit={submitLog}>
-  
         <label htmlFor="username" className={styles.userLabel}>Email:</label>
         <input
           type="text"
@@ -108,6 +117,7 @@ function Example() {
         Sign in with Google
       </button>
     </div>
+    </>
   );  
 }
 

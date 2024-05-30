@@ -1,6 +1,7 @@
 'use client';
 
 import React, { useState, useEffect } from 'react';
+import Image from 'next/image';
 import styles from './page.module.css';
 
 function ResetPassword() {
@@ -64,7 +65,16 @@ function ResetPassword() {
   };
 
   return (
-    <div className={styles.forgotPasswordContainer}>
+    <>
+    <div className={styles.topLeft}> 
+      <Image
+          src="/logo.svg"
+          width={50}
+          height={50}
+        />
+        <span>Global Green Scholar</span>
+    </div>     
+     <div className={styles.forgotPasswordContainer}>
       <h1 className={styles.title}>Reset Password</h1>
       <form onSubmit={handleSubmit} className={styles.form}>
         <label htmlFor="email" className={styles.label}>
@@ -100,6 +110,7 @@ function ResetPassword() {
         <a href="/login" className={styles.backToLogin}> Back to login</a>
       </form>
     </div>
+    </>
   );
 }
 

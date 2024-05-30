@@ -121,6 +121,15 @@ function Example() {
     }
   };
   return (
+    <>
+    <div className={styles.topLeft}> 
+      <Image
+          src="/logo.svg"
+          width={50}
+          height={50}
+        />
+      <span>Global Green Scholar </span>
+    </div>
     <div className={styles.exampleContainer}>
       <div className={styles.exampleImageContainer}>
         <Image
@@ -206,6 +215,7 @@ function Example() {
         <input type="submit" value="Continue" className={styles.exampleSubmitButton} />
       </form>
     </div>
+    </>
   );
 }
 export default Example;

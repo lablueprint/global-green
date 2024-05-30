@@ -1,6 +1,7 @@
 'use client';
 
 import React, { useState } from 'react';
+import Image from 'next/image';
 import styles from './page.module.css';
 
 function ForgotPassword() {
@@ -40,6 +41,15 @@ function ForgotPassword() {
   };
 
   return (
+    <>
+    <div className={styles.topLeft}> 
+      <Image
+          src="/logo.svg"
+          width={50}
+          height={50}
+        />
+        <span>Global Green Scholar</span>
+    </div>    
     <div className={styles.forgotPasswordContainer}>
       <h1 className={styles.title}>Forgot Password?</h1>
       <p className={styles.resetInstructions}>We will send you reset instructions</p>
@@ -62,6 +72,7 @@ function ForgotPassword() {
         <a href="/login" className={styles.backToLogin}> Back to login</a>
       </form>
     </div>
+    </>
   );
 }
 

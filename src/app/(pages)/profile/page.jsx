@@ -313,7 +313,7 @@ function Profile() {
                 {userData && (
                 <PdfForm
                   templatePdf="/certificate.pdf"
-                  userName={userData.userName}
+                  userName={`${userData.firstName} ${userData.lastName}`}
                   course={certificate.key}
                   date={certificate.date}
                 />

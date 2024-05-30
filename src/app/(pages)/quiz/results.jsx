@@ -119,11 +119,8 @@ function Results({ points, totalQuestions, questionResults }) {
   // router.push(`/quiz?courseKey=${courseKey}&stage=${currStage + 1}`);
     router.push(`/roadmap/course?courseKey=${courseKey}`);
     if (percentage >= 60) {
-      let newStage = currStage + 1;
-      if (currStage === 6) {
-        newStage = 6;
-      }
-      const complete = newStage === 6;
+      const newStage = currStage + 1;
+      const complete = newStage === 7;
       changeProgress(session.user.id, newStage, complete);
       console.log('good');
       console.log(newStage);

@@ -37,9 +37,9 @@ function CourseDisplay() {
       };
     }).filter((course) => {
       if (filterX === 'completed') {
-        return course.progress >= 6;
+        return course.complete;
       } if (filterX === 'incomplete') {
-        return course.progress < 6;
+        return !course.complete;
       }
       return true;
     });

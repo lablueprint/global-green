@@ -3,6 +3,7 @@
 import React from 'react';
 import { useRouter } from 'next/navigation';
 import { BsArrowLeft } from 'react-icons/bs';
+import { useSession } from 'next-auth/react';
 import Course5Introduction from './lessons/introduction';
 import Course5Lesson1 from './lessons/lesson1';
 import Course5Lesson2 from './lessons/lesson2';
@@ -12,12 +13,47 @@ import styles from '../page.module.css';
 
 function EcoFriendlyTravelling({ courseKey, stage }) {
   const router = useRouter();
-  const nextLesson = () => { router.push(`/lesson/?courseKey=${courseKey}&stage=${Number(stage) + 1}`); };
+
+  const { data: session } = useSession();
+
+  const changeProgress = async (userId, currStage, complete) => {
+    try {
+      const response = await fetch('/api/users/me/change-progress', {
+        method: 'PATCH',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          userId,
+          courseKey,
+          currStage,
+          complete,
+        }),
+      });
+
+      if (!response.ok) {
+        const errorData = await response.json();
+        console.error('Error updating course progress:', errorData.error);
+      } else {
+        const responseData = await response.json();
+        console.log('Course progress updated successfully:', responseData);
+      }
+    } catch (error) {
+      console.error('Error updating course progress:', error);
+    }
+  };
+
+  const handleIntro = async () => {
+    if (session) {
+      await changeProgress(session.user.id, 2, false);
+      router.push(`/roadmap/course?courseKey=${courseKey}`);
+    }
+  };
   const nextQuiz = () => { router.push(`/quiz/?courseKey=${courseKey}&stage=${Number(stage)}`); };
   const backToRoadmap = () => { router.push(`/roadmap/course?courseKey=${courseKey}`); };
 
   const lessons = [
-    <Course5Introduction handleNext={nextLesson} />,
+    <Course5Introduction handleNext={handleIntro} />,
     <Course5Lesson1 handleNext={nextQuiz} />,
     <Course5Lesson2 handleNext={nextQuiz} />,
     <Course5Lesson3 handleNext={nextQuiz} />,

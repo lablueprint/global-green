@@ -11,8 +11,6 @@ function CourseCard({
 }) {
   const cardStyle = {
     backgroundImage: `url(${convertToURL(background)})`,
-    backgroundSize: 'cover',
-    backgroundPosition: 'center',
   };
   const router = useRouter();
   const handleClick = () => {
@@ -21,13 +19,13 @@ function CourseCard({
       case 'plasticandrecycling':
         router.push('/roadmap/course/?courseKey=plasticandrecycling');
         break;
-      case 'eco-friendlytraveling':
+      case 'eco-friendlytravel':
         router.push('/roadmap/course/?courseKey=eco-friendlytravel');
         break;
       case 'oceanpollution':
         router.push('/roadmap/course/?courseKey=oceanpollution');
         break;
-      case 'ecosystemconservation':
+      case 'conservationandrestoration':
         router.push('/roadmap/course/?courseKey=conservationandrestoration');
         break;
       case 'climatechange':
@@ -40,18 +38,13 @@ function CourseCard({
   };
   // code for cours name, duration, and progress bar
   return (
-    <div className={styles.courseCard} style={cardStyle} onClick={handleClick}>
-      <div className={styles.courseName}>
-        {/* {name} */}
-      </div>
+    <div className={styles.courseCard}>
+      <div className={styles.courseCardImage} style={cardStyle} onClick={handleClick} />
       <div className={styles.bottomBar}>
-        <div className={styles.courseDuration} style={{ backgroundColor: color }}>
-          2 h
-        </div>
         <div className={styles.progressBar}>
           <ProgressBar
             value={progress}
-            maxValue={6}
+            maxValue={7}
             x={progress}
             y={6}
             color={color}

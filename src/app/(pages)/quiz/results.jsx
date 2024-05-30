@@ -240,7 +240,18 @@ function Results({
   const handleContinue = () => {
   // router.push(`/quiz?courseKey=${courseKey}&stage=${currStage + 1}`);
     router.push(`/roadmap/course?courseKey=${courseKey}`);
-
+    if (percentage >= 60) {
+      const newStage = currStage + 1;
+      const complete = newStage === 7;
+      changeProgress(session.user.id, newStage, complete);
+      console.log('good');
+      console.log(newStage);
+    // update the backend
+    // userid = user id
+    // course key = coursekey
+    // currStage = currStage
+    // complete is true if currStage = 7
+    }
     console.log('k');
   };
 

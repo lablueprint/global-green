@@ -11,6 +11,7 @@ function LinearProgressWithLabel({
     <Box sx={{
       display: 'flex',
       justifyContent: 'center',
+      justifyContent: 'center',
       alignItems: 'center',
       width: '100%',
       padding: '0 10px',
@@ -23,9 +24,11 @@ function LinearProgressWithLabel({
           lineHeight: '1',
           textAlign: 'left',
           textWrap: 'nowrap',
+          textWrap: 'nowrap',
           flex: 1, // Allow the course name to grow flexibly
         }}
       >
+
         {`${x === y ? 'Completed' : `${Math.ceil((maxValue - value) * 0.3) === 1 ? `${Math.ceil((maxValue - value) * 0.3)} hr left` : `${Math.ceil((maxValue - value) * 0.3)} hrs left`}`}`}
       </Typography>
       <Box sx={{ width: '100%', margin: 0.75 }}>
@@ -35,15 +38,19 @@ function LinearProgressWithLabel({
           sx={{
             borderRadius: 5,
             width: '150px',
+            width: '150px',
             height: '10px',
             backgroundColor: 'lightgrey',
+            backgroundColor: 'lightgrey',
             '& .MuiLinearProgress-bar': {
+              backgroundColor: 'green',
               backgroundColor: 'green',
               borderRadius: 5,
             },
           }}
         />
       </Box>
+      {/* <Box sx={{
       {/* <Box sx={{
         minWidth: 35,
         position: 'relative',
@@ -82,7 +89,7 @@ function LinearWithValueLabel({
       <LinearProgressWithLabel
         value={value}
         x={x}
-        y={y}
+        y={7}
         color={color}
         maxValue={maxValue}
       />

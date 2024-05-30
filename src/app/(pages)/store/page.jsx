@@ -5,6 +5,7 @@ import Button from '@mui/material/Button';
 import { useSession } from 'next-auth/react';
 import styles from './page.module.css';
 import ChallengeBadge from '@/app/components/snackBar';
+import Popup from './PopupMessage.jsx';
 
 function Store() {
   const { data: session } = useSession();
@@ -24,6 +25,25 @@ function Store() {
   const [buySixAccessoriesBadge, setBuySixAccessoriesBadge] = useState(false);
   const [buyOneBackgroundBadge, setBuyOneBackgroundBadge] = useState(false);
   const [buyThreeBackgroundsBadge, setBuyThreeBackgroundsBadge] = useState(false);
+  const [showPopup, setShowPopup] = useState(false);
+  const [popupMessage, setPopupMessage] = useState('');
+  const [popupItemName, setPopupItemName] = useState('');
+  const [popupItemImage, setPopupItemImage] = useState('');
+
+  useEffect(() => {
+    function handleClickOutside(event) {
+      const popupElement = document.getElementById('popup');
+      if (showPopup && popupElement && !popupElement.contains(event.target)) {
+        setShowPopup(false);
+      }
+    }
+
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, [showPopup]);
+
   const getUserDetails = async (id) => {
     if (!id) return;
     const response = await fetch(
@@ -109,6 +129,13 @@ function Store() {
     if (session) getUserDetails(session.user.id);
   }, [session]);
 
+  function showPopupMessage(message, itemName, itemImage) {
+    setPopupMessage(message);
+    setPopupItemName(itemName);
+    setPopupItemImage(itemImage);
+    setShowPopup(true);
+  }
+
   function buyItem(item, type) {
     if (item.price > seeds) {
       alert('You do not have enough coins.');
@@ -190,12 +217,16 @@ function Store() {
         type === 'background' ? [...userBackgrounds, item.name] : userBackgrounds,
         seeds - item.price,
       );
+      showPopupMessage('Congrats! You just bought', item.name, item.image);
     }
   }
 
   function storeItem(item) {
     return (
-      <>
+      <div
+        className={styles.storeItem}
+        key={item.name}
+      >
         <ChallengeBadge
           challengeName="Visit the store"
           challengePointValue="20"
@@ -232,77 +263,72 @@ function Store() {
           open={buyThreeBackgroundsBadge}
           handleClose={() => setBuyThreeBackgroundsBadge(false)}
         />
-        <div
-          className={styles.storeItem}
-          key={item.name}
-        >
 
-          <div className={styles.storeItemImg}>
-            {
+        <div className={styles.storeItemImg}>
+          {
             (userAccessories.includes(item.name) || userBackgrounds.includes(item.name))
             && <div className={styles.storeItemImgOverlay} />
           }
-            <img src={item.image} alt={item.name} />
-          </div>
-          <div className={styles.storeItemPrice}>
-            <span style={{ display: 'inline-flex', alignItems: 'center' }}>
-              {item.price}
-              <img
-                src="/store/seeds_logo.svg"
-                alt="icon"
-                width="10px"
-                height="10px"
-                style={{ marginLeft: '4px' }}
-              />
-            </span>
-          </div>
-          <div className={`${styles.storeItemDetails}`}>
-            <span>{item.name}</span>
-            {userAccessories.includes(item.name) || userBackgrounds.includes(item.name) ? (
-              <Button
-                type="button"
-                sx={{
-                  borderRadius: '1em',
-                  padding: '0.2em 1.2em',
-                  backgroundColor: 'lightgray',
-                  color: 'gray',
-                  textTransform: 'none',
-                  fontFamily: 'inherit',
-                }}
-                disabled
-              >
-                Bought
-              </Button>
-            ) : (
-              <Button
-                type="button"
-                sx={{
-                  borderRadius: '1em',
-                  padding: '0.45em 2em',
-                  backgroundColor: '#519546',
-                  fontFamily: 'inherit',
-                  color: 'white',
-                  textAlign: 'center',
-                  fontFamily: 'Instrument Sans',
-                  fontSize: '16px',
-                  fontStyle: 'normal',
-                  fontWeight: '500',
-                  lineHeight: '110%',
-                  textTransform: 'none',
-                  '&:hover': {
-                    backgroundColor: '#519546',
-                    color: 'white',
-                    opacity: 0.9,
-                  },
-                }}
-                onClick={() => buyItem(item, currentTab)}
-              >
-                Buy
-              </Button>
-            )}
-          </div>
+          <img src={item.image} alt={item.name} />
         </div>
-      </>
+        <div className={styles.storeItemPrice}>
+          <span style={{ display: 'inline-flex', alignItems: 'center' }}>
+            {item.price}
+            <img
+              src="/store/seeds_logo.svg"
+              alt="icon"
+              width="10px"
+              height="10px"
+              style={{ marginLeft: '4px' }}
+            />
+          </span>
+        </div>
+        <div className={`${styles.storeItemDetails}`}>
+          <span>{item.name}</span>
+          {userAccessories.includes(item.name) || userBackgrounds.includes(item.name) ? (
+            <Button
+              type="button"
+              sx={{
+                borderRadius: '1em',
+                padding: '0.2em 1.2em',
+                backgroundColor: 'lightgray',
+                color: 'gray',
+                textTransform: 'none',
+                fontFamily: 'inherit',
+              }}
+              disabled
+            >
+              Bought
+            </Button>
+          ) : (
+            <Button
+              type="button"
+              sx={{
+                borderRadius: '1em',
+                padding: '0.45em 2em',
+                backgroundColor: '#519546',
+                fontFamily: 'inherit',
+                color: 'white',
+                textAlign: 'center',
+                fontFamily: 'Instrument Sans',
+                fontSize: '16px',
+                fontStyle: 'normal',
+                fontWeight: '500',
+                lineHeight: '110%',
+                textTransform: 'none',
+                '&:hover': {
+                  backgroundColor: '#519546',
+                  color: 'white',
+                  opacity: 0.9,
+                },
+              }}
+              onClick={() => buyItem(item, currentTab)}
+            >
+              Buy
+            </Button>
+          )}
+        </div>
+      </div>
     );
   }
 
@@ -385,6 +411,14 @@ function Store() {
         {currentTab === 'accessories' && accesoriesTab()}
         {currentTab === 'background' && backgroundTab()}
       </div>
+      {showPopup && (
+        <Popup
+          message="Congrats! You just bought"
+          itemName={popupItemName}
+          itemImage={popupItemImage}
+          onClose={() => setShowPopup(false)}
+        />
+      )}
     </div>
   );
 }

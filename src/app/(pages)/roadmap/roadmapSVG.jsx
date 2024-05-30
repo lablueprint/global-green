@@ -7,7 +7,11 @@ function RoadmapSVG({ courseKey, currStage }) {
   const router = useRouter();
 
   const clickStage = (stage) => () => {
-    router.push(`/lesson/?courseKey=${courseKey}&stage=${stage}`);
+    if (stage === 6) {
+      router.push(`/quiz/?courseKey=${courseKey}&stage=${stage}`);
+    } else {
+      router.push(`/lesson/?courseKey=${courseKey}&stage=${stage}`);
+    }
   };
 
   let step1 = (

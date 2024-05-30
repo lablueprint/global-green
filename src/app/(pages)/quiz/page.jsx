@@ -402,15 +402,12 @@ function Quiz() {
   const checkAnswer = (selectedOption) => {
     setShowCheckButton(false); // Hide the Check button
     if (currentQuestion.type === 'matching') {
-      const isCorrect = selectedMatches.length === currentQuestion.options.length
-        && selectedMatches.every(
-          (match) => currentQuestion.options[match.option].definition
-            === currentQuestion.answer[match.definition],
-        );
-      handleAnswer(
-        isCorrect,
-        selectedMatches.map((match) => match.option).join(', '),
-      );
+      const correctPairs = transformToMatchedPairs(currentQuestion.options, currentQuestion.answer);
+
+      const isCorrect = Object.keys(matchedPairs).length === Object.keys(correctPairs).length
+        && Object.keys(matchedPairs).every((key) => matchedPairs[key] === correctPairs[key]);
+
+      handleAnswer(isCorrect, JSON.stringify(matchedPairs));
       setAttempted(true);
     } else if (currentQuestion.type === 'checkAllThatApply') {
       // Sort to ensure order does not affect comparison

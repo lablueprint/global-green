@@ -351,7 +351,7 @@ function Profile() {
                         .currStage
                       : 0
                   }
-                  maxValue={6}
+                  maxValue={7}
                   color="green"
                   isPopupDisplayed={profilePopup || passwordPopup}
                 />

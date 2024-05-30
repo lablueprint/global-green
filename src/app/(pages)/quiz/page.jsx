@@ -28,6 +28,7 @@ function Quiz() {
   const [showCheckButton, setShowCheckButton] = useState(true);
   const [isCurrentAnswerCorrect, setIsCurrentAnswerCorrect] = useState(null);
   const [skipCount, setSkipCount] = useState(0);
+  const [usedHint, setUsedHint] = useState(false);
   const [questionResults, setQuestionResults] = useState([]);
   const [matchedPairs, setMatchedPairs] = useState({});
 
@@ -293,6 +294,7 @@ function Quiz() {
     if (currentQuestion.hint) {
       setPopupMessage(currentQuestion.hint);
       setShowHint(true);
+      setUsedHint(true);
     }
     // setPopupMessage(currentQuestion.hint || 'This is a hint for the question.');
     // setShowHint(true);
@@ -426,6 +428,8 @@ function Quiz() {
   if (showResults) {
     return (
       <Results
+        skips={skipCount}
+        usedHint={usedHint}
         points={points}
         totalQuestions={currentQuiz.questions.length}
         questionResults={questionResults}

@@ -1,11 +1,10 @@
-import * as React from "react";
-import Button from "@mui/material/Button";
-import Snackbar from "@mui/material/Snackbar";
-import Alert from "@mui/material/Alert";
-import Image from "next/image";
-import styles from "./page.module.css";
+import * as React from 'react';
+import Snackbar from '@mui/material/Snackbar';
+import Alert from '@mui/material/Alert';
+import Image from 'next/image';
+import styles from './snackBar.module.css';
 
-export default function CustomizedSnackbars({
+export default function ChallengeBadge({
   challengeName,
   challengePointValue,
   open,
@@ -15,9 +14,9 @@ export default function CustomizedSnackbars({
     <div>
       <Snackbar
         open={open}
-        autoHideDuration={6000}
+        autoHideDuration={600000}
         onClose={handleClose}
-        anchorOrigin={{ vertical: "top", horizontal: "right" }}
+        anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
       >
         <Alert
           onClose={handleClose}
@@ -26,9 +25,9 @@ export default function CustomizedSnackbars({
           icon={false}
           //  severity="success"
           className={styles.alert}
-          sx={{ width: "100%" }}
+          sx={{ width: '100%' }}
         >
-          <div className={styles.rectangle}></div>
+          <div className={styles.rectangle} />
           <div className={styles.alertContainer}>
             <Image
               className={styles.bookIcon}
@@ -54,9 +53,14 @@ export default function CustomizedSnackbars({
               src="https://global-green-2.s3.us-west-1.amazonaws.com/pointsIcon.svg"
               alt="icon"
             />
-            <p className={styles.snackbarPointsText}> +{challengePointValue}</p>
+            <p className={styles.snackbarPointsText}>
+              {' '}
+              +
+              {challengePointValue}
+            </p>
           </div>
         </Alert>
+
       </Snackbar>
     </div>
   );

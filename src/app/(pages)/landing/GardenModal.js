@@ -107,7 +107,11 @@ export default function GardenModal({
               <h2 className={styles.gardenModalText}>Edit</h2>
               <div className={styles.gardenModalEditBox}>
                 <div className={styles.gardenModalEditBoxLeft}>
-                  <GardenImage status="edit" flowers={flowers} />
+                  <GardenImage
+                    status="edit"
+                    flowers={flowers}
+                    gardenState={gardenState}
+                  />
                 </div>
                 <div className={styles.gardenModalEditBoxRight}>
                   <p className={styles.gardenModalText}>
@@ -185,6 +189,7 @@ export default function GardenModal({
               setIsGardenModalOpen={setIsGardenModalOpen}
               flowers={flowers}
               setIsCustomizing={setIsCustomizing}
+              gardenState={gardenState}
             />
           )
         }

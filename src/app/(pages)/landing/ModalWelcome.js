@@ -5,7 +5,7 @@ import styles from './page.module.css';
 import GardenImage from './GardenImage';
 
 export default function ModalWelcome({
-  setIsGardenModalOpen, flowers, setIsCustomizing,
+  setIsGardenModalOpen, flowers, setIsCustomizing, gardenState,
 }) {
   return (
     <div className={styles.gardenModal}>
@@ -16,7 +16,11 @@ export default function ModalWelcome({
       <p className={styles.gardenModalSubtext}>
         Your garden is where you can see the progress of your learning journey.
       </p>
-      <GardenImage status="view" flowers={flowers} />
+      <GardenImage
+        status="view"
+        flowers={flowers}
+        gardenState={gardenState}
+      />
       <div className={styles.gardenModalButtonContainer}>
         <Button
           variant="contained"

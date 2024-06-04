@@ -287,72 +287,84 @@
     left: 70px;
     width: 60px;
     border-radius: 0%;
+    z-index: 5;
     background-image: url("https://global-green-2.s3.us-west-1.amazonaws.com/flower1.png");
   }
   .gardenFlower1Wide {
     top: 40px;
     left: 150px;
     width: 80px;
+    z-index: 5;
     background-image: url("https://global-green-2.s3.us-west-1.amazonaws.com/flower1.png");
   }
   .gardenFlower2 {
     top: 80px;
     left: 260px;
     height: 90px;
+    z-index: 5;
     background-image: url("https://global-green-2.s3.us-west-1.amazonaws.com/flower2.png");
   }
   .gardenFlower2Wide {
     top: 160px;
     left: 110px;
     height: 110px;
+    z-index: 5;
     background-image: url("https://global-green-2.s3.us-west-1.amazonaws.com/flower2.png");
   }
   .gardenFlower3 {
     top: 100px;
     left: 230px;
     height: 80px;
+    z-index: 5;
     background-image: url("https://global-green-2.s3.us-west-1.amazonaws.com/flower3.png");
   }
   .gardenFlower3Wide {
     top: 150px;
     left: 50px;
     height: 100px;
+    z-index: 5;
     background-image: url("https://global-green-2.s3.us-west-1.amazonaws.com/flower3.png");
   }
   .gardenFlower4 {
     top: 115px;
     left: 120px;
     width: 60px;
+    z-index: 5;
     background-image: url("https://global-green-2.s3.us-west-1.amazonaws.com/flower4.png");
   }
   .gardenFlower4Wide {
     top: 35px;
     left: 210px;
     width: 80px;
+    z-index: 5;
     background-image: url("https://global-green-2.s3.us-west-1.amazonaws.com/flower4.png");
   }
   .gardenFlower5 {
     top: 40px;
     left: 200px;
     height: 110px;
+    z-index: 5;
     background-image: url("https://global-green-2.s3.us-west-1.amazonaws.com/flower5.png");
   }
   .gardenFlower5Wide {
     top: 90px;
     left: 0px;
     height: 130px;
+    z-index: 5;
     background-image: url("https://global-green-2.s3.us-west-1.amazonaws.com/flower5.png");
   }
   .gardenFlower6 {
     top: 120px;
     left: 70px;
     width: 70px;
+    z-index: 5;
     background-image: url("https://global-green-2.s3.us-west-1.amazonaws.com/flower6.png");
   }
   .gardenFlower6Wide {
     top: 60px;
     left: 150px;
     width: 90px;
+    z-index: 5;
     background-image: url("https://global-green-2.s3.us-west-1.amazonaws.com/flower6.png");
   }
   .gardenFlower7 {
@@ -361,9 +373,103 @@
     background-image: url("https://global-green-2.s3.us-west-1.amazonaws.com/flower7.png");
   }
 
+  .gardenAccBushes {
+    width: 90px;
+    height: 60px;
+    background-image: url("https://global-green-2.s3.us-west-1.amazonaws.com/Bushes.png");
+  }
+
+  .gardenAccBushesWide {
+    width: 70px;
+    height: 50px;
+    top: 240px;
+    left: 320px;
+    rotate: 20deg;
+    z-index: 10;
+    background-image: url("https://global-green-2.s3.us-west-1.amazonaws.com/Bushes.png");
+  }
+
+  .gardenAccTurbinesWide {
+    width: 300px;
+    height: 150px;
+    top: 90px;
+    left: 210px;
+    rotate: 15deg;
+    z-index: 0;
+    background-image: url("https://global-green-2.s3.us-west-1.amazonaws.com/Turbines.png");
+  }
+
+  .gardenAccTurbines {
+    width: 100px;
+    height: 50px;
+    background-image: url("https://global-green-2.s3.us-west-1.amazonaws.com/Turbines.png");
+  }
+
+  .gardenAccPlantWide {
+    width: 40px;
+    height: 40px;
+    top: 220px;
+    left: 230px;
+    rotate: -15deg;
+    z-index: 10;
+    background-image: url("https://global-green-2.s3.us-west-1.amazonaws.com/Plant.png");
+  }
+
+  .gardenAccPlant {
+    width: 90px;
+    height: 80px;
+    background-image: url("https://global-green-2.s3.us-west-1.amazonaws.com/Plant.png");
+  }
+
+  .gardenAccTentWide {
+    width: 60px;
+    height: 60px;
+    top: 210px;
+    left: 270px;
+    z-index: 10;
+    background-image: url("https://global-green-2.s3.us-west-1.amazonaws.com/Tent.png");
+  }
+
+  .gardenAccTent {
+    width: 100px;
+    height: 100px;
+    background-image: url("https://global-green-2.s3.us-west-1.amazonaws.com/Tent.png");
+  }
+
+  .gardenAccToolsWide {
+    width: 40px;
+    height: 40px;
+    left: 380px;
+    top: 240px;
+    z-index: 10;
+    rotate: 40deg;
+    background-image: url("https://global-green-2.s3.us-west-1.amazonaws.com/Tools.png");
+  }
+  .gardenAccTools {
+    width: 100px;
+    height: 100px;
+    background-image: url("https://global-green-2.s3.us-west-1.amazonaws.com/Tools.png");
+  }
+
+  .gardenAccMushroomsWide {
+    width: 50px;
+    height: 50px;
+    top: 240px;
+    left: 180px;
+    rotate: -40deg;
+    z-index: 10;
+    background-image: url("https://global-green-2.s3.us-west-1.amazonaws.com/Mushrooms.png");
+  }
+
+  .gardenAccMushrooms {
+    width: 100px;
+    height: 100px;
+    background-image: url("https://global-green-2.s3.us-west-1.amazonaws.com/Mushrooms.png");
+  }
+
   /* TODO: display the background and accessories images to the GardenImage by adding styling */
 
-  .accessoriesBush {
+  .accessoriesBushes {
     width: 90px;
     height: 60px;
     background-image: url("https://global-green-2.s3.us-west-1.amazonaws.com/Bushes.png");

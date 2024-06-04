@@ -1,20 +1,21 @@
 .forgotPasswordContainer {
-  margin: auto 400px;
-  padding: 20px;
   justify-content: center;
   align-items: center;
   display: flex;
   flex-direction: column;
   background-color: white;
   height: 70vh;
-  margin-left: 600px;
+  margin-left: 20vw;
 }
 
 .title {
-  text-align: center;
-  margin-bottom: 5px;
-  color: #4caf50;
-  white-space: nowrap;
+  color: var(--Grey-100, #1D1D1D);
+  font-family: "Instrument Sans";
+  font-size: 36px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: 100%;
+  margin-bottom: -2px;
 }
 
 .resetInstructions {
@@ -29,23 +30,41 @@
 }
 
 .label {
+  flex-direction: column;
   margin-bottom: 10px;
   font-weight: 500;
   color: #808080;
+  background-color: white;
+  display: flex;
+  align-items: center;
+}
+
+.email {
+  width: 48%; 
+  align-self: left;
+  background-color: white;
+  color: var(--Grey-40, #9B9B9B);
+  font-family: "Instrument Sans";
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 140%;
 }
 
 .input {
     margin-top: 7px;
     margin-bottom: 25px; 
-    padding: 10px;
-    font-size: 12px; 
+    padding: 12px 18px;
+    font-size: 18px; 
+    font-weight: 550;
+    line-height: 110%;
     background-color: #f2f2f2;
-    color: black;
+    font-family: "Instrument Sans";
     border: none;
-    border-radius: 5px;
+    border-radius: 8px;
     cursor: pointer;
-    width: 100%; 
-    border-radius: 25px;
+    width: 45%; 
+    border-radius: 8px;
 }
 
 .buttonContainer {
@@ -56,13 +75,14 @@
 }
 
 .submitButton {
-  padding: 15px 0;
-  background-color: #4caf50;
+  padding: 14px 18px;
+  background: var(--Green-100, #519546);
+  backdrop-filter: blur(5px);
   color: white;
   border: none;
   cursor: pointer;
-  border-radius: 25px;
-  width: 100%;
+  border-radius: 24px;
+  width: 35%;
   font-size: 14px;
   font-weight: bold;
 }
@@ -73,11 +93,15 @@
 
 .backToLogin {
   display: block;
-  color: #4caf50;
+  color: var(--Green-100, #519546);
   text-decoration: underline;
   text-align: center;
   margin-top: 20px;
-  font-size: 13px;
+  font-size: 15px;
+  letter-spacing: -0.3px;
+  line-height: 100%;
+  font-style: normal;
+  font-weight: 600;
 }
 
 .topLeft {

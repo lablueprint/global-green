@@ -55,15 +55,15 @@ function ForgotPassword() {
       <p className={styles.resetInstructions}>We will send you reset instructions</p>
       <form onSubmit={handleSubmit} className={styles.form}>
         <label htmlFor="email" className={styles.label}>
-          Email:
-          <input
-            type="email"
-            id="email"
-            name="email"
-            value={email}
-            onChange={handleEmailChange}
-            className={styles.input}
-            placeholder="Enter your email address"
+          <div className={styles.email}> Email</div>
+            <input
+              type="email"
+              id="email"
+              name="email"
+              value={email}
+              onChange={handleEmailChange}
+              className={styles.input}
+              placeholder="Enter your email address"
           />
         </label>
         <div className={styles.buttonContainer}>

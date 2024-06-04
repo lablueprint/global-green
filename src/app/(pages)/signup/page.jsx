@@ -3,7 +3,10 @@ import React, { useState, useRef } from 'react';
 import Image from 'next/image';
 import { signIn } from 'next-auth/react';
 import ReCAPTCHA from 'react-google-recaptcha';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faEye, faEyeSlash } from '@fortawesome/free-solid-svg-icons';
 import styles from './page.module.css';
+
 function Example() {
   const [firstName, setFirstName] = useState('');
   const [lastName, setLastName] = useState('');
@@ -11,6 +14,9 @@ function Example() {
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
   const [userName, setUserName] = useState('username');
+  const [showPassword, setShowPassword] = useState(false);
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+
   // Captcha Related
   const recaptcha = useRef(null);
   const [captchaToken, setCaptchaToken] = useState("");
@@ -20,6 +26,7 @@ function Example() {
       setCaptchaToken(token);
     }
   };
+
   const OnSignup = async () => {
     // signup function. This will call upon /api/users/signup
     // and send the username and password to the backend
@@ -64,15 +71,19 @@ function Example() {
       window.location.href = "/signup";
     }
   };
+
   const firstNameChange = (e) => {
     setFirstName(e.target.value);
   };
+
   const lastNameChange = (e) => {
     setLastName(e.target.value);
   };
+
   const passwordChange = (e) => {
     setPassword(e.target.value);
   };
+
   const emailChange = (e) => {
     setEmail(e.target.value);
     setUserName(e.target.value);
@@ -81,6 +92,15 @@ function Example() {
   const confirmPasswordChange = (e) => {
     setConfirmPassword(e.target.value);
   };
+
+  const togglePasswordVisibility = () => {
+    setShowPassword(!showPassword);
+  };
+
+  const toggleConfirmPasswordVisibility = () => {
+    setShowConfirmPassword(!showConfirmPassword);
+  };
+
   const submitLog = (event) => {
     event.preventDefault();
     let validEntries = true;
@@ -120,102 +140,108 @@ function Example() {
       OnSignup();
     }
   };
+
   return (
     <>
-    <div className={styles.topLeft}> 
-      <Image
-          src="/logo.svg"
-          width={50}
-          height={50}
-        />
-      <span>Global Green Scholar </span>
-    </div>
-    <div className={styles.exampleContainer}>
-      <div className={styles.exampleImageContainer}>
+      <div className={styles.topLeft}> 
         <Image
-          src="/signupimage.png"
-          alt="Sign Up Image"
-          width={600}
-          height={600}
-          className={styles.alignImage}
-        />
-        <div className={styles.exampleGGtext}>
-          Learn about sustainability with <br /> <span className={styles.exampleGreenText}>Global Green</span> today
-        </div>
+            src="/logo.svg"
+            width={50}
+            height={50}
+          />
+        <span>Global Green Scholar </span>
       </div>
-      <form className={styles.exampleForm} onSubmit={submitLog}>
-        <h1 className={styles.exampleTitle}>Create your account</h1>
-        <label htmlFor="firstName" className={styles.exampleLabel}>
-          First name:
-          <input
-            type="text"
-            id="firstName"
-            name="firstName"
-            onChange={firstNameChange}
-            className={styles.exampleInput}
+      <div className={styles.exampleContainer}>
+        <div className={styles.exampleImageContainer}>
+          <Image
+            src="/signupimage.png"
+            alt="Sign Up Image"
+            width={600}
+            height={600}
+            className={styles.alignImage}
           />
-        </label>
-        <label htmlFor="lastName" className={styles.exampleLabel}>
-          Last name:
-          <input
-            type="text"
-            id="lastName"
-            name="lastName"
-            onChange={lastNameChange}
-            className={styles.exampleInput}
-          />
-        </label>
-        <label htmlFor="email" className={styles.exampleLabel}>
-          Email Address:
-          <input
-            type="email"
-            id="email"
-            name="email"
-            onChange={emailChange}
-            className={styles.exampleInput}
-          />
-        </label>
-        {/* <label htmlFor="userName" className={styles.exampleLabel}>
-          Username:
-          <input
-            type="text"
-            id="userName"
-            name="userName"
-            onChange={userNameChange}
-            className={styles.exampleInput}
-          />
-        </label> */}
-        <label htmlFor="pass" className={styles.exampleLabel}>
-          Password:
-          <input
-            type="password"
-            id="pass"
-            name="pass"
-            onChange={passwordChange}
-            className={styles.exampleInput}
-          />
-        </label>
-        <label htmlFor="confirmPass" className={styles.exampleLabel}>
-          Confirm Password:
-          <input
-            type="password"
-            id="confirmPass"
-            name="confirmPass"
-            onChange={confirmPasswordChange}
-            className={styles.exampleInput}
-          />
-        </label>
-        <div className="pb-20px">
-          <ReCAPTCHA
-            size="normal"
-            sitekey={process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY}
-            onChange={onCaptchaChange}
-          />
+          <div className={styles.exampleGGtext}>
+            Learn about sustainability with <br /> <span className={styles.exampleGreenText}>Global Green</span> today
+          </div>
         </div>
-        <input type="submit" value="Continue" className={styles.exampleSubmitButton} />
-      </form>
-    </div>
+        <form className={styles.exampleForm} onSubmit={submitLog}>
+          <h1 className={styles.exampleTitle}>Create your account</h1>
+          <label htmlFor="firstName" className={styles.exampleLabel}>
+            First name:
+            <input
+              type="text"
+              id="firstName"
+              name="firstName"
+              onChange={firstNameChange}
+              className={styles.exampleInput}
+            />
+          </label>
+          <label htmlFor="lastName" className={styles.exampleLabel}>
+            Last name:
+            <input
+              type="text"
+              id="lastName"
+              name="lastName"
+              onChange={lastNameChange}
+              className={styles.exampleInput}
+            />
+          </label>
+          <label htmlFor="email" className={styles.exampleLabel}>
+            Email Address:
+            <input
+              type="email"
+              id="email"
+              name="email"
+              onChange={emailChange}
+              className={styles.exampleInput}
+            />
+          </label>
+          <label htmlFor="pass" className={styles.exampleLabel}>
+            Password:
+            <div className={styles.passwordContainer}>
+              <input
+                type={showPassword ? 'text' : 'password'}
+                id="pass"
+                name="pass"
+                onChange={passwordChange}
+                className={styles.exampleInput}
+              />
+              <FontAwesomeIcon
+                icon={showPassword ? faEyeSlash : faEye}
+                className={styles.passwordIcon}
+                onClick={togglePasswordVisibility}
+              />
+            </div>
+          </label>
+          <label htmlFor="confirmPass" className={styles.exampleLabel}>
+            Confirm Password:
+            <div className={styles.passwordContainer}>
+              <input
+                type={showConfirmPassword ? 'text' : 'password'}
+                id="confirmPass"
+                name="confirmPass"
+                onChange={confirmPasswordChange}
+                className={styles.exampleInput}
+              />
+              <FontAwesomeIcon
+                icon={showConfirmPassword ? faEyeSlash : faEye}
+                className={styles.passwordIcon}
+                onClick={toggleConfirmPasswordVisibility}
+              />
+            </div>
+          </label>
+          <div className="pb-20px">
+            <ReCAPTCHA
+              size="normal"
+              sitekey={process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY}
+              onChange={onCaptchaChange}
+            />
+          </div>
+          <input type="submit" value="Continue" className={styles.exampleSubmitButton} />
+        </form>
+      </div>
     </>
   );
 }
+
 export default Example;

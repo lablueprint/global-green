@@ -7,7 +7,7 @@
   color: #ccc;
   align-items: center;
   flex-direction: column;
-  margin-left: 300px;
+  margin-left: 33%;
 }
 
 .userForm {
@@ -109,4 +109,22 @@
   
   .topLeft span {
     margin-top: -5px;
+  }
+
+  .passwordContainer {
+    position: relative;
+    width: 95%;
+  }
+  
+  .passwordContainer input {
+    width: 100%;
+  }
+  
+  .passwordIcon {
+    position: absolute;
+    right: -8px;
+    top: 35%;
+    transform: translateY(-50%);
+    cursor: pointer;
+    color: #aaa;
   }

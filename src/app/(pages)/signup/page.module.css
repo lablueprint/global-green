@@ -6,7 +6,7 @@
   max-width: 100%;
   margin: 0 auto;
   background-color: white;
-  margin-left: 200px;
+  margin-left: 17%;
 }
 .exampleImageContainer {
   background-color: white;
@@ -92,4 +92,23 @@
 
 .topLeft span {
   margin-top: -5px;
+}
+
+.passwordContainer {
+  position: relative;
+  width: 100%;
+}
+
+.passwordContainer input {
+  width: 100%;
+  padding-right: 15px;
+}
+
+.passwordIcon {
+  position: absolute;
+  right: -15px;
+  top: 50%;
+  transform: translateY(-50%);
+  cursor: pointer;
+  color: #aaa;
 }

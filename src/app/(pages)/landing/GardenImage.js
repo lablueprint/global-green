@@ -24,12 +24,13 @@ export default function GardenImage({ status, flowers }) {
 
   return (
     <div className={containerClass}>
-      <div className={backgroundClass} />
-      <motion.div
-        animate={{ rotate: 360, opacity: 1 }}
-        transition={{ ease: 'linear', duration: 70, repeat: Infinity }}
-        className={earthClass}
-      />
+      <div className={backgroundClass}>
+        <motion.div
+          animate={{ rotate: 360 }}
+          transition={{ ease: 'linear', duration: 70, repeat: Infinity }}
+          className={earthClass}
+        />
+      </div>
       <div>
         <AnimatePresence>
           {Object.keys(flowers).map((index) => (flowers[index] ? (
@@ -38,8 +39,6 @@ export default function GardenImage({ status, flowers }) {
               initial="initial"
               animate="animate"
               exit="exit"
-              layout
-              layoutId={`gardenFlower${index}`}
               variants={variant}
               transition={{
                 duration: 1,

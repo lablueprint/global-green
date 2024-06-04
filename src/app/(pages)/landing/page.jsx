@@ -6,6 +6,7 @@ import { useSession } from 'next-auth/react';
 import styles from './page.module.css';
 import CourseDisplay from './CourseDisplay';
 import GardenModal from './GardenModal';
+import GardenImage from './GardenImage';
 
 function LandingPage() {
   const [currentModule] = useState({ imageUrl: '/landingpageImage.png', name: 'Chinenye Eneh' });
@@ -15,12 +16,12 @@ function LandingPage() {
   // better naming scheme - either as global variables since local to track which indexes
   // move garden state to redux to make the operations easier
   const courseFlowerMap = {
-    course1: 1,
-    course2: 2,
-    course3: 3,
-    course4: 4,
-    course5: 5,
-    course6: 6,
+    plasticandrecycling: 1,
+    sustainabilitylab: 2,
+    conservationandrestoration: 3,
+    climatechange: 4,
+    oceanpollution: 5,
+    'eco-friendlytravel': 6,
   };
   const [flowers, setFlowers] = useState({
     1: false,
@@ -63,6 +64,8 @@ function LandingPage() {
         adjustFlowers[courseFlowerMap[course.key]] = true;
       }
     });
+    console.log('user', user);
+    console.log('adjustFlowers', adjustFlowers);
     setFlowers(adjustFlowers);
 
     setAccessories(user.accessories);
@@ -118,14 +121,24 @@ function LandingPage() {
       <div className={styles.banner}>
         <div className={styles.imageGarden}>
           {/* landing page image */}
-          <Image
+          {/* <Image
             className={styles.image}
             src={currentModule.imageUrl}
             alt="landing page Image"
             width={500}
             height={230}
             style={{ borderRadius: '10px' }}
-          />
+          /> */}
+          <div
+            style={
+            {
+              overflow: 'hidden',
+              height: '300px',
+            }
+          }
+          >
+            <GardenImage status="view" flowers={flowers} />
+          </div>
           {/* going to garden */}
           {/* TODO: Figure out how to get garden info? */}
           <div className={styles.garden}>

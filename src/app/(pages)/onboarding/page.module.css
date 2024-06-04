@@ -1,12 +1,21 @@
 @import url('https://fonts.googleapis.com/css2?family=Instrument+Sans:ital,wght@0,400..700;1,400..700&display=swap');
 
+.main-container {
+    padding: 0 10vw;
+    min-width: 100%;
+    background-image: url('/onboarding.png');
+    background-size: contain;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
 .container {
     font-family: 'Instrument Sans', sans-serif;
     display: flex;
     flex-direction: column;
     justify-content: center;
     height: 80vh;
-    padding: 10vh;
+    padding: 10vh 5vw;
 }
 
 .title {

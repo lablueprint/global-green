@@ -1,9 +1,11 @@
 'use client';
 
 import React, { useState } from 'react';
+import { useRouter } from 'next/navigation';
 import styles from './page.module.css';
 
 function Onboarding() {
+  const router = useRouter();
   const images = [
     { content: 'Slide 1' },
     { content: 'Slide 2' },
@@ -15,11 +17,15 @@ function Onboarding() {
   const [currentSlide, setCurrentSlide] = useState(0);
 
   function nextSlide() {
-    setCurrentSlide(currentSlide === images.length - 1 ? 0 : currentSlide + 1);
+    if (currentSlide === images.length - 1) {
+      router.push('/landing');
+    } else {
+      setCurrentSlide(currentSlide + 1);
+    }
   }
 
   function prevSlide() {
-    setCurrentSlide(currentSlide === 0 ? images.length - 1 : currentSlide - 1);
+    setCurrentSlide(Math.max(0, currentSlide - 1));
   }
 
   return (

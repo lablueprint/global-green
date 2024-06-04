@@ -11,6 +11,7 @@ import PdfForm from './PdfForm';
 import ProgressBar from './progressBar';
 import ProfilePopup from './profilePopup';
 import PasswordPopup from './passwordPopup';
+import ChallengeBadge from '@/app/components/snackBar';
 
 function Profile() {
   const [isEditing, setIsEditing] = useState(false);
@@ -24,6 +25,9 @@ function Profile() {
   const [currentPage, setCurrentPage] = useState(0);
   const [currIndex, setCurrIndex] = useState();
   const [courseData, setCourseData] = useState([]);
+
+  const [visitProfileBadge, setVisitProfileBadge] = useState(false);
+
   const { data: session } = useSession();
 
   const handleLogout = async () => {
@@ -53,6 +57,24 @@ function Profile() {
       setProfileImage(data.user.profilePic);
     }
     setCourseProgress(data.user.courses);
+    if (data.user.badges) {
+      const badge = data.user.badges.find((badge) => badge.key === 'visitProfile');
+      if (!badge) {
+        const response = await fetch('/api/users/me/add-badge', {
+          method: 'PATCH',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            userId: data.user._id,
+            badge: 'visitProfile',
+          }),
+        });
+        const res = await response.json();
+        console.log('res', res);
+        setVisitProfileBadge(true);
+      }
+    }
   };
 
   const deleteAccount = async () => {
@@ -222,9 +244,16 @@ function Profile() {
   };
 
   return userData ? (
-    <div className={styles.container}>
-      <div className={styles.pageName}> Profile </div>
-      {profilePopup && (
+    <>
+      <ChallengeBadge
+        challengeName="Visit the profile"
+        challengePointValue="20"
+        open={visitProfileBadge}
+        handleClose={() => setVisitProfileBadge(false)}
+      />
+      <div className={styles.container}>
+        <div className={styles.pageName}> Profile </div>
+        {profilePopup && (
         <ProfilePopup
           onClose={handleCloseProfile}
           onIndexUpdate={handleChangeProfileIndex}
@@ -232,84 +261,84 @@ function Profile() {
           onSRCUpdate={handleChangeProfileSRC}
           profileImage={profileImage}
         />
-      )}
-      {passwordPopup && (
+        )}
+        {passwordPopup && (
         <PasswordPopup
           onClose={handleClosePassword}
           userName={userData.email}
         />
-      )}
-      <div className={styles.container}>
-        <div className={styles.profileSection}>
-          <Image
-            src={profileImage}
-            alt="Profile"
-            width={120}
-            height={120}
-            style={{ borderRadius: '50%' }}
-            onClick={handleChangeProfileImage}
-          />
-          <div className={styles.name}>
-            <div className={styles.displayName}> Display Name </div>
-            {isEditing ? (
-              <input
-                type="text"
-                value={editedName}
-                onChange={handleNameChange}
-                onBlur={handleBlur}
-                className={styles.editingName}
-              />
-            ) : (
-              <div className={styles.username} onClick={handleNameClick}>
-                {userData.userName}
-              </div>
-            )}
+        )}
+        <div className={styles.container}>
+          <div className={styles.profileSection}>
+            <Image
+              src={profileImage}
+              alt="Profile"
+              width={120}
+              height={120}
+              style={{ borderRadius: '50%' }}
+              onClick={handleChangeProfileImage}
+            />
+            <div className={styles.name}>
+              <div className={styles.displayName}> Display Name </div>
+              {isEditing ? (
+                <input
+                  type="text"
+                  value={editedName}
+                  onChange={handleNameChange}
+                  onBlur={handleBlur}
+                  className={styles.editingName}
+                />
+              ) : (
+                <div className={styles.username} onClick={handleNameClick}>
+                  {userData.userName}
+                </div>
+              )}
+            </div>
           </div>
         </div>
-      </div>
-      <div className={styles.certificateSection}>
-        <div className={styles.sectionHeader}> Certificates </div>
-        <div className={styles.row}>
-          {displayedCertificates.map((certificate, index) => (
-            <div
-              key={index}
-              onClick={PdfForm.generatePdf}
-              className={styles.certificateItem}
-              style={{
-                backgroundImage: 'url("/certificate.jpg")',
-                borderRadius: '10px',
-                backgroundSize: 'cover',
-              }}
-            >
-              {userData && (
+        <div className={styles.certificateSection}>
+          <div className={styles.sectionHeader}> Certificates </div>
+          <div className={styles.row}>
+            {displayedCertificates.map((certificate, index) => (
+              <div
+                key={index}
+                onClick={PdfForm.generatePdf}
+                className={styles.certificateItem}
+                style={{
+                  backgroundImage: 'url("/certificate.jpg")',
+                  borderRadius: '10px',
+                  backgroundSize: 'cover',
+                }}
+              >
+                {userData && (
                 <PdfForm
                   templatePdf="/certificate.pdf"
                   userName={userData.userName}
                   course={certificate.key}
                   date={certificate.date}
                 />
-              )}
-            </div>
-          ))}
+                )}
+              </div>
+            ))}
+          </div>
+          <div className={styles.paginationDots}>
+            {Array.from({ length: totalPages }, (_, i) => (
+              <span
+                key={i}
+                className={`${styles.dot} ${
+                  i === currentPage ? styles.activeDot : ''
+                }`}
+                onClick={() => handlePageChange(i)}
+              >
+                .
+              </span>
+            ))}
+          </div>
         </div>
-        <div className={styles.paginationDots}>
-          {Array.from({ length: totalPages }, (_, i) => (
-            <span
-              key={i}
-              className={`${styles.dot} ${
-                i === currentPage ? styles.activeDot : ''
-              }`}
-              onClick={() => handlePageChange(i)}
-            >
-              .
-            </span>
-          ))}
-        </div>
-      </div>
-      <div className={styles.coursesSection}>
-        <div className={styles.sectionHeader}>Course Progress</div>
-        <div className={styles.row}>
-          {courseData
+        <div className={styles.coursesSection}>
+          <div className={styles.sectionHeader}>Course Progress</div>
+          <div className={styles.row}>
+            {courseData
             && courseProgress
             && courseData.map((course) => (
               <div key={course.key} className={styles.courseItem}>
@@ -328,48 +357,49 @@ function Profile() {
                 />
               </div>
             ))}
+          </div>
         </div>
+        <div className={styles.accountSection}>
+          <div className={styles.sectionHeader}> Account </div>
+          <div className={styles.accountRow}>
+            <div className={styles.accountCol}>
+              <div className={styles.sectionText}>Change Password</div>
+              <div className={styles.subText}>
+                Set a different password to login to your account
+              </div>
+            </div>
+            <div className={styles.accountCol}>
+              <div className={styles.arrow} onClick={handleChangePassword}>
+                {' '}
+                {'>'}
+                {' '}
+              </div>
+            </div>
+          </div>
+          <div className={styles.accountRow}>
+            <div className={styles.accountCol}>
+              <div className={styles.sectionText} style={{ color: 'red' }}>
+                Delete Account
+              </div>
+              <div className={styles.subText}>
+                Permanently delete the account and remove access from all
+                resources
+              </div>
+            </div>
+            <div className={styles.accountCol}>
+              <div className={styles.arrow} onClick={deleteAccount}>
+                {' '}
+                {'>'}
+                {' '}
+              </div>
+            </div>
+          </div>
+        </div>
+        <button type="button" onClick={handleLogout}>
+          Logout
+        </button>
       </div>
-      <div className={styles.accountSection}>
-        <div className={styles.sectionHeader}> Account </div>
-        <div className={styles.accountRow}>
-          <div className={styles.accountCol}>
-            <div className={styles.sectionText}>Change Password</div>
-            <div className={styles.subText}>
-              Set a different password to login to your account
-            </div>
-          </div>
-          <div className={styles.accountCol}>
-            <div className={styles.arrow} onClick={handleChangePassword}>
-              {' '}
-              {'>'}
-              {' '}
-            </div>
-          </div>
-        </div>
-        <div className={styles.accountRow}>
-          <div className={styles.accountCol}>
-            <div className={styles.sectionText} style={{ color: 'red' }}>
-              Delete Account
-            </div>
-            <div className={styles.subText}>
-              Permanently delete the account and remove access from all
-              resources
-            </div>
-          </div>
-          <div className={styles.accountCol}>
-            <div className={styles.arrow} onClick={deleteAccount}>
-              {' '}
-              {'>'}
-              {' '}
-            </div>
-          </div>
-        </div>
-      </div>
-      <button type="button" onClick={handleLogout}>
-        Logout
-      </button>
-    </div>
+    </>
   ) : null;
 }
 

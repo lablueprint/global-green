@@ -179,7 +179,7 @@ export default function NavBar() {
                 width={16}
                 height={16}
               />
-              {user.points}
+              {user.seeds}
               {' Points'}
             </div>
           </div>

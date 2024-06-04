@@ -4,6 +4,8 @@ import React, { useState, useEffect } from 'react';
 import Button from '@mui/material/Button';
 import { useSession } from 'next-auth/react';
 import styles from './page.module.css';
+import ChallengeBadge from '@/app/components/snackBar';
+import Popup from './PopupMessage.jsx';
 
 function Store() {
   const { data: session } = useSession();
@@ -13,10 +15,35 @@ function Store() {
 
   const [accessories, setAccessories] = useState([]);
   const [backgrounds, setBackgrounds] = useState([]);
-  
+
   const [userAccessories, setUserAccessories] = useState([]);
   const [userBackgrounds, setUserBackgrounds] = useState([]);
-  
+
+  const [visitStoreBadge, setVisitStoreBadge] = useState(false);
+  const [buyOneAccessoryBadge, setBuyOneAccessoryBadge] = useState(false);
+  const [buyThreeAccessoriesBadge, setBuyThreeAccessoriesBadge] = useState(false);
+  const [buySixAccessoriesBadge, setBuySixAccessoriesBadge] = useState(false);
+  const [buyOneBackgroundBadge, setBuyOneBackgroundBadge] = useState(false);
+  const [buyThreeBackgroundsBadge, setBuyThreeBackgroundsBadge] = useState(false);
+  const [showPopup, setShowPopup] = useState(false);
+  const [popupMessage, setPopupMessage] = useState('');
+  const [popupItemName, setPopupItemName] = useState('');
+  const [popupItemImage, setPopupItemImage] = useState('');
+
+  useEffect(() => {
+    function handleClickOutside(event) {
+      const popupElement = document.getElementById('popup');
+      if (showPopup && popupElement && !popupElement.contains(event.target)) {
+        setShowPopup(false);
+      }
+    }
+
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, [showPopup]);
+
   const getUserDetails = async (id) => {
     if (!id) return;
     const response = await fetch(
@@ -36,6 +63,25 @@ function Store() {
     setUserBackgrounds(data.user.backgrounds ? data.user.backgrounds : []);
     setSeeds(data.user.seeds ? data.user.seeds : 50);
     setUserId(data.user._id);
+
+    if (data.user.badges) {
+      const badge = data.user.badges.find((badge) => badge.key === 'visitStore');
+      if (!badge) {
+        const response = await fetch('/api/users/me/add-badge', {
+          method: 'PATCH',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            userId: data.user._id,
+            badge: 'visitStore',
+          }),
+        });
+        const res = await response.json();
+        console.log('res', res);
+        setVisitStoreBadge(true);
+      }
+    }
   };
 
   const getAllAccessories = async () => {
@@ -83,22 +129,95 @@ function Store() {
     if (session) getUserDetails(session.user.id);
   }, [session]);
 
+  function showPopupMessage(message, itemName, itemImage) {
+    setPopupMessage(message);
+    setPopupItemName(itemName);
+    setPopupItemImage(itemImage);
+    setShowPopup(true);
+  }
+
   function buyItem(item, type) {
     if (item.price > seeds) {
       alert('You do not have enough coins.');
     } else {
       if (type === 'accessories') {
+        if (userAccessories.length === 0) {
+          const response = fetch('/api/users/me/add-badge', {
+            method: 'PATCH',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+              userId,
+              badge: 'buyOneAccessory',
+            }),
+          });
+          setBuyOneAccessoryBadge(true);
+        } else if (userAccessories.length === 2) {
+          const response = fetch('/api/users/me/add-badge', {
+            method: 'PATCH',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+              userId,
+              badge: 'buyThreeAccessories',
+            }),
+          });
+          setBuyThreeAccessoriesBadge(true);
+        } else if (userAccessories.length === 5) {
+          const response = fetch('/api/users/me/add-badge', {
+            method: 'PATCH',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+              userId,
+              badge: 'buySixAccessories',
+            }),
+          });
+          setBuySixAccessoriesBadge(true);
+        }
+
         setUserAccessories([...userAccessories, item.name]);
       }
       if (type === 'background') {
+        if (userBackgrounds.length === 0) {
+          const response = fetch('/api/users/me/add-badge', {
+            method: 'PATCH',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+              userId,
+              badge: 'buyOneBackground',
+            }),
+          });
+          setBuyOneBackgroundBadge(true);
+        } else if (userBackgrounds.length === 2) {
+          const response = fetch('/api/users/me/add-badge', {
+            method: 'PATCH',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+              userId,
+              badge: 'buyThreeBackgrounds',
+            }),
+          });
+          setBuyThreeBackgroundsBadge(true);
+        }
+
         setUserBackgrounds([...userBackgrounds, item.name]);
       }
       setSeeds(seeds - item.price);
+
       updateUserDataInDB(
         type === 'accessories' ? [...userAccessories, item.name] : userAccessories,
         type === 'background' ? [...userBackgrounds, item.name] : userBackgrounds,
         seeds - item.price,
       );
+      showPopupMessage('Congrats! You just bought', item.name, item.image);
     }
   }
 
@@ -108,6 +227,42 @@ function Store() {
         className={styles.storeItem}
         key={item.name}
       >
+        <ChallengeBadge
+          challengeName="Visit the store"
+          challengePointValue="20"
+          open={visitStoreBadge}
+          handleClose={() => setVisitStoreBadge(false)}
+        />
+        <ChallengeBadge
+          challengeName="Buy your first accessory"
+          challengePointValue="20"
+          open={buyOneAccessoryBadge}
+          handleClose={() => setBuyOneAccessoryBadge(false)}
+        />
+        <ChallengeBadge
+          challengeName="Buy three accessories"
+          challengePointValue="20"
+          open={buyThreeAccessoriesBadge}
+          handleClose={() => setBuyThreeAccessoriesBadge(false)}
+        />
+        <ChallengeBadge
+          challengeName="Buy six accessories"
+          challengePointValue="20"
+          open={buySixAccessoriesBadge}
+          handleClose={() => setBuySixAccessoriesBadge(false)}
+        />
+        <ChallengeBadge
+          challengeName="Buy your first background"
+          challengePointValue="20"
+          open={buyOneBackgroundBadge}
+          handleClose={() => setBuyOneBackgroundBadge(false)}
+        />
+        <ChallengeBadge
+          challengeName="Buy three backgrounds"
+          challengePointValue="20"
+          open={buyThreeBackgroundsBadge}
+          handleClose={() => setBuyThreeBackgroundsBadge(false)}
+        />
 
         <div className={styles.storeItemImg}>
           {
@@ -162,7 +317,7 @@ function Store() {
                 lineHeight: '110%',
                 textTransform: 'none',
                 '&:hover': {
-                  backgroundColor: '#519546', 
+                  backgroundColor: '#519546',
                   color: 'white',
                   opacity: 0.9,
                 },
@@ -181,7 +336,7 @@ function Store() {
     return (
       <div className={styles.storeItems}>
         {accessories.map((item) => storeItem(item))}
-      </div>  
+      </div>
     );
   }
 
@@ -189,14 +344,14 @@ function Store() {
     return (
       <div className={styles.storeItems}>
         {backgrounds.map((item) => storeItem(item))}
-      </div>  
+      </div>
     );
   }
 
   return (
     <div className={styles.storeContainer}>
       <div className={styles.store}>
-        <div className={styles.title}> 
+        <div className={styles.title}>
           Store
           <div className={styles.seedsTitle}>
             {seeds}
@@ -218,11 +373,11 @@ function Store() {
               fontSize: '20px',
               fontStyle: 'normal',
               fontWeight: '600',
-              lineHeight: '110%',      
+              lineHeight: '110%',
               '&:hover': {
-                backgroundColor: 'transparent', 
-                color: currentTab === 'accessories' ? '#519546' : '#9B9B9B', 
-                borderBottom: currentTab === 'accessories' ? '2px solid #519546' : 'none', 
+                backgroundColor: 'transparent',
+                color: currentTab === 'accessories' ? '#519546' : '#9B9B9B',
+                borderBottom: currentTab === 'accessories' ? '2px solid #519546' : 'none',
               },
             }}
             onClick={() => setCurrentTab('accessories')}
@@ -241,11 +396,11 @@ function Store() {
               fontSize: '20px',
               fontStyle: 'normal',
               fontWeight: '600',
-              lineHeight: '110%',   
+              lineHeight: '110%',
               '&:hover': {
                 backgroundColor: 'transparent',
                 color: currentTab === 'background' ? '#519546' : '#9B9B9B',
-                borderBottom: currentTab === 'background' ? '2px solid #519546' : '1px solid lightgrey', 
+                borderBottom: currentTab === 'background' ? '2px solid #519546' : '1px solid lightgrey',
               },
             }}
             onClick={() => setCurrentTab('background')}
@@ -256,6 +411,14 @@ function Store() {
         {currentTab === 'accessories' && accesoriesTab()}
         {currentTab === 'background' && backgroundTab()}
       </div>
+      {showPopup && (
+        <Popup
+          message="Congrats! You just bought"
+          itemName={popupItemName}
+          itemImage={popupItemImage}
+          onClose={() => setShowPopup(false)}
+        />
+      )}
     </div>
   );
 }

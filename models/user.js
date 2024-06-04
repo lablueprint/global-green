@@ -7,7 +7,6 @@ const userSchema = new Schema(
     email: { type: String, required: true },
     password: { type: String },
     userName: { type: String },
-    points: { type: Number, default: 0 },
     badges: { type: Array },
     courses: [
       {

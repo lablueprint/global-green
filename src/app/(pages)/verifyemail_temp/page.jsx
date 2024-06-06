@@ -3,7 +3,7 @@
 import React, { useEffect, useState } from 'react';
 import { useSession, signOut } from 'next-auth/react';
 import styles from './page.module.css';
-
+import Image from 'next/image';
 
 function VerifyEmail() {
   const [token, setToken] = useState('');
@@ -170,10 +170,10 @@ function VerifyEmail() {
         <div className={styles.contentContainer}>
           <h3 className={styles.verificationTitle}>Enter Verification Code</h3>
           <p className={styles.accountDeletionNotice}>
-            We have sent a code to {userName} <br/>
-            Please enter received code to continue.
+            We have sent a code to <strong>{userName}</strong><br/>
+            Please verify your account within 48 hours <br/>
+            Enter received code to continue.
           </p>
-  
           <div className={styles.tokenInputContainer}>
             {Array.from({ length: 6 }).map((_, index) => (
               <input
@@ -191,15 +191,17 @@ function VerifyEmail() {
                 onKeyDown={(e) => {
                   if (e.key === "Backspace" && !token[index] && index > 0) {
                     e.preventDefault(); // preventing default backspace option
-                    const prevInput = e.target.form[index -1];
-                    prevInput.focus();
-                    prevInput.select();
+                    const prevInput = e.target.previousElementSibling;
+                    if (prevInput) {
+                      prevInput.focus();
+                      prevInput.select();
+                    }
                   }
                 }}
                 onInput={(e) => {
-                  const nextInput = e.target.form[index + 1]; // find the next input field
+                  const nextInput = e.target.nextElementSibling; // find the next input field
                   if (nextInput && e.target.value) {
-                    nextInput.focus();
+                    nextInput.focus(); // Move focus to the next input field
                   }
                 }}
               />
@@ -229,15 +231,13 @@ function VerifyEmail() {
     }
     return <p>Your verification time has expired. Please sign up again.</p>;
   }
-  
+    
   return (
     <div>
-      <p>
-        Welcome back
-        {' '}
-        {userName}
-        . Please check your email for a verification code to verify your account.
-      </p>
+      <div className={styles.topLeft}>
+        <Image src="/logo.svg" width={50} height={50} />
+        <span>Global Green Scholar</span>
+      </div>
       {renderIndicator()}
       {message && <p>{message}</p>}
       {error && <p>{error}</p>}

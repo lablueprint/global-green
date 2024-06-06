@@ -2,11 +2,12 @@
 
 .main-container {
     padding: 0 10vw;
-    min-width: 100%;
-    background-image: url('/onboarding.png');
+    height: 100vh;
+    background-image: url('/onboarding.svg');
     background-size: contain;
-    background-position: center;
+    background-position: bottom;
     background-repeat: no-repeat;
+    background-color: rgb(250, 250, 250);
 }
 
 .container {
@@ -14,35 +15,33 @@
     display: flex;
     flex-direction: column;
     justify-content: center;
-    height: 80vh;
-    padding: 10vh 5vw;
+    width: 80vw;
+    height: 100vh;
 }
 
 .title {
     color: #529546;
     text-align: center;
     font-weight: 500;
-    margin: 3vh 0;
+    font-size: 32px;
+    margin-bottom: 2vh;
 }
 
 .carousel-container {
-    width: 100%;
-    height: 100%;
-    margin-bottom: 4vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    max-height: 65vh;
+    margin: 3vh 0;
 }
 
 .carousel-slide {
     display: flex;
     justify-content: center;
     align-items: center;
-    background-color: #f0f0f0;
-    height: 100%;
+    max-height: 65vh;
+    max-width: 100%;
     border-radius: 10px;
-}
-
-.carousel-content {
-    font-size: 24px;
-    color: #333;
 }
 
 .carousel-button {
@@ -61,6 +60,7 @@
     display: flex;
     flex-direction: row;
     justify-content: space-between;
+    width: 100%;
 }
 
 .dots {
@@ -87,4 +87,14 @@
     border-radius: 50%;
     display: inline-block;
     cursor: pointer;
+}
+
+.topic {
+    font-weight: 500;
+    margin-bottom: 8px;
+}
+
+.description {
+    display: flex;
+    font-size: 16px;
 }

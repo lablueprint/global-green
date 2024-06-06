@@ -8,3 +8,10 @@ body {
   font-weight: 400;
   line-height: 110%;
 }
+
+@media (max-width: 1130px ) {
+  body {
+    width: 1130px;
+    overflow-x: scroll;
+  }
+}

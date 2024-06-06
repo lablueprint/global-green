@@ -24,7 +24,10 @@ export default async function RootLayout({ children }) {
         <body>
           <div className={styles.error}>
             <h1>Unsupported Device</h1>
-            <p>This application is not supported on mobile devices. Please use a web browser on a desktop or laptop.</p>
+            <p>
+              This application is not supported on mobile devices.
+              Please use a web browser on a desktop or laptop.
+            </p>
           </div>
         </body>
       </html>

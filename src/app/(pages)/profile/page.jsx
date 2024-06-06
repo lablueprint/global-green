@@ -1,4 +1,5 @@
-'use client'
+'use client';
+
 // Profile.jsx
 import React, { useEffect, useState } from 'react';
 import Image from 'next/image';
@@ -232,30 +233,32 @@ function Profile() {
             userName={userData.email}
           />
         )}
-        <div className={styles.profileSection}>
-          <Image
-            src={profileImage}
-            alt="Profile"
-            width={120}
-            height={120}
-            style={{ borderRadius: '50%' }}
-            onClick={handleChangeProfileImage}
-          />
-          <div className={styles.name}>
-            <div className={styles.displayName}> Display Name </div>
-            {isEditing ? (
-              <input
-                type="text"
-                value={editedName}
-                onChange={handleNameChange}
-                onBlur={handleBlur}
-                className={styles.editingName}
-              />
-            ) : (
-              <div className={styles.username} onClick={handleNameClick}>
-                {userData.userName}
-              </div>
-            )}
+        <div className={styles.container}>
+          <div className={styles.profileSection}>
+            <Image
+              src={profileImage}
+              alt="Profile"
+              width={120}
+              height={120}
+              style={{ borderRadius: '50%', cursor: 'pointer' }}
+              onClick={handleChangeProfileImage}
+            />
+            <div className={styles.name}>
+              <div className={styles.displayName}> Display Name </div>
+              {isEditing ? (
+                <input
+                  type="text"
+                  value={editedName}
+                  onChange={handleNameChange}
+                  onBlur={handleBlur}
+                  className={styles.editingName}
+                />
+              ) : (
+                <div className={styles.username} onClick={handleNameClick}>
+                  {userData.userName}
+                </div>
+              )}
+            </div>
           </div>
         </div>
         <div className={styles.certificateSection}>
@@ -273,12 +276,12 @@ function Profile() {
                 }}
               >
                 {userData && (
-                  <PdfForm
-                    templatePdf="/certificate.pdf"
-                    userName={userData.userName}
-                    course={certificate.key}
-                    date={certificate.date}
-                  />
+                <PdfForm
+                  templatePdf="/certificate.pdf"
+                  userName={`${userData.firstName} ${userData.lastName}`}
+                  course={certificate.key}
+                  date={certificate.date}
+                />
                 )}
               </div>
             ))}
@@ -298,25 +301,25 @@ function Profile() {
         <div className={styles.coursesSection}>
           <div className={styles.sectionHeader}>Course Progress</div>
           <div className={styles.row}>
-            {courseData &&
-              courseProgress &&
-              courseData.map((course) => (
-                <div key={course.key} className={styles.courseItem}>
-                  <div className={styles.courseName}>{course.label}</div>
-                  <ProgressBar
-                    className={styles.progressBar}
-                    value={
-                      courseProgress.find((item) => item.key === course.key)
-                        ? courseProgress.find((item) => item.key === course.key)
-                            .currStage
-                        : 0
-                    }
-                    maxValue={6}
-                    color="green"
-                    isPopupDisplayed={profilePopup || passwordPopup}
-                  />
-                </div>
-              ))}
+            {courseData
+            && courseProgress
+            && courseData.map((course) => (
+              <div key={course.key} className={styles.courseItem}>
+                <div className={styles.courseName}>{course.label}</div>
+                <ProgressBar
+                  className={styles.progressBar}
+                  value={
+                    courseProgress.find((item) => item.key === course.key)
+                      ? courseProgress.find((item) => item.key === course.key)
+                        .currStage
+                      : 0
+                  }
+                  maxValue={7}
+                  color="green"
+                  isPopupDisplayed={profilePopup || passwordPopup}
+                />
+              </div>
+            ))}
           </div>
         </div>
         <div className={styles.accountSection}>

@@ -2,6 +2,7 @@
 
 import React, { useState, useEffect } from 'react';
 import Image from 'next/image';
+import { useRouter } from 'next/navigation';
 import styles from './page.module.css';
 import MultipleChoiceQuiz from './MultipleChoice';
 import TrueFalseQuiz from './TrueFalse';
@@ -49,6 +50,7 @@ function Quiz() {
 
   const [currentQuiz, setCurrentQuiz] = useState(null);
   const [loading, setLoading] = useState(true);
+  const router = useRouter();
   useEffect(() => {
     getQuiz().then((res) => {
       setCurrentQuiz({ totalQuestions: res.length, questions: res });
@@ -438,6 +440,7 @@ function Quiz() {
   }
 
   const urlParams = new URLSearchParams(window.location.search);
+  const course = urlParams.get('courseKey');
   const num = urlParams.get('stage');
 
   return (
@@ -448,13 +451,8 @@ function Quiz() {
         </div>
         <div className={styles.progressbarandhintcontainer}>
           <div
-            style={{
-              position: 'absolute',
-              cursor: 'pointer',
-              fontSize: '12px',
-              color: '#454545',
-            }}
-            onClick={() => console.log('bye bye')}
+            className={styles.xButton}
+            onClick={() => router.push(`/lesson?courseKey=${course}&stage=${num}`)}
           >
             &#10005;
           </div>

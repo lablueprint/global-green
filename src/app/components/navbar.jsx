@@ -41,9 +41,12 @@ function NavLink({
   );
 }
 export default function NavBar() {
-  const [currentPath, setCurrentPath] = useState('');
+  const [currentPath, setCurrentPath] = useState(
+    typeof window !== 'undefined' ? window.location.pathname : '',
+  );
   const { data: session } = useSession();
   const [user, setUser] = useState({});
+  const [shouldRenderNav, setShouldRenderNav] = useState(false);
   const navlinks = [
     {
       href: '/landing',
@@ -89,27 +92,36 @@ export default function NavBar() {
     console.log('session', session);
     if (session) getUserDetails(session.user.id);
   }, [session]);
+
   useEffect(() => {
     if (typeof window !== 'undefined') {
-      setCurrentPath(window.location.pathname);
+      const path = window.location.pathname;
+      setCurrentPath(path);
+      // Check if path starts with /roadmap/ or /lesson/
+      if (path.startsWith('/roadmap/') || path.startsWith('/lesson') || path.startsWith('/quiz')) {
+        setShouldRenderNav(true);
+      } else {
+        // Other paths where navbar should be rendered
+        const pathsToRenderNav = [
+          '/landing',
+          '/challenges',
+          '/store',
+          '/profile',
+          '/map',
+        ];
+        setShouldRenderNav(pathsToRenderNav.includes(path));
+      }
     }
   }, []);
+
+  if (!shouldRenderNav) {
+    return null;
+  }
+
   return (
     <div
       id="navbar"
       className={`${styles.navbar}`}
-      style={{
-        display:
-          currentPath === '/login'
-          || currentPath === '/signup'
-          || currentPath === '/verifyemail'
-          || currentPath === '/verifyemail_temp'
-          || currentPath === '/forgot-password'
-          || currentPath === '/onboarding'
-          || currentPath === '/reset-password'
-            ? 'none'
-            : 'flex',
-      }}
     >
       <div className={styles.navcomp}>
         <div

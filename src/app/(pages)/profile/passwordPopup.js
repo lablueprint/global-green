@@ -1,17 +1,22 @@
 import React, { useState, useEffect } from 'react';
-import { FaPencilAlt, FaRegCheckCircle } from 'react-icons/fa';
+import {
+  FaPencilAlt, FaRegCheckCircle, FaEye, FaEyeSlash,
+} from 'react-icons/fa';
 import styles from './page.module.css';
 
-function passwordPopup({ onClose, userName }) {
+function PasswordPopup({ onClose, userName }) {
   const [currentPassword, setCurrentPassword] = useState('');
   const [newPassword, setNewPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
   const [canChange, setCanChange] = useState(false);
   const [success, setSuccess] = useState(false);
+  const [showCurrentPassword, setShowCurrentPassword] = useState(false);
 
   const handleCurrentPasswordChange = (e) => setCurrentPassword(e.target.value);
   const handleNewPasswordChange = (e) => setNewPassword(e.target.value);
   const handleConfirmPasswordChange = (e) => setConfirmPassword(e.target.value);
+
+  const toggleShowCurrentPassword = () => setShowCurrentPassword(!showCurrentPassword);
 
   useEffect(() => {
     if (currentPassword && newPassword && confirmPassword) {
@@ -92,32 +97,35 @@ function passwordPopup({ onClose, userName }) {
             Enter your current password
           </div>
           <input
-            type="password"
+            type={showCurrentPassword ? 'text' : 'password'}
             className={styles.passInput}
             value={currentPassword}
             onChange={handleCurrentPasswordChange}
             placeholder="Current Password"
           />
+          {' '}
           <div className={styles.passPopText}>
             Enter a new password
           </div>
-          <input
-            type="password"
-            className={styles.passInput}
-            onChange={handleNewPasswordChange}
-            placeholder="New Password"
-
-          />
+          <div className={styles.inputWrapper}>
+            <input
+              type="password"
+              className={styles.passInput}
+              onChange={handleNewPasswordChange}
+              placeholder="New Password"
+            />
+          </div>
           <div className={styles.passPopText}>
             Confirm your new password
           </div>
-          <input
-            type="password"
-            className={styles.passInput}
-            onChange={handleConfirmPasswordChange}
-            placeholder="Confirm Password"
-
-          />
+          <div className={styles.inputWrapper}>
+            <input
+              type="password"
+              className={styles.passInput}
+              onChange={handleConfirmPasswordChange}
+              placeholder="Confirm Password"
+            />
+          </div>
           <div className={styles.passPopBottom}>
             <div
               className={styles.passPopButton}
@@ -138,4 +146,4 @@ function passwordPopup({ onClose, userName }) {
   );
 }
 
-export default passwordPopup;
+export default PasswordPopup;

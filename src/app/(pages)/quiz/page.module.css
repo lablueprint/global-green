@@ -49,6 +49,13 @@
   margin: 15px;
 }
 
+.xButton{
+    position: absolute;
+    cursor: pointer;
+    font-size: 15px;
+    color: #454545;
+}
+
 .progressbarandhintcontainer {
   display: flex;
   justify-content: space-between;
@@ -123,6 +130,7 @@
 
 .choiceButton:hover {
   outline: 2.75px solid #1d594b;
+  cursor: pointer;
 }
 
 .hintButton {
@@ -176,6 +184,7 @@
 
 .closeButton:hover {
   color: #ff0000;
+  cursor: pointer;
 }
 
 .optionsContainer button,
@@ -190,6 +199,7 @@
 .optionsContainer button:hover,
 .definitionsContainer button:hover {
   border-color: #f0ad4e;
+  cursor: pointer;
 }
 
 .scoreCard {
@@ -293,6 +303,7 @@
 .nextButton:hover {
   background-color: #04aa6d;
   opacity: 0.5;
+  cursor: pointer;
 }
 
 .checkButton {
@@ -310,6 +321,7 @@
 .checkButton:hover {
   /* background-color: #04AA6D;  */
   opacity: 0.8;
+  cursor: pointer;
 }
 
 .checkButtonEnabled {
@@ -340,6 +352,7 @@
   background-color: #f2f2f2;
   color: #808080;
   border-color: #808080;
+  cursor: pointer;
 }
 
 /* Matching styling */
@@ -442,6 +455,10 @@
   margin-bottom: 55px;
 }
 
+.optionGridContainer:hover{
+  cursor: pointer;
+}
+
 .optionLabel {
   display: flex;
   align-items: center;
@@ -451,6 +468,7 @@
   font-weight: 500;
 }
 
+
 .optionCheckbox {
   -webkit-appearance: none; /* Remove default styling for WebKit browsers */
   -moz-appearance: none; /* Remove default styling for Mozilla browsers */
@@ -458,8 +476,8 @@
   border-radius: 9px;
   border: 0px solid gray; /* Customizable border */
   background-color: var(--Grey-8, rgba(13, 13, 13, 0.08));
-  width: 35px;
-  height: 35px;
+  width: 60px;
+  height: 30px;
   cursor: pointer; /* Change cursor to pointer to indicate it's clickable */
 }
 
@@ -538,4 +556,26 @@
   height: 8px;
   background-size: cover;
   border-radius: 0 0 10px 10px; /* Match the border radius of .scoreContainer if any */
+}
+
+.inputWrapper {
+  position: relative;
+}
+
+.passInput {
+  width: 100%;
+  padding-right: 30px; /* Adjust this value to provide space for the icon */
+}
+
+.icon {
+  position: absolute;
+  top: 50%;
+  right: 10px;
+  transform: translateY(-100%);
+  cursor: pointer;
+}
+
+.iconStyle {
+  color: #000; /* Change to desired color */
+  font-size: 1.2em; /* Adjust size as needed */
 }

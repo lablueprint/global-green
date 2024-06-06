@@ -121,3 +121,26 @@
 .ggLogoAndText {
   margin-bottom: 100px;
 }
+
+
+/* for a smaller screen */
+@media (max-width: 1300px) {
+  .navbar{
+    max-width: 25vw;
+    min-width: 25vw;
+  }
+}
+
+@media (max-width: 900px) {
+  .navbar{
+    max-width: 30vw; 
+    min-width: 30vw;
+  }
+}
+
+@media (max-width: 780px) {
+  .navbar{
+    max-width: 40vw; 
+    min-width: 40vw;
+  }
+}

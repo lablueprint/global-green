@@ -20,7 +20,7 @@ function LinearProgressWithLabel({
       <Typography
         style={{
           color: 'black',
-          fontSize: '14px',
+          fontSize: '1.2rem',
           lineHeight: '1',
           textAlign: 'left',
           textWrap: 'nowrap',

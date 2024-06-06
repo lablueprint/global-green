@@ -120,3 +120,14 @@
 .topLeft span {
   margin-top: -5px;
 }
+
+@media (max-width: 800px) {
+  .submitButton {
+    width: 10rem; /* Make submit button full width on smaller screens */
+    font-size: 15px;
+  }
+
+  .input {
+    font-size: 13px; /* Make button container full width on smaller screens */
+  }
+}

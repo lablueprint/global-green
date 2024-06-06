@@ -44,12 +44,8 @@ export default function NavBar() {
   const [currentPath, setCurrentPath] = useState(
     typeof window !== 'undefined' ? window.location.pathname : '',
   );
-  const [currentPath, setCurrentPath] = useState(
-    typeof window !== 'undefined' ? window.location.pathname : '',
-  );
   const { data: session } = useSession();
   const [user, setUser] = useState({});
-  const [shouldRenderNav, setShouldRenderNav] = useState(false);
   const [shouldRenderNav, setShouldRenderNav] = useState(false);
   const navlinks = [
     {
@@ -96,7 +92,6 @@ export default function NavBar() {
     console.log('session', session);
     if (session) getUserDetails(session.user.id);
   }, [session]);
-
 
   useEffect(() => {
     if (typeof window !== 'undefined') {

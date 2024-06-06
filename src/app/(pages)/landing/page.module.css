@@ -168,7 +168,7 @@
   border-radius: 10px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
   width: 80%;
-  max-width: 10rem;
+  max-width: 60rem;
   height: min-content;
   display: flex;
   flex-direction: column;
@@ -193,8 +193,8 @@
   }
   .gardenModalImageContainer {
     position: relative;
-    width: 600px;
-    height: 300px;
+    width: 40rem;
+    height: 18rem;
     margin: 20px;
     border-radius: 10px;
     overflow: hidden;

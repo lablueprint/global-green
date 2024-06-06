@@ -105,6 +105,7 @@ export default function NavBar() {
           || currentPath === '/verifyemail'
           || currentPath === '/verifyemail_temp'
           || currentPath === '/forgot-password'
+          || currentPath === '/onboarding'
           || currentPath === '/reset-password'
             ? 'none'
             : 'flex',
@@ -181,7 +182,7 @@ export default function NavBar() {
                 width={16}
                 height={16}
               />
-              {user.points}
+              {user.seeds}
               {' Points'}
             </div>
           </div>

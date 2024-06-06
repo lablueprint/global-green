@@ -19,11 +19,8 @@ function Store() {
   const [userAccessories, setUserAccessories] = useState([]);
   const [userBackgrounds, setUserBackgrounds] = useState([]);
 
-  const [visitStoreBadge, setVisitStoreBadge] = useState(false);
-  const [buyOneAccessoryBadge, setBuyOneAccessoryBadge] = useState(false);
   const [buyThreeAccessoriesBadge, setBuyThreeAccessoriesBadge] = useState(false);
   const [buySixAccessoriesBadge, setBuySixAccessoriesBadge] = useState(false);
-  const [buyOneBackgroundBadge, setBuyOneBackgroundBadge] = useState(false);
   const [buyThreeBackgroundsBadge, setBuyThreeBackgroundsBadge] = useState(false);
   const [showPopup, setShowPopup] = useState(false);
   const [popupMessage, setPopupMessage] = useState('');
@@ -63,25 +60,6 @@ function Store() {
     setUserBackgrounds(data.user.backgrounds ? data.user.backgrounds : []);
     setSeeds(data.user.seeds ? data.user.seeds : 50);
     setUserId(data.user._id);
-
-    if (data.user.badges) {
-      const badge = data.user.badges.find((badge) => badge.key === 'visitStore');
-      if (!badge) {
-        const response = await fetch('/api/users/me/add-badge', {
-          method: 'PATCH',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify({
-            userId: data.user._id,
-            badge: 'visitStore',
-          }),
-        });
-        const res = await response.json();
-        console.log('res', res);
-        setVisitStoreBadge(true);
-      }
-    }
   };
 
   const getAllAccessories = async () => {
@@ -141,19 +119,7 @@ function Store() {
       alert('You do not have enough coins.');
     } else {
       if (type === 'accessories') {
-        if (userAccessories.length === 0) {
-          const response = fetch('/api/users/me/add-badge', {
-            method: 'PATCH',
-            headers: {
-              'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({
-              userId,
-              badge: 'buyOneAccessory',
-            }),
-          });
-          setBuyOneAccessoryBadge(true);
-        } else if (userAccessories.length === 2) {
+        if (userAccessories.length === 2) {
           const response = fetch('/api/users/me/add-badge', {
             method: 'PATCH',
             headers: {
@@ -182,19 +148,7 @@ function Store() {
         setUserAccessories([...userAccessories, item.name]);
       }
       if (type === 'background') {
-        if (userBackgrounds.length === 0) {
-          const response = fetch('/api/users/me/add-badge', {
-            method: 'PATCH',
-            headers: {
-              'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({
-              userId,
-              badge: 'buyOneBackground',
-            }),
-          });
-          setBuyOneBackgroundBadge(true);
-        } else if (userBackgrounds.length === 2) {
+        if (userBackgrounds.length === 2) {
           const response = fetch('/api/users/me/add-badge', {
             method: 'PATCH',
             headers: {
@@ -227,18 +181,7 @@ function Store() {
         className={styles.storeItem}
         key={item.name}
       >
-        <ChallengeBadge
-          challengeName="Visit the store"
-          challengePointValue="20"
-          open={visitStoreBadge}
-          handleClose={() => setVisitStoreBadge(false)}
-        />
-        <ChallengeBadge
-          challengeName="Buy your first accessory"
-          challengePointValue="20"
-          open={buyOneAccessoryBadge}
-          handleClose={() => setBuyOneAccessoryBadge(false)}
-        />
+
         <ChallengeBadge
           challengeName="Buy three accessories"
           challengePointValue="20"
@@ -251,12 +194,7 @@ function Store() {
           open={buySixAccessoriesBadge}
           handleClose={() => setBuySixAccessoriesBadge(false)}
         />
-        <ChallengeBadge
-          challengeName="Buy your first background"
-          challengePointValue="20"
-          open={buyOneBackgroundBadge}
-          handleClose={() => setBuyOneBackgroundBadge(false)}
-        />
+
         <ChallengeBadge
           challengeName="Buy three backgrounds"
           challengePointValue="20"

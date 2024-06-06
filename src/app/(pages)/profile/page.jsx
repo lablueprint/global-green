@@ -1,4 +1,5 @@
-'use client'
+'use client';
+
 // Profile.jsx
 import React, { useEffect, useState } from 'react';
 import Image from 'next/image';
@@ -52,7 +53,7 @@ function Profile() {
     setCourseProgress(data.user.courses);
 
     if (data.user.badges) {
-      const badge = data.user.badges.find((badge) => badge.key === 'visitProfile');
+      const badge = data.user.badges.find((badge) => badge.key === 'personalizer');
       if (!badge) {
         const response = await fetch('/api/users/me/add-badge', {
           method: 'PATCH',
@@ -61,7 +62,7 @@ function Profile() {
           },
           body: JSON.stringify({
             userId: data.user._id,
-            badge: 'visitProfile',
+            badge: 'personalizer',
           }),
         });
         const res = await response.json();
@@ -204,7 +205,7 @@ function Profile() {
   return userData ? (
     <>
       <ChallengeBadge
-        challengeName="Visit the profile"
+        challengeName="Personalizer"
         challengePointValue="20"
         open={visitProfileBadge}
         handleClose={() => setVisitProfileBadge(false)}
@@ -298,9 +299,9 @@ function Profile() {
         <div className={styles.coursesSection}>
           <div className={styles.sectionHeader}>Course Progress</div>
           <div className={styles.row}>
-            {courseData &&
-              courseProgress &&
-              courseData.map((course) => (
+            {courseData
+              && courseProgress
+              && courseData.map((course) => (
                 <div key={course.key} className={styles.courseItem}>
                   <div className={styles.courseName}>{course.label}</div>
                   <ProgressBar
@@ -308,7 +309,7 @@ function Profile() {
                     value={
                       courseProgress.find((item) => item.key === course.key)
                         ? courseProgress.find((item) => item.key === course.key)
-                            .currStage
+                          .currStage
                         : 0
                     }
                     maxValue={6}

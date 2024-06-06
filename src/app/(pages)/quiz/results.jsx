@@ -85,10 +85,10 @@ function Results({
 
   const router = useRouter();
   const { data: session } = useSession();
-  const [complete3LessonsBadge, setComplete3LessonsBadge] = useState(false);
-  const [complete5LessonsBadge, setComplete5LessonsBadge] = useState(false);
+  const [complete1LessonBadge, setcomplete1LessonBadge] = useState(false);
+  // const [complete5LessonsBadge, setComplete5LessonsBadge] = useState(false);
   const [completeFirstCourseBadge, setCompleteFirstCourseBadge] = useState(false);
-  const [completeAllCoursesBadge, setCompleteAllCoursesBadge] = useState(false);
+  const [completeThreeCoursesBadge, setCompleteThreeCoursesBadge] = useState(false);
   const [highAchieverBadge, setHighAchieverBadge] = useState(false);
   const [noSkipsBadge, setNoSkipsBadge] = useState(false);
   const [noHintsBadge, setNoHintsBadge] = useState(false);
@@ -176,12 +176,12 @@ function Results({
       if (percentage >= 60) {
         let newStage = currStage + 1;
 
-        if (percentage >= 80) {
+        if (percentage === 100) {
           if (userBadges) {
-            const badge = userBadges.find((badge) => badge === 'highAchiever');
+            const badge = userBadges.find((badge) => badge === 'bullseye');
             if (!badge) {
               setHighAchieverBadge(true);
-              addBadge(session.user.id, 'highAchiever');
+              addBadge(session.user.id, 'bullseye');
             }
           }
         }
@@ -196,8 +196,8 @@ function Results({
           }
 
           if (finishedCourses.length === 5) {
-            setCompleteAllCoursesBadge(true);
-            addBadge(session.user.id, 'completeAllCourses');
+            setCompleteThreeCoursesBadge(true);
+            addBadge(session.user.id, 'completeThreeCourses');
           }
         }
 
@@ -207,32 +207,32 @@ function Results({
 
         if (skips === 0) {
           if (userBadges) {
-            const badge = userBadges.find((badge) => badge === 'noSkips');
+            const badge = userBadges.find((badge) => badge === 'skip-free');
             if (!badge) {
               setNoSkipsBadge(true);
-              addBadge(session.user.id, 'noSkips');
+              addBadge(session.user.id, 'skip-free');
             }
           }
         }
 
         if (usedHint === false) {
           if (userBadges) {
-            const badge = userBadges.find((badge) => badge === 'noHints');
+            const badge = userBadges.find((badge) => badge === 'independent');
             if (!badge) {
               setNoHintsBadge(true);
-              addBadge(session.user.id, 'noHints');
+              addBadge(session.user.id, 'independent');
             }
           }
         }
 
         if (newStage === 3) {
-          setComplete3LessonsBadge(true);
-          addBadge(session.user.id, 'complete3Lessons');
+          setcomplete1LessonBadge(true);
+          addBadge(session.user.id, 'complete1Lesson');
         }
-        if (newStage === 5) {
-          setComplete5LessonsBadge(true);
-          addBadge(session.user.id, 'complete5Lessons');
-        }
+        // if (newStage === 5) {
+        //   setComplete5LessonsBadge(true);
+        //   addBadge(session.user.id, 'complete5Lessons');
+        // }
       }
     }
   }, [session]);
@@ -258,43 +258,43 @@ function Results({
   return (
     <>
       <ChallengeBadge
-        challengeName="Complete 3 lessons"
-        challengePointValue="20"
-        open={complete3LessonsBadge}
-        handleClose={() => setComplete3LessonsBadge(false)}
+        challengeName="Complete 1 Lesson"
+        challengePointValue="10"
+        open={complete1LessonBadge}
+        handleClose={() => setcomplete1LessonBadge(false)}
       />
-      <ChallengeBadge
+      {/* <ChallengeBadge
         challengeName="Complete 5 lessons"
         challengePointValue="20"
         open={complete5LessonsBadge}
         handleClose={() => setComplete5LessonsBadge(false)}
-      />
+      /> */}
       <ChallengeBadge
         challengeName="Complete first course"
-        challengePointValue="20"
+        challengePointValue="30"
         open={completeFirstCourseBadge}
         handleClose={() => setCompleteFirstCourseBadge(false)}
       />
       <ChallengeBadge
-        challengeName="Complete all courses"
-        challengePointValue="20"
-        open={completeAllCoursesBadge}
-        handleClose={() => setCompleteAllCoursesBadge(false)}
+        challengeName="Complete three courses"
+        challengePointValue="50"
+        open={completeThreeCoursesBadge}
+        handleClose={() => setCompleteThreeCoursesBadge(false)}
       />
       <ChallengeBadge
-        challengeName="High achiever"
-        challengePointValue="20"
+        challengeName="Bullseye"
+        challengePointValue="10"
         open={highAchieverBadge}
         handleClose={() => setHighAchieverBadge(false)}
       />
       <ChallengeBadge
-        challengeName="No skips"
+        challengeName="Skip-free"
         challengePointValue="20"
         open={noSkipsBadge}
         handleClose={() => setNoSkipsBadge(false)}
       />
       <ChallengeBadge
-        challengeName="No hints"
+        challengeName="Independent"
         challengePointValue="20"
         open={noHintsBadge}
         handleClose={() => setNoHintsBadge(false)}

@@ -38,7 +38,7 @@ function LandingPage() {
   const handleOpenGardenModal = () => {
     setIsGardenModalOpen(true);
     if (user.badges) {
-      const badge = user.badges.find((badge) => badge.key === 'visitGarden');
+      const badge = user.badges.find((badge) => badge.key === 'GardenStroll');
       if (!badge) {
         const response = fetch('/api/users/me/add-badge', {
           method: 'PATCH',
@@ -47,7 +47,7 @@ function LandingPage() {
           },
           body: JSON.stringify({
             userId: user._id,
-            badge: 'visitGarden',
+            badge: 'GardenStroll',
           }),
         });
         setGardenBadge(true);
@@ -63,8 +63,8 @@ function LandingPage() {
   return (
     <>
       <ChallengeBadge
-        challengeName="Visit the garden"
-        challengePointValue="20"
+        challengeName="Garden Stroll"
+        challengePointValue="10"
         open={gardenBadge}
         handleClose={() => setGardenBadge(false)}
       />

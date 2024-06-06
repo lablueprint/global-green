@@ -81,13 +81,14 @@ function LandingPage() {
         <div className={styles.banner}>
           <div className={styles.imageGarden}>
             {/* landing page image */}
-            <Image
+            <div
               className={styles.image}
-              src={currentModule.imageUrl}
-              alt="landing page Image"
-              width={500}
-              height={230}
-              style={{ borderRadius: '10px' }}
+              style={{
+                backgroundImage: `url(${currentModule.imageUrl})`, // Set background image URL
+                backgroundSize: 'cover',
+                backgroundPosition: 'center',
+                backgroundRepeat: 'no-repeat',
+              }}
             />
             {/* going to garden */}
             <div className={styles.garden}>

@@ -275,7 +275,7 @@ function Profile() {
               alt="Profile"
               width={120}
               height={120}
-              style={{ borderRadius: '50%' }}
+              style={{ borderRadius: '50%', cursor: 'pointer' }}
               onClick={handleChangeProfileImage}
             />
             <div className={styles.name}>

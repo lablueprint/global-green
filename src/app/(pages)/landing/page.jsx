@@ -130,20 +130,11 @@ function LandingPage() {
             height={230}
             style={{ borderRadius: '10px' }}
           /> */}
-          <div
-            style={
-            {
-              overflow: 'hidden',
-              height: '300px',
-            }
-          }
-          >
-            <GardenImage
-              status="view"
-              flowers={flowers}
-              gardenState={gardenState}
-            />
-          </div>
+          <GardenImage
+            status="view"
+            flowers={flowers}
+            gardenState={gardenState}
+          />
           {/* going to garden */}
           {/* TODO: Figure out how to get garden info? */}
           <div className={styles.garden}>

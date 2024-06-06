@@ -12,6 +12,7 @@ export default function GardenModal({
   // Official state of user garden
   // mb replace this w a function to update the user state??
   const [isCustomizing, setIsCustomizing] = useState(false);
+  const [previewGardenState, setPreviewGardenState] = useState(gardenState);
   const [currentTab, setCurrentTab] = useState('accessories'); // accessories, background
 
   // TODO: need to add restrictions from adding items that haven't been bought yet
@@ -23,8 +24,8 @@ export default function GardenModal({
   // State to track items selected in menu
   const [selector, setSelector] = useState(null);
   useEffect(() => {
-    setSelector(gardenState);
-  }, []);
+    setSelector(previewGardenState);
+  }, [previewGardenState]);
 
   function selectBackground(val) {
     setSelector((prevSelector) => ({
@@ -54,6 +55,11 @@ export default function GardenModal({
       background: selector.background,
       accessories: selector.accessories,
     }));
+    setPreviewGardenState(() => ({
+      background: selector.background,
+      accessories: selector.accessories,
+    }));
+
     setIsCustomizing(false);
   }
 
@@ -110,7 +116,7 @@ export default function GardenModal({
                   <GardenImage
                     status="edit"
                     flowers={flowers}
-                    gardenState={gardenState}
+                    gardenState={selector}
                   />
                 </div>
                 <div className={styles.gardenModalEditBoxRight}>
@@ -173,11 +179,9 @@ export default function GardenModal({
                         fontFamily: 'inherit',
                       }}
                       onClick={() => applySelections()}
-                      disabled={currentTab !== 'background' && selector.accessories.length === 0} // don't think background would ever be disabled?
+
                     >
-                      { selector.accessories.length > 0 || currentTab === 'background'
-                        ? 'Add to Garden'
-                        : 'Nothing Selected'}
+                      {'Apply '}
                     </Button>
                   </div>
                 </div>
@@ -189,7 +193,7 @@ export default function GardenModal({
               setIsGardenModalOpen={setIsGardenModalOpen}
               flowers={flowers}
               setIsCustomizing={setIsCustomizing}
-              gardenState={gardenState}
+              gardenState={previewGardenState}
             />
           )
         }

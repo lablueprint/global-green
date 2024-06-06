@@ -11,7 +11,8 @@ export default function GardenImage({ status, flowers, gardenState }) {
   };
   const isView = status === 'view';
 
-  const containerClass = styles.gardenModalImageContainer;
+  const containerClass = isView
+    ? styles.gardenModalImageContainer : styles.gardenEditImageContainer;
   const backgroundClass = isView
     ? `${styles.gardenImage} ${styles.gardenBackgroundWide}`
     : `${styles.gardenEditImage} ${styles.gardenBackground}`;
@@ -30,8 +31,8 @@ export default function GardenImage({ status, flowers, gardenState }) {
     <div className={containerClass}>
       <div className={backgroundClass}>
         <motion.div
-          // animate={{ rotate: 360 }}
-          // transition={{ ease: 'linear', duration: 70, repeat: Infinity }}
+          animate={{ rotate: 360 }}
+          transition={{ ease: 'linear', duration: 70, repeat: Infinity }}
           className={earthClass}
         />
 

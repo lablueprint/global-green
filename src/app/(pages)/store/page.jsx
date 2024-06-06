@@ -19,31 +19,6 @@ function Store() {
   const [userAccessories, setUserAccessories] = useState([]);
   const [userBackgrounds, setUserBackgrounds] = useState([]);
 
-  const [visitStoreBadge, setVisitStoreBadge] = useState(false);
-  const [buyOneAccessoryBadge, setBuyOneAccessoryBadge] = useState(false);
-  const [buyThreeAccessoriesBadge, setBuyThreeAccessoriesBadge] = useState(false);
-  const [buySixAccessoriesBadge, setBuySixAccessoriesBadge] = useState(false);
-  const [buyOneBackgroundBadge, setBuyOneBackgroundBadge] = useState(false);
-  const [buyThreeBackgroundsBadge, setBuyThreeBackgroundsBadge] = useState(false);
-  const [showPopup, setShowPopup] = useState(false);
-  const [popupMessage, setPopupMessage] = useState('');
-  const [popupItemName, setPopupItemName] = useState('');
-  const [popupItemImage, setPopupItemImage] = useState('');
-
-  useEffect(() => {
-    function handleClickOutside(event) {
-      const popupElement = document.getElementById('popup');
-      if (showPopup && popupElement && !popupElement.contains(event.target)) {
-        setShowPopup(false);
-      }
-    }
-
-    document.addEventListener('mousedown', handleClickOutside);
-    return () => {
-      document.removeEventListener('mousedown', handleClickOutside);
-    };
-  }, [showPopup]);
-
   const getUserDetails = async (id) => {
     if (!id) return;
     const response = await fetch(
@@ -307,7 +282,6 @@ function Store() {
                 borderRadius: '1em',
                 padding: '0.45em 2em',
                 backgroundColor: '#519546',
-                fontFamily: 'inherit',
                 color: 'white',
                 textAlign: 'center',
                 fontFamily: 'Instrument Sans',

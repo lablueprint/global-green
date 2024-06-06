@@ -4,6 +4,8 @@ import React, { useState, useEffect } from 'react';
 import Button from '@mui/material/Button';
 import { useSession } from 'next-auth/react';
 import styles from './page.module.css';
+import ChallengeBadge from '@/app/components/snackBar';
+import Popup from './PopupMessage.jsx';
 
 function Store() {
   const { data: session } = useSession();
@@ -36,6 +38,25 @@ function Store() {
     setUserBackgrounds(data.user.backgrounds ? data.user.backgrounds : []);
     setSeeds(data.user.seeds ? data.user.seeds : 50);
     setUserId(data.user._id);
+
+    if (data.user.badges) {
+      const badge = data.user.badges.find((badge) => badge.key === 'visitStore');
+      if (!badge) {
+        const response = await fetch('/api/users/me/add-badge', {
+          method: 'PATCH',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            userId: data.user._id,
+            badge: 'visitStore',
+          }),
+        });
+        const res = await response.json();
+        console.log('res', res);
+        setVisitStoreBadge(true);
+      }
+    }
   };
 
   const getAllAccessories = async () => {
@@ -83,22 +104,95 @@ function Store() {
     if (session) getUserDetails(session.user.id);
   }, [session]);
 
+  function showPopupMessage(message, itemName, itemImage) {
+    setPopupMessage(message);
+    setPopupItemName(itemName);
+    setPopupItemImage(itemImage);
+    setShowPopup(true);
+  }
+
   function buyItem(item, type) {
     if (item.price > seeds) {
       alert('You do not have enough coins.');
     } else {
       if (type === 'accessories') {
+        if (userAccessories.length === 0) {
+          const response = fetch('/api/users/me/add-badge', {
+            method: 'PATCH',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+              userId,
+              badge: 'buyOneAccessory',
+            }),
+          });
+          setBuyOneAccessoryBadge(true);
+        } else if (userAccessories.length === 2) {
+          const response = fetch('/api/users/me/add-badge', {
+            method: 'PATCH',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+              userId,
+              badge: 'buyThreeAccessories',
+            }),
+          });
+          setBuyThreeAccessoriesBadge(true);
+        } else if (userAccessories.length === 5) {
+          const response = fetch('/api/users/me/add-badge', {
+            method: 'PATCH',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+              userId,
+              badge: 'buySixAccessories',
+            }),
+          });
+          setBuySixAccessoriesBadge(true);
+        }
+
         setUserAccessories([...userAccessories, item.name]);
       }
       if (type === 'background') {
+        if (userBackgrounds.length === 0) {
+          const response = fetch('/api/users/me/add-badge', {
+            method: 'PATCH',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+              userId,
+              badge: 'buyOneBackground',
+            }),
+          });
+          setBuyOneBackgroundBadge(true);
+        } else if (userBackgrounds.length === 2) {
+          const response = fetch('/api/users/me/add-badge', {
+            method: 'PATCH',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+              userId,
+              badge: 'buyThreeBackgrounds',
+            }),
+          });
+          setBuyThreeBackgroundsBadge(true);
+        }
+
         setUserBackgrounds([...userBackgrounds, item.name]);
       }
       setSeeds(seeds - item.price);
+
       updateUserDataInDB(
         type === 'accessories' ? [...userAccessories, item.name] : userAccessories,
         type === 'background' ? [...userBackgrounds, item.name] : userBackgrounds,
         seeds - item.price,
       );
+      showPopupMessage('Congrats! You just bought', item.name, item.image);
     }
   }
 
@@ -108,6 +202,42 @@ function Store() {
         className={styles.storeItem}
         key={item.name}
       >
+        <ChallengeBadge
+          challengeName="Visit the store"
+          challengePointValue="20"
+          open={visitStoreBadge}
+          handleClose={() => setVisitStoreBadge(false)}
+        />
+        <ChallengeBadge
+          challengeName="Buy your first accessory"
+          challengePointValue="20"
+          open={buyOneAccessoryBadge}
+          handleClose={() => setBuyOneAccessoryBadge(false)}
+        />
+        <ChallengeBadge
+          challengeName="Buy three accessories"
+          challengePointValue="20"
+          open={buyThreeAccessoriesBadge}
+          handleClose={() => setBuyThreeAccessoriesBadge(false)}
+        />
+        <ChallengeBadge
+          challengeName="Buy six accessories"
+          challengePointValue="20"
+          open={buySixAccessoriesBadge}
+          handleClose={() => setBuySixAccessoriesBadge(false)}
+        />
+        <ChallengeBadge
+          challengeName="Buy your first background"
+          challengePointValue="20"
+          open={buyOneBackgroundBadge}
+          handleClose={() => setBuyOneBackgroundBadge(false)}
+        />
+        <ChallengeBadge
+          challengeName="Buy three backgrounds"
+          challengePointValue="20"
+          open={buyThreeBackgroundsBadge}
+          handleClose={() => setBuyThreeBackgroundsBadge(false)}
+        />
 
         <div className={styles.storeItemImg}>
           {
@@ -255,6 +385,14 @@ function Store() {
         {currentTab === 'accessories' && accesoriesTab()}
         {currentTab === 'background' && backgroundTab()}
       </div>
+      {showPopup && (
+        <Popup
+          message="Congrats! You just bought"
+          itemName={popupItemName}
+          itemImage={popupItemImage}
+          onClose={() => setShowPopup(false)}
+        />
+      )}
     </div>
   );
 }

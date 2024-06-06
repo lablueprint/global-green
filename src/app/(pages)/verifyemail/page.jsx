@@ -2,6 +2,8 @@
 
 import React, { useEffect, useState } from 'react';
 import { useSession, signOut, signIn } from 'next-auth/react';
+import styles from './page.module.css';
+import Image from 'next/image';
 
 function VerifyEmail() {
   const [token, setToken] = useState('');
@@ -37,16 +39,15 @@ function VerifyEmail() {
     setVerified(data.user.verified);
     console.log('data at verifyemail', data);
     if (data.user.verified) {
-      // stop all intervals
+      // Stop all intervals
       if (intervalRef.current) clearInterval(intervalRef.current);
-      // relogin to get updated session
+      // Relogin to get updated session
       await signIn('credentials', { username: data.user.userName, password: data.user.password });
-
-      // redirect to profile page
+      // Redirect to profile page
       window.location.href = '/profile';
     }
-
   }
+
   const handleVerifyEmail = async () => {
     try {
       const res = await fetch('/api/users/verifyemail', {
@@ -62,8 +63,6 @@ function VerifyEmail() {
       } else {
         setMessage(data.message);
         await fetchUpdatedUserDetails(session.user.id);
-
-        
       }
     } catch (err) {
       setError(err.message);
@@ -76,18 +75,16 @@ function VerifyEmail() {
       console.log('verified at handlelogut', verified);
       window.location.href = '/profile';
       return;
-    }
-    else {
+    } else {
       if (session.user.verified) {
         console.log('verified at handlelogut', verified);
         alert('Your account has been verified. You can now access your profile.');
         window.location.href = '/profile';
         return;
       }
-    alert('Your verification time has expired. Please sign up again.');
-    await signOut();
-  }
-
+      alert('Your verification time has expired. Please sign up again.');
+      await signOut();
+    }
   };
 
   const updateTimer = () => {
@@ -96,10 +93,8 @@ function VerifyEmail() {
       const diff = expiresAt - currentTime;
       if (diff <= 0) {
         setTimeLeft(0);
-        clearInterval(intervalRef.current); // Assuming you have a ref for this interval as well
+        clearInterval(intervalRef.current); // Stop the interval if time expires
         handleLogout();
-        
-        
       } else {
         setTimeLeft(Math.round(diff / 1000));
       }
@@ -172,9 +167,9 @@ function VerifyEmail() {
     () => {
       console.log('session', session);
 
-      // if no user logged in, redirect to login page
+      // If no user logged in, redirect to login page
       if (!session) {
-       window.location.href = '/login';
+        window.location.href = '/login';
       }
       if (session?.user?.verified) {
         console.log('verified at useeffect', session.user.verified);
@@ -182,7 +177,7 @@ function VerifyEmail() {
       }
       if (session?.user?.id) getUserDetails(session.user.id);
 
-      // make sure only one interval is running at a time
+      // Make sure only one interval is running at a time
       if (intervalRef.current) {
         clearInterval(intervalRef.current);
       }
@@ -193,55 +188,151 @@ function VerifyEmail() {
   );
 
   useEffect(() => {
-    const timer = expiresAt ? setInterval(updateTimer, 1000) : null;
-
-    // Cleanup timer on component unmount or when expiresAt changes
-    return () => {
-      if (timer) clearInterval(timer);
-    };
+    if (expiresAt) {
+      const timer = setInterval(updateTimer, 1000);
+      // Cleanup timer on component unmount or when expiresAt changes
+      return () => clearInterval(timer);
+    }
   }, [expiresAt]); // Dependency array includes expiresAt to re-trigger countdown when it's updated
 
   function renderIndicator() {
     if (timeLeft === null) {
-      return <p>Loading...</p>;
-    } if (timeLeft > 0) {
       return (
-        <div>
-          <p>
-            Your account will be deleted in
-            {' '}
-            {timeLeft}
-            {' '}
-            seconds. Please verify your email before then.
-            {' '}
-            This is to ensure that your account is secure.
+        <div className={styles.contentContainer}>
+          <h3 className={styles.verificationTitle}>Enter Verification Code</h3>
+          <p className={styles.accountDeletionNotice}>
+            We have sent a code to <strong>{userName}</strong><br/>
+            Please verify your account within 48 hours <br/>
+            Enter received code to continue.
           </p>
-          <input
-            type="text"
-            value={token}
-            onChange={(e) => setToken(e.target.value)}
-            placeholder="Enter token"
-          />
-          <button type="button" onClick={handleVerifyEmail}>Verify Email</button>
-          <p>
-            Did&apos;t receive the email?
+          <div className={styles.tokenInputContainer}>
+            {Array.from({ length: 6 }).map((_, index) => (
+              <input
+                key={index}
+                type="text" 
+                maxLength="1"
+                value={token[index] || ''} // set value to the corresponding char from the token
+                onChange={(e) => {
+                  let newToken = token.split(''); // split the token into an array of characters
+                  newToken[index] = e.target.value; // replace char at current index with the new value
+                  setToken(newToken.join('')); // updates the token state
+                }}
+                className={styles.tokenInput}
+                autoFocus={index === 0}
+                onKeyDown={(e) => {
+                  if (e.key === "Backspace" && !token[index] && index > 0) {
+                    e.preventDefault(); // preventing default backspace option
+                    const prevInput = e.target.previousElementSibling;
+                    if (prevInput) {
+                      prevInput.focus();
+                      prevInput.select();
+                    }
+                  }
+                }}
+                onInput={(e) => {
+                  const nextInput = e.target.nextElementSibling; // find the next input field
+                  if (nextInput && e.target.value) {
+                    nextInput.focus(); // Move focus to the next input field
+                  }
+                }}
+              />
+            ))}
+          </div>
+  
+          <div style={{ textAlign: 'center', marginTop: '20px'}}>
+            <p style={{ display: 'inline'}}>Didn't receive a code?</p>
+            <span 
+              onClick={!resendDisabled ? resendVerificationEmail : undefined} 
+              className={resendDisabled ? styles.resendTextDisabled : styles.resendText}
+              style={{ cursor: resendDisabled ? 'default' : 'pointer', marginLeft: '10px' }}
+            >
+              {resendDisabled ? `Resend in ${cooldown} seconds` : 'Click to resend'}
+            </span>
+          </div>
+  
+          <button 
+            type="button" 
+            onClick={handleVerifyEmail}
+            className={styles.verifyButton}
+          >
+            Verify your account
+          </button>
+        </div>
+      );
+    }
+    if (timeLeft > 0) {
+      return (
+        <div className={styles.contentContainer}>
+          <h3 className={styles.verificationTitle}>Enter Verification Code</h3>
+          <p className={styles.accountDeletionNotice}>
+            We have sent a code to <strong>{userName}</strong><br/>
+            Please verify your account within 48 hours <br/>
+            Enter received code to continue.
           </p>
-          <button type="button" onClick={resendVerificationEmail} disabled={resendDisabled}>
-            {resendDisabled ? `Resend in ${cooldown} seconds` : 'Resend Verification'}
+          <div className={styles.tokenInputContainer}>
+            {Array.from({ length: 6 }).map((_, index) => (
+              <input
+                key={index}
+                type="text" 
+                maxLength="1"
+                value={token[index] || ''} // set value to the corresponding char from the token
+                onChange={(e) => {
+                  let newToken = token.split(''); // split the token into an array of characters
+                  newToken[index] = e.target.value; // replace char at current index with the new value
+                  setToken(newToken.join('')); // updates the token state
+                }}
+                className={styles.tokenInput}
+                autoFocus={index === 0}
+                onKeyDown={(e) => {
+                  if (e.key === "Backspace" && !token[index] && index > 0) {
+                    e.preventDefault(); // preventing default backspace option
+                    const prevInput = e.target.previousElementSibling;
+                    if (prevInput) {
+                      prevInput.focus();
+                      prevInput.select();
+                    }
+                  }
+                }}
+                onInput={(e) => {
+                  const nextInput = e.target.nextElementSibling; // find the next input field
+                  if (nextInput && e.target.value) {
+                    nextInput.focus(); // Move focus to the next input field
+                  }
+                }}
+              />
+            ))}
+          </div>
+  
+          <div style={{ textAlign: 'center', marginTop: '20px'}}>
+            <p style={{ display: 'inline'}}>Didn't receive a code?</p>
+            <span 
+              onClick={!resendDisabled ? resendVerificationEmail : undefined} 
+              className={resendDisabled ? styles.resendTextDisabled : styles.resendText}
+              style={{ cursor: resendDisabled ? 'default' : 'pointer', marginLeft: '10px' }}
+            >
+              {resendDisabled ? `Resend in ${cooldown} seconds` : 'Click to resend'}
+            </span>
+          </div>
+          
+          <button 
+            type="button" 
+            onClick={handleVerifyEmail}
+            className={styles.verifyButton}
+          >
+            Verify your account
           </button>
         </div>
       );
     }
     return <p>Your verification time has expired. Please sign up again.</p>;
   }
+    
   return (
     <div>
-      <h1>
-        Welcome back
-        {' '}
-        {userName}
-        . Please check your email for a verification code to verify your account.
-      </h1>
+      <div className={styles.topLeft}>
+        <Image src="/logo.svg" width={50} height={50} />
+        <span>Global Green Scholar</span>
+      </div>
       {renderIndicator()}
       {message && <p>{message}</p>}
       {error && <p>{error}</p>}

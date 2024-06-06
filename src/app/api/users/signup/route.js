@@ -57,7 +57,7 @@ export async function POST(request) {
     const savedUser = await newUser.save();
 
     // Generate a verification token
-    const hashedToken = (await bcryptjs.hash(savedUser.id.toString(), 10)).slice(7, 15);
+    const hashedToken = (await bcryptjs.hash(savedUser.id.toString(), 10)).slice(9, 15);
     savedUser.verifyToken = hashedToken;
 
     await savedUser.save();

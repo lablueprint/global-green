@@ -1,14 +1,17 @@
 'use client';
 
-import React, { useEffect, useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Image from 'next/image';
 import { useSession } from 'next-auth/react';
 import styles from './page.module.css';
 import CourseDisplay from './CourseDisplay';
 import GardenModal from './GardenModal';
 import GardenImage from './GardenImage';
+import ChallengeBadge from '@/app/components/snackBar';
 
 function LandingPage() {
+  const [gardenBadge, setGardenBadge] = useState(false);
+  const [user, setUser] = useState({});
   const [currentModule] = useState({ imageUrl: '/landingpageImage.png', name: 'Chinenye Eneh' });
   const [isGardenModalOpen, setIsGardenModalOpen] = useState(false);
 
@@ -76,6 +79,7 @@ function LandingPage() {
     // TODO: add more checks for if a user field exists! some accounts don't have some fields
     if (user.garden && user.garden.background) {
       setGardenState(user.garden);
+      console.log(user.garden);
     }
   };
 
@@ -93,9 +97,21 @@ function LandingPage() {
       body: JSON.stringify({ id, garden: gardenState }),
     });
   };
+  const getUserDetails = async (id) => {
+    if (!id) return;
+    const response = await fetch('/api/users/me', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ id, garden: gardenState }),
+    });
+  };
 
   useEffect(() => {
-    updateGardenState(session.user.id);
+    if (!(gardenState.background === 'background1' && gardenState.accessories.length === 0)) {
+      updateGardenState(session.user.id);
+    }
   }, [gardenState]);
 
   // seeing landing page banner
@@ -152,8 +168,8 @@ function LandingPage() {
             </div>
           </div>
         </div>
+        <CourseDisplay />
       </div>
-      <CourseDisplay />
     </div>
   );
 }

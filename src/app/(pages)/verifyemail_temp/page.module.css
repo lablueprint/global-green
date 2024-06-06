@@ -5,12 +5,12 @@
     justify-content: center;
     min-height: 100vh;
     width: 100%;
-    margin-left: 200px;
+    margin-left: 12vw;
   }
   
   .verificationTitle {
     text-align: center;
-    color: green;
+    color: black;
     font-size: 36px;
     font-weight: 600;
     margin: 0 auto;
@@ -19,7 +19,7 @@
   
   .accountDeletionNotice {
     text-align: center;
-    color: #d3d3d3;
+    color: rgba(13, 13, 13, 0.44);
     margin: 0 auto;
     width: 100%;
     font-size: 15px;
@@ -46,7 +46,7 @@
   }
   
   .verifyButton {
-    background-color: #4caf50;
+    background-color: #519546;
     color: white;
     padding: 12px 24px;
     border: none;
@@ -71,8 +71,24 @@
   }
 
   .resendText {
-    color: green;
+    color: #519546;
   }
   
+  .topLeft {
+    color: var(--Green-100, #519546);
+    font-family: "Arial", sans-serif;
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: 100%;
+    padding-top: 30px;
+    padding-left: 30px;
+    display: flex;
+    align-items: center;
+  }
+  
+  .topLeft span {
+    margin-top: -5px;
+  }
  
   

@@ -62,7 +62,7 @@
   gap: 0.5rem;
 }
 
-.storeItem img {
+.storeItemImg img {
   width: 100%;
   height: 100%;
   object-fit: contain;
@@ -122,4 +122,118 @@
   font-style: normal;
   font-weight: 600;
   line-height: 110%;
+}
+
+.popupOverlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 999;
+  backdrop-filter: blur(5px);
+}
+
+.popup {
+  background-color: white;
+  color: var(--Grey-100, #1D1D1D);
+  padding: 80px;
+  border-radius: 24px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  position: relative;
+  z-index: 1000;
+  text-align: center;
+  font-family: "Instrument Sans";
+  font-size: 24px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: 100%;
+}
+
+.closeButton {
+  background: none;
+  border: none;
+  color: var(--Grey-100, #1D1D1D);
+  font-size: 20px;
+  cursor: pointer;
+  position: absolute;
+  top: 10px;
+  right: 10px;
+}
+
+.message {
+  color: var(--Grey-100, #1D1D1D);
+  text-align: center;
+}
+
+.itemName {
+  color: var(--Grey-40, #9B9B9B);
+  font-family: "Instrument Sans";
+  font-size: 18px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: 110%; /* 19.8px */
+}
+
+.itemImage {
+  margin-top: 10px;
+  width: 100px;
+  height: auto;
+  margin-bottom: 30px;
+}
+
+.PopupButtons {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-self: stretch;
+  gap: 30px;
+}
+
+.AddLaterButton {
+  display: flex;
+  min-width: 160px;
+  padding: 12px 32px;
+  justify-content: center;
+  align-items: center;
+  gap: 8px;
+
+  border-radius: 40px;
+  border: 2px solid var(--Grey-40, #9B9B9B);
+  background-color: white;
+
+  color: var(--Grey-100, #1D1D1D);
+  text-align: center;
+
+  font-family: "Instrument Sans";
+  font-size: 18px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: 110%;
+  cursor: pointer;
+}
+
+.AddToGardenButton {
+  display: flex;
+  min-width: 160px;
+  padding: 12px 32px;
+  justify-content: center;
+  align-items: center;
+  gap: 8px;
+
+  border-radius: 40px;
+  background: var(--Grey-80, rgba(13, 13, 13, 0.80));
+
+  color: var(--White-100, #FFFFFD);
+  text-align: center;
+  font-family: "Instrument Sans";
+  font-size: 18px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: 110%;
+  cursor: pointer;
 }

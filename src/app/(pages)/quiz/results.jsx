@@ -90,7 +90,10 @@ function Results({
   const [completeFirstCourseBadge, setCompleteFirstCourseBadge] = useState(false);
   const [completeThreeCoursesBadge, setCompleteThreeCoursesBadge] = useState(false);
   const [highAchieverBadge, setHighAchieverBadge] = useState(false);
+  const [perfectPrecisionBadge, setPerfectPrecisionBadge] = useState(false);
+  const [quizChampionBadge, setQuizChampionBadge] = useState(false);
   const [noSkipsBadge, setNoSkipsBadge] = useState(false);
+  const [superIndependentBadge, setSuperIndependentBadge] = useState(false);
   const [noHintsBadge, setNoHintsBadge] = useState(false);
   const urlParams = new URLSearchParams(window.location.search);
   const courseKey = urlParams.get('courseKey');
@@ -124,7 +127,7 @@ function Results({
     }
   };
 
-  const addBadge = async (userId, badge) => {
+  const addBadge = async (userId, badge, seeds) => {
     try {
       const response = await fetch('/api/users/me/add-badge', {
         method: 'PATCH',
@@ -134,6 +137,7 @@ function Results({
         body: JSON.stringify({
           userId,
           badge,
+          seeds,
         }),
       });
 
@@ -181,7 +185,19 @@ function Results({
             const badge = userBadges.find((badge) => badge === 'bullseye');
             if (!badge) {
               setHighAchieverBadge(true);
-              addBadge(session.user.id, 'bullseye');
+              addBadge(session.user.id, 'bullseye', 10);
+            } else if (!(userBadges.find((badge) => badge === 'secondbullseye'))) {
+              addBadge(session.user.id, 'secondbullseye', 0);
+            } else if (!(userBadges.find((badge) => badge === 'thirdbullseye'))) {
+              addBadge(session.user.id, 'PerfectPrecision', 30);
+              setPerfectPrecisionBadge(true);
+            } else if (!(userBadges.find((badge) => badge === 'fourthbullseye'))) {
+              addBadge(session.user.id, 'fourthbullseye', 0);
+            } else if (!(userBadges.find((badge) => badge === 'fifthbullseye'))) {
+              addBadge(session.user.id, 'fifthbullseye', 0);
+            } else if (!(userBadges.find((badge) => badge === 'sixthbullseye'))) {
+              addBadge(session.user.id, 'QuizChampion', 50);
+              setQuizChampionBadge(true);
             }
           }
         }
@@ -192,12 +208,12 @@ function Results({
 
           if (finishedCourses.length === 0) {
             setCompleteFirstCourseBadge(true);
-            addBadge(session.user.id, 'completeFirstCourse');
+            addBadge(session.user.id, 'completeFirstCourse', 30);
           }
 
           if (finishedCourses.length === 5) {
             setCompleteThreeCoursesBadge(true);
-            addBadge(session.user.id, 'completeThreeCourses');
+            addBadge(session.user.id, 'completeThreeCourses', 50);
           }
         }
 
@@ -210,7 +226,7 @@ function Results({
             const badge = userBadges.find((badge) => badge === 'skip-free');
             if (!badge) {
               setNoSkipsBadge(true);
-              addBadge(session.user.id, 'skip-free');
+              addBadge(session.user.id, 'skip-free', 10);
             }
           }
         }
@@ -220,14 +236,19 @@ function Results({
             const badge = userBadges.find((badge) => badge === 'independent');
             if (!badge) {
               setNoHintsBadge(true);
-              addBadge(session.user.id, 'independent');
+              addBadge(session.user.id, 'independent', 10);
+            } else if (!(userBadges.find((badge) => badge === 'secondindependent'))) {
+              addBadge(session.user.id, 'secondindependent', 0);
+            } else if (!(userBadges.find((badge) => badge === 'thirdindependent'))) {
+              addBadge(session.user.id, 'SuperIndependent', 30);
+              setSuperIndependentBadge(true);
             }
           }
         }
 
         if (newStage === 3) {
           setcomplete1LessonBadge(true);
-          addBadge(session.user.id, 'complete1Lesson');
+          addBadge(session.user.id, 'complete1Lesson', 10);
         }
         // if (newStage === 5) {
         //   setComplete5LessonsBadge(true);
@@ -288,16 +309,35 @@ function Results({
         handleClose={() => setHighAchieverBadge(false)}
       />
       <ChallengeBadge
+        challengeName="Perfect Precision"
+        challengePointValue="30"
+        open={perfectPrecisionBadge}
+        handleClose={() => setPerfectPrecisionBadge(false)}
+      />
+      <ChallengeBadge
+        challengeName="Quiz Champion"
+        challengePointValue="50"
+        open={quizChampionBadge}
+        handleClose={() => setQuizChampionBadge(false)}
+      />
+      <ChallengeBadge
         challengeName="Skip-free"
-        challengePointValue="20"
+        challengePointValue="10"
         open={noSkipsBadge}
         handleClose={() => setNoSkipsBadge(false)}
       />
       <ChallengeBadge
         challengeName="Independent"
-        challengePointValue="20"
+        challengePointValue="10"
         open={noHintsBadge}
         handleClose={() => setNoHintsBadge(false)}
+      />
+
+      <ChallengeBadge
+        challengeName="Super Independent"
+        challengePointValue="30"
+        open={superIndependentBadge}
+        handleClose={() => setSuperIndependentBadge(false)}
       />
 
       <div className={styles.resultsContainer}>

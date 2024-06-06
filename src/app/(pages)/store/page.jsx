@@ -128,6 +128,7 @@ function Store() {
             body: JSON.stringify({
               userId,
               badge: 'buyThreeAccessories',
+              seeds: 20,
             }),
           });
           setBuyThreeAccessoriesBadge(true);
@@ -140,6 +141,7 @@ function Store() {
             body: JSON.stringify({
               userId,
               badge: 'buySixAccessories',
+              seeds: 30,
             }),
           });
           setBuySixAccessoriesBadge(true);
@@ -157,6 +159,7 @@ function Store() {
             body: JSON.stringify({
               userId,
               badge: 'buyThreeBackgrounds',
+              seeds: 20,
             }),
           });
           setBuyThreeBackgroundsBadge(true);

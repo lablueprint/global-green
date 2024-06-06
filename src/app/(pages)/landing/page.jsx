@@ -48,7 +48,9 @@ function LandingPage() {
           body: JSON.stringify({
             userId: user._id,
             badge: 'GardenStroll',
+            seeds: 10,
           }),
+
         });
         setGardenBadge(true);
       }

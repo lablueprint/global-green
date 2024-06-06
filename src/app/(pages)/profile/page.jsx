@@ -63,6 +63,7 @@ function Profile() {
           body: JSON.stringify({
             userId: data.user._id,
             badge: 'personalizer',
+            seeds: 10,
           }),
         });
         const res = await response.json();
@@ -206,7 +207,7 @@ function Profile() {
     <>
       <ChallengeBadge
         challengeName="Personalizer"
-        challengePointValue="20"
+        challengePointValue="10"
         open={visitProfileBadge}
         handleClose={() => setVisitProfileBadge(false)}
       />

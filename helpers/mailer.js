@@ -11,7 +11,7 @@ export const sendEmail = async ({ email, emailType, user }) => {
   try {
     const userId = user.id;
     // create a hased token
-    const vhashedToken = await (await bcryptjs.hash(userId.toString(), 10)).slice(7, 15);
+    const vhashedToken = await (await bcryptjs.hash(userId.toString(), 10)).slice(9, 15);
     const fhashedToken = await (await bcryptjs.hash(userId.toString(), 10)).slice(5, 13);
 
     if (emailType === 'VERIFY') {

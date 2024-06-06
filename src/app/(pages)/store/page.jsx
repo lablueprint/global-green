@@ -13,10 +13,10 @@ function Store() {
 
   const [accessories, setAccessories] = useState([]);
   const [backgrounds, setBackgrounds] = useState([]);
-  
+
   const [userAccessories, setUserAccessories] = useState([]);
   const [userBackgrounds, setUserBackgrounds] = useState([]);
-  
+
   const getUserDetails = async (id) => {
     if (!id) return;
     const response = await fetch(
@@ -152,7 +152,6 @@ function Store() {
                 borderRadius: '1em',
                 padding: '0.45em 2em',
                 backgroundColor: '#519546',
-                fontFamily: 'inherit',
                 color: 'white',
                 textAlign: 'center',
                 fontFamily: 'Instrument Sans',
@@ -162,7 +161,7 @@ function Store() {
                 lineHeight: '110%',
                 textTransform: 'none',
                 '&:hover': {
-                  backgroundColor: '#519546', 
+                  backgroundColor: '#519546',
                   color: 'white',
                   opacity: 0.9,
                 },
@@ -181,7 +180,7 @@ function Store() {
     return (
       <div className={styles.storeItems}>
         {accessories.map((item) => storeItem(item))}
-      </div>  
+      </div>
     );
   }
 
@@ -189,14 +188,14 @@ function Store() {
     return (
       <div className={styles.storeItems}>
         {backgrounds.map((item) => storeItem(item))}
-      </div>  
+      </div>
     );
   }
 
   return (
     <div className={styles.storeContainer}>
       <div className={styles.store}>
-        <div className={styles.title}> 
+        <div className={styles.title}>
           Store
           <div className={styles.seedsTitle}>
             {seeds}
@@ -218,11 +217,11 @@ function Store() {
               fontSize: '20px',
               fontStyle: 'normal',
               fontWeight: '600',
-              lineHeight: '110%',      
+              lineHeight: '110%',
               '&:hover': {
-                backgroundColor: 'transparent', 
-                color: currentTab === 'accessories' ? '#519546' : '#9B9B9B', 
-                borderBottom: currentTab === 'accessories' ? '2px solid #519546' : 'none', 
+                backgroundColor: 'transparent',
+                color: currentTab === 'accessories' ? '#519546' : '#9B9B9B',
+                borderBottom: currentTab === 'accessories' ? '2px solid #519546' : 'none',
               },
             }}
             onClick={() => setCurrentTab('accessories')}
@@ -241,11 +240,11 @@ function Store() {
               fontSize: '20px',
               fontStyle: 'normal',
               fontWeight: '600',
-              lineHeight: '110%',   
+              lineHeight: '110%',
               '&:hover': {
                 backgroundColor: 'transparent',
                 color: currentTab === 'background' ? '#519546' : '#9B9B9B',
-                borderBottom: currentTab === 'background' ? '2px solid #519546' : '1px solid lightgrey', 
+                borderBottom: currentTab === 'background' ? '2px solid #519546' : '1px solid lightgrey',
               },
             }}
             onClick={() => setCurrentTab('background')}

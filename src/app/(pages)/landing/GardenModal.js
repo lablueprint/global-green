@@ -78,10 +78,21 @@ export default function GardenModal({
 
     return (
       <div className={styles.gardenModalEditTab}>
+        {currentTab === 'background' && (
+          <motion.div
+            key="default"
+            className={`${styles.gardenModalEditItem} ${styles.backgroundDefault}`}
+            style={{
+              border: isSelected('defaultbg') ? '4px solid green' : 'none',
+              cursor: 'pointer',
+            }}
+            onPointerDown={() => { select('defaultbg'); }}
+          />
+        )}
         {options.map((item) => (
           <motion.div
             key={item}
-            className={`${styles.gardenModalEditItem} ${styles[`${currentTab}${item}`]}`}
+            className={`${styles.gardenModalEditItem} ${styles[`${currentTab}${item.replace(' ', '')}`]}`}
             style={{
               border: isSelected(item) ? '4px solid green' : 'none',
               cursor: 'pointer',

@@ -229,23 +229,23 @@
     width: 600px;
     height: 360px;
     margin: 0px;
-    border-radius: 10px;
+    border-radius: 30px;
     overflow: hidden;
   }
   .gardenEditImageContainer {
     position: relative;
     justify-content: center;
     align-items: center;
-    width: 400px;
-    height: 300px;
+    width: 350px;
+    height: 250px;
     margin: 0px;
-    border-radius: 10px;
+    border-radius: 20px;
     overflow: hidden;
   }
   .gardenImage {
     position: absolute;
     width: 600px;
-    height: 300px;
+    height: 280px;
     background-position: center;
     background-size: contain;
     border-radius: 0%;
@@ -254,8 +254,6 @@
   }
   .gardenEditImage {
     position: absolute;
-    top: 0;
-    left: 0;
     width: 500px;
     height: 400px;
     background-size: contain;
@@ -263,16 +261,50 @@
     overflow: hidden;
   }
   /* TODO: replace this with the correct background */
-  .gardenBackground {
-    background-image: url('/backgrounds/background1.png');
+  .gardenBackgrounddefaultbg {
+    background-image: url('https://global-green-2.s3.us-west-1.amazonaws.com/gardenbgclear.png');
   }
+
+  .gardenBackground {
+    height: 250px;
+    background-size: cover;
+    background-position: center;
+    border-radius: 20px;
+  }
+
   .gardenBackgroundWide {
-    width: 600px;
-    height: 300px;
+    height: 280px;
     background-size: cover;
     border-radius: 20px;
-    background-image: url('/backgrounds/background1.png');
   }
+
+  .gardenBackgroundCloudy {
+    background-image: url('https://global-green-2.s3.us-west-1.amazonaws.com/gardenbgcloudy.png');
+  }
+  
+  .gardenBackgroundSunny {
+    background-image: url('https://global-green-2.s3.us-west-1.amazonaws.com/gardenbgsunny.png');
+  }
+
+
+  .gardenBackgroundStormy {
+    background-image: url('https://global-green-2.s3.us-west-1.amazonaws.com/gardenbgstormy.png');
+  }
+
+  .gardenBackgroundStarryNight {
+    background-image: url('https://global-green-2.s3.us-west-1.amazonaws.com/gardenbgstarry.png');
+  }
+
+
+  .gardenBackgroundMidnight {
+    background-image: url('https://global-green-2.s3.us-west-1.amazonaws.com/gardenbgmidnight.png');
+  }
+
+
+
+
+
+  
   .gardenEarth {
     width: 200px;
     height: 200px;
@@ -537,9 +569,30 @@
     background-image: url("https://global-green-2.s3.us-west-1.amazonaws.com/Mushrooms.png");
   }
 
-  .background1 {
-    background-image: url('/backgrounds/background1.png');
+  .backgroundCloudy {
+    background-image: url('https://global-green-2.s3.us-west-1.amazonaws.com/background1.png');
   }
+
+  .backgroundStormy {
+    background-image: url('https://global-green-2.s3.us-west-1.amazonaws.com/background2.png');
+  }
+
+  .backgroundSunny {
+    background-image: url('https://global-green-2.s3.us-west-1.amazonaws.com/background6.png');
+  }
+
+  .backgroundStarryNight {
+    background-image: url('https://global-green-2.s3.us-west-1.amazonaws.com/background5.png');
+  }
+  .backgroundMidnight {
+    background-image: url('https://global-green-2.s3.us-west-1.amazonaws.com/background4.png');
+  }
+
+  .backgroundDefault {
+    background-image: url('https://global-green-2.s3.us-west-1.amazonaws.com/background3.png');
+  }
+
+
 
 
 .gardenModalEditBox {

@@ -24,12 +24,12 @@ function LandingPage() {
     'eco-friendlytravel': 6,
   };
   const [flowers, setFlowers] = useState({
-    1: true,
-    2: true,
-    3: true,
-    4: true,
-    5: true,
-    6: true,
+    1: false,
+    2: false,
+    3: false,
+    4: false,
+    5: false,
+    6: false,
   });
 
   // TODO: potentially move this and the update functions to a redux state

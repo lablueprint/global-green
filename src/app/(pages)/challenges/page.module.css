@@ -133,6 +133,7 @@
   font-weight: 500;
 }
 .pointsBorder {
+  background-color: white;
   border-radius: 100px;
   border: 1px solid var(--Grey-20, #cbcbcb);
   position: absolute;
@@ -276,7 +277,6 @@
 .points {
   color: #000;
 
-  font-family: Inter;
   font-size: 16px;
   font-style: normal;
   font-weight: 600;
@@ -294,8 +294,6 @@
 }
 .cardTitle {
   color: #000;
-
-  font-family: Inter;
   font-size: 18px;
   font-style: normal;
   font-weight: 600;
@@ -306,7 +304,6 @@
 .completedcardTitle {
   color: #000;
 
-  font-family: Inter;
   font-size: 18px;
   font-style: normal;
   font-weight: 600;

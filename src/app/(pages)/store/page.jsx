@@ -19,6 +19,32 @@ function Store() {
   const [userAccessories, setUserAccessories] = useState([]);
   const [userBackgrounds, setUserBackgrounds] = useState([]);
 
+  const [showPopup, setShowPopup] = useState(false);
+  const [popupMessage, setPopupMessage] = useState('');
+  const [popupItemName, setPopupItemName] = useState('');
+  const [popupItemImage, setPopupItemImage] = useState('');
+
+  const [visitStoreBadge, setVisitStoreBadge] = useState(false);
+  const [buyOneAccessoryBadge, setBuyOneAccessoryBadge] = useState(false);
+  const [buyThreeAccessoriesBadge, setBuyThreeAccessoriesBadge] = useState(false);
+  const [buySixAccessoriesBadge, setBuySixAccessoriesBadge] = useState(false);
+  const [buyOneBackgroundBadge, setBuyOneBackgroundBadge] = useState(false);
+  const [buyThreeBackgroundsBadge, setBuyThreeBackgroundsBadge] = useState(false);
+
+  useEffect(() => {
+    function handleClickOutside(event) {
+      const popupElement = document.getElementById('popup');
+      if (showPopup && popupElement && !popupElement.contains(event.target)) {
+        setShowPopup(false);
+      }
+    }
+
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, [showPopup]);
+
   const getUserDetails = async (id) => {
     if (!id) return;
     const response = await fetch(

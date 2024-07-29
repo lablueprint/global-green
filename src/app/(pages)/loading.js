@@ -8,7 +8,7 @@ export default function Loading() {
         position: "absolute",
         top: "50%",
         left: "50%",
-        marginTop: "-50px",
+        marginTop: "-130px",
         marginLeft: "-50px",
     }
   return (
@@ -20,7 +20,7 @@ export default function Loading() {
         }}
         transition={{ ease: "linear", duration: 5, repeat: Infinity }}
       >
-        <Image  width="150" height="100" src={convertToURL("earth.png")} />
+        <Image  width="425" height="300" src={convertToURL("earth.png")} />
       </motion.div>
       {/* Loading
       <Image width="1000" height="500" src={convertToURL("earth.png")} /> */}

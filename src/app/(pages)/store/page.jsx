@@ -19,16 +19,17 @@ function Store() {
   const [userAccessories, setUserAccessories] = useState([]);
   const [userBackgrounds, setUserBackgrounds] = useState([]);
 
+  const [showPopup, setShowPopup] = useState(false);
+  const [popupMessage, setPopupMessage] = useState('');
+  const [popupItemName, setPopupItemName] = useState('');
+  const [popupItemImage, setPopupItemImage] = useState('');
+
   const [visitStoreBadge, setVisitStoreBadge] = useState(false);
   const [buyOneAccessoryBadge, setBuyOneAccessoryBadge] = useState(false);
   const [buyThreeAccessoriesBadge, setBuyThreeAccessoriesBadge] = useState(false);
   const [buySixAccessoriesBadge, setBuySixAccessoriesBadge] = useState(false);
   const [buyOneBackgroundBadge, setBuyOneBackgroundBadge] = useState(false);
   const [buyThreeBackgroundsBadge, setBuyThreeBackgroundsBadge] = useState(false);
-  const [showPopup, setShowPopup] = useState(false);
-  const [popupMessage, setPopupMessage] = useState('');
-  const [popupItemName, setPopupItemName] = useState('');
-  const [popupItemImage, setPopupItemImage] = useState('');
 
   useEffect(() => {
     function handleClickOutside(event) {
@@ -307,7 +308,6 @@ function Store() {
                 borderRadius: '1em',
                 padding: '0.45em 2em',
                 backgroundColor: '#519546',
-                fontFamily: 'inherit',
                 color: 'white',
                 textAlign: 'center',
                 fontFamily: 'Instrument Sans',

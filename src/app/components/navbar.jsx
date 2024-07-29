@@ -103,7 +103,10 @@ export default function NavBar() {
           currentPath === '/login'
           || currentPath === '/signup'
           || currentPath === '/verifyemail'
+          || currentPath === '/verifyemail_temp'
           || currentPath === '/forgot-password'
+          || currentPath === '/onboarding'
+          || currentPath === '/reset-password'
             ? 'none'
             : 'flex',
       }}

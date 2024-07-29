@@ -34,6 +34,8 @@ function CourseCard({
       case 'sustainabilitylab':
         router.push('/roadmap/course/?courseKey=sustainabilitylab');
         break;
+      default:
+        console.log('not valid course option');
     }
   };
   // code for cours name, duration, and progress bar

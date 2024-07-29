@@ -137,15 +137,6 @@ function LandingPage() {
       </div>
       <div className={styles.banner}>
         <div className={styles.imageGarden}>
-          {/* landing page image */}
-          {/* <Image
-            className={styles.image}
-            src={currentModule.imageUrl}
-            alt="landing page Image"
-            width={500}
-            height={230}
-            style={{ borderRadius: '10px' }}
-          /> */}
           <GardenImage
             status="view"
             flowers={flowers}
@@ -154,17 +145,21 @@ function LandingPage() {
           {/* going to garden */}
           {/* TODO: Figure out how to get garden info? */}
           <div className={styles.garden}>
-            <h2>Your Garden</h2>
-            <div className={styles.gardenInfoContainer}>
-              <div className={styles.gardenInfo}>Started on June 2024</div>
-              <div className={styles.gardenInfo}>1 Plant collected</div>
-              <div className={styles.gardenInfo}>3 Hours spent in total</div>
+            <div className={styles.gardenText}>
+              <h2>Your Garden</h2>
+              <div className={styles.gardenInfoContainer}>
+                <div className={styles.gardenInfo}>Started on June 2024</div>
+                <div className={styles.gardenInfo}>1 Plant collected</div>
+                <div className={styles.gardenInfo}>3 Hours spent in total</div>
+              </div>
             </div>
-            <div
-              onClick={() => setIsGardenModalOpen(true)}
-              className={styles.enterGarden}
-            >
-              Enter Garden
+            <div className={styles.gardenButton}>
+              <div
+                onClick={() => setIsGardenModalOpen(true)}
+                className={styles.enterGarden}
+              >
+                Enter Garden
+              </div>
             </div>
           </div>
         </div>

@@ -20,7 +20,7 @@ function LinearProgressWithLabel({
       <Typography
         style={{
           color: 'black',
-          fontSize: '1.2rem',
+          fontSize: '1rem',
           lineHeight: '1',
           textAlign: 'left',
           textWrap: 'nowrap',
@@ -37,8 +37,7 @@ function LinearProgressWithLabel({
           value={(value / maxValue) * 100}
           sx={{
             borderRadius: 5,
-            width: '150px',
-            width: '150px',
+            width: '12em',
             height: '10px',
             backgroundColor: 'lightgrey',
             backgroundColor: 'lightgrey',

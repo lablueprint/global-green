@@ -62,12 +62,12 @@ function LandingPage() {
   // seeing landing page banner
   return (
     <>
-      <ChallengeBadge
+      {/* <ChallengeBadge
         challengeName="Visit the garden"
         challengePointValue="20"
         open={gardenBadge}
         handleClose={() => setGardenBadge(false)}
-      />
+      /> */}
 
       <div className={styles.landingPage}>
         {isGardenModalOpen && <GardenModal setIsGardenModalOpen={setIsGardenModalOpen} />}

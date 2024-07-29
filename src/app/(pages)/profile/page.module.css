@@ -68,6 +68,10 @@
   border-radius: 10px;
 }
 
+.username:hover{
+  cursor: pointer;
+}
+
 .editingName {
   border: 2px solid #ddd;
   background-color: #e8e8e8;
@@ -141,6 +145,10 @@
   transition: border-color 0.3s ease;
 }
 
+.popPic:hover{
+  cursor: pointer;
+}
+
 .active {
   width: 100px; /* Adjust the width dynamically */
   height: 100px;
@@ -194,40 +202,33 @@
   border-radius: 10px;
   text-align: left;
   padding: 30px 20px;
-  display: flex;
   flex-direction: column;
   justify-content: space-between;
-  height: 175px;
+  width: 300px;
+  height: 200px;
   cursor: pointer;
-}
-
-.certificateItem {
-  flex: 0 0 calc(33.33% - 20px);
 }
 
 .certificateHeader {
   font-size: 20px;
+  padding-top: 85px;
   font-weight: 500;
-  border-bottom-width: 2px;
-  padding-bottom: 5px;
   color: green;
 }
 
 .certificateName {
   margin-top: 4px;
-  font-size: 18px;
+  font-size: 13px;
   font-weight: 500;
-  border-left: 4px solid;
-  padding: 0px 10px;
-  width: 130px;
+  padding-top: 13px;
+  color: green;
 }
 
 .certificateInfo {
-  display: flex;
   font-size: 15px;
   color: green;
-  padding: 8px 0px;
   gap: 5px;
+  text-align: right;
 }
 
 .paginationDots {

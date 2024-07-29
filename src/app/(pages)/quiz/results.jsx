@@ -92,6 +92,7 @@ function Results({
   const [highAchieverBadge, setHighAchieverBadge] = useState(false);
   const [noSkipsBadge, setNoSkipsBadge] = useState(false);
   const [noHintsBadge, setNoHintsBadge] = useState(false);
+
   const urlParams = new URLSearchParams(window.location.search);
   const courseKey = urlParams.get('courseKey');
   const currStage = parseInt(urlParams.get('stage'), 10);
@@ -310,14 +311,14 @@ function Results({
               fontSize: '12px',
               color: '#454545',
             }}
-            onClick={() => console.log('bye bye')}
+            onClick={() => router.push(`/roadmap/course?courseKey=${courseKey}`)}
           >
             &#10005;
           </div>
           <LinearWithValueLabel
-            value={totalQuestions}
-            x={totalQuestions}
-            y={totalQuestions}
+            value={100}
+            x={10}
+            y={10}
           />
         </div>
         <div className={styles.x}>

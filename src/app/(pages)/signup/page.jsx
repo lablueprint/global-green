@@ -1,22 +1,23 @@
-'use client';
-import React, { useState, useRef } from 'react';
-import Image from 'next/image';
-import { signIn } from 'next-auth/react';
-import ReCAPTCHA from 'react-google-recaptcha';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faEye, faEyeSlash } from '@fortawesome/free-solid-svg-icons';
-import styles from './page.module.css';
+"use client";
+import React, { useState, useRef } from "react";
+import Image from "next/image";
+import { signIn } from "next-auth/react";
+import ReCAPTCHA from "react-google-recaptcha";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faEye, faEyeSlash } from "@fortawesome/free-solid-svg-icons";
+import styles from "./page.module.css";
+import { useRouter } from "next/navigation";
 
-function Example() {
-  const [firstName, setFirstName] = useState('');
-  const [lastName, setLastName] = useState('');
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [confirmPassword, setConfirmPassword] = useState('');
-  const [userName, setUserName] = useState('username');
+function SignUp() {
+  const [firstName, setFirstName] = useState("");
+  const [lastName, setLastName] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
+  const [userName, setUserName] = useState("username");
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
-
+  const router = useRouter();
   // Captcha Related
   const recaptcha = useRef(null);
   const [captchaToken, setCaptchaToken] = useState("");
@@ -32,10 +33,10 @@ function Example() {
     // and send the username and password to the backend
     // if the signup is successful, redirect to the profile page
     try {
-      const response = await fetch('/api/users/signup', {
-        method: 'POST',
+      const response = await fetch("/api/users/signup", {
+        method: "POST",
         headers: {
-          'Content-Type': 'application/json',
+          "Content-Type": "application/json",
         },
         body: JSON.stringify({
           userName,
@@ -105,34 +106,35 @@ function Example() {
     event.preventDefault();
     let validEntries = true;
     // for email input format validation
-    const regex = /^([\w-]+(?:\.[\w-]+)*)@((?:[\w-]+\.)*\w[\w-]{0,66})\.([a-z]{2,6}(?:\.[a-z]{2})?)$/;
-    if (firstName === '' || lastName === '') {
+    const regex =
+      /^([\w-]+(?:\.[\w-]+)*)@((?:[\w-]+\.)*\w[\w-]{0,66})\.([a-z]{2,6}(?:\.[a-z]{2})?)$/;
+    if (firstName === "" || lastName === "") {
       // eslint-disable-next-line no-alert
-      alert('Name is required!');
+      alert("Name is required!");
       validEntries = false;
       return;
     }
     if (!regex.test(email)) {
       // eslint-disable-next-line no-alert
-      alert('Invalid email!');
+      alert("Invalid email!");
       validEntries = false;
       return;
     }
-    if (password === '') {
+    if (password === "") {
       // eslint-disable-next-line no-alert
-      alert('Password is required!');
+      alert("Password is required!");
       validEntries = false;
       return;
     }
     if (password.length < 8) {
       // eslint-disable-next-line no-alert
-      alert('Password needs to be at least 8 characters');
+      alert("Password needs to be at least 8 characters");
       validEntries = false;
       return;
     }
     if (confirmPassword !== password) {
       // eslint-disable-next-line no-alert
-      alert('Password and confirm password fields need to match');
+      alert("Password and confirm password fields need to match");
       validEntries = false;
       return;
     }
@@ -143,12 +145,8 @@ function Example() {
 
   return (
     <>
-      <div className={styles.topLeft}> 
-        <Image
-            src="/logo.svg"
-            width={50}
-            height={50}
-          />
+      <div className={styles.topLeft}>
+        <Image src="/logo.svg" width={50} height={50} />
         <span>Global Green Scholar </span>
       </div>
       <div className={styles.exampleContainer}>
@@ -161,7 +159,8 @@ function Example() {
             className={styles.alignImage}
           />
           <div className={styles.exampleGGtext}>
-            Learn about sustainability with <br /> <span className={styles.exampleGreenText}>Global Green</span> today
+            Learn about sustainability with <br />{" "}
+            <span className={styles.exampleGreenText}>Global Green</span> today
           </div>
         </div>
         <form className={styles.exampleForm} onSubmit={submitLog}>
@@ -200,7 +199,7 @@ function Example() {
             Password:
             <div className={styles.passwordContainer}>
               <input
-                type={showPassword ? 'text' : 'password'}
+                type={showPassword ? "text" : "password"}
                 id="pass"
                 name="pass"
                 onChange={passwordChange}
@@ -217,7 +216,7 @@ function Example() {
             Confirm Password:
             <div className={styles.passwordContainer}>
               <input
-                type={showConfirmPassword ? 'text' : 'password'}
+                type={showConfirmPassword ? "text" : "password"}
                 id="confirmPass"
                 name="confirmPass"
                 onChange={confirmPasswordChange}
@@ -230,18 +229,38 @@ function Example() {
               />
             </div>
           </label>
-          <div className="pb-20px">
-            <ReCAPTCHA
-              size="normal"
-              sitekey={process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY}
-              onChange={onCaptchaChange}
+          <div className={styles.center}>
+            <div className={styles.centerCaptcha}>
+              <div className="pb-20px">
+                <ReCAPTCHA
+                  size="normal"
+                  sitekey={process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY}
+                  onChange={onCaptchaChange}
+                />
+              </div>
+            </div>
+            <input
+              type="submit"
+              value="Continue"
+              className={styles.exampleSubmitButton}
             />
+
+            <p className={styles.loginPrompt}>
+              Already have an account?{" "}
+              <a href="/login" className={styles.loginLink}>
+                Sign In
+              </a>
+            </p>
+            <hr></hr>
+            <p className={styles.termsFont}>
+              By continuing, you acknowledge that you have read and understood,
+              and agree to Global Green’s Terms & Conditions and Privacy Policy
+            </p>
           </div>
-          <input type="submit" value="Continue" className={styles.exampleSubmitButton} />
         </form>
       </div>
     </>
   );
 }
 
-export default Example;
+export default SignUp;

@@ -23,22 +23,22 @@
 .sectionText {
   font-size: 17px;
   font-weight: 500;
+  margin-top: 5px;
 }
 
 .row {
   display: flex;
-  justify-content: left;
-  padding: 10px;
+  justify-content: space-between;
+  padding: 10px 0px;
   flex-wrap: wrap;
   gap: 20px;
 }
 
 .subText {
   font-size: 15px;
-  color: gray;
-  padding: 15px 0px;
-  gap: 5px;
-  margin-bottom: 20px;
+  color: #a1a1a1;
+  padding: 7px 0px;
+  margin-bottom: 15px;
 }
 
 /* top section */
@@ -68,7 +68,7 @@
   border-radius: 10px;
 }
 
-.username:hover{
+.username:hover {
   cursor: pointer;
 }
 
@@ -145,7 +145,7 @@
   transition: border-color 0.3s ease;
 }
 
-.popPic:hover{
+.popPic:hover {
   cursor: pointer;
 }
 
@@ -189,11 +189,25 @@
   justify-content: space-between;
 }
 
+.accountCol {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+
+.accountClick {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
 .arrow {
   font-size: 25px;
   font-weight: 300;
   color: gray;
   cursor: pointer;
+  margin-right: 20px;
 }
 
 /* certificate section */
@@ -251,12 +265,12 @@
 .courseItem {
   display: flex;
   flex: 0 0 calc(50% - 40px);
-  align-items: left;
   margin-right: 20px;
 }
 
 .courseName {
-  width: 50%;
+  width: 360px;
+  white-space: nowrap;
 }
 
 /* password popup */
@@ -278,7 +292,7 @@
   cursor: pointer;
   font-size: 25px;
   font-weight: 500;
-  color: #9B9B9B;
+  color: #9b9b9b;
 }
 
 .pencil {
@@ -298,7 +312,7 @@
 .passPopSub {
   text-align: center;
   font-size: 16px;
-  color: #9B9B9B;
+  color: #9b9b9b;
   margin-bottom: 2rem;
   font-weight: 300;
   font-family: "Instrument Sans";
@@ -307,7 +321,7 @@
 
 .passPopText {
   font-size: 14px;
-  color: #9B9B9B;
+  color: #9b9b9b;
   margin: 8px 0;
 }
 
@@ -324,15 +338,12 @@
   font-size: 18px;
   padding: 12px 18px;
   margin-bottom: 10px;
-}
-
-.passInput:hover {
-  cursor: pointer;
+  width: 93%;
 }
 
 .passPopButton {
   font-size: 18px;
-  border: 2px solid #9B9B9B;
+  border: 2px solid #9b9b9b;
   border-radius: 40px;
   padding: 12px 55px;
   cursor: pointer;
@@ -341,15 +352,15 @@
 }
 
 .enabled {
-  background-color: #0D0D0D;
+  background-color: #0d0d0d;
   color: white;
-  border-color: #0D0D0D;
+  border-color: #0d0d0d;
 }
 
 .disabled {
-  background-color: #E2E2E2;
-  border-color: #E2E2E2;
-  color: #CBCBCB;
+  background-color: #e2e2e2;
+  border-color: #e2e2e2;
+  color: #cbcbcb;
 }
 
 .disabled:hover {
@@ -361,7 +372,7 @@
   border: 1px solid black;
   border-radius: 40px;
   padding: 12px 55px;
-  background-color: #0D0D0D;
+  background-color: #0d0d0d;
   color: white;
   cursor: pointer;
   text-align: center;
@@ -379,7 +390,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  z-index: 1000; 
+  z-index: 1000;
 }
 
 .modalContent {
@@ -387,7 +398,7 @@
   padding: 50px;
   border-radius: 10px;
   text-align: center;
-  z-index: 1001; 
+  z-index: 1001;
 }
 
 .buttons {
@@ -412,5 +423,16 @@
   padding: 10px 20px;
   border: none;
   border-radius: 5px;
+  cursor: pointer;
+}
+
+.logout_btn {
+  border: none;
+  border-radius: 12px;
+  width: 80px;
+  height: 35px;
+}
+
+.logout_btn:hover {
   cursor: pointer;
 }

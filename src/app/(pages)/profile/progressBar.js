@@ -23,7 +23,7 @@ function LinearProgressWithLabel({
           lineHeight: '1',
           fontFamily: 'Arial',
           textAlign: 'left',
-          width: '100px',
+          width: '50px',
         }}
       />
       <Box

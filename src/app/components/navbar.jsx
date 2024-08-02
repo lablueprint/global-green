@@ -203,16 +203,3 @@ export default function NavBar() {
     </div>
   );
 }
-/* return (
-    <div className={styles.navbar}>
-        <div className={styles.navcomp}>
-            <NavLink href="/" style={{ textDecoration: 'none' }} className={styles.GGScholar}>GG Scholar</NavLink>
-            <NavLink href= "/courses" style={{ textDecoration: 'none'}}>Courses</NavLink>
-            <NavLink href= "/challenges" style={{ textDecoration: 'none'}}>Challenges</NavLink>
-            <NavLink href="/map" style={{ textDecoration: 'none'}} >Map</NavLink>
-            <NavLink href="/store" style={{ textDecoration: 'none'}} >Store</NavLink>
-            <NavLink href= "/profile" style={{ textDecoration: 'none'}} >Profile</NavLink>
-        </div>
-    </div>
-  );
-} */

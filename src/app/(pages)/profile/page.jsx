@@ -1,3 +1,6 @@
+/* eslint-disable jsx-a11y/no-static-element-interactions */
+/* eslint-disable jsx-a11y/click-events-have-key-events */
+
 'use client';
 
 // Profile.jsx
@@ -233,72 +236,75 @@ function Profile() {
             userName={userData.email}
           />
         )}
-        <div className={styles.container}>
-          <div className={styles.profileSection}>
-            <Image
-              src={profileImage}
-              alt="Profile"
-              width={120}
-              height={120}
-              style={{ borderRadius: '50%', cursor: 'pointer' }}
-              onClick={handleChangeProfileImage}
-            />
-            <div className={styles.name}>
-              <div className={styles.displayName}> Display Name </div>
-              {isEditing ? (
-                <input
-                  type="text"
-                  value={editedName}
-                  onChange={handleNameChange}
-                  onBlur={handleBlur}
-                  className={styles.editingName}
-                />
-              ) : (
-                <div className={styles.username} onClick={handleNameClick}>
-                  {userData.userName}
-                </div>
-              )}
-            </div>
+        <div className={styles.profileSection}>
+          <Image
+            src={profileImage}
+            alt="Profile"
+            width={120}
+            height={120}
+            style={{ borderRadius: '50%', cursor: 'pointer' }}
+            onClick={handleChangeProfileImage}
+          />
+          <div className={styles.name}>
+            <div className={styles.displayName}> Display Name </div>
+            {isEditing ? (
+              <input
+                type="text"
+                value={editedName}
+                onChange={handleNameChange}
+                onBlur={handleBlur}
+                className={styles.editingName}
+              />
+            ) : (
+              <div className={styles.username} onClick={handleNameClick}>
+                {userData.userName}
+              </div>
+            )}
           </div>
         </div>
         <div className={styles.certificateSection}>
-          <div className={styles.sectionHeader}> Certificates </div>
-          <div className={styles.row}>
-            {displayedCertificates.map((certificate, index) => (
-              <div
-                key={index}
-                onClick={PdfForm.generatePdf}
-                className={styles.certificateItem}
-                style={{
-                  backgroundImage: 'url("/certificate.jpg")',
-                  borderRadius: '10px',
-                  backgroundSize: 'cover',
-                }}
-              >
-                {userData && (
-                <PdfForm
-                  templatePdf="/certificate.pdf"
-                  userName={`${userData.firstName} ${userData.lastName}`}
-                  course={certificate.key}
-                  date={certificate.date}
-                />
-                )}
+          {displayedCertificates.length === 0 ? ''
+            : (
+              <div className={styles.certificateSection}>
+                <div className={styles.sectionHeader}>Certificates</div>
+                <div className={styles.row}>
+                  {displayedCertificates.map((certificate, index) => (
+                    <div
+                      key={index}
+                      onClick={PdfForm.generatePdf}
+                      className={styles.certificateItem}
+                      style={{
+                        backgroundImage: 'url("/certificate.jpg")',
+                        borderRadius: '10px',
+                        backgroundSize: 'cover',
+                      }}
+                    >
+                      {userData && (
+                      <PdfForm
+                        templatePdf="/certificate.pdf"
+                        userName={`${userData.firstName} ${userData.lastName}`}
+                        course={certificate.key}
+                        date={certificate.date}
+                      />
+                      )}
+                    </div>
+                  ))}
+                </div>
+                <div className={styles.paginationDots}>
+                  {Array.from({ length: totalPages }, (_, i) => (
+                    <span
+                      key={i}
+                      className={`${styles.dot} ${i === currentPage ? styles.activeDot : ''}`}
+                      onClick={() => handlePageChange(i)}
+                    >
+                      .
+                    </span>
+                  ))}
+                </div>
               </div>
-            ))}
-          </div>
-          <div className={styles.paginationDots}>
-            {Array.from({ length: totalPages }, (_, i) => (
-              <span
-                key={i}
-                className={`${styles.dot} ${i === currentPage ? styles.activeDot : ''}`}
-                onClick={() => handlePageChange(i)}
-              >
-                .
-              </span>
-            ))}
-          </div>
+            )}
         </div>
-        <div className={styles.coursesSection}>
+        <div>
           <div className={styles.sectionHeader}>Course Progress</div>
           <div className={styles.row}>
             {courseData
@@ -325,36 +331,36 @@ function Profile() {
         <div className={styles.accountSection}>
           <div className={styles.sectionHeader}> Account </div>
           <div className={styles.accountRow}>
-            <div className={styles.accountCol}>
-              <div className={styles.sectionText}>Change Password</div>
-              <div className={styles.subText}>
-                Set a different password to login to your account
+            <div className={styles.accountClick}>
+              <div className={styles.accountCol}>
+                <div className={styles.sectionText}>Change Password</div>
+                <div className={styles.subText}>
+                  Set a different password to login to your account
+                </div>
               </div>
-            </div>
-            <div className={styles.accountCol}>
               <div className={styles.arrow} onClick={handleChangePassword}>
                 {'>'}
               </div>
             </div>
           </div>
           <div className={styles.accountRow}>
-            <div className={styles.accountCol}>
-              <div className={styles.sectionText} style={{ color: 'red' }}>
-                Delete Account
+            <div className={styles.accountClick}>
+              <div className={styles.accountCol}>
+                <div className={styles.sectionText} style={{ color: 'red' }}>
+                  Delete Account
+                </div>
+                <div className={styles.subText}>
+                  Permanently delete the account and remove access from all
+                  resources
+                </div>
               </div>
-              <div className={styles.subText}>
-                Permanently delete the account and remove access from all
-                resources
-              </div>
-            </div>
-            <div className={styles.accountCol}>
               <div className={styles.arrow} onClick={handleDeleteClick}>
                 {'>'}
               </div>
             </div>
           </div>
         </div>
-        <button type="button" onClick={handleLogout}>
+        <button className={styles.logout_btn} type="button" onClick={handleLogout}>
           Logout
         </button>
       </div>

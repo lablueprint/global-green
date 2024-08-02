@@ -10,11 +10,6 @@ function LandingPage() {
   const { data: session } = useSession();
 
   useEffect(() => {
-    if (session) {
-      setTimeout(() => {
-        location.reload();
-      }, 1000);
-    }
     router.push('/landing');
   }, []);
 

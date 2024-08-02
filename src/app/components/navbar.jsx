@@ -116,6 +116,13 @@ export default function NavBar() {
     }
   }, []);
 
+  useEffect(() => {
+    if (window.location.pathname.startsWith('/landing')) {
+      setShouldRenderNav(true);
+      setCurrentPath('/landing');
+    }
+  }, [location.href]);
+
   if (!shouldRenderNav) {
     return null;
   }

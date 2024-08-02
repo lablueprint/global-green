@@ -10,7 +10,6 @@ import Button from "@mui/material/Button";
 import styles from "./page.module.css";
 import SimpleSnackbar from "../../components/snackBar";
 import DisplayChallengesCards from "./DisplayChallengesCards";
-import DisplayChallengesCardsTest from "./DisplayChallengesCardsTest";
 
 // fetches too many times and numerator
 // how to track points
@@ -103,7 +102,7 @@ function challenges() {
     points,
     setPoints,
     challenge,
-    handlePointsChange,
+    handlePointsChange
   ) {
     const pointsElement = document.getElementById(`points_${index}`);
     const buttonElement = document.getElementById(`button_${index}`);
@@ -145,7 +144,7 @@ function challenges() {
 
   return (
     <div className={styles.everything}>
-      <Button onClick={handleOpen}>Open Snackbar</Button>
+      {/* <Button onClick={handleOpen}>Open Snackbar</Button> */}
       <SimpleSnackbar
         challengeName="meow"
         challengePointValue="393"
@@ -154,11 +153,7 @@ function challenges() {
       />
 
       <p className={styles.title}>Challenges</p>
-      <DisplayChallengesCardsTest
-        challengeTypeFilter="Test"
-        challengeDescription="Description about Explorer challenges"
-        badges={badges}
-      />
+
       <DisplayChallengesCards
         challengeTypeFilter="Explorer"
         challengeDescription="Description about Explorer challenges"

@@ -31,9 +31,7 @@ function NavLink({
       onClick={() => setCurrentPath(href)}
       style={{ textDecoration: 'none' }}
     >
-      <div
-        className={`${styles.link} ${isActive ? styles.active : ''}`}
-      >
+      <div className={`${styles.link} ${isActive ? styles.active : ''}`}>
         {icon}
         {children}
       </div>
@@ -98,7 +96,11 @@ export default function NavBar() {
       const path = window.location.pathname;
       setCurrentPath(path);
       // Check if path starts with /roadmap/ or /lesson/
-      if (path.startsWith('/roadmap/') || path.startsWith('/lesson') || path.startsWith('/quiz')) {
+      if (
+        path.startsWith('/roadmap/')
+        || path.startsWith('/lesson')
+        || path.startsWith('/quiz')
+      ) {
         setShouldRenderNav(true);
       } else {
         // Other paths where navbar should be rendered
@@ -119,27 +121,16 @@ export default function NavBar() {
   }
 
   return (
-    <div
-      id="navbar"
-      className={`${styles.navbar}`}
-    >
+    <div id="navbar" className={`${styles.navbar}`}>
       <div className={styles.navcomp}>
-        <div
-          className={`${styles.navlinks} ${
-            currentPath === '/courses'
-          }`}
-        >
+        <div className={`${styles.navlinks} ${currentPath === '/courses'}`}>
           <div className={styles.ggLogoAndText}>
             <NavLink
               href="/landing"
               icon={(
                 <Image
-                  width={
-                    47
-                  }
-                  height={
-                   47
-                  }
+                  width={47}
+                  height={47}
                   alt="gg Logo"
                   src="https://global-green-2.s3.us-west-1.amazonaws.com/globalgreenlogo.png"
                 />
@@ -165,12 +156,8 @@ export default function NavBar() {
             </NavLink>
           ))}
         </div>
-        <div
-          className={`${styles.GGScholar}`}
-        />
-        <div
-          className={`${styles.profileWrapper} `}
-        >
+        <div className={`${styles.GGScholar}`} />
+        <div className={`${styles.profileWrapper} `}>
           <div className={styles.personIcon}>
             {user.profilePic ? (
               <Image

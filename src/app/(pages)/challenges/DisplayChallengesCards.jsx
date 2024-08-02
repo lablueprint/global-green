@@ -30,67 +30,65 @@ function DisplayChallengesCards(props) {
   return (
     <div>
       <p className={styles.challengesTitle}>{props.challengeTypeFilter}</p>
-      <p className={styles.challengeDescription}>
+      <p className={styles.challengeDescriptionText}>
         {props.challengeDescription}
       </p>
       <div className={styles.container}>
-        <div className={styles.container}>
-          {challengesArray.Challenges
-            && challengesArray.Challenges.filter(
-              (challenge) => challenge.challengeType === props.challengeTypeFilter,
-            ).map((challenge, index) => (
-              <div key={index}>
-                <div
-                  className={
-                      props.array[index]
-                        ? styles.activeBorder
-                        : styles.inactiveBorder
-                    }
-                >
-                  <div className={styles.inner}>
-                    <div className={styles.pointsBorder}>
-                      <Image
-                        className={styles.pointsIcon}
-                        height="12"
-                        width="10"
-                        src="https://global-green-2.s3.us-west-1.amazonaws.com/pointsIcon.svg"
-                        alt="icon"
-                      />
-                      <p className={styles.pointsText}>
-                        {" "}
-                        {JSON.stringify(challenge.pointsToEarn)}
-                      </p>
-                    </div>
-                    <div>
-                      <Image
-                        className={styles.icon}
-                        height="48"
-                        width="48"
-                        src={
-                          props.array[index]
-                            ? challenge.icon
-                            : challenge.blackandwhiteicon
-                          }
-                        alt="icon"
-                      />
-                    </div>
-                    <div className={styles.text}>
-                      <p className={styles.cardTitle}>
-                        {challenge.challengeTitle.toString()}
-                      </p>
-                      <p className={styles.description}>
-                        {challenge.description.toString()}
-                      </p>
-                      <p className={styles.date}>
-                        Completed {challenge.date.toString()}
-                      </p>
-                    </div>
+        {challengesArray.Challenges &&
+          challengesArray.Challenges.filter(
+            (challenge) => challenge.challengeType === props.challengeTypeFilter
+          ).map((challenge, index) => (
+            <div key={index}>
+              <div
+                className={
+                  props.array[index]
+                    ? styles.activeBorder
+                    : styles.inactiveBorder
+                }
+              >
+                <div className={styles.inner}>
+                  <div className={styles.pointsBorder}>
+                    <Image
+                      className={styles.pointsIcon}
+                      height="12"
+                      width="10"
+                      src="https://global-green-2.s3.us-west-1.amazonaws.com/pointsIcon.svg"
+                      alt="icon"
+                    />
+                    <p className={styles.pointsText}>
+                      {" "}
+                      {JSON.stringify(challenge.pointsToEarn)}
+                    </p>
                   </div>
-                  <div />
+                  <div>
+                    <Image
+                      className={styles.icon}
+                      height="48"
+                      width="48"
+                      src={
+                        props.array[index]
+                          ? challenge.icon
+                          : challenge.blackandwhiteicon
+                      }
+                      alt="icon"
+                    />
+                  </div>
+                  <div className={styles.text}>
+                    <p className={styles.cardTitle}>
+                      {challenge.challengeTitle.toString()}
+                    </p>
+                    <p className={styles.description}>
+                      {challenge.description.toString()}
+                    </p>
+                    <p className={styles.date}>
+                      Completed {challenge.date.toString()}
+                    </p>
+                  </div>
                 </div>
+                <div />
               </div>
-            ))}
-        </div>
+            </div>
+          ))}
       </div>
     </div>
   );

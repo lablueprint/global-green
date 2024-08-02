@@ -1,6 +1,7 @@
 @import url("https://fonts.googleapis.com/css2?family=Instrument+Sans:ital,wght@0,400..700;1,400..700&display=swap");
 
 .storeContainer {
+  margin-top: 100px;
   width: 90%;
   margin-bottom: 50px;
 }
@@ -22,7 +23,7 @@
   font-size: 40px;
   font-weight: 600;
   line-height: 100%;
-  margin-top: 40px;
+  /* margin-top: 40px; */
   margin-bottom: 20px;
   width: 100%;
   background-color: white;
@@ -47,8 +48,10 @@
 .storeItems {
   display: flex;
   flex-wrap: wrap;
-  justify-content: space-between;
-  gap: 5rem;
+  /* justify-content: space-between; */
+  justify-content: flex-start;
+  row-gap: 1rem;
+  column-gap: 5rem;
   margin-top: 30px;
   border-radius: 5px;
   background-color: white;
@@ -70,8 +73,11 @@
 
 .storeItemImg {
   position: relative;
-  width: 12em;
-  height: 12em;
+  top: 0px;
+  right: 0px;
+  width: 14em;
+  height: 14em;
+
   padding: 0;
   background-color: #e4eef6;
   border-radius: 1em;
@@ -95,8 +101,9 @@
 
 .storeItemPrice {
   position: absolute;
-  top: 0.5rem;
-  right: 0.5rem;
+  top: 15.5px;
+  right: 15.5px;
+
   color: black;
   border: 1px solid #cbcbcb;
   padding: 0.1rem 0.5rem;
@@ -142,7 +149,7 @@
 
 .popup {
   background-color: white;
-  color: var(--Grey-100, #1D1D1D);
+  color: var(--Grey-100, #1d1d1d);
   padding: 80px;
   border-radius: 24px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
@@ -159,7 +166,7 @@
 .closeButton {
   background: none;
   border: none;
-  color: var(--Grey-100, #1D1D1D);
+  color: var(--Grey-100, #1d1d1d);
   font-size: 20px;
   cursor: pointer;
   position: absolute;
@@ -168,12 +175,12 @@
 }
 
 .message {
-  color: var(--Grey-100, #1D1D1D);
+  color: var(--Grey-100, #1d1d1d);
   text-align: center;
 }
 
 .itemName {
-  color: var(--Grey-40, #9B9B9B);
+  color: var(--Grey-40, #9b9b9b);
   font-family: "Instrument Sans";
   font-size: 18px;
   font-style: normal;
@@ -205,10 +212,10 @@
   gap: 8px;
 
   border-radius: 40px;
-  border: 2px solid var(--Grey-40, #9B9B9B);
+  border: 2px solid var(--Grey-40, #9b9b9b);
   background-color: white;
 
-  color: var(--Grey-100, #1D1D1D);
+  color: var(--Grey-100, #1d1d1d);
   text-align: center;
 
   font-family: "Instrument Sans";
@@ -228,9 +235,9 @@
   gap: 8px;
 
   border-radius: 40px;
-  background: var(--Grey-80, rgba(13, 13, 13, 0.80));
+  background: var(--Grey-80, rgba(13, 13, 13, 0.8));
 
-  color: var(--White-100, #FFFFFD);
+  color: var(--White-100, #fffffd);
   text-align: center;
   font-family: "Instrument Sans";
   font-size: 18px;

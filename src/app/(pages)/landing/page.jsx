@@ -1,18 +1,21 @@
-'use client';
+"use client";
 
-import React, { useState, useEffect } from 'react';
-import Image from 'next/image';
-import { useSession } from 'next-auth/react';
-import styles from './page.module.css';
-import CourseDisplay from './CourseDisplay';
-import GardenModal from './GardenModal';
-import GardenImage from './GardenImage';
-import ChallengeBadge from '@/app/components/snackBar';
+import React, { useState, useEffect } from "react";
+import Image from "next/image";
+import { useSession } from "next-auth/react";
+import styles from "./page.module.css";
+import CourseDisplay from "./CourseDisplay";
+import GardenModal from "./GardenModal";
+import GardenImage from "./GardenImage";
+import ChallengeBadge from "@/app/components/snackBar";
 
 function LandingPage() {
   const [gardenBadge, setGardenBadge] = useState(false);
   const [user, setUser] = useState({});
-  const [currentModule] = useState({ imageUrl: '/landingpageImage.png', name: 'Chinenye Eneh' });
+  const [currentModule] = useState({
+    imageUrl: "/landingpageImage.png",
+    name: "Chinenye Eneh",
+  });
   const [isGardenModalOpen, setIsGardenModalOpen] = useState(false);
 
   // TODO: replace this mapping method
@@ -24,7 +27,7 @@ function LandingPage() {
     conservationandrestoration: 3,
     climatechange: 4,
     oceanpollution: 5,
-    'eco-friendlytravel': 6,
+    "eco-friendlytravel": 6,
   };
   const [flowers, setFlowers] = useState({
     1: false,
@@ -37,7 +40,7 @@ function LandingPage() {
 
   // TODO: potentially move this and the update functions to a redux state
   const [gardenState, setGardenState] = useState({
-    background: 'background1',
+    background: "background1",
     accessories: [],
   });
   const [accessories, setAccessories] = useState([]);
@@ -47,16 +50,13 @@ function LandingPage() {
 
   const getCoursesInfo = async (id) => {
     if (!id) return;
-    const response = await fetch(
-      '/api/users/me',
-      {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ id }),
+    const response = await fetch("/api/users/me", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
       },
-    );
+      body: JSON.stringify({ id }),
+    });
 
     const data = await response.json();
     const { user } = data;
@@ -68,8 +68,8 @@ function LandingPage() {
         adjustFlowers[courseFlowerMap[course.key]] = true;
       }
     });
-    console.log('user', user);
-    console.log('adjustFlowers', adjustFlowers);
+    console.log("user", user);
+    console.log("adjustFlowers", adjustFlowers);
     setFlowers(adjustFlowers);
 
     setAccessories(user.accessories);
@@ -89,27 +89,32 @@ function LandingPage() {
 
   const updateGardenState = async (id) => {
     // update the user's garden state
-    await fetch('/api/users/me/update-garden', {
-      method: 'POST',
+    await fetch("/api/users/me/update-garden", {
+      method: "POST",
       headers: {
-        'Content-Type': 'application/json',
+        "Content-Type": "application/json",
       },
       body: JSON.stringify({ id, garden: gardenState }),
     });
   };
   const getUserDetails = async (id) => {
     if (!id) return;
-    const response = await fetch('/api/users/me', {
-      method: 'POST',
+    const response = await fetch("/api/users/me", {
+      method: "POST",
       headers: {
-        'Content-Type': 'application/json',
+        "Content-Type": "application/json",
       },
       body: JSON.stringify({ id, garden: gardenState }),
     });
   };
 
   useEffect(() => {
-    if (!(gardenState.background === 'background1' && gardenState.accessories.length === 0)) {
+    if (
+      !(
+        gardenState.background === "background1" &&
+        gardenState.accessories.length === 0
+      )
+    ) {
       updateGardenState(session.user.id);
     }
   }, [gardenState]);
@@ -117,22 +122,22 @@ function LandingPage() {
   // seeing landing page banner
   return (
     <div className={styles.landingPage}>
-      {isGardenModalOpen
-      && (
-      <GardenModal
-        setIsGardenModalOpen={setIsGardenModalOpen}
-        flowers={flowers}
-        accessories={accessories}
-        backgrounds={backgrounds}
-        gardenState={gardenState}
-        setGardenState={setGardenState}
-      />
+      {isGardenModalOpen && (
+        <GardenModal
+          setIsGardenModalOpen={setIsGardenModalOpen}
+          flowers={flowers}
+          accessories={accessories}
+          backgrounds={backgrounds}
+          gardenState={gardenState}
+          setGardenState={setGardenState}
+        />
       )}
       <div className={styles.welcome}>
         <h1>
-          Welcome,
-          {' '}
-          <span className={styles.userName}>{session.user.userName}</span>
+          Welcome,{" "}
+          <span className={styles.userName}>
+            {session?.user?.userName && session.user.userName}
+          </span>
         </h1>
       </div>
       <div className={styles.banner}>

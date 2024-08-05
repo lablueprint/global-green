@@ -14,8 +14,6 @@ export async function PATCH(request) {
       complete,
     } = reqBody;
 
-    console.log('backend course progress');
-
     const user = await User.findById(userId);
     if (!user) {
       return NextResponse.json({ error: 'User not found' }, { status: 404 });
@@ -23,8 +21,6 @@ export async function PATCH(request) {
 
     // Check if the course exists
     const courseIndex = user.courses.findIndex((course) => course.key === courseKey);
-
-    console.log(courseIndex);
 
     if (courseIndex !== -1) {
       // Update the existing course

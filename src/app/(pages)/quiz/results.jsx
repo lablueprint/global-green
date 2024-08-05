@@ -92,6 +92,7 @@ function Results({
   const [highAchieverBadge, setHighAchieverBadge] = useState(false);
   const [noSkipsBadge, setNoSkipsBadge] = useState(false);
   const [noHintsBadge, setNoHintsBadge] = useState(false);
+  const [hasUpdated, setHasUpdated] = useState(false);
 
   const urlParams = new URLSearchParams(window.location.search);
   const courseKey = urlParams.get('courseKey');
@@ -169,7 +170,7 @@ function Results({
   };
 
   useEffect(() => {
-    if (session) {
+    if (session && !hasUpdated) {
       getUserDetails(session.user.id);
       if (session.user.id === null) {
         return;
@@ -202,9 +203,13 @@ function Results({
           }
         }
 
-        console.log('good');
+        console.log('finished quiz');
         console.log(newStage);
+        console.log(session.user.data);
         changeProgress(session.user.id, newStage, newStage === 6);
+        console.log('after update');
+        console.log(session.user.data);
+        setHasUpdated(true);
 
         if (skips === 0) {
           if (userBadges) {
@@ -226,17 +231,18 @@ function Results({
           }
         }
 
-        if (newStage === 3) {
+        if (newStage === 4) {
           setComplete3LessonsBadge(true);
           addBadge(session.user.id, 'complete3Lessons');
         }
-        if (newStage === 5) {
+        if (newStage === 6) {
           setComplete5LessonsBadge(true);
           addBadge(session.user.id, 'complete5Lessons');
         }
       }
+      setHasUpdated(true);
     }
-  }, [session]);
+  }, [session, hasUpdated]);
 
   const handleContinue = () => {
   // router.push(`/quiz?courseKey=${courseKey}&stage=${currStage + 1}`);
@@ -245,7 +251,8 @@ function Results({
       const newStage = currStage + 1;
       const complete = newStage === 7;
       changeProgress(session.user.id, newStage, complete);
-      console.log('good');
+      setHasUpdated(true);
+      console.log('handle continue');
       console.log(newStage);
     // update the backend
     // userid = user id

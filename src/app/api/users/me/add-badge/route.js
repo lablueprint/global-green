@@ -12,6 +12,13 @@ export async function PATCH(request) {
       return NextResponse.json({ error: 'Badge is required' }, { status: 400 });
     }
 
+    // if user alr has badge
+    const user = await User.findOne({ _id: userId, 'badges.key': badge }).select('-password');
+    if (user) {
+      // If user already has the badge, return a success response without adding the badge again
+      return NextResponse.json({ message: 'Badge already exists', user });
+    }
+
     // Create the new badge object with the badge name and the date
     const badgeObj = {
       date: new Date(),
@@ -19,7 +26,7 @@ export async function PATCH(request) {
     };
 
     // Update the user with the new badge and increment the points only if the badge is not already present
-    const user = await User.findOneAndUpdate(
+    const updatedUser = await User.findOneAndUpdate(
       { _id: userId, 'badges.key': { $ne: badge } },
       {
         $addToSet: { badges: badgeObj },
@@ -28,8 +35,8 @@ export async function PATCH(request) {
       { new: true },
     ).select('-password');
 
-    if (!user) {
-      return NextResponse.json({ error: 'User not found or badge already exists' }, { status: 404 });
+    if (!updatedUser) {
+      return NextResponse.json({ error: 'User not found' }, { status: 404 });
     }
 
     return NextResponse.json({ message: 'Badge added successfully', user });

@@ -1,11 +1,13 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import { useSession } from 'next-auth/react';
 import styles from './page.module.css';
 import SignInLogo from '@/app/components/logos/signInLogo';
 
 function ForgotPassword() {
   const [email, setEmail] = useState('');
+  const { data: session } = useSession();
 
   const handleEmailChange = (e) => {
     setEmail(e.target.value);
@@ -39,6 +41,16 @@ function ForgotPassword() {
       console.log('Error: ', error);
     }
   };
+
+  useEffect(() => {
+    if (session?.user) {
+      if (!session.user.verified) {
+        window.location.href = '/verifyemail';
+      } else {
+        window.location.href = '/profile';
+      }
+    }
+  }, [session]);
 
   return (
     <>

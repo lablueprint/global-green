@@ -8,6 +8,7 @@ import styles from './page.module.css';
 import SignInLogo from '@/app/components/logos/signInLogo';
 import GoogleLogo from '@/app/components/logos/googleLogo';
 
+// WHY IS IT CALLED EXAMPLE HUUUUUUUUUH (pls change)
 function Example() {
   const [userName, setUsername] = useState('');
   const [password, setPassword] = useState('');

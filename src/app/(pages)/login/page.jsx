@@ -6,6 +6,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEye, faEyeSlash } from '@fortawesome/free-solid-svg-icons';
 import styles from './page.module.css';
 import SignInLogo from '@/app/components/logos/signInLogo';
+import GoogleLogo from '@/app/components/logos/googleLogo';
 
 function Example() {
   const [userName, setUsername] = useState('');
@@ -123,7 +124,8 @@ function Example() {
           className={styles.googleButton}
           onClick={() => login('google')}
         >
-          Sign in with Google
+          <GoogleLogo />
+          <span>Sign in with Google</span>
         </button>
       </div>
     </section>

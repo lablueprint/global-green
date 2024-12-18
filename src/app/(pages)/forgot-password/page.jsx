@@ -1,11 +1,13 @@
 'use client';
 
-import React, { useState } from 'react';
-import Image from 'next/image';
+import React, { useState, useEffect } from 'react';
+import { useSession } from 'next-auth/react';
 import styles from './page.module.css';
+import SignInLogo from '@/app/components/logos/signInLogo';
 
 function ForgotPassword() {
   const [email, setEmail] = useState('');
+  const { data: session } = useSession();
 
   const handleEmailChange = (e) => {
     setEmail(e.target.value);
@@ -40,38 +42,53 @@ function ForgotPassword() {
     }
   };
 
+  useEffect(() => {
+    if (session?.user) {
+      if (!session.user.verified) {
+        window.location.href = '/verifyemail';
+      } else {
+        window.location.href = '/profile';
+      }
+    }
+  }, [session]);
+
   return (
     <>
-    <div className={styles.topLeft}> 
-      <Image
-          src="/logo.svg"
-          width={50}
-          height={50}
-        />
-        <span>Global Green Scholar</span>
-    </div>    
-    <div className={styles.forgotPasswordContainer}>
-      <h1 className={styles.title}>Forgot Password?</h1>
-      <p className={styles.resetInstructions}>We will send you reset instructions</p>
-      <form onSubmit={handleSubmit} className={styles.form}>
-        <label htmlFor="email" className={styles.label}>
-          <div className={styles.email}> Email</div>
-            <input
-              type="email"
-              id="email"
-              name="email"
-              value={email}
-              onChange={handleEmailChange}
-              className={styles.input}
-              placeholder="Enter your email address"
-          />
-        </label>
-        <div className={styles.buttonContainer}>
-          <button type="submit" className={styles.submitButton}>Reset Password</button>
+      <div className={styles.topLeft}>
+        <SignInLogo />
+      </div>
+      <div className={styles.pageContent}>
+        <div className={styles.forgotPasswordContainer}>
+          <div className={styles.contentText}>
+            <h1 className={styles.title}>Forgot Password?</h1>
+            <div className={styles.resetInstructions}>
+              We will send you reset instructions
+            </div>
+          </div>
+          <form onSubmit={handleSubmit} className={styles.form}>
+            <label htmlFor="email" className={styles.label}>
+              <div className={styles.email}> Email</div>
+              <input
+                type="email"
+                id="email"
+                name="email"
+                value={email}
+                onChange={handleEmailChange}
+                className={styles.input}
+              />
+            </label>
+          </form>
+          <div>
+            <button type="submit" className={styles.submitButton}>
+              Reset Password
+            </button>
+            <a href="/login" className={styles.backToLogin}>
+              {' '}
+              Back to login
+            </a>
+          </div>
         </div>
-        <a href="/login" className={styles.backToLogin}> Back to login</a>
-      </form>
-    </div>
+      </div>
     </>
   );
 }

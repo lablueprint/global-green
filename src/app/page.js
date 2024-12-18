@@ -13,10 +13,6 @@ function LandingPage() {
     router.push('/landing');
   }, []);
 
-  return (
-    <>
-
-    </>
-  );
+  return <></>;
 }
 export default LandingPage;

@@ -56,7 +56,9 @@ function Profile() {
     setCourseProgress(data.user.courses);
 
     if (data.user.badges) {
-      const badge = data.user.badges.find((badge) => badge.key === 'visitProfile');
+      const badge = data.user.badges.find(
+        (badge) => badge.key === 'visitProfile'
+      );
       if (!badge) {
         const response = await fetch('/api/users/me/add-badge', {
           method: 'PATCH',
@@ -263,69 +265,72 @@ function Profile() {
           </div>
         </div>
         <div className={styles.certificateSection}>
-          {displayedCertificates.length === 0 ? ''
-            : (
-              <div className={styles.certificateSection}>
-                <div className={styles.sectionHeader}>Certificates</div>
-                <div className={styles.row}>
-                  {displayedCertificates.map((certificate, index) => (
-                    <div
-                      key={index}
-                      onClick={PdfForm.generatePdf}
-                      className={styles.certificateItem}
-                      style={{
-                        backgroundImage: 'url("/certificate.jpg")',
-                        borderRadius: '10px',
-                        backgroundSize: 'cover',
-                      }}
-                    >
-                      {userData && (
+          {displayedCertificates.length === 0 ? (
+            ''
+          ) : (
+            <div className={styles.certificateSection}>
+              <div className={styles.sectionHeader}>Certificates</div>
+              <div className={styles.row}>
+                {displayedCertificates.map((certificate, index) => (
+                  <div
+                    key={index}
+                    onClick={PdfForm.generatePdf}
+                    className={styles.certificateItem}
+                    style={{
+                      backgroundImage: 'url("/certificate.jpg")',
+                      borderRadius: '10px',
+                      backgroundSize: 'cover',
+                    }}
+                  >
+                    {userData && (
                       <PdfForm
                         templatePdf="/certificate.pdf"
                         userName={`${userData.firstName} ${userData.lastName}`}
                         course={certificate.key}
                         date={certificate.date}
                       />
-                      )}
-                    </div>
-                  ))}
-                </div>
-                <div className={styles.paginationDots}>
-                  {Array.from({ length: totalPages }, (_, i) => (
-                    <span
-                      key={i}
-                      className={`${styles.dot} ${i === currentPage ? styles.activeDot : ''}`}
-                      onClick={() => handlePageChange(i)}
-                    >
-                      .
-                    </span>
-                  ))}
-                </div>
+                    )}
+                  </div>
+                ))}
               </div>
-            )}
+              <div className={styles.paginationDots}>
+                {Array.from({ length: totalPages }, (_, i) => (
+                  <span
+                    key={i}
+                    className={`${styles.dot} ${
+                      i === currentPage ? styles.activeDot : ''
+                    }`}
+                    onClick={() => handlePageChange(i)}
+                  >
+                    .
+                  </span>
+                ))}
+              </div>
+            </div>
+          )}
         </div>
         <div>
           <div className={styles.sectionHeader}>Course Progress</div>
           <div className={styles.row}>
-            {courseData
-            && courseProgress
-            && courseData.map((course) => (
-              <div key={course.key} className={styles.courseItem}>
-                <div className={styles.courseName}>{course.label}</div>
-                <ProgressBar
-                  className={styles.progressBar}
-                  value={
-                    courseProgress.find((item) => item.key === course.key)
-                      ? courseProgress.find((item) => item.key === course.key)
-                        .currStage
-                      : 0
-                  }
-                  maxValue={7}
-                  color="green"
-                  isPopupDisplayed={profilePopup || passwordPopup}
-                />
-              </div>
-            ))}
+            {courseData &&
+              courseProgress &&
+              courseData.map((course) => (
+                <div key={course.key} className={styles.courseItem}>
+                  <div className={styles.courseName}>{course.label}</div>
+                  <ProgressBar
+                    className={styles.progressBar}
+                    value={
+                      courseProgress.find((item) => item.key === course.key)
+                        ? courseProgress.find((item) => item.key === course.key)
+                            .currStage
+                        : 0
+                    }
+                    maxValue={7}
+                    color="green"
+                    isPopupDisplayed={profilePopup || passwordPopup}
+                  />
+                </div>
+              ))}
           </div>
         </div>
         <div className={styles.accountSection}>
@@ -360,7 +365,11 @@ function Profile() {
             </div>
           </div>
         </div>
-        <button className={styles.logout_btn} type="button" onClick={handleLogout}>
+        <button
+          className={styles.logout_btn}
+          type="button"
+          onClick={handleLogout}
+        >
           Logout
         </button>
       </div>

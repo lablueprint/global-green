@@ -3,15 +3,15 @@
 import React, { useState, useEffect } from 'react';
 import Image from 'next/image';
 import { motion, AnimatePresence } from 'framer-motion';
-import convertToURL from '../convertToURL';
+import convertToURL from '@/app/convertToURL';
 
 export default function Loading() {
   const center = {
     position: 'absolute',
-    top: '50%',
-    left: '50%',
-    marginTop: '-130px',
-    marginLeft: '-50px',
+    top: '25vh',
+    left: '36vw',
+    // marginTop: '-130px',
+    // marginLeft: '-50px',
   };
   return (
     <div style={center}>

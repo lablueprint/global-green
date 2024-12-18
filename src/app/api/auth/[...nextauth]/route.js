@@ -16,22 +16,27 @@ const options = {
       name: 'Credentials',
       credentials: {
         username: { label: 'Username', type: 'text' },
-        password: { label: 'Password', type: 'password' }
+        password: { label: 'Password', type: 'password' },
       },
       async authorize(credentials) {
         console.log('trying to authorize');
         try {
           console.log('credentials', credentials);
           await connectMongoDB();
-          const user = await User.findOne(
-            { $or: [{ email: credentials.username }, { userName: credentials.username }] },
-          );
+          const user = await User.findOne({
+            $or: [
+              { email: credentials.username },
+              { userName: credentials.username },
+            ],
+          });
           if (!user) {
             return null;
           }
           // sometimes the input password is already hashed
           console.log('during credentials authorize', user);
-          const isValid = await bcryptjs.compare(credentials.password, user.password) || credentials.password === user.password;
+          const isValid =
+            (await bcryptjs.compare(credentials.password, user.password)) ||
+            credentials.password === user.password;
           console.log('isValid', isValid);
           return isValid ? user : null;
         } catch (error) {
@@ -39,7 +44,6 @@ const options = {
           return null;
         }
       },
-
     }),
   ],
   secret: process.env.JWT_SECRET,
@@ -53,8 +57,7 @@ const options = {
       console.log('Sign in here');
       if (account.provider === 'credentials') {
         console.log('credentials');
-        const existingUser = await User
-          .findOne({ email: user.email });
+        const existingUser = await User.findOne({ email: user.email });
         if (!existingUser) {
           // error user not found
           console.log('User not found');
@@ -102,14 +105,11 @@ const options = {
       console.log('session', session);
       return session;
     },
-    async jwt({
-      token, account, profile, user,
-    }) {
+    async jwt({ token, account, profile, user }) {
       console.log('jwt');
       const email = '';
       if (account?.provider === 'google') {
-        const existingUser = await
-        User.findOne({ email: profile.email });
+        const existingUser = await User.findOne({ email: profile.email });
         token.id = existingUser.id;
         token.userName = existingUser.userName;
         token.email = existingUser.email;
@@ -127,15 +127,12 @@ const options = {
 
       return Promise.resolve(token);
     },
-
   },
   pages: {
-    signIn: '/login',
+    signIn: '/signup',
   },
 
-
   debug: true,
-
 };
 
 const handler = NextAuth(options);

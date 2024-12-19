@@ -1,3 +1,5 @@
 {
     "editor.inlineSuggest.showToolbar": "always",
+    "prettier.jsxSingleQuote": false,
+    "prettier.singleQuote": true,
 }

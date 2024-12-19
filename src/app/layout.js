@@ -22,9 +22,7 @@ export default async function RootLayout({ children }) {
             <div
               style={{ minWidth: '80vw' }} // TODO: I feel like we should include this? - Ryan K
             >
-              <Suspense fallback={<Loading />}>
-                {children}
-              </Suspense>
+              <Suspense fallback={<Loading />}>{children}</Suspense>
             </div>
           </div>
         </SessionProvider>

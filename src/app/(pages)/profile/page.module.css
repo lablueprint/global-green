@@ -2,42 +2,46 @@
 
 .container {
   text-align: left;
-  margin: 40px 60px;
+  padding: 4em 5em;
 }
 
 .pageName {
-  color: black;
-  font-size: 2em;
-  margin-bottom: 40px;
+  color: #1d1d1d;
+  font-size: 40px;
   font-weight: bold;
+  line-height: 100%;
+  margin-bottom: 36px;
 }
 
 .sectionHeader {
-  font-size: 25px;
+  font-size: 18px;
   font-weight: 600;
   margin: 20px 0;
   border-bottom: 1.5px solid #ddd;
-  padding-bottom: 10px;
+  padding: 10px 0;
 }
 
 .sectionText {
-  font-size: 17px;
+  font-size: 16px;
+  color: #1d1d1d;
   font-weight: 500;
   margin-top: 5px;
+  line-height: 140%;
 }
 
 .row {
   display: flex;
   justify-content: space-between;
-  padding: 10px 0px;
+  padding: 8px 0px;
   flex-wrap: wrap;
-  gap: 20px;
+  gap: 16px;
 }
 
 .subText {
-  font-size: 15px;
-  color: #a1a1a1;
-  padding: 7px 0px;
+  font-size: 14px;
+  color: #9b9b9b;
+  line-height: 140%;
+  padding: 4px 0px;
   margin-bottom: 15px;
 }
 
@@ -45,26 +49,30 @@
 
 .profileSection {
   display: flex;
-  align-items: center;
+  align-items: flex-end;
   margin-bottom: 50px;
 }
 
 .name {
-  font-size: 15px;
+  font-size: 14px;
   font-weight: 500;
-  margin-left: 50px;
+  margin-left: 25px;
 }
 
 .displayName {
-  color: #a7a0a0;
-  margin-bottom: 10px;
+  color: #9b9b9b;
+  margin-bottom: 9px;
 }
 
 .username {
-  border: 2px solid #ddd;
+  /* border: 2px solid #ddd; */
   background-color: #e8e8e8;
-  width: 200px;
-  padding: 8px 10px;
+  color: #1d1d1d;
+  font-size: 18px;
+  font-weight: 600;
+  line-height: 110%;
+  width: 300px;
+  padding: 12px 18px;
   border-radius: 10px;
 }
 
@@ -100,87 +108,108 @@
 .popUp {
   position: absolute;
   background-color: white;
-  border: 1px solid black;
-  padding: 50px 50px;
-  border-radius: 10px;
+  padding: 36px 48px;
+  border-radius: 24px;
+  width: 730px;
 }
 
 .popTop {
   display: flex;
   justify-content: space-between;
-  border-bottom: 1px solid gray;
+  padding-bottom: 10px;
+  border-bottom: 1px solid #cbcbcb;
   margin-bottom: 10px;
 }
 
 .popTitle {
-  font-size: 20px;
+  font-size: 24px;
   font-weight: 550;
   padding-bottom: 10px;
+  color: #1d1d1d;
 }
 
 .popSubTitle {
-  font-size: 20px;
+  font-size: 18px;
   font-weight: 550;
-  padding: 20px 0px;
+  padding: 10px 0px;
+  color: #1d1d1d;
 }
 
 .popText {
-  font-size: 18px;
-  color: gray;
+  font-size: 16px;
+  color: #9b9b9b;
 }
 
 .popPicAll {
   padding: 30px 20px;
-  display: grid;
-  grid-template-columns: repeat(6, 1fr);
+  /* display: grid;
+  grid-template-columns: repeat(5, 1fr); */
+  display: flex;
+  flex-wrap: wrap;
+  gap: 32px;
+  margin: 32px 0;
 }
 
 .popPic {
-  width: 100px; /* Adjust the width dynamically */
-  height: 100px;
+  width: 110px; /* Adjust the width dynamically */
+  height: 110px;
   border-radius: 50px;
   background-size: cover;
-  margin: 30px 10px;
-  border: 2px solid transparent;
+  /* margin: 10px 10px; */
+  /* border: 2px solid transparent; */
   transition: border-color 0.3s ease;
 }
 
 .popPic:hover {
   cursor: pointer;
+  opacity: 0.5;
 }
 
 .active {
-  width: 100px; /* Adjust the width dynamically */
-  height: 100px;
-  border-radius: 54px;
+  width: 105px; /* Adjust the width dynamically */
+  height: 105px;
+  border-radius: 50px;
   background-size: cover;
+  background-color: #519546;
   margin: 30px 10px;
-  border: 5px solid green;
+  outline: 2px solid #519546;
   transition: border-color 0.3s ease;
-}
-
-.popPic:hover {
-  opacity: 0.5;
 }
 
 .popBottom {
   display: flex;
   justify-content: right;
+  gap: 16px;
 }
 
 .popButton {
-  font-size: 18px;
-  border: 1px solid black;
-  border-radius: 10px;
-  padding: 2px 10px;
-  margin: 5px;
+  font-size: 16px;
+  font-weight: 550;
+  line-height: 110%;
+  color: #1d1d1d;
+  border: 1px solid #9b9b9b;
+  border-radius: 40px;
+  padding: 12px 32px;
   cursor: pointer;
+  min-width: 90px;
+  text-align: center;
+}
+
+.popButton:hover {
+  background-color: #e2e2e2;
+  border-color: transparent;
+  transition-duration: 300ms;
 }
 
 .popClose {
   cursor: pointer;
-  font-size: 20px;
-  font-weight: 500;
+  padding: 5px;
+  border-radius: 4px;
+}
+
+.popClose:hover {
+  background-color: #e2e2e2;
+  transition-duration: 300ms;
 }
 
 /* account section */
@@ -200,14 +229,22 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
+  margin-bottom: 2px;
 }
 
 .arrow {
-  font-size: 25px;
-  font-weight: 300;
-  color: gray;
   cursor: pointer;
-  margin-right: 20px;
+  width: 45px;
+  height: 45px;
+  border-radius: 10px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.arrow:hover {
+  background-color: #f0f0f0;
+  transition-duration: 500ms;
 }
 
 /* certificate section */
@@ -265,12 +302,15 @@
 .courseItem {
   display: flex;
   flex: 0 0 calc(50% - 40px);
-  margin-right: 20px;
 }
 
 .courseName {
-  width: 360px;
+  width: 300px;
   white-space: nowrap;
+  font-weight: 600;
+  line-height: 100%;
+  color: #1d1d1d;
+  font-size: 14px;
 }
 
 /* password popup */
@@ -278,21 +318,32 @@
 .passPopUp {
   position: absolute;
   background-color: white;
-  border: 1px solid black;
   padding: 3rem;
   border-radius: 24px;
   display: flex;
   flex-direction: column;
-  max-width: 500px;
+  width: 500px;
 }
 
 .passPopClose {
   display: flex;
   justify-content: flex-end;
-  cursor: pointer;
+  /* cursor: pointer; */
   font-size: 25px;
   font-weight: 500;
   color: #9b9b9b;
+}
+
+.passPopCloseBtn {
+  padding: 5px;
+  cursor: pointer;
+  color: #9b9b9b;
+  border-radius: 4px;
+}
+
+.passPopCloseBtn:hover {
+  background-color: #e2e2e2;
+  transition-duration: 300ms;
 }
 
 .pencil {
@@ -315,7 +366,7 @@
   color: #9b9b9b;
   margin-bottom: 2rem;
   font-weight: 300;
-  font-family: "Instrument Sans";
+  font-family: 'Instrument Sans';
   line-height: 140%;
 }
 
@@ -335,7 +386,7 @@
   border-radius: 8px;
   border: none;
   background-color: rgb(232, 232, 232);
-  font-size: 18px;
+  font-size: 14px;
   padding: 12px 18px;
   margin-bottom: 10px;
   width: 93%;
@@ -428,11 +479,21 @@
 
 .logout_btn {
   border: none;
-  border-radius: 12px;
-  width: 80px;
+  font-family: 'Instrument Sans';
+  color: #1d1d1d;
+  margin-top: 10px;
+  width: 100px;
   height: 35px;
+  font-size: 16px;
+  font-weight: 500;
+  border-radius: 40px;
+  padding: 6px 12px;
+  cursor: pointer;
+  text-align: center;
 }
 
 .logout_btn:hover {
   cursor: pointer;
+  background-color: #9b9b9b;
+  transition-duration: 500ms;
 }

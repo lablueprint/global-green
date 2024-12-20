@@ -7,8 +7,8 @@
 import React, { useEffect, useState } from 'react';
 import Image from 'next/image';
 import { useSession, signOut } from 'next-auth/react';
+import defaultProfilePic from './default_profilepic.jpg';
 import styles from './page.module.css';
-import defaultProfilePic from './profilepic.jpg';
 import PdfForm from './PdfForm';
 import ProgressBar from './progressBar';
 import ProfilePopup from './profilePopup';
@@ -242,8 +242,8 @@ function Profile() {
           <Image
             src={profileImage}
             alt="Profile"
-            width={120}
-            height={120}
+            width={110}
+            height={110}
             style={{ borderRadius: '50%', cursor: 'pointer' }}
             onClick={handleChangeProfileImage}
           />
@@ -344,7 +344,12 @@ function Profile() {
                 </div>
               </div>
               <div className={styles.arrow} onClick={handleChangePassword}>
-                {'>'}
+                <Image
+                  src="/profile/profile_arrow.svg"
+                  alt="Profile"
+                  width={20}
+                  height={20}
+                />
               </div>
             </div>
           </div>
@@ -360,7 +365,12 @@ function Profile() {
                 </div>
               </div>
               <div className={styles.arrow} onClick={handleDeleteClick}>
-                {'>'}
+                <Image
+                  src="/profile/profile_arrow.svg"
+                  alt="Profile"
+                  width={20}
+                  height={20}
+                />
               </div>
             </div>
           </div>

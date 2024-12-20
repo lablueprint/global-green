@@ -21,8 +21,15 @@ function ProfilePopup({
       <div className={styles.popUp}>
         <div className={styles.popTop}>
           <div className={styles.popTitle}>Profile</div>
-          <div className={styles.popClose} onClick={onClose}>
-            {' '}
+          <div>
+            <Image
+              src="/profile/close_btn.svg"
+              width={24}
+              height={24}
+              alt="close-btn"
+              onClick={onClose}
+              className={styles.popClose}
+            />
           </div>
         </div>
         <div className={styles.popMiddle}>
@@ -36,6 +43,7 @@ function ProfilePopup({
               <div key={index}>
                 <Image
                   width={100}
+                  height={100}
                   className={
                     index === currIndex ? styles.active : styles.popPic
                   }
@@ -43,7 +51,6 @@ function ProfilePopup({
                     highlight(index, course.imageSrc);
                     // console.log(profileData[index].imageSrc);
                   }}
-                  height={100}
                   src={course.imageSrc}
                   alt="profile pic variation"
                 />
@@ -59,7 +66,9 @@ function ProfilePopup({
             className={styles.popButton}
             onClick={() => {
               if (typeof currIndex !== 'number') {
-                alert('Please select an image to change your avatar to or press cancel');
+                alert(
+                  'Please select an image to change your avatar to or press cancel'
+                );
               } else {
                 onClose();
                 onSRCUpdate(tempProfile);

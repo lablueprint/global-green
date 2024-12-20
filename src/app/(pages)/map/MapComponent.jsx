@@ -59,11 +59,12 @@ function MapComponent() {
 
     if (mapArray.length) {
       // Display Map
+      console.log('HERES THE STARTING', mapArray);
       const map = new mapboxgl.Map({
         container: mapContainerRef.current,
         style: 'mapbox://styles/mapbox/streets-v11',
-        center: mapArray[0].longlat, // starting position
-        zoom: 9, // starting zoom
+        center: [-90, 40], // starting position
+        zoom: 2, // starting zoom
       });
 
       // Hook up mapRef to the map

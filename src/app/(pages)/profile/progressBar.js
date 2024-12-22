@@ -5,16 +5,15 @@ import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
 import styles from './page.module.css';
 
-function LinearProgressWithLabel({
-  value, maxValue, color, isPopupDisplayed,
-}) {
+function LinearProgressWithLabel({ value, maxValue, color, isPopupDisplayed }) {
   return (
-    <Box sx={{
-      display: 'flex',
-      position: 'relative',
-      alignItems: 'center',
-      width: '100%',
-    }}
+    <Box
+      sx={{
+        display: 'flex',
+        position: 'relative',
+        alignItems: 'center',
+        width: '100%',
+      }}
     >
       <Typography
         style={{
@@ -39,10 +38,9 @@ function LinearProgressWithLabel({
           value={(value / maxValue) * 100}
           sx={{
             borderRadius: 5,
-            border: '1px solid black',
             width: 'calc(100% - 2px)',
             height: '10px',
-            backgroundColor: 'white',
+            backgroundColor: '#E2E2E2',
             '& .MuiLinearProgress-bar': {
               backgroundColor: color,
               borderRadius: 5,
@@ -61,9 +59,7 @@ LinearProgressWithLabel.propTypes = {
   maxValue: PropTypes.number.isRequired,
 };
 
-function LinearWithValueLabel({
-  value, color, isPopupDisplayed, maxValue,
-}) {
+function LinearWithValueLabel({ value, color, isPopupDisplayed, maxValue }) {
   return (
     <Box sx={{ width: '100%' }}>
       <LinearProgressWithLabel

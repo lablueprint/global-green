@@ -4,18 +4,16 @@ import LinearProgress from '@mui/material/LinearProgress';
 import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
 
-function LinearProgressWithLabel({
-  value, maxValue, x, y, color,
-}) {
+function LinearProgressWithLabel({ value, maxValue, x, y, color }) {
   return (
-    <Box sx={{
-      display: 'flex',
-      justifyContent: 'center',
-      justifyContent: 'center',
-      alignItems: 'center',
-      width: '100%',
-      padding: '0 10px',
-    }}
+    <Box
+      sx={{
+        display: 'flex',
+        justifyContent: 'center',
+        alignItems: 'center',
+        width: '100%',
+        padding: '0 10px',
+      }}
     >
       <Typography
         style={{
@@ -24,12 +22,18 @@ function LinearProgressWithLabel({
           lineHeight: '1',
           textAlign: 'left',
           textWrap: 'nowrap',
-          textWrap: 'nowrap',
           flex: 1, // Allow the course name to grow flexibly
         }}
       >
-
-        {`${x === y ? 'Completed' : `${Math.ceil((maxValue - value) * 0.3) === 1 ? `${Math.ceil((maxValue - value) * 0.3)} hr left` : `${Math.ceil((maxValue - value) * 0.3)} hrs left`}`}`}
+        {`${
+          x === y
+            ? 'Completed'
+            : `${
+                Math.ceil((maxValue - value) * 0.3) === 1
+                  ? `${Math.ceil((maxValue - value) * 0.3)} hr left`
+                  : `${Math.ceil((maxValue - value) * 0.3)} hrs left`
+              }`
+        }`}
       </Typography>
       <Box sx={{ width: '100%', margin: 0.75 }}>
         <LinearProgress
@@ -40,9 +44,7 @@ function LinearProgressWithLabel({
             width: '12em',
             height: '10px',
             backgroundColor: 'lightgrey',
-            backgroundColor: 'lightgrey',
             '& .MuiLinearProgress-bar': {
-              backgroundColor: 'green',
               backgroundColor: 'green',
               borderRadius: 5,
             },
@@ -80,9 +82,7 @@ LinearProgressWithLabel.propTypes = {
   color: PropTypes.string.isRequired,
   maxValue: PropTypes.number.isRequired,
 };
-function LinearWithValueLabel({
-  value, x, y, color, maxValue,
-}) {
+function LinearWithValueLabel({ value, x, y, color, maxValue }) {
   return (
     <Box sx={{ width: '100%' }}>
       <LinearProgressWithLabel

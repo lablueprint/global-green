@@ -23,26 +23,29 @@ function CourseDisplay() {
     if (!courseData) {
       return;
     }
-    const tempFilteredData = courseData.map((course) => {
-      const progress = courseProgress.find((c) => c.key === course.key);
-      if (progress) {
+    const tempFilteredData = courseData
+      .map((course) => {
+        const progress = courseProgress.find((c) => c.key === course.key);
+        if (progress) {
+          return {
+            ...course,
+            progress: progress.currStage,
+          };
+        }
         return {
           ...course,
-          progress: progress.currStage,
+          progress: 0,
         };
-      }
-      return {
-        ...course,
-        progress: 0,
-      };
-    }).filter((course) => {
-      if (filterX === 'completed') {
-        return course.complete;
-      } if (filterX === 'incomplete') {
-        return !course.complete;
-      }
-      return true;
-    });
+      })
+      .filter((course) => {
+        if (filterX === 'completed') {
+          return course.complete;
+        }
+        if (filterX === 'incomplete') {
+          return !course.complete;
+        }
+        return true;
+      });
     setFilteredData(tempFilteredData);
   };
   const getUserDetails = async (id) => {
@@ -60,14 +63,11 @@ function CourseDisplay() {
     filterData('all');
     console.log('filteredData', filteredData);
   };
-  useEffect(
-    () => {
-      console.log('session', session);
-      if (session) getUserDetails(session.user.id);
-      if (courseData.length === 0) fetchCoursesData();
-    },
-    [session, courseData],
-  );
+  useEffect(() => {
+    console.log('session', session);
+    if (session) getUserDetails(session.user.id);
+    if (courseData && courseData.length === 0) fetchCoursesData();
+  }, [session, courseData]);
   return (
     <div className={styles.courseContainer}>
       <div className={styles.courseToggle}>

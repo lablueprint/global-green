@@ -8,7 +8,7 @@ import Box from '@mui/material/Box';
 // so if it is at 50, half of the progress bar will be filled up
 // x is current value (numerator)
 // y is the total (denominator)
-function LinearProgressWithLabel({ value, x, y }) {
+export function LinearProgressWithLabel({ value, x, y }) {
   return (
     <Box sx={{ display: 'flex', justifyContent: 'left', width: '100%' }}>
       <Box sx={{ minWidth: 35, mr: -7, position: 'relative' }}>
@@ -61,9 +61,15 @@ LinearProgressWithLabel.propTypes = {
   y: PropTypes.number.isRequired,
 };
 
-function LinearWithValueLabel({ value, x, y }) {
+export function LinearWithValueLabel({ value, x, y }) {
   return (
-    <Box sx={{ width: '100%' }}>
+    <Box
+      sx={{
+        width: '108%',
+        margin: '0px',
+        padding: '0px',
+      }}
+    >
       <LinearProgressWithLabel value={value} x={x} y={y} />
     </Box>
   );
@@ -75,4 +81,4 @@ LinearWithValueLabel.propTypes = {
   y: PropTypes.number.isRequired,
 };
 
-export default LinearWithValueLabel;
+// export default LinearWithValueLabel;

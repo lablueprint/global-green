@@ -26,8 +26,10 @@
   flex-direction: row;
 }
 .welcome h1 {
-  font-weight: normal;
+  font-weight: 500;
+  font-size: 2rem;
 }
+
 .imageGarden {
   display: flex;
   flex-direction: row;
@@ -38,7 +40,7 @@
 
 .image {
   width: 100%;
-  height: 20rem;
+  height: 10rem;
   max-width: 45rem;
   border-radius: 10px;
 }
@@ -46,8 +48,8 @@
 /* going to the garden */
 .garden {
   padding: 20px;
-  border-radius: 15px;
-  height: 242px;
+  border-radius: 20px;
+  height: 11rem;
   background-color: rgb(237, 234, 234);
   width: 23rem;
   display: flex;
@@ -61,13 +63,19 @@
   padding-left: 25px;
 }
 
+.yourGarden{
+  font-weight: 600;
+  font-size: 20px;
+  margin-bottom: 20px;
+}
+
 .gardenButton {
   display: flex;
   justify-content: center;
 }
 
 .gardenInfo {
-  font-size: 18px;
+  font-size: 15px;
   color: gray;
   margin: 2px;
   padding: 2px;
@@ -78,10 +86,11 @@
   background: green;
   color: white;
   border-radius: 20px;
-  width: 200px;
+  width: 150px;
   text-align: center;
-  margin-top: 20px;
-  padding: 10px 5px;
+  padding: 8px 3px;
+  font-size: 15px;
+  font-weight: 400;
 }
 /* whole course part */
 .courseContainer {
@@ -102,6 +111,7 @@
   border-bottom: 2px solid gray;
   margin-bottom: 1rem;
   position: relative;
+  font-size: 16px;
 }
 .active {
   color: green;
@@ -130,14 +140,14 @@
   justify-content: flex-start;
   align-items: center;
   border-radius: 10px;
-  width: 20rem;
-  height: auto;
+  width: 15rem;
+  height: 12rem;
 }
 
 .courseCardImage {
   margin: 0;
   margin-top: 0.5rem;
-  height: 13rem;
+  height: 11rem;
   width: 100%;
   background-size: contain;
   background-repeat: no-repeat;
@@ -208,7 +218,7 @@
   justify-content: center;
   align-items: center;
   width: 600px;
-  height: 300px;
+  height: 13rem;
   margin: 0px;
   border-radius: 30px;
   overflow: hidden;
@@ -218,7 +228,7 @@
   justify-content: center;
   align-items: center;
   width: 350px;
-  height: 250px;
+  height: 18rem;
   margin: 0px;
   border-radius: 20px;
   overflow: hidden;
@@ -226,7 +236,7 @@
 .gardenImage {
   position: absolute;
   width: 600px;
-  height: 280px;
+  height: 180px;
   background-position: center;
   background-size: contain;
   border-radius: 0%;
@@ -282,7 +292,7 @@
 .gardenEarth {
   width: 200px;
   height: 200px;
-  top: 150px;
+  top: 120px;
   left: 80px;
   background-size: cover;
   background-image: url("/garden/earth.png");
@@ -291,7 +301,7 @@
 .gardenEarthWide {
   width: 250px;
   height: 250px;
-  top: 230px;
+  top: 200px;
   left: 175px;
   background-image: url("/garden/earth.png");
   z-index: 10;

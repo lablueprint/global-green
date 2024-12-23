@@ -82,6 +82,7 @@ export default function GardenImage({ status, flowers, gardenState }) {
 GardenImage.propTypes = {
   status: PropTypes.string.isRequired,
   flowers: PropTypes.objectOf(PropTypes.bool).isRequired,
+  // eslint-disable-next-line react/require-default-props
   gardenState: PropTypes.shape({
     background: PropTypes.string,
     accessories: PropTypes.arrayOf(PropTypes.string),

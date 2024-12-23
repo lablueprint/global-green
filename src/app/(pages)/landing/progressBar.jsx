@@ -41,7 +41,7 @@ function LinearProgressWithLabel({ value, maxValue, x, y, color }) {
           value={(value / maxValue) * 100}
           sx={{
             borderRadius: 5,
-            width: '12em',
+            width: '9em',
             height: '10px',
             backgroundColor: 'lightgrey',
             '& .MuiLinearProgress-bar': {

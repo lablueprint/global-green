@@ -151,7 +151,7 @@ function LandingPage() {
           {/* TODO: Figure out how to get garden info? */}
           <div className={styles.garden}>
             <div className={styles.gardenText}>
-              <h2>Your Garden</h2>
+              <div className={styles.yourGarden}>Your Garden</div>
               <div className={styles.gardenInfoContainer}>
                 <div className={styles.gardenInfo}>Started on June 2024</div>
                 <div className={styles.gardenInfo}>1 Plant collected</div>

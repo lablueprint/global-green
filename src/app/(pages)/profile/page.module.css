@@ -110,7 +110,7 @@
   background-color: white;
   padding: 36px 48px;
   border-radius: 24px;
-  width: 730px;
+  width: 750px;
 }
 
 .popTop {
@@ -166,12 +166,11 @@
 }
 
 .active {
-  width: 105px; /* Adjust the width dynamically */
-  height: 105px;
+  width: 110px; /* Adjust the width dynamically */
+  height: 110px;
   border-radius: 50px;
   background-size: cover;
   background-color: #519546;
-  margin: 30px 10px;
   outline: 2px solid #519546;
   transition: border-color 0.3s ease;
 }
@@ -394,12 +393,28 @@
 
 .passPopButton {
   font-size: 18px;
-  border: 2px solid #9b9b9b;
+  border: 1.5px solid #9b9b9b;
   border-radius: 40px;
   padding: 12px 55px;
   cursor: pointer;
   text-align: center;
   font-weight: 500;
+}
+
+.passPopCancelButton {
+  font-size: 18px;
+  border: 1.5px solid #9b9b9b;
+  border-radius: 40px;
+  padding: 12px 55px;
+  cursor: pointer;
+  text-align: center;
+  font-weight: 500;
+}
+
+.passPopCancelButton:hover {
+  background-color: #9b9b9b;
+  color: #fff;
+  transition-duration: 300ms;
 }
 
 .enabled {
@@ -478,22 +493,26 @@
 }
 
 .logout_btn {
-  border: none;
+  border: 1.5px solid #9b9b9b;
   font-family: 'Instrument Sans';
+  background-color: #fff;
   color: #1d1d1d;
   margin-top: 10px;
-  width: 100px;
+  width: 140px;
   height: 35px;
   font-size: 16px;
   font-weight: 500;
   border-radius: 40px;
-  padding: 6px 12px;
+  padding: 12px 32px;
   cursor: pointer;
-  text-align: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .logout_btn:hover {
   cursor: pointer;
   background-color: #9b9b9b;
+  color: #fff;
   transition-duration: 500ms;
 }

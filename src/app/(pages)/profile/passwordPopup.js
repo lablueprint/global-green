@@ -138,7 +138,7 @@ function PasswordPopup({ onClose, userName }) {
             />
           </div>
           <div className={styles.passPopBottom}>
-            <div className={styles.passPopButton} onClick={onClose}>
+            <div className={styles.passPopCancelButton} onClick={onClose}>
               Cancel
             </div>
             <div

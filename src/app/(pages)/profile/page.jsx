@@ -380,7 +380,7 @@ function Profile() {
           type="button"
           onClick={handleLogout}
         >
-          Logout
+          Log Out
         </button>
       </div>
     </>

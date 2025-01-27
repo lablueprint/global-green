@@ -17,7 +17,7 @@
     "@mui/icons-material": "^5.15.6",
     "@mui/material": "^5.15.6",
     "@react-email/components": "^0.0.7",
-    "@react-email/render": "^0.0.12",
+    "@react-email/render": "^0.0.7",
     "@react-pdf/renderer": "^3.3.8",
     "aws-sdk": "^2.1553.0",
     "axios": "^1.6.8",
@@ -42,12 +42,13 @@
     "react-circular-progressbar": "^2.1.0",
     "react-dom": "18.2.0",
     "react-draggable": "^4.4.6",
-    "react-email": "1.10.0",
+    "react-email": "1.9.4",
     "react-google-recaptcha": "^3.1.0",
     "react-helmet": "^6.1.0",
     "react-icons": "^4.12.0",
     "react-leader-line": "^1.0.5",
-    "resend": "^3.1.0"
+    "resend": "^3.1.0",
+    "sharp": "^0.33.5"
   },
   "devDependencies": {
     "eslint": "^8.57.0",

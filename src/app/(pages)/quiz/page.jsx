@@ -10,6 +10,7 @@ import Matching from './Matching';
 import LinearWithValueLabel from './progressBar';
 import Results from './results';
 import Check from './CheckAllThatApply';
+import Loading from '../loading';
 
 function Quiz() {
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
@@ -72,7 +73,8 @@ function Quiz() {
   }, [showAnswerPopup, selectedMatches]);
 
   if (loading) {
-    return <div>Loading...</div>;
+    return <Loading />;
+    // return <div>Loading...</div>;
   }
 
   if (!currentQuiz) {
@@ -286,7 +288,7 @@ function Quiz() {
     setShowCheckButton(false);
   };
 
-  if (showResults) {
+  if (!showResults) {
     return (
       <Results
         skips={skipCount}
@@ -421,6 +423,7 @@ function Quiz() {
             Check
           </button>
         )}
+        {!showCheckButton && <div style={{ height: '43px' }}> hello</div>}
       </div>
       {showAnswerPopup && (
         <AnswerPopup

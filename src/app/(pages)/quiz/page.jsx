@@ -2,7 +2,8 @@
 
 import React, { useState, useEffect } from 'react';
 import Image from 'next/image';
-import { useRouter } from 'next/navigation';
+// import { useRouter } from 'next/navigation';
+import { useSearchParams } from 'next/navigation';
 import styles from './page.module.css';
 import MultipleChoiceQuiz from './MultipleChoice';
 import TrueFalseQuiz from './TrueFalse';
@@ -34,14 +35,17 @@ function Quiz() {
   const [questionResults, setQuestionResults] = useState([]);
   const [matchedPairs, setMatchedPairs] = useState({});
 
+  const searchParams = useSearchParams();
   // ***IMPORTANT***
   // change Key here to access the different quizzes in mongoDB
   // right now the key is for the quiz corresponding to Course 1 Lesson 1
 
   const getQuiz = async () => {
     const urlParams = new URLSearchParams(window.location.search);
-    const courseKey = urlParams.get('courseKey');
-    const stage = urlParams.get('stage');
+    // const courseKey = urlParams.get('courseKey');
+    // const stage = urlParams.get('stage');
+    const courseKey = searchParams.get('courseKey');
+    const stage = searchParams.get('stage');
     const key = `${courseKey}_${stage}`;
     console.log(key);
     const res = await fetch(`/api/quizzes?key=${encodeURIComponent(key)}`);

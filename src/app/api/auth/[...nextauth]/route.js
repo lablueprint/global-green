@@ -135,6 +135,11 @@ const options = {
   debug: true,
 };
 
+console.log('Environment check:', {
+  hasNextAuthSecret: !!process.env.NEXTAUTH_SECRET,
+  nextAuthUrl: process.env.NEXTAUTH_URL,
+});
+
 const handler = NextAuth(options);
 
 export { handler as GET, handler as POST };

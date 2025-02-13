@@ -158,7 +158,7 @@ function SignUp() {
       if (!session.user.verified) {
         window.location.href = '/verifyemail';
       } else {
-        window.location.href = '/profile';
+        window.location.href = '/landing';
       }
     }
   }, [session]);

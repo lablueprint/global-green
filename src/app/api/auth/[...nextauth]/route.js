@@ -46,7 +46,7 @@ const options = {
       },
     }),
   ],
-  secret: process.env.NEXT_PUBLIC_NEXTAUTH_SECRET,
+  secret: 'temporary-hardcoded-secret-for-testing', //process.env.NEXT_PUBLIC_NEXTAUTH_SECRET,
   session: {
     strategy: 'jwt',
     maxAge: 30 * 24 * 60 * 60,

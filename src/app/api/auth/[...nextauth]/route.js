@@ -144,6 +144,15 @@
 
 // export { handler as GET, handler as POST };
 
+console.log('Environment variables at load time:', {
+  NODE_ENV: process.env.NODE_ENV,
+  NEXTAUTH_SECRET_EXISTS: typeof process.env.NEXTAUTH_SECRET === 'string',
+  NEXTAUTH_SECRET_LENGTH: process.env.NEXTAUTH_SECRET
+    ? process.env.NEXTAUTH_SECRET.length
+    : 0,
+  NEXTAUTH_URL: process.env.NEXTAUTH_URL,
+});
+
 // Simplified version for debugging
 import NextAuth from 'next-auth';
 import GoogleProvider from 'next-auth/providers/google';

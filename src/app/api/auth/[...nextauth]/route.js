@@ -144,34 +144,36 @@
 
 // export { handler as GET, handler as POST };
 
-console.log('Environment variables at load time:', {
-  NODE_ENV: process.env.NODE_ENV,
-  NEXTAUTH_SECRET_EXISTS: typeof process.env.NEXTAUTH_SECRET === 'string',
-  NEXTAUTH_SECRET_LENGTH: process.env.NEXTAUTH_SECRET
-    ? process.env.NEXTAUTH_SECRET.length
-    : 0,
-  NEXTAUTH_URL: process.env.NEXTAUTH_URL,
-});
-
-// Simplified version for debugging
 import NextAuth from 'next-auth';
 import GoogleProvider from 'next-auth/providers/google';
 
-console.log('Environment variables:', {
-  NEXTAUTH_SECRET: process.env.NEXTAUTH_SECRET
-    ? 'Set (length: ' + process.env.NEXTAUTH_SECRET.length + ')'
-    : 'Not set',
-  NEXTAUTH_URL: process.env.NEXTAUTH_URL,
+// log env variables at runtime
+console.log('Runtime environment check:', {
+  NODE_ENV: process.env.NODE_ENV,
+  NEXTAUTH_SECRET_AVAILABLE: !!process.env.NEXTAUTH_SECRET,
+  NEXTAUTH_URL_AVAILABLE: !!process.env.NEXTAUTH_URL,
 });
 
-const handler = NextAuth({
+// hardcoded fallback secret for testing
+const SECRET =
+  process.env.NEXTAUTH_SECRET ||
+  'THIS_IS_A_FALLBACK_SECRET_DO_NOT_USE_IN_PRODUCTION';
+
+export const authOptions = {
   providers: [
     GoogleProvider({
-      clientId: process.env.GOOGLE_ID || 'missing-id',
-      clientSecret: process.env.GOOGLE_SECRET || 'missing-secret',
+      clientId: process.env.GOOGLE_ID || 'placeholder-id',
+      clientSecret: process.env.GOOGLE_SECRET || 'placeholder-secret',
     }),
   ],
-  secret: process.env.NEXTAUTH_SECRET || 'temporary-fallback-secret',
-});
+  secret: SECRET,
+  session: {
+    strategy: 'jwt',
+  },
+  // no callbacks for now to simplify
+  debug: true,
+};
+
+const handler = NextAuth(authOptions);
 
 export { handler as GET, handler as POST };

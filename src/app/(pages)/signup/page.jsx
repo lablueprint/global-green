@@ -176,6 +176,7 @@ function SignUp() {
             width={600}
             height={600}
             className={styles.alignImage}
+            priority
           />
           <div className={styles.imageCaption}>
             Learn about sustainability with <br />{' '}

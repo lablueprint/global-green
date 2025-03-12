@@ -5,6 +5,21 @@ import CredentialsProvider from 'next-auth/providers/credentials';
 import User from '../../../../../models/user';
 import connectMongoDB from '../../../../../libs/mongodb';
 
+let isConnected = false;
+const ensureDbConnection = async () => {
+  if (!isConnected) {
+    try {
+      await connectMongoDB();
+      isConnected = true;
+      console.log('MongoDB connected in NextAuth');
+    } catch (error) {
+      console.log('Failed to connect to MongoDB in NextAuth:', error);
+      throw error;
+    }
+  }
+  return isConnected;
+};
+
 const options = {
   providers: [
     GoogleProvider({
@@ -19,10 +34,10 @@ const options = {
         password: { label: 'Password', type: 'password' },
       },
       async authorize(credentials) {
-        console.log('trying to authorize');
         try {
-          console.log('credentials', credentials);
-          await connectMongoDB();
+          console.log('trying to authorize credentials for:', credentials);
+          await ensureDbConnection();
+
           const user = await User.findOne({
             $or: [
               { email: credentials.username },
@@ -30,6 +45,7 @@ const options = {
             ],
           });
           if (!user) {
+            console.log('User not found for:', credentials);
             return null;
           }
           // sometimes the input password is already hashed
@@ -53,20 +69,21 @@ const options = {
   },
   callbacks: {
     async signIn({ user, account, profile }) {
-      await connectMongoDB();
-      console.log('Sign in here');
+      await ensureDbConnection();
+      console.log('Sign in attempt');
       if (account.provider === 'credentials') {
-        console.log('credentials');
-        const existingUser = await User.findOne({ email: user.email });
-        if (!existingUser) {
-          // error user not found
-          console.log('User not found');
-          return false;
-        }
-        console.log('User exists');
-        console.log(existingUser);
-        console.log('User object', user);
         return true;
+        // console.log('credentials');
+        // const existingUser = await User.findOne({ email: user.email });
+        // if (!existingUser) {
+        //   // error user not found
+        //   console.log('User not found');
+        //   return false;
+        // }
+        // console.log('User exists');
+        // console.log(existingUser);
+        // console.log('User object', user);
+        // return true;
       }
 
       if (account.provider === 'google' && profile.email_verified) {
@@ -109,12 +126,20 @@ const options = {
       console.log('jwt');
       const email = '';
       if (account?.provider === 'google') {
-        const existingUser = await User.findOne({ email: profile.email });
-        token.id = existingUser.id;
-        token.userName = existingUser.userName;
-        token.email = existingUser.email;
-        token.verified = existingUser.verified;
-        console.log('token', token);
+        try {
+          const existingUser = await User.findOne({ email: profile.email });
+          if (existingUser) {
+            token.id = existingUser.id;
+            token.userName = existingUser.userName;
+            token.email = existingUser.email;
+            token.verified = existingUser.verified;
+            console.log('token', token);
+          } else {
+            console.log('user not found in JWT callback');
+          }
+        } catch (error) {
+          console.log('error in JWT Google provider:', error);
+        }
       }
       if (account?.provider === 'credentials') {
         token.id = user.id;
@@ -123,7 +148,7 @@ const options = {
         token.verified = user.verified;
         console.log('token', token);
       }
-      await connectMongoDB();
+      // await ensureDbConnection();
 
       return Promise.resolve(token);
     },

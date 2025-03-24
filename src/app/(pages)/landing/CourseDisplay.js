@@ -4,6 +4,7 @@ import React, { useState, useEffect } from 'react';
 import { useSession } from 'next-auth/react';
 import CourseCard from './CourseCard';
 import styles from './page.module.css';
+
 // course display: seeing all courses, incomplete, complete courses
 function CourseDisplay() {
   const [courseData, setCourseData] = useState([]);
@@ -11,12 +12,14 @@ function CourseDisplay() {
   const [filter, setFilter] = useState('all');
   const { data: session } = useSession();
   const [filteredData, setFilteredData] = useState([]);
+
   async function fetchCoursesData() {
     const response = await fetch('/api/courses');
     const data = await response.json();
     console.log('api courses', data);
     setCourseData(data.res);
   }
+
   const filterData = (filterX) => {
     console.log('filterX', filterX);
     console.log('courseData', courseData);
@@ -48,6 +51,7 @@ function CourseDisplay() {
       });
     setFilteredData(tempFilteredData);
   };
+
   const getUserDetails = async (id) => {
     console.log('id', id);
     if (!id) return;
@@ -60,19 +64,29 @@ function CourseDisplay() {
     });
     const data = await response.json();
     setCourseProgress(data.user.courses);
-    filterData('all');
-    console.log('filteredData', filteredData);
   };
+
   useEffect(() => {
     console.log('session', session);
-    if (session) getUserDetails(session.user.id);
-    if (courseData && courseData.length === 0) fetchCoursesData();
-  }, [session, courseData]);
+    if (session) {
+      getUserDetails(session.user.id);
+      fetchCoursesData();
+    }
+  }, [session]);
+
+  useEffect(() => {
+    if (courseData.length > 0) {
+      filterData('all');
+    }
+  }, [courseData, courseProgress]);
+
   return (
     <div className={styles.courseContainer}>
       <div className={styles.courseToggle}>
         <div
-          className={filter === 'all' ? styles.active : ''}
+          className={
+            filter === 'all' ? styles.active : styles.courseToggleButton
+          }
           onClick={() => {
             setFilter('all');
             filterData('all');
@@ -82,7 +96,9 @@ function CourseDisplay() {
         </div>
 
         <div
-          className={filter === 'completed' ? styles.active : ''}
+          className={
+            filter === 'completed' ? styles.active : styles.courseToggleButton
+          }
           onClick={() => {
             setFilter('completed');
             filterData('completed');
@@ -91,7 +107,9 @@ function CourseDisplay() {
           Complete
         </div>
         <div
-          className={filter === 'incomplete' ? styles.active : ''}
+          className={
+            filter === 'incomplete' ? styles.active : styles.courseToggleButton
+          }
           onClick={() => {
             setFilter('incomplete');
             filterData('incomplete');

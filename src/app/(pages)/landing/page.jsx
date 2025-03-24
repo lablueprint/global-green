@@ -13,6 +13,7 @@ function LandingPage() {
   // const [gardenBadge, setGardenBadge] = useState(false);
   // const [user, setUser] = useState({});
   const [loading, setLoading] = useState(true);
+  const [dummyState, setDummyState] = useState(0);
   const { data: session } = useSession();
   // const [currentModule] = useState({
   //   imageUrl: '/landingpageImage.png',
@@ -94,6 +95,7 @@ function LandingPage() {
 
   useEffect(() => {
     if (!loading) {
+      setDummyState((prev) => prev + 1);
       console.log('re-rendering!');
     }
   }, [loading]);

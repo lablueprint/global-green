@@ -13,6 +13,7 @@ function LandingPage() {
   // const [gardenBadge, setGardenBadge] = useState(false);
   // const [user, setUser] = useState({});
   const [loading, setLoading] = useState(true);
+  const { data: session } = useSession();
   // const [currentModule] = useState({
   //   imageUrl: '/landingpageImage.png',
   //   name: 'Chinenye Eneh',
@@ -46,8 +47,6 @@ function LandingPage() {
   });
   const [accessories, setAccessories] = useState([]);
   const [backgrounds, setBackgrounds] = useState([]);
-
-  const { data: session } = useSession();
 
   const getCoursesInfo = async (id) => {
     if (!id) return;
@@ -90,7 +89,7 @@ function LandingPage() {
   };
 
   useEffect(() => {
-    if (session) getCoursesInfo(session.user.id);
+    getCoursesInfo(session.user.id);
   }, [session]);
 
   const updateGardenState = async (id) => {

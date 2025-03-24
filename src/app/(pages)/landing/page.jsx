@@ -12,6 +12,7 @@ import ChallengeBadge from '@/app/components/snackBar';
 function LandingPage() {
   const [gardenBadge, setGardenBadge] = useState(false);
   const [user, setUser] = useState({});
+  const [loading, setLoading] = useState(true);
   const [currentModule] = useState({
     imageUrl: '/landingpageImage.png',
     name: 'Chinenye Eneh',
@@ -83,6 +84,7 @@ function LandingPage() {
       setGardenState(user.garden);
       console.log(user.garden);
     }
+    setLoading(false);
   };
 
   useEffect(() => {
@@ -138,7 +140,7 @@ function LandingPage() {
         <h1>
           Welcome,{' '}
           <span className={styles.userName}>
-            {user ? user.userName : 'User'}
+            {Loading ? 'User' : user.userName}
           </span>
         </h1>
       </div>

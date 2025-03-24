@@ -10,13 +10,14 @@ import GardenImage from './GardenImage';
 import ChallengeBadge from '@/app/components/snackBar';
 
 function LandingPage() {
-  const [gardenBadge, setGardenBadge] = useState(false);
+  // const [gardenBadge, setGardenBadge] = useState(false);
   const [user, setUser] = useState({});
+  const [userId, setUserId] = useState(null);
   const [loading, setLoading] = useState(true);
-  const [currentModule] = useState({
-    imageUrl: '/landingpageImage.png',
-    name: 'Chinenye Eneh',
-  });
+  // const [currentModule] = useState({
+  //   imageUrl: '/landingpageImage.png',
+  //   name: 'Chinenye Eneh',
+  // });
   const [isGardenModalOpen, setIsGardenModalOpen] = useState(false);
 
   // TODO: replace this mapping method
@@ -59,6 +60,10 @@ function LandingPage() {
       body: JSON.stringify({ id }),
     });
 
+    if (!response.ok) {
+      throw new Error(`HTTP error! status: ${response.status}`);
+    }
+
     const data = await response.json();
     const { user } = data;
 
@@ -88,8 +93,14 @@ function LandingPage() {
   };
 
   useEffect(() => {
-    if (session) getCoursesInfo(session.user.id);
+    if (session && session.user && session.user.id) {
+      setUserId(session.user.id);
+    }
   }, [session]);
+
+  useEffect(() => {
+    if (userId) getCoursesInfo(userId);
+  }, [userId]);
 
   const updateGardenState = async (id) => {
     // update the user's garden state
@@ -140,7 +151,7 @@ function LandingPage() {
         <h1>
           Welcome,{' '}
           <span className={styles.userName}>
-            {loading ? 'User' : user.userName}
+            {loading ? 'User' : user?.userName}
           </span>
         </h1>
       </div>

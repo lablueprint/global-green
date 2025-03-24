@@ -92,6 +92,12 @@ function LandingPage() {
     getCoursesInfo(session.user.id);
   }, [session]);
 
+  useEffect(() => {
+    if (!loading) {
+      console.log('re-rendering!');
+    }
+  }, [loading]);
+
   const updateGardenState = async (id) => {
     // update the user's garden state
     await fetch('/api/users/me/update-garden', {

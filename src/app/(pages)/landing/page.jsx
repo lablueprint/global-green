@@ -140,7 +140,7 @@ function LandingPage() {
         <h1>
           Welcome,{' '}
           <span className={styles.userName}>
-            {Loading ? 'User' : user.userName}
+            {loading ? 'User' : user.userName}
           </span>
         </h1>
       </div>

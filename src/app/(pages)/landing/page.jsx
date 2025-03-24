@@ -1,20 +1,20 @@
-"use client";
+'use client';
 
-import React, { useState, useEffect } from "react";
-import Image from "next/image";
-import { useSession } from "next-auth/react";
-import styles from "./page.module.css";
-import CourseDisplay from "./CourseDisplay";
-import GardenModal from "./GardenModal";
-import GardenImage from "./GardenImage";
-import ChallengeBadge from "@/app/components/snackBar";
+import React, { useState, useEffect } from 'react';
+import Image from 'next/image';
+import { useSession } from 'next-auth/react';
+import styles from './page.module.css';
+import CourseDisplay from './CourseDisplay';
+import GardenModal from './GardenModal';
+import GardenImage from './GardenImage';
+import ChallengeBadge from '@/app/components/snackBar';
 
 function LandingPage() {
   const [gardenBadge, setGardenBadge] = useState(false);
   const [user, setUser] = useState({});
   const [currentModule] = useState({
-    imageUrl: "/landingpageImage.png",
-    name: "Chinenye Eneh",
+    imageUrl: '/landingpageImage.png',
+    name: 'Chinenye Eneh',
   });
   const [isGardenModalOpen, setIsGardenModalOpen] = useState(false);
 
@@ -27,7 +27,7 @@ function LandingPage() {
     conservationandrestoration: 3,
     climatechange: 4,
     oceanpollution: 5,
-    "eco-friendlytravel": 6,
+    'eco-friendlytravel': 6,
   };
   const [flowers, setFlowers] = useState({
     1: false,
@@ -40,7 +40,7 @@ function LandingPage() {
 
   // TODO: potentially move this and the update functions to a redux state
   const [gardenState, setGardenState] = useState({
-    background: "background1",
+    background: 'background1',
     accessories: [],
   });
   const [accessories, setAccessories] = useState([]);
@@ -50,16 +50,18 @@ function LandingPage() {
 
   const getCoursesInfo = async (id) => {
     if (!id) return;
-    const response = await fetch("/api/users/me", {
-      method: "POST",
+    const response = await fetch('/api/users/me', {
+      method: 'POST',
       headers: {
-        "Content-Type": "application/json",
+        'Content-Type': 'application/json',
       },
       body: JSON.stringify({ id }),
     });
 
     const data = await response.json();
     const { user } = data;
+
+    setUser(user);
 
     // set the flowers based on progress
     const adjustFlowers = flowers;
@@ -68,8 +70,8 @@ function LandingPage() {
         adjustFlowers[courseFlowerMap[course.key]] = true;
       }
     });
-    console.log("user", user);
-    console.log("adjustFlowers", adjustFlowers);
+    console.log('user', user);
+    console.log('adjustFlowers', adjustFlowers);
     setFlowers(adjustFlowers);
 
     setAccessories(user.accessories);
@@ -89,20 +91,20 @@ function LandingPage() {
 
   const updateGardenState = async (id) => {
     // update the user's garden state
-    await fetch("/api/users/me/update-garden", {
-      method: "POST",
+    await fetch('/api/users/me/update-garden', {
+      method: 'POST',
       headers: {
-        "Content-Type": "application/json",
+        'Content-Type': 'application/json',
       },
       body: JSON.stringify({ id, garden: gardenState }),
     });
   };
   const getUserDetails = async (id) => {
     if (!id) return;
-    const response = await fetch("/api/users/me", {
-      method: "POST",
+    const response = await fetch('/api/users/me', {
+      method: 'POST',
       headers: {
-        "Content-Type": "application/json",
+        'Content-Type': 'application/json',
       },
       body: JSON.stringify({ id, garden: gardenState }),
     });
@@ -111,7 +113,7 @@ function LandingPage() {
   useEffect(() => {
     if (
       !(
-        gardenState.background === "background1" &&
+        gardenState.background === 'background1' &&
         gardenState.accessories.length === 0
       )
     ) {
@@ -134,9 +136,9 @@ function LandingPage() {
       )}
       <div className={styles.welcome}>
         <h1>
-          Welcome,{" "}
+          Welcome,{' '}
           <span className={styles.userName}>
-            {session?.user?.userName && session.user.userName}
+            {user ? user.userName : 'User'}
           </span>
         </h1>
       </div>

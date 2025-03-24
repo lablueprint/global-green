@@ -11,8 +11,7 @@ import ChallengeBadge from '@/app/components/snackBar';
 
 function LandingPage() {
   // const [gardenBadge, setGardenBadge] = useState(false);
-  const [user, setUser] = useState({});
-  const [userId, setUserId] = useState(null);
+  // const [user, setUser] = useState({});
   const [loading, setLoading] = useState(true);
   // const [currentModule] = useState({
   //   imageUrl: '/landingpageImage.png',
@@ -67,8 +66,6 @@ function LandingPage() {
     const data = await response.json();
     const { user } = data;
 
-    setUser(user);
-
     // set the flowers based on progress
     const adjustFlowers = flowers;
     user.courses.forEach((course) => {
@@ -93,14 +90,8 @@ function LandingPage() {
   };
 
   useEffect(() => {
-    if (session && session.user && session.user.id) {
-      setUserId(session.user.id);
-    }
+    if (session) getCoursesInfo(session.user.id);
   }, [session]);
-
-  useEffect(() => {
-    if (userId) getCoursesInfo(userId);
-  }, [userId]);
 
   const updateGardenState = async (id) => {
     // update the user's garden state
@@ -151,7 +142,9 @@ function LandingPage() {
         <h1>
           Welcome,{' '}
           <span className={styles.userName}>
-            {loading ? 'User' : user?.userName}
+            {loading
+              ? 'User'
+              : session?.user?.userName && session.user.userName}
           </span>
         </h1>
       </div>

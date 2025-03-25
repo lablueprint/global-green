@@ -8,12 +8,11 @@ import CourseDisplay from './CourseDisplay';
 import GardenModal from './GardenModal';
 import GardenImage from './GardenImage';
 import ChallengeBadge from '@/app/components/snackBar';
+import WelcomeUser from './WelcomeUser';
 
 function LandingPage() {
   // const [gardenBadge, setGardenBadge] = useState(false);
   // const [user, setUser] = useState({});
-  const [loading, setLoading] = useState(true);
-  const [dummyState, setDummyState] = useState(0);
   const { data: session } = useSession();
   // const [currentModule] = useState({
   //   imageUrl: '/landingpageImage.png',
@@ -86,19 +85,13 @@ function LandingPage() {
       setGardenState(user.garden);
       console.log(user.garden);
     }
-    setLoading(false);
   };
 
   useEffect(() => {
-    getCoursesInfo(session.user.id);
-  }, [session]);
-
-  useEffect(() => {
-    if (!loading) {
-      setDummyState((prev) => prev + 1);
-      console.log('re-rendering!');
+    if (!session) {
+      getCoursesInfo(session.user.id);
     }
-  }, [loading]);
+  }, [session]);
 
   const updateGardenState = async (id) => {
     // update the user's garden state
@@ -145,16 +138,9 @@ function LandingPage() {
           setGardenState={setGardenState}
         />
       )}
-      <div className={styles.welcome}>
-        <h1>
-          Welcome,{' '}
-          <span className={styles.userName}>
-            {loading
-              ? 'User'
-              : session?.user?.userName && session.user.userName}
-          </span>
-        </h1>
-      </div>
+      <WelcomeUser
+        userName={session?.user?.userName && session.user.userName}
+      />
       <div className={styles.banner}>
         <div className={styles.imageGarden}>
           <GardenImage

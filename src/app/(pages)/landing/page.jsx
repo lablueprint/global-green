@@ -13,7 +13,8 @@ import WelcomeUser from './WelcomeUser';
 function LandingPage() {
   // const [gardenBadge, setGardenBadge] = useState(false);
   // const [user, setUser] = useState({});
-  const { data: session } = useSession();
+  const { data: session, status } = useSession();
+  const [userName, setUserName] = useState(null);
   // const [currentModule] = useState({
   //   imageUrl: '/landingpageImage.png',
   //   name: 'Chinenye Eneh',
@@ -49,7 +50,9 @@ function LandingPage() {
   const [backgrounds, setBackgrounds] = useState([]);
 
   const getCoursesInfo = async (id) => {
+    console.log(1);
     if (!id) return;
+    console.log(2);
     const response = await fetch('/api/users/me', {
       method: 'POST',
       headers: {
@@ -85,13 +88,26 @@ function LandingPage() {
       setGardenState(user.garden);
       console.log(user.garden);
     }
+
+    if (user.userName) {
+      setUserName(user.userName);
+    } else if (session?.user?.userName) {
+      setUserName(session.user.userName);
+    }
   };
 
   useEffect(() => {
-    if (!session) {
+    console.log('STHSTHSTH: ', session, status);
+    if (status === 'authenticated' && session?.user?.id) {
       getCoursesInfo(session.user.id);
     }
-  }, [session]);
+  }, [status, session]);
+
+  useEffect(() => {
+    if (!userName && session?.user?.userName) {
+      setUserName(session.user.userName);
+    }
+  }, [userName, session]);
 
   const updateGardenState = async (id) => {
     // update the user's garden state
@@ -138,9 +154,7 @@ function LandingPage() {
           setGardenState={setGardenState}
         />
       )}
-      <WelcomeUser
-        userName={session?.user?.userName && session.user.userName}
-      />
+      <WelcomeUser userName={userName} />
       <div className={styles.banner}>
         <div className={styles.imageGarden}>
           <GardenImage

@@ -8,23 +8,10 @@ import ClassIcon from '@mui/icons-material/Class';
 import FlagOutlinedIcon from '@mui/icons-material/FlagOutlined';
 import ShoppingBagOutlinedIcon from '@mui/icons-material/ShoppingBagOutlined';
 import LocationOnOutlinedIcon from '@mui/icons-material/LocationOnOutlined';
-import TollOutlinedIcon from '@mui/icons-material/TollOutlined';
-import PublicOutlinedIcon from '@mui/icons-material/PublicOutlined';
-import KeyboardArrowLeftIcon from '@mui/icons-material/KeyboardArrowLeft';
-import KeyboardDoubleArrowLeftIcon from '@mui/icons-material/KeyboardDoubleArrowLeft';
-import KeyboardDoubleArrowRightIcon from '@mui/icons-material/KeyboardDoubleArrowRight';
-import Button from '@mui/material/Button';
 import { useSession, signOut } from 'next-auth/react';
 import styles from './navbar.module.css';
 
-function NavLink({
-  href,
-  children,
-  icon,
-  isActive,
-  setCurrentPath,
-  currentPath,
-}) {
+function NavLink({ href, children, icon, isActive, setCurrentPath }) {
   return (
     <Link
       href={href}
@@ -38,13 +25,14 @@ function NavLink({
     </Link>
   );
 }
+
 export default function NavBar() {
-  const [currentPath, setCurrentPath] = useState(
-    typeof window !== 'undefined' ? window.location.pathname : '',
-  );
-  const { data: session } = useSession();
-  const [user, setUser] = useState({});
+  const [currentPath, setCurrentPath] = useState('');
+  const { data: session, status } = useSession();
+  const [user, setUser] = useState({ userName: 'User', seeds: 0 });
   const [shouldRenderNav, setShouldRenderNav] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
+
   const navlinks = [
     {
       href: '/landing',
@@ -72,56 +60,123 @@ export default function NavBar() {
       icon: <LocationOnOutlinedIcon />,
     },
   ];
+
   const getUserDetails = async (id) => {
     if (!id) return;
-    const response = await fetch('/api/users/me', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({ id }),
-    });
-    const data = await response.json();
-    console.log('data', data);
-    setUser(data.user);
-    console.log('user', user);
+
+    try {
+      setIsLoading(true);
+      const response = await fetch('/api/users/me', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ id }),
+      });
+
+      if (!response.ok) {
+        throw new Error(`HTTP error! Status: ${response.status}`);
+      }
+
+      const data = await response.json();
+      console.log('data', data);
+      setUser({
+        ...data.user,
+        userName: data.user.userName || 'User',
+        seeds: data.user.seeds || 0,
+      });
+      console.log('user', user);
+    } catch (error) {
+      console.error('Error fetching user details:', error);
+    } finally {
+      setIsLoading(false);
+    }
   };
+
   useEffect(() => {
     console.log('session', session);
-    if (session) getUserDetails(session.user.id);
-  }, [session]);
+    if (status === 'authenticated' && session?.user?.id) {
+      console.log('nav session authenticated');
+      getUserDetails(session.user.id);
+    }
+  }, [status, session]);
 
   useEffect(() => {
     if (typeof window !== 'undefined') {
+      return;
+    }
+
+    const updatePathAndNavState = () => {
       const path = window.location.pathname;
       setCurrentPath(path);
       // Check if path starts with /roadmap/ or /lesson/
       if (
-        path.startsWith('/roadmap/')
-        || path.startsWith('/lesson')
-        || path.startsWith('/quiz')
+        path.startsWith('/roadmap/') ||
+        path.startsWith('/lesson') ||
+        path.startsWith('/quiz')
       ) {
         setShouldRenderNav(true);
-      } else {
-        // Other paths where navbar should be rendered
-        const pathsToRenderNav = [
-          '/landing',
-          '/challenges',
-          '/store',
-          '/profile',
-          '/map',
-        ];
-        setShouldRenderNav(pathsToRenderNav.includes(path));
+        return;
       }
-    }
+
+      // Other paths where navbar should be rendered
+      const pathsToRenderNav = [
+        '/landing',
+        '/challenges',
+        '/store',
+        '/profile',
+        '/map',
+      ];
+      setShouldRenderNav(pathsToRenderNav.includes(path));
+    };
+
+    updatePathAndNavState(); // initial check
+
+    const handleRouteChange = () => {
+      updatePathAndNavState();
+    };
+
+    // event listener for route changes
+    window.addEventListener('popstate', handleRouteChange);
+
+    // clean up listener on unmount
+    return () => {
+      window.removeEventListener('popstate', handleRouteChange);
+    };
   }, []);
 
   useEffect(() => {
+    if (typeof window === 'undefined') {
+      return;
+    }
+
     if (window.location.pathname.startsWith('/landing')) {
       setShouldRenderNav(true);
       setCurrentPath('/landing');
     }
-  }, [location.href]);
+
+    // to detect URL changes
+    const observer = new MutationObserver((mutations) => {
+      mutations.forEach(() => {
+        const newPath = window.location.pathname;
+        if (currentPath !== newPath) {
+          setCurrentPath(newPath);
+
+          const shouldShow =
+            ['/landing', '/challenges', '/store', '/profile', '/map'].includes(
+              newPath
+            ) ||
+            newPath.startsWith('/roadmap/') ||
+            newPath.startsWith('/lesson') ||
+            newPath.startsWith('/quiz');
+          setShouldRenderNav(shouldShow);
+        }
+      });
+    });
+
+    observer.observe(document, { subtree: true, childList: true });
+    return () => observer.disconnect();
+  }, [currentPath]);
 
   if (!shouldRenderNav) {
     return null;
@@ -134,17 +189,16 @@ export default function NavBar() {
           <div className={styles.ggLogoAndText}>
             <NavLink
               href="/landing"
-              icon={(
+              icon={
                 <Image
                   width={47}
                   height={47}
                   alt="gg Logo"
                   src="https://global-green-2.s3.us-west-1.amazonaws.com/globalgreenlogo.png"
                 />
-              )}
+              }
               isActive={currentPath === '/'}
               setCurrentPath={setCurrentPath}
-              currentPath={currentPath}
             >
               Global Green Scholar
             </NavLink>
@@ -156,9 +210,7 @@ export default function NavBar() {
               icon={link.icon}
               isActive={currentPath === link.href}
               setCurrentPath={setCurrentPath}
-              currentPath={currentPath}
             >
-              {/* {link.text} */}
               <p>{link.text}</p>
             </NavLink>
           ))}
@@ -179,7 +231,7 @@ export default function NavBar() {
           </div>
           <div className={styles.profileText}>
             <div className={styles.usernameText}>
-              {user.userName || 'Login'}
+              {isLoading ? 'User' : user.userName}
             </div>
             <div className={styles.profilePoints}>
               <Image
@@ -188,7 +240,7 @@ export default function NavBar() {
                 width={16}
                 height={16}
               />
-              {user.seeds}
+              {isLoading ? '...' : user.seeds}
               {' Points'}
             </div>
           </div>

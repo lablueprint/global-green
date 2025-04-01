@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import Image from 'next/image';
 import { useSession } from 'next-auth/react';
 import styles from './page.module.css';
@@ -20,6 +20,9 @@ function LandingPage() {
   //   name: 'Chinenye Eneh',
   // });
   const [isGardenModalOpen, setIsGardenModalOpen] = useState(false);
+  const [dataFetched, setDataFetched] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
+  const [idWaitTimer, setIdWaitTimer] = useState(null); // keep track of time waiting for ID
 
   // TODO: replace this mapping method
   // better naming scheme - either as global variables since local to track which indexes
@@ -49,67 +52,151 @@ function LandingPage() {
   const [accessories, setAccessories] = useState([]);
   const [backgrounds, setBackgrounds] = useState([]);
 
-  const getCoursesInfo = async (id) => {
-    console.log(1);
-    if (!id) return;
-    console.log(2);
-    const response = await fetch('/api/users/me', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({ id }),
-    });
-
-    if (!response.ok) {
-      throw new Error(`HTTP error! status: ${response.status}`);
-    }
-
-    const data = await response.json();
-    const { user } = data;
-
-    // set the flowers based on progress
-    const adjustFlowers = flowers;
-    user.courses.forEach((course) => {
-      if (course.complete) {
-        adjustFlowers[courseFlowerMap[course.key]] = true;
+  const getCoursesInfo = useCallback(
+    async (id) => {
+      if (!id) {
+        console.log('no id provided, skipping fetch');
+        return false;
       }
-    });
-    console.log('user', user);
-    console.log('adjustFlowers', adjustFlowers);
-    setFlowers(adjustFlowers);
 
-    setAccessories(user.accessories);
-    setBackgrounds(user.backgrounds);
+      try {
+        console.log('fetch user info with ID:', id);
+        const response = await fetch('/api/users/me', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({ id }),
+        });
 
-    // set the garden based on the user selection
-    // TODO: add more checks for if a user field exists! some accounts don't have some fields
-    if (user.garden && user.garden.background) {
-      setGardenState(user.garden);
-      console.log(user.garden);
-    }
+        if (!response.ok) {
+          throw new Error(`HTTP error! status: ${response.status}`);
+        }
 
-    if (user.userName) {
-      setUserName(user.userName);
-    } else if (session?.user?.userName) {
+        const data = await response.json();
+        const { user } = data;
+        console.log('user data fetched successfully!');
+
+        // set the flowers based on progress
+        if (user?.courses) {
+          const adjustFlowers = { ...flowers };
+          user.courses.forEach((course) => {
+            if (course.complete) {
+              adjustFlowers[courseFlowerMap[course.key]] = true;
+            }
+          });
+          console.log('user', user);
+          console.log('adjustFlowers', adjustFlowers);
+          setFlowers(adjustFlowers);
+        }
+
+        if (user?.accessories) setAccessories(user.accessories);
+        if (user?.backgrounds) setBackgrounds(user.backgrounds);
+        // set the garden based on the user selection
+        // TODO: add more checks for if a user field exists! some accounts don't have some fields
+        if (user?.garden?.background) {
+          setGardenState(user.garden);
+          console.log(user.garden);
+        }
+
+        if (user.userName) {
+          console.log('setting username from API:', user.userName);
+          setUserName(user.userName);
+        } else if (session?.user?.userName) {
+          console.log('setting username from session:', session.user.userName);
+          setUserName(session.user.userName);
+        }
+
+        setDataFetched(true);
+        setIsLoading(false);
+
+        if (idWaitTimer) {
+          clearTimeout(idWaitTimer);
+          setIdWaitTimer(null);
+        }
+
+        return true;
+      } catch (error) {
+        console.log('error fetching user data:', error);
+        setIsLoading(false);
+        return false;
+      }
+    },
+    [flowers, courseFlowerMap, session, idWaitTimer] // [session]
+  );
+
+  // basic try to fetch data from session
+  const setNameFromSession = useCallback(() => {
+    if (session?.user?.userName) {
       setUserName(session.user.userName);
     }
-  };
+  }, [session]);
 
+  // useEffect(() => {
+  //   console.log('STHSTHSTH: ', session, status);
+  //   if (status === 'authenticated' && session?.user?.id) {
+  //     getCoursesInfo(session.user.id);
+  //   }
+  // }, [status, session]);
+
+  // session monitoring and data fetching
   useEffect(() => {
-    console.log('STHSTHSTH: ', session, status);
-    if (status === 'authenticated' && session?.user?.id) {
+    if (dataFetched) return;
+
+    if (status !== 'authenticated') {
+      console.log('session not authenticated yet');
+      return;
+    }
+
+    console.log('session authenticated, checking for ID');
+    setNameFromSession();
+    if (session?.user?.id) {
+      console.log('ID found immediately, fetching data');
       getCoursesInfo(session.user.id);
+      return;
     }
-  }, [status, session]);
 
-  useEffect(() => {
-    if (!userName && session?.user?.userName) {
-      setUserName(session.user.userName);
+    console.log('no ID yet, setting up wait timer');
+    if (idWaitTimer) {
+      clearTimeout(idWaitTimer);
     }
-  }, [userName, session]);
+
+    // polling mechanism to check ID every 500ms
+    const intervalId = setInterval(() => {
+      console.log('checking for ID...');
+      if (session?.user?.id) {
+        console.log('ID FOUND DURING POLLING');
+        clearInterval(intervalId);
+        getCoursesInfo(session.user.id);
+      }
+    }, 500);
+
+    // setting a 5-second timeout to stop polling if no ID
+    const timeoutId = setTimeout(() => {
+      console.log('timed out waiting for id');
+      clearInterval(intervalId);
+      setIsLoading(false);
+      setDataFetched(true);
+    }, 5000);
+
+    setIdWaitTimer(timeoutId);
+    return () => {
+      clearInterval(intervalId);
+      clearTimeout(timeoutId);
+    };
+  }, [
+    status,
+    session,
+    getCoursesInfo,
+    dataFetched,
+    idWaitTimer,
+    setNameFromSession,
+  ]);
+  // is this triggered if all changes or just one?
 
   const updateGardenState = async (id) => {
+    if (!id) return;
+
     // update the user's garden state
     await fetch('/api/users/me/update-garden', {
       method: 'POST',

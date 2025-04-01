@@ -84,7 +84,9 @@ function CourseDisplay() {
     <div className={styles.courseContainer}>
       <div className={styles.courseToggle}>
         <div
-          className={filter === 'all' ? styles.active : ''}
+          className={
+            filter === 'all' ? styles.active : styles.courseToggleButton
+          }
           onClick={() => {
             setFilter('all');
             filterData('all');
@@ -94,7 +96,9 @@ function CourseDisplay() {
         </div>
 
         <div
-          className={filter === 'completed' ? styles.active : ''}
+          className={
+            filter === 'completed' ? styles.active : styles.courseToggleButton
+          }
           onClick={() => {
             setFilter('completed');
             filterData('completed');
@@ -103,7 +107,9 @@ function CourseDisplay() {
           Complete
         </div>
         <div
-          className={filter === 'incomplete' ? styles.active : ''}
+          className={
+            filter === 'incomplete' ? styles.active : styles.courseToggleButton
+          }
           onClick={() => {
             setFilter('incomplete');
             filterData('incomplete');

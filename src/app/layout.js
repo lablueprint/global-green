@@ -20,7 +20,8 @@ export default async function RootLayout({ children }) {
           <div className={styles.wrapper}>
             <NavBar />
             <div
-              style={{ minWidth: '80vw', width: '100%' }} // TODO: I feel like we should include this? - Ryan K
+              style={{ minWidth: '80vw' }} // TODO: I feel like we should include this? - Ryan K
+              className={styles.content}
             >
               <Suspense fallback={<Loading />}>{children}</Suspense>
             </div>

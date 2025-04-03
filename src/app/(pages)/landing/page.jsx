@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState, useEffect, useCallback } from 'react';
+import React, { useState, useEffect, useCallback, useRef } from 'react';
 import Image from 'next/image';
 import { useSession } from 'next-auth/react';
 import styles from './page.module.css';
@@ -22,7 +22,10 @@ function LandingPage() {
   const [isGardenModalOpen, setIsGardenModalOpen] = useState(false);
   const [dataFetched, setDataFetched] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
-  const [idWaitTimer, setIdWaitTimer] = useState(null); // keep track of time waiting for ID
+
+  const intervalIdRef = useRef(null);
+  const timeoutIdRef = useRef(null);
+  const attemptCountRef = useRef(0);
 
   // TODO: replace this mapping method
   // better naming scheme - either as global variables since local to track which indexes
@@ -52,6 +55,18 @@ function LandingPage() {
   const [accessories, setAccessories] = useState([]);
   const [backgrounds, setBackgrounds] = useState([]);
 
+  const clearAllTimers = useCallback(() => {
+    if (intervalIdRef.current) {
+      clearInterval(intervalIdRef.current);
+      intervalIdRef.current = null;
+    }
+
+    if (timeoutIdRef.current) {
+      clearTimeout(timeoutIdRef.current);
+      timeoutIdRef.current = null;
+    }
+  }, []);
+
   const getCoursesInfo = useCallback(
     async (id) => {
       if (!id) {
@@ -61,6 +76,8 @@ function LandingPage() {
 
       try {
         console.log('fetch user info with ID:', id);
+        setIsLoading(true);
+
         const response = await fetch('/api/users/me', {
           method: 'POST',
           headers: {
@@ -107,14 +124,9 @@ function LandingPage() {
           setUserName(session.user.userName);
         }
 
+        clearAllTimers();
         setDataFetched(true);
         setIsLoading(false);
-
-        if (idWaitTimer) {
-          clearTimeout(idWaitTimer);
-          setIdWaitTimer(null);
-        }
-
         return true;
       } catch (error) {
         console.log('error fetching user data:', error);
@@ -122,7 +134,7 @@ function LandingPage() {
         return false;
       }
     },
-    [flowers, courseFlowerMap, session, idWaitTimer] // [session]
+    [flowers, courseFlowerMap, session, clearAllTimers] // [session]
   );
 
   // basic try to fetch data from session
@@ -130,7 +142,7 @@ function LandingPage() {
     if (session?.user?.userName) {
       setUserName(session.user.userName);
     }
-  }, [session]);
+  }, [session, userName]);
 
   // useEffect(() => {
   //   console.log('STHSTHSTH: ', session, status);
@@ -148,8 +160,10 @@ function LandingPage() {
       return;
     }
 
-    console.log('session authenticated, checking for ID');
+    clearAllTimers();
     setNameFromSession();
+
+    console.log('session authenticated, checking for ID');
     if (session?.user?.id) {
       console.log('ID found immediately, fetching data');
       getCoursesInfo(session.user.id);
@@ -157,40 +171,43 @@ function LandingPage() {
     }
 
     console.log('no ID yet, setting up wait timer');
-    if (idWaitTimer) {
-      clearTimeout(idWaitTimer);
-    }
+    attemptCountRef.current = 0;
 
-    // polling mechanism to check ID every 500ms
-    const intervalId = setInterval(() => {
-      console.log('checking for ID...');
+    // interval to check for id periodically
+    intervalIdRef.current = setInterval(() => {
+      attemptCountRef.current += 1;
+      console.log(`checking for ID... (attempt ${attemptCountRef.current})`);
+
       if (session?.user?.id) {
-        console.log('ID FOUND DURING POLLING');
-        clearInterval(intervalId);
+        console.log('ID found during polling, fetching data');
         getCoursesInfo(session.user.id);
+      }
+
+      // give up on polling after 10 attempts (5 seconds)
+      if (attemptCountRef.current >= 10) {
+        console.log('max poll attempts reached, giving up');
+        clearAllTimers();
+        setDataFetched(true);
+        setIsLoading(false);
       }
     }, 500);
 
-    // setting a 5-second timeout to stop polling if no ID
-    const timeoutId = setTimeout(() => {
-      console.log('timed out waiting for id');
-      clearInterval(intervalId);
-      setIsLoading(false);
+    // additional safety timeout
+    timeoutIdRef.current = setTimeout(() => {
+      console.log('timeout reached waiting for ID');
+      clearAllTimers();
       setDataFetched(true);
-    }, 5000);
+      setIsLoading(false);
+    }, 6000);
 
-    setIdWaitTimer(timeoutId);
-    return () => {
-      clearInterval(intervalId);
-      clearTimeout(timeoutId);
-    };
+    return clearAllTimers;
   }, [
     status,
     session,
     getCoursesInfo,
     dataFetched,
-    idWaitTimer,
     setNameFromSession,
+    clearAllTimers,
   ]);
   // is this triggered if all changes or just one?
 

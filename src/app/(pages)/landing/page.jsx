@@ -13,7 +13,7 @@ import WelcomeUser from './WelcomeUser';
 function LandingPage() {
   // const [gardenBadge, setGardenBadge] = useState(false);
   // const [user, setUser] = useState({});
-  const { data: session, status } = useSession();
+  const { data: session, status, update } = useSession();
   const [userName, setUserName] = useState(null);
   // const [currentModule] = useState({
   //   imageUrl: '/landingpageImage.png',
@@ -185,7 +185,8 @@ function LandingPage() {
 
       // give up on polling after 10 attempts (5 seconds)
       if (attemptCountRef.current >= 10) {
-        console.log('max poll attempts reached, giving up');
+        console.log('max poll attempts reached, trying session update');
+
         clearAllTimers();
         setDataFetched(true);
         setIsLoading(false);
@@ -195,9 +196,19 @@ function LandingPage() {
     // additional safety timeout
     timeoutIdRef.current = setTimeout(() => {
       console.log('timeout reached waiting for ID');
-      clearAllTimers();
-      setDataFetched(true);
-      setIsLoading(false);
+
+      // force NextAuth to refresh the session
+      update().then(() => {
+        console.log('session updated, checking id again');
+        if (session?.user?.id) {
+          getCoursesInfo(session.user.id);
+        } else {
+          console.log('still no id after update, giving up');
+          clearAllTimers();
+          setDataFetched(true);
+          setIsLoading(false);
+        }
+      });
     }, 6000);
 
     return clearAllTimers;

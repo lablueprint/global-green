@@ -187,28 +187,26 @@ function LandingPage() {
       if (attemptCountRef.current >= 10) {
         console.log('max poll attempts reached, trying session update');
 
-        clearAllTimers();
-        setDataFetched(true);
-        setIsLoading(false);
+        update().then(() => {
+          console.log('session update, checking for id again');
+          if (session?.user?.id) {
+            getCoursesInfo(session.user.id);
+          } else {
+            console.log('still no id after update, giving up');
+            clearAllTimers();
+            setDataFetched(true);
+            setIsLoading(false);
+          }
+        });
       }
     }, 500);
 
     // additional safety timeout
     timeoutIdRef.current = setTimeout(() => {
       console.log('timeout reached waiting for ID');
-
-      // force NextAuth to refresh the session
-      update().then(() => {
-        console.log('session updated, checking id again');
-        if (session?.user?.id) {
-          getCoursesInfo(session.user.id);
-        } else {
-          console.log('still no id after update, giving up');
-          clearAllTimers();
-          setDataFetched(true);
-          setIsLoading(false);
-        }
-      });
+      clearAllTimers();
+      setDataFetched(true);
+      setIsLoading(false);
     }, 6000);
 
     return clearAllTimers;

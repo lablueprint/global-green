@@ -15,11 +15,11 @@ function LandingPage() {
   // const [user, setUser] = useState({});
   const { data: session, status, update } = useSession();
   const [userName, setUserName] = useState(null);
+  const [isGardenModalOpen, setIsGardenModalOpen] = useState(false);
   // const [currentModule] = useState({
   //   imageUrl: '/landingpageImage.png',
   //   name: 'Chinenye Eneh',
   // });
-  const [isGardenModalOpen, setIsGardenModalOpen] = useState(false);
 
   // TODO: replace this mapping method
   // better naming scheme - either as global variables since local to track which indexes
@@ -59,6 +59,7 @@ function LandingPage() {
       try {
         console.log('fetch user info with ID:', id);
 
+        // getUserDetails?
         const response = await fetch('/api/users/me', {
           method: 'POST',
           headers: {
@@ -118,14 +119,7 @@ function LandingPage() {
     if (session?.user?.userName) {
       setUserName(session.user.userName);
     }
-  }, [session, userName]);
-
-  // useEffect(() => {
-  //   console.log('STHSTHSTH: ', session, status);
-  //   if (status === 'authenticated' && session?.user?.id) {
-  //     getCoursesInfo(session.user.id);
-  //   }
-  // }, [status, session]);
+  }, [session]);
 
   // session monitoring and data fetching
   useEffect(() => {

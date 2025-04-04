@@ -20,12 +20,6 @@ function LandingPage() {
   //   name: 'Chinenye Eneh',
   // });
   const [isGardenModalOpen, setIsGardenModalOpen] = useState(false);
-  const [dataFetched, setDataFetched] = useState(false);
-  const [isLoading, setIsLoading] = useState(false);
-
-  const intervalIdRef = useRef(null);
-  const timeoutIdRef = useRef(null);
-  const attemptCountRef = useRef(0);
 
   // TODO: replace this mapping method
   // better naming scheme - either as global variables since local to track which indexes
@@ -55,18 +49,6 @@ function LandingPage() {
   const [accessories, setAccessories] = useState([]);
   const [backgrounds, setBackgrounds] = useState([]);
 
-  const clearAllTimers = useCallback(() => {
-    if (intervalIdRef.current) {
-      clearInterval(intervalIdRef.current);
-      intervalIdRef.current = null;
-    }
-
-    if (timeoutIdRef.current) {
-      clearTimeout(timeoutIdRef.current);
-      timeoutIdRef.current = null;
-    }
-  }, []);
-
   const getCoursesInfo = useCallback(
     async (id) => {
       if (!id) {
@@ -76,7 +58,6 @@ function LandingPage() {
 
       try {
         console.log('fetch user info with ID:', id);
-        setIsLoading(true);
 
         const response = await fetch('/api/users/me', {
           method: 'POST',
@@ -123,18 +104,13 @@ function LandingPage() {
           console.log('setting username from session:', session.user.userName);
           setUserName(session.user.userName);
         }
-
-        clearAllTimers();
-        setDataFetched(true);
-        setIsLoading(false);
         return true;
       } catch (error) {
         console.log('error fetching user data:', error);
-        setIsLoading(false);
         return false;
       }
     },
-    [flowers, courseFlowerMap, session, clearAllTimers] // [session]
+    [flowers, courseFlowerMap, session] // [session]
   );
 
   // basic try to fetch data from session
@@ -153,14 +129,11 @@ function LandingPage() {
 
   // session monitoring and data fetching
   useEffect(() => {
-    if (dataFetched) return;
-
     if (status !== 'authenticated') {
       console.log('session not authenticated yet');
       return;
     }
 
-    clearAllTimers();
     setNameFromSession();
 
     console.log('session authenticated, checking for ID');
@@ -170,54 +143,17 @@ function LandingPage() {
       return;
     }
 
-    console.log('no ID yet, setting up wait timer');
-    attemptCountRef.current = 0;
+    console.log('no ID yet, force updating session');
 
-    // interval to check for id periodically
-    intervalIdRef.current = setInterval(() => {
-      attemptCountRef.current += 1;
-      console.log(`checking for ID... (attempt ${attemptCountRef.current})`);
-
+    update().then(() => {
+      console.log('session update, checking for id again');
       if (session?.user?.id) {
-        console.log('ID found during polling, fetching data');
         getCoursesInfo(session.user.id);
+      } else {
+        console.log('still no id after update, giving up');
       }
-
-      // give up on polling after 10 attempts (5 seconds)
-      if (attemptCountRef.current >= 10) {
-        console.log('max poll attempts reached, trying session update');
-
-        update().then(() => {
-          console.log('session update, checking for id again');
-          if (session?.user?.id) {
-            getCoursesInfo(session.user.id);
-          } else {
-            console.log('still no id after update, giving up');
-            clearAllTimers();
-            setDataFetched(true);
-            setIsLoading(false);
-          }
-        });
-      }
-    }, 500);
-
-    // additional safety timeout
-    timeoutIdRef.current = setTimeout(() => {
-      console.log('timeout reached waiting for ID');
-      clearAllTimers();
-      setDataFetched(true);
-      setIsLoading(false);
-    }, 6000);
-
-    return clearAllTimers;
-  }, [
-    status,
-    session,
-    getCoursesInfo,
-    dataFetched,
-    setNameFromSession,
-    clearAllTimers,
-  ]);
+    });
+  }, [status, session]);
   // is this triggered if all changes or just one?
 
   const updateGardenState = async (id) => {

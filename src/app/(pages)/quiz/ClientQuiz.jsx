@@ -288,7 +288,7 @@ function Quiz() {
     setShowCheckButton(false);
   };
 
-  if (!showResults) {
+  if (showResults) {
     return (
       <Results
         skips={skipCount}

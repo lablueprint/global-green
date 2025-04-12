@@ -11,8 +11,10 @@ export const metadata = {
   title: 'Global Green Web App',
   description: 'Web-based educational game',
 };
+
 export default async function RootLayout({ children }) {
   const session = await getServerSession();
+
   return (
     <html lang="en">
       <body style={{ margin: 0, padding: 0 }}>
@@ -20,8 +22,9 @@ export default async function RootLayout({ children }) {
           <div className={styles.wrapper}>
             <NavBar />
             <div
-              style={{ minWidth: '80vw' }} // TODO: I feel like we should include this? - Ryan K
-              className={styles.content}
+              //style={{ minWidth: '80vw' }} // TODO: I feel like we should include this? - Ryan K
+              className={`main-content ${styles.content}`}
+              // style={{ margin: '0 10vw' }}
             >
               <Suspense fallback={<Loading />}>{children}</Suspense>
             </div>

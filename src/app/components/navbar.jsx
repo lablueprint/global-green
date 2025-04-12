@@ -79,11 +79,16 @@ export default function NavBar() {
       }
 
       const data = await response.json();
+
+      if (data.message == 'User not found!') {
+        throw new Error('user may be deleted');
+      }
+
       console.log('data', data);
       setUser({
         ...data.user,
-        userName: data.user.userName || 'User',
-        seeds: data.user.seeds || 0,
+        userName: data?.user?.userName || 'User',
+        seeds: data?.user?.seeds || 0,
       });
       console.log('user', user);
     } catch (error) {
@@ -177,6 +182,22 @@ export default function NavBar() {
     observer.observe(document, { subtree: true, childList: true });
     return () => observer.disconnect();
   }, [currentPath]);
+
+  useEffect(() => {
+    console.log('Navbar visibility changed:', shouldRenderNav);
+    if (!shouldRenderNav) {
+      document.body.classList.add('no-navbar');
+      console.log('Added no-navbar class');
+    } else {
+      document.body.classList.remove('no-navbar');
+      console.log('Removed no-navbar class');
+    }
+
+    // Clean up when component unmounts
+    return () => {
+      document.body.classList.remove('no-navbar');
+    };
+  }, [shouldRenderNav]);
 
   if (!shouldRenderNav) {
     return null;

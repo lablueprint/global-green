@@ -342,7 +342,7 @@ function VerifyEmail() {
   }
 
   return (
-    <div>
+    <div className={styles.verifyContainer}>
       <div className={styles.topLeft}>
         <SignInLogo />
       </div>

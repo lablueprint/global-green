@@ -1,7 +1,6 @@
 'use client';
 
-import React, { useState, useEffect, useCallback, useRef } from 'react';
-import Image from 'next/image';
+import React, { useState, useEffect, useCallback } from 'react';
 import { useSession } from 'next-auth/react';
 import styles from './page.module.css';
 import CourseDisplay from './CourseDisplay';
@@ -52,12 +51,12 @@ function LandingPage() {
   const getCoursesInfo = useCallback(
     async (id) => {
       if (!id) {
-        console.log('no id provided, skipping fetch');
+        //console.log('no id provided, skipping fetch');
         return false;
       }
 
       try {
-        console.log('fetch user info with ID:', id);
+        //console.log('fetch user info with ID:', id);
 
         // getUserDetails?
         const response = await fetch('/api/users/me', {
@@ -74,7 +73,7 @@ function LandingPage() {
 
         const data = await response.json();
         const { user } = data;
-        console.log('user data fetched successfully!');
+        //console.log('user data fetched successfully!');
 
         // set the flowers based on progress
         if (user?.courses) {
@@ -84,8 +83,8 @@ function LandingPage() {
               adjustFlowers[courseFlowerMap[course.key]] = true;
             }
           });
-          console.log('user', user);
-          console.log('adjustFlowers', adjustFlowers);
+          //console.log('user', user);
+          //console.log('adjustFlowers', adjustFlowers);
           setFlowers(adjustFlowers);
         }
 
@@ -95,19 +94,19 @@ function LandingPage() {
         // TODO: add more checks for if a user field exists! some accounts don't have some fields
         if (user?.garden?.background) {
           setGardenState(user.garden);
-          console.log(user.garden);
+          //console.log(user.garden);
         }
 
         if (user.userName) {
-          console.log('setting username from API:', user.userName);
+          //console.log('setting username from API:', user.userName);
           setUserName(user.userName);
         } else if (session?.user?.userName) {
-          console.log('setting username from session:', session.user.userName);
+          //console.log('setting username from session:', session.user.userName);
           setUserName(session.user.userName);
         }
         return true;
       } catch (error) {
-        console.log('error fetching user data:', error);
+        //console.log('error fetching user data:', error);
         return false;
       }
     },
@@ -124,27 +123,27 @@ function LandingPage() {
   // session monitoring and data fetching
   useEffect(() => {
     if (status !== 'authenticated') {
-      console.log('session not authenticated yet');
+      //console.log('session not authenticated yet');
       return;
     }
 
     setNameFromSession();
 
-    console.log('session authenticated, checking for ID');
+    //console.log('session authenticated, checking for ID');
     if (session?.user?.id) {
-      console.log('ID found immediately, fetching data');
+      //console.log('ID found immediately, fetching data');
       getCoursesInfo(session.user.id);
       return;
     }
 
-    console.log('no ID yet, force updating session');
+    //console.log('no ID yet, force updating session');
 
     update().then(() => {
-      console.log('session update, checking for id again');
+      //console.log('session update, checking for id again');
       if (session?.user?.id) {
         getCoursesInfo(session.user.id);
       } else {
-        console.log('still no id after update, giving up');
+        //console.log('still no id after update, giving up');
       }
     });
   }, [status, session]);
@@ -155,16 +154,6 @@ function LandingPage() {
 
     // update the user's garden state
     await fetch('/api/users/me/update-garden', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({ id, garden: gardenState }),
-    });
-  };
-  const getUserDetails = async (id) => {
-    if (!id) return;
-    const response = await fetch('/api/users/me', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',

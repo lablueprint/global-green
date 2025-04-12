@@ -63,7 +63,9 @@ function CourseDisplay() {
       body: JSON.stringify({ id }),
     });
     const data = await response.json();
-    setCourseProgress(data.user.courses);
+    if (data?.user?.courses) {
+      setCourseProgress(data.user.courses);
+    }
   };
 
   useEffect(() => {

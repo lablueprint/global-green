@@ -1,3 +1,9 @@
+.overallContainer {
+  position: fixed;
+  left: 0;
+  width: 100%;
+}
+
 .pageContent {
   display: flex;
   justify-content: center;

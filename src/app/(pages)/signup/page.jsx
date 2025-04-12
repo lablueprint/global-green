@@ -164,7 +164,7 @@ function SignUp() {
   }, [session]);
 
   return (
-    <>
+    <div className={styles.signupContainer}>
       <div className={styles.topLeft}>
         <SignInLogo />
       </div>
@@ -299,7 +299,7 @@ function SignUp() {
           </div>
         </form>
       </div>
-    </>
+    </div>
   );
 }
 

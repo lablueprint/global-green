@@ -1,3 +1,26 @@
+.verifyContainer {
+  position: fixed;
+  left: 0;
+  width: 100%;
+}
+
+.topLeft {
+  color: var(--Green-100, #519546);
+  font-family: 'Arial', sans-serif;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: 100%;
+  padding-top: 30px;
+  padding-left: 30px;
+  display: flex;
+  align-items: center;
+}
+
+.topLeft span {
+  margin-top: -5px;
+}
+
 .contentContainer {
   display: flex;
   flex-direction: column;
@@ -72,21 +95,4 @@
 
 .resendText {
   color: #519546;
-}
-
-.topLeft {
-  color: var(--Green-100, #519546);
-  font-family: 'Arial', sans-serif;
-  font-size: 16px;
-  font-style: normal;
-  font-weight: 600;
-  line-height: 100%;
-  padding-top: 30px;
-  padding-left: 30px;
-  display: flex;
-  align-items: center;
-}
-
-.topLeft span {
-  margin-top: -5px;
 }

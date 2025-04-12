@@ -53,7 +53,7 @@ function ForgotPassword() {
   }, [session]);
 
   return (
-    <>
+    <div className={styles.overallContainer}>
       <div className={styles.topLeft}>
         <SignInLogo />
       </div>
@@ -89,7 +89,7 @@ function ForgotPassword() {
           </div>
         </div>
       </div>
-    </>
+    </div>
   );
 }
 

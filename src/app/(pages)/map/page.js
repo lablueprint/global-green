@@ -11,25 +11,19 @@ export default function Page() {
 
   const { data: session } = useSession();
 
-  useEffect(
-    () => {
-      if (session) getUserDetails(session.user.id);
-    },
-    [session],
-  );
+  useEffect(() => {
+    if (session) getUserDetails(session.user.id);
+  }, [session]);
 
   const getUserDetails = async (id) => {
     if (!id) return;
-    const response = await fetch(
-      '/api/users/me',
-      {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ id }),
+    const response = await fetch('/api/users/me', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
       },
-    );
+      body: JSON.stringify({ id }),
+    });
 
     const data = await response.json();
     console.log('data', data);
@@ -66,8 +60,8 @@ export default function Page() {
         <div className={styles.header}>
           <h1 className={styles.title}>Sustainability Map</h1>
           <div className={styles.exampleText}>
-            Some kind of description giving a brief overview of what sustainability labs and
-            recycling centers are, along with their impact.
+            Explore Global Green Journey’s various Sustainability Lab locations
+            across the world.
           </div>
         </div>
         <MapComponent />

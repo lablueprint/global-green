@@ -7,40 +7,71 @@ export async function PATCH(request) {
   await connectMongoDB();
   try {
     const reqBody = await request.json();
-    const {
+    const { userId, courseKey, currStage, complete } = reqBody;
+
+    console.log('backend course progress update req:', {
       userId,
       courseKey,
       currStage,
       complete,
-    } = reqBody;
+    });
 
-    console.log('backend course progress');
+    // using findByIdAndUpdate with atomic operators instead of direct modification
+    let updateQuery = {};
 
-    const user = await User.findById(userId);
-    if (!user) {
+    // check if course exists
+    const userCheck = await User.findById(userId);
+    if (!userCheck) {
       return NextResponse.json({ error: 'User not found' }, { status: 404 });
     }
 
-    // Check if the course exists
-    const courseIndex = user.courses.findIndex((course) => course.key === courseKey);
+    const courseExists = userCheck.courses.some(
+      (course) => course.key === courseKey
+    );
 
-    console.log(courseIndex);
+    if (courseExists) {
+      // Update the existing course using positional $ operator
+      if (currStage !== undefined)
+        updateQuery['courses.$[elem].currStage'] = currStage; // mongodb direct mod
+      // user.courses[courseIndex].currStage = currStage;   // document sth sth
+      if (complete !== undefined)
+        updateQuery['courses.$[elem].complete'] = complete;
+      // user.courses[courseIndex].complete = complete;
 
-    if (courseIndex !== -1) {
-      // Update the existing course
-      if (currStage !== undefined) user.courses[courseIndex].currStage = currStage;
-      if (complete !== undefined) user.courses[courseIndex].complete = complete;
+      const updatedUser = await User.findByIdAndUpdate(
+        userId,
+        { $set: updateQuery },
+        {
+          new: true,
+          arrayFilters: [{ 'elem.key': courseKey }],
+        }
+      );
+
+      console.log('user update successfully:', updatedUser);
+      return NextResponse.json({
+        message: 'backend progress updated successfully',
+        user: updatedUser,
+      });
     } else {
-      // Add the new course
-      user.courses.push({ key: courseKey, currStage, complete });
+      // Add the new course using $push
+      const updatedUser = await User.findByIdAndUpdate(
+        userId,
+        {
+          $push: {
+            courses: { key: courseKey, currStage, complete },
+          },
+        },
+        { new: true }
+      );
+
+      console.log('new course added successfully:', updatedUser);
+      return NextResponse.json({
+        message: 'backend progress updated successfully',
+        user: updatedUser,
+      });
     }
-
-    // Save the user document
-    await user.save();
-
-    console.log('user', user);
-    return NextResponse.json({ message: 'backend progress updated successfully', user });
   } catch (error) {
+    console.error('error updating course progress:', error);
     return NextResponse.json({ error: error.message }, { status: 500 });
   }
 }

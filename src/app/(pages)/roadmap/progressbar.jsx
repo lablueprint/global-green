@@ -8,9 +8,9 @@ import Box from '@mui/material/Box';
 // so if it is at 50, half of the progress bar will be filled up
 // x is current value (numerator)
 // y is the total (denominator)
-function LinearProgressWithLabel({ value, x, y }) {
+export function LinearProgressWithLabel({ value, x, y }) {
   return (
-    <Box sx={{ display: 'flex', justifyContent: 'left', width: '100%'}}>
+    <Box sx={{ display: 'flex', justifyContent: 'left', width: '100%' }}>
       <Box sx={{ minWidth: 35, mr: -7, position: 'relative' }}>
         <Typography
           style={{
@@ -20,17 +20,16 @@ function LinearProgressWithLabel({ value, x, y }) {
             fontFamily: 'Arial',
             textAlign: 'right',
           }}
-        >
-        </Typography>
+        />
       </Box>
-      <Box sx={{ width: '30%', mr: 0, ml: 8}}>
+      <Box sx={{ width: '30%', mr: 0, ml: 8 }}>
         <LinearProgress
           variant="determinate"
           value={value}
           sx={{
             borderRadius: 5,
             border: '0px',
-            height: '10px', 
+            height: '10px',
             backgroundColor: '#0D0D0D14',
             '& .MuiLinearProgress-bar': {
               backgroundColor: '#519546',
@@ -49,14 +48,12 @@ function LinearProgressWithLabel({ value, x, y }) {
             textAlign: 'left',
           }}
         >
-          {`${x}/${y}`}
+          {`${x - 1}/${y}`}
         </Typography>
       </Box>
     </Box>
   );
 }
-
-
 
 LinearProgressWithLabel.propTypes = {
   value: PropTypes.number.isRequired,
@@ -64,9 +61,15 @@ LinearProgressWithLabel.propTypes = {
   y: PropTypes.number.isRequired,
 };
 
-function LinearWithValueLabel({ value, x, y }) {
+export function LinearWithValueLabel({ value, x, y }) {
   return (
-    <Box sx={{ width: '100%' }}>
+    <Box
+      sx={{
+        width: '108%',
+        margin: '0px',
+        padding: '0px',
+      }}
+    >
       <LinearProgressWithLabel value={value} x={x} y={y} />
     </Box>
   );
@@ -78,4 +81,4 @@ LinearWithValueLabel.propTypes = {
   y: PropTypes.number.isRequired,
 };
 
-export default LinearWithValueLabel;
+// export default LinearWithValueLabel;

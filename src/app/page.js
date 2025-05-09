@@ -1,14 +1,18 @@
-// Import necessary components
-import Link from 'next/link';
-import styles from './page.module.css';
+'use client';
 
-export default function Page() {
-  return (
-    <main className={styles.container}>
-      <h1 className={styles.title1}>Welcome to Global Green</h1>
-      <p className={styles.description}>
-        You should not be seeing this page. Go to /landing
-      </p>
-    </main>
-  );
+import React, { useState, useEffect } from 'react';
+
+import { useRouter } from 'next/navigation';
+import { useSession } from 'next-auth/react';
+
+function LandingPage() {
+  const router = useRouter();
+  const { data: session } = useSession();
+
+  useEffect(() => {
+    router.push('/landing');
+  }, []);
+
+  return <></>;
 }
+export default LandingPage;

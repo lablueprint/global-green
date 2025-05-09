@@ -1,94 +1,98 @@
-.contentContainer {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    min-height: 100vh;
-    width: 100%;
-    margin-left: 12vw;
-  }
-  
-  .verificationTitle {
-    text-align: center;
-    color: black;
-    font-size: 36px;
-    font-weight: 600;
-    margin: 0 auto;
-    width: 100%;
-  }
-  
-  .accountDeletionNotice {
-    text-align: center;
-    color: rgba(13, 13, 13, 0.44);
-    margin: 0 auto;
-    width: 100%;
-    font-size: 15px;
-    margin-top: 10px;
-  }
-  
-  .tokenInputContainer {
-    justify-content: center;
-    gap: 5px;
-    display: flex;
-    margin: 20px 0; 
-  }
-  
-  .tokenInput {
-    width: 50px;
-    height: 50px;
-    border-radius: 15px;
-    border: 1px solid #d3d3d3;
-    background-color: #f2f2f2;
-    font-size: 20px;
-    text-align: center;
-    color: green;
-    font-weight: bold;
-  }
-  
-  .verifyButton {
-    background-color: #519546;
-    color: white;
-    padding: 12px 24px;
-    border: none;
-    border-radius: 40px;
-    cursor: pointer; 
-    margin: 20px auto; 
-    display: block;
-    font-size: 18px;
-    font-weight: bold;
-  }
-  
-  .resendText, .resendTextDisabled {
-    text-decoration: underline;
-    cursor: pointer;
-    display: inline; 
-    margin-left: 10px;
-  }
-  
-  .resendTextDisabled {
-    color: #d3d3d3;
-    cursor: not-allowed;
-  }
+.verifyContainer {
+  position: fixed;
+  left: 0;
+  width: 100%;
+}
 
-  .resendText {
-    color: #519546;
-  }
-  
-  .topLeft {
-    color: var(--Green-100, #519546);
-    font-family: "Arial", sans-serif;
-    font-size: 16px;
-    font-style: normal;
-    font-weight: 600;
-    line-height: 100%;
-    padding-top: 30px;
-    padding-left: 30px;
-    display: flex;
-    align-items: center;
-  }
-  
-  .topLeft span {
-    margin-top: -5px;
-  }
- 
-  
+.topLeft {
+  color: var(--Green-100, #519546);
+  font-family: 'Arial', sans-serif;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: 100%;
+  padding-top: 30px;
+  padding-left: 30px;
+  display: flex;
+  align-items: center;
+}
+
+.topLeft span {
+  margin-top: -5px;
+}
+
+.contentContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  min-height: 80vh;
+}
+
+.verificationTitle {
+  text-align: center;
+  color: black;
+  font-size: 36px;
+  font-weight: 600;
+  margin: 0 auto;
+  width: 100%;
+}
+
+.accountDeletionNotice {
+  text-align: center;
+  color: rgba(13, 13, 13, 0.44);
+  margin: 0 auto;
+  width: 100%;
+  font-size: 15px;
+  margin-top: 10px;
+}
+
+.tokenInputContainer {
+  justify-content: center;
+  gap: 5px;
+  display: flex;
+  margin: 20px 0;
+}
+
+.tokenInput {
+  width: 50px;
+  height: 50px;
+  border-radius: 15px;
+  border: 1px solid #d3d3d3;
+  background-color: #f2f2f2;
+  font-size: 20px;
+  text-align: center;
+  color: green;
+  font-weight: bold;
+}
+
+.verifyButton {
+  background-color: #519546;
+  color: white;
+  padding: 12px 24px;
+  border: none;
+  border-radius: 40px;
+  cursor: pointer;
+  margin: 20px auto;
+  display: block;
+  font-size: 18px;
+  font-weight: bold;
+}
+
+.resendText,
+.resendTextDisabled {
+  text-decoration: underline;
+  cursor: pointer;
+  display: inline;
+  margin-left: 10px;
+}
+
+.resendTextDisabled {
+  color: #d3d3d3;
+  cursor: not-allowed;
+}
+
+.resendText {
+  color: #519546;
+}

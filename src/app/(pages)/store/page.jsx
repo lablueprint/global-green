@@ -19,9 +19,11 @@ function Store() {
   const [userAccessories, setUserAccessories] = useState([]);
   const [userBackgrounds, setUserBackgrounds] = useState([]);
 
-  const [buyThreeAccessoriesBadge, setBuyThreeAccessoriesBadge] = useState(false);
+  const [buyThreeAccessoriesBadge, setBuyThreeAccessoriesBadge] =
+    useState(false);
   const [buySixAccessoriesBadge, setBuySixAccessoriesBadge] = useState(false);
-  const [buyThreeBackgroundsBadge, setBuyThreeBackgroundsBadge] = useState(false);
+  const [buyThreeBackgroundsBadge, setBuyThreeBackgroundsBadge] =
+    useState(false);
   const [showPopup, setShowPopup] = useState(false);
   const [popupMessage, setPopupMessage] = useState('');
   const [popupItemName, setPopupItemName] = useState('');
@@ -43,16 +45,13 @@ function Store() {
 
   const getUserDetails = async (id) => {
     if (!id) return;
-    const response = await fetch(
-      '/api/users/me',
-      {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ id }),
+    const response = await fetch('/api/users/me', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
       },
-    );
+      body: JSON.stringify({ id }),
+    });
 
     const data = await response.json();
     console.log('data', data);
@@ -79,7 +78,11 @@ function Store() {
     getAllBackgrounds();
   }, []);
 
-  async function updateUserDataInDB(newUserAccessories, newUserBackgrounds, newSeeds) {
+  async function updateUserDataInDB(
+    newUserAccessories,
+    newUserBackgrounds,
+    newSeeds
+  ) {
     const response = await fetch('/api/users/me/buy-item', {
       method: 'PATCH',
       headers: {
@@ -170,9 +173,13 @@ function Store() {
       setSeeds(seeds - item.price);
 
       updateUserDataInDB(
-        type === 'accessories' ? [...userAccessories, item.name] : userAccessories,
-        type === 'background' ? [...userBackgrounds, item.name] : userBackgrounds,
-        seeds - item.price,
+        type === 'accessories'
+          ? [...userAccessories, item.name]
+          : userAccessories,
+        type === 'background'
+          ? [...userBackgrounds, item.name]
+          : userBackgrounds,
+        seeds - item.price
       );
       showPopupMessage('Congrats! You just bought', item.name, item.image);
     }
@@ -180,11 +187,7 @@ function Store() {
 
   function storeItem(item) {
     return (
-      <div
-        className={styles.storeItem}
-        key={item.name}
-      >
-
+      <div className={styles.storeItem} key={item.name}>
         <ChallengeBadge
           challengeName="Buy three accessories"
           challengePointValue="20"
@@ -206,27 +209,29 @@ function Store() {
         />
 
         <div className={styles.storeItemImg}>
-          {
-            (userAccessories.includes(item.name) || userBackgrounds.includes(item.name))
-            && <div className={styles.storeItemImgOverlay} />
-          }
+          {(userAccessories.includes(item.name) ||
+            userBackgrounds.includes(item.name)) && (
+            <div className={styles.storeItemImgOverlay} />
+          )}
           <img src={item.image} alt={item.name} />
-        </div>
-        <div className={styles.storeItemPrice}>
-          <span style={{ display: 'inline-flex', alignItems: 'center' }}>
-            {item.price}
-            <img
-              src="/store/seeds_logo.svg"
-              alt="icon"
-              width="10px"
-              height="10px"
-              style={{ marginLeft: '4px' }}
-            />
-          </span>
+
+          <div className={styles.storeItemPrice}>
+            <span style={{ display: 'inline-flex', alignItems: 'center' }}>
+              {item.price}
+              <img
+                src="/store/seeds_logo.svg"
+                alt="icon"
+                width="10px"
+                height="10px"
+                style={{ marginLeft: '4px' }}
+              />
+            </span>
+          </div>
         </div>
         <div className={`${styles.storeItemDetails}`}>
           <span>{item.name}</span>
-          {userAccessories.includes(item.name) || userBackgrounds.includes(item.name) ? (
+          {userAccessories.includes(item.name) ||
+          userBackgrounds.includes(item.name) ? (
             <Button
               type="button"
               sx={{
@@ -248,7 +253,6 @@ function Store() {
                 borderRadius: '1em',
                 padding: '0.45em 2em',
                 backgroundColor: '#519546',
-                fontFamily: 'inherit',
                 color: 'white',
                 textAlign: 'center',
                 fontFamily: 'Instrument Sans',
@@ -296,9 +300,7 @@ function Store() {
           Store
           <div className={styles.seedsTitle}>
             {seeds}
-            <img
-              src="/store/seeds_logo_title.svg"
-            />
+            <img src="/store/seeds_logo_title.svg" />
           </div>
         </div>
         <div className={styles.storeTabs}>
@@ -310,7 +312,8 @@ function Store() {
               textTransform: 'none',
               fontFamily: 'Instrument Sans',
               color: currentTab === 'accessories' ? '#519546' : '#9B9B9B',
-              borderBottom: currentTab === 'accessories' ? '2px solid #519546' : 'none',
+              borderBottom:
+                currentTab === 'accessories' ? '2px solid #519546' : 'none',
               fontSize: '20px',
               fontStyle: 'normal',
               fontWeight: '600',
@@ -318,7 +321,8 @@ function Store() {
               '&:hover': {
                 backgroundColor: 'transparent',
                 color: currentTab === 'accessories' ? '#519546' : '#9B9B9B',
-                borderBottom: currentTab === 'accessories' ? '2px solid #519546' : 'none',
+                borderBottom:
+                  currentTab === 'accessories' ? '2px solid #519546' : 'none',
               },
             }}
             onClick={() => setCurrentTab('accessories')}
@@ -333,7 +337,10 @@ function Store() {
               textTransform: 'none',
               fontFamily: 'Instrument Sans',
               color: currentTab === 'background' ? '#519546' : '#9B9B9B',
-              borderBottom: currentTab === 'background' ? '2px solid #519546' : '1px solid lightgrey',
+              borderBottom:
+                currentTab === 'background'
+                  ? '2px solid #519546'
+                  : '1px solid lightgrey',
               fontSize: '20px',
               fontStyle: 'normal',
               fontWeight: '600',
@@ -341,7 +348,10 @@ function Store() {
               '&:hover': {
                 backgroundColor: 'transparent',
                 color: currentTab === 'background' ? '#519546' : '#9B9B9B',
-                borderBottom: currentTab === 'background' ? '2px solid #519546' : '1px solid lightgrey',
+                borderBottom:
+                  currentTab === 'background'
+                    ? '2px solid #519546'
+                    : '1px solid lightgrey',
               },
             }}
             onClick={() => setCurrentTab('background')}

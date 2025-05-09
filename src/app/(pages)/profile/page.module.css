@@ -2,70 +2,82 @@
 
 .container {
   text-align: left;
-  margin: 40px 60px;
+  padding: 4em 5em;
 }
 
 .pageName {
-  color: black;
-  font-size: 2em;
-  margin-bottom: 40px;
+  color: #1d1d1d;
+  font-size: 40px;
   font-weight: bold;
+  line-height: 100%;
+  margin-bottom: 36px;
 }
 
 .sectionHeader {
-  font-size: 25px;
+  font-size: 18px;
   font-weight: 600;
   margin: 20px 0;
   border-bottom: 1.5px solid #ddd;
-  padding-bottom: 10px;
+  padding: 10px 0;
 }
 
 .sectionText {
-  font-size: 17px;
+  font-size: 16px;
+  color: #1d1d1d;
   font-weight: 500;
+  margin-top: 5px;
+  line-height: 140%;
 }
 
 .row {
   display: flex;
-  justify-content: left;
-  padding: 10px;
+  justify-content: space-between;
+  padding: 8px 0px;
   flex-wrap: wrap;
-  gap: 20px;
+  gap: 16px;
 }
 
 .subText {
-  font-size: 15px;
-  color: gray;
-  padding: 15px 0px;
-  gap: 5px;
-  margin-bottom: 20px;
+  font-size: 14px;
+  color: #9b9b9b;
+  line-height: 140%;
+  padding: 4px 0px;
+  margin-bottom: 15px;
 }
 
 /* top section */
 
 .profileSection {
   display: flex;
-  align-items: center;
+  align-items: flex-end;
   margin-bottom: 50px;
 }
 
 .name {
-  font-size: 15px;
+  font-size: 14px;
   font-weight: 500;
-  margin-left: 50px;
+  margin-left: 25px;
 }
 
 .displayName {
-  color: #a7a0a0;
-  margin-bottom: 10px;
+  color: #9b9b9b;
+  margin-bottom: 9px;
 }
 
 .username {
-  border: 2px solid #ddd;
+  /* border: 2px solid #ddd; */
   background-color: #e8e8e8;
-  width: 200px;
-  padding: 8px 10px;
+  color: #1d1d1d;
+  font-size: 18px;
+  font-weight: 600;
+  line-height: 110%;
+  width: 300px;
+  padding: 12px 18px;
   border-radius: 10px;
+}
+
+.username:hover {
+  cursor: pointer;
 }
 
 .editingName {
@@ -82,7 +94,7 @@
 .overlay {
   position: fixed;
   top: 0;
-  left: 110px;
+  left: 0;
   width: 100%;
   height: 100%;
   background-color: rgba(0, 0, 0, 0.5);
@@ -90,88 +102,113 @@
   display: flex;
   justify-content: center;
   align-items: center;
+  z-index: 1000;
 }
 
 .popUp {
   position: absolute;
   background-color: white;
-  border: 1px solid black;
-  padding: 50px 50px;
-  border-radius: 10px;
+  padding: 36px 48px;
+  border-radius: 24px;
+  width: 750px;
 }
 
 .popTop {
   display: flex;
   justify-content: space-between;
-  border-bottom: 1px solid gray;
+  padding-bottom: 10px;
+  border-bottom: 1px solid #cbcbcb;
   margin-bottom: 10px;
 }
 
 .popTitle {
-  font-size: 20px;
+  font-size: 24px;
   font-weight: 550;
   padding-bottom: 10px;
+  color: #1d1d1d;
 }
 
 .popSubTitle {
-  font-size: 20px;
+  font-size: 18px;
   font-weight: 550;
-  padding: 20px 0px;
+  padding: 10px 0px;
+  color: #1d1d1d;
 }
 
 .popText {
-  font-size: 18px;
-  color: gray;
+  font-size: 16px;
+  color: #9b9b9b;
 }
 
 .popPicAll {
   padding: 30px 20px;
-  display: grid;
-  grid-template-columns: repeat(6, 1fr);
+  /* display: grid;
+  grid-template-columns: repeat(5, 1fr); */
+  display: flex;
+  flex-wrap: wrap;
+  gap: 32px;
+  margin: 32px 0;
 }
 
 .popPic {
-  width: 100px; /* Adjust the width dynamically */
-  height: 100px;
+  width: 110px; /* Adjust the width dynamically */
+  height: 110px;
   border-radius: 50px;
   background-size: cover;
-  margin: 30px 10px;
-  border: 2px solid transparent;
-  transition: border-color 0.3s ease;
-}
-
-.active {
-  width: 100px; /* Adjust the width dynamically */
-  height: 100px;
-  border-radius: 54px;
-  background-size: cover;
-  margin: 30px 10px;
-  border: 5px solid green;
+  /* margin: 10px 10px; */
+  /* border: 2px solid transparent; */
   transition: border-color 0.3s ease;
 }
 
 .popPic:hover {
+  cursor: pointer;
   opacity: 0.5;
+}
+
+.active {
+  width: 110px; /* Adjust the width dynamically */
+  height: 110px;
+  border-radius: 50px;
+  background-size: cover;
+  background-color: #519546;
+  outline: 2px solid #519546;
+  transition: border-color 0.3s ease;
 }
 
 .popBottom {
   display: flex;
   justify-content: right;
+  gap: 16px;
 }
 
 .popButton {
-  font-size: 18px;
-  border: 1px solid black;
-  border-radius: 10px;
-  padding: 2px 10px;
-  margin: 5px;
+  font-size: 16px;
+  font-weight: 550;
+  line-height: 110%;
+  color: #1d1d1d;
+  border: 1px solid #9b9b9b;
+  border-radius: 40px;
+  padding: 12px 32px;
   cursor: pointer;
+  min-width: 90px;
+  text-align: center;
+}
+
+.popButton:hover {
+  background-color: #e2e2e2;
+  border-color: transparent;
+  transition-duration: 300ms;
 }
 
 .popClose {
   cursor: pointer;
-  font-size: 20px;
-  font-weight: 500;
+  padding: 5px;
+  border-radius: 4px;
+}
+
+.popClose:hover {
+  background-color: #e2e2e2;
+  transition-duration: 300ms;
 }
 
 /* account section */
@@ -180,11 +217,33 @@
   justify-content: space-between;
 }
 
+.accountCol {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+
+.accountClick {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 2px;
+}
+
 .arrow {
-  font-size: 25px;
-  font-weight: 300;
-  color: gray;
   cursor: pointer;
+  width: 45px;
+  height: 45px;
+  border-radius: 10px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.arrow:hover {
+  background-color: #f0f0f0;
+  transition-duration: 500ms;
 }
 
 /* certificate section */
@@ -193,40 +252,33 @@
   border-radius: 10px;
   text-align: left;
   padding: 30px 20px;
-  display: flex;
   flex-direction: column;
   justify-content: space-between;
-  height: 175px;
+  width: 300px;
+  height: 200px;
   cursor: pointer;
-}
-
-.certificateItem {
-  flex: 0 0 calc(33.33% - 20px);
 }
 
 .certificateHeader {
   font-size: 20px;
+  padding-top: 85px;
   font-weight: 500;
-  border-bottom-width: 2px;
-  padding-bottom: 5px;
   color: green;
 }
 
 .certificateName {
   margin-top: 4px;
-  font-size: 18px;
+  font-size: 13px;
   font-weight: 500;
-  border-left: 4px solid;
-  padding: 0px 10px;
-  width: 130px;
+  padding-top: 13px;
+  color: green;
 }
 
 .certificateInfo {
-  display: flex;
   font-size: 15px;
   color: green;
-  padding: 8px 0px;
   gap: 5px;
+  text-align: right;
 }
 
 .paginationDots {
@@ -249,12 +301,15 @@
 .courseItem {
   display: flex;
   flex: 0 0 calc(50% - 40px);
-  align-items: left;
-  margin-right: 20px;
 }
 
 .courseName {
-  width: 50%;
+  width: 300px;
+  white-space: nowrap;
+  font-weight: 600;
+  line-height: 100%;
+  color: #1d1d1d;
+  font-size: 14px;
 }
 
 /* password popup */
@@ -262,18 +317,32 @@
 .passPopUp {
   position: absolute;
   background-color: white;
-  border: 1px solid black;
-  padding: 50px 50px;
-  border-radius: 10px;
+  padding: 3rem;
+  border-radius: 24px;
+  display: flex;
+  flex-direction: column;
   width: 500px;
 }
 
 .passPopClose {
-  cursor: pointer;
+  display: flex;
+  justify-content: flex-end;
+  /* cursor: pointer; */
   font-size: 25px;
   font-weight: 500;
-  color: gray;
-  text-align: right;
+  color: #9b9b9b;
+}
+
+.passPopCloseBtn {
+  padding: 5px;
+  cursor: pointer;
+  color: #9b9b9b;
+  border-radius: 4px;
+}
+
+.passPopCloseBtn:hover {
+  background-color: #e2e2e2;
+  transition-duration: 300ms;
 }
 
 .pencil {
@@ -284,78 +353,96 @@
 }
 
 .passPopTitle {
-  font-size: 20px;
+  font-size: 18px;
   font-weight: 550;
-  padding-bottom: 20px;
+  padding-bottom: 8px;
   text-align: center;
 }
 
 .passPopSub {
   text-align: center;
-  font-size: 18px;
-  color: gray;
-  margin-bottom: 40px;
+  font-size: 16px;
+  color: #9b9b9b;
+  margin-bottom: 2rem;
+  font-weight: 300;
+  font-family: 'Instrument Sans';
+  line-height: 140%;
 }
 
 .passPopText {
-  font-size: 18px;
-  color: gray;
-  margin: 10px 0;
+  font-size: 14px;
+  color: #9b9b9b;
+  margin: 8px 0;
 }
 
 .passPopBottom {
-  margin: 20px 0;
+  margin: 2rem 0 0 0;
   display: flex;
-  justify-content: center;
+  justify-content: space-between;
 }
 
 .passInput {
-  width: 100%;
-  height: 40px;
-  border-radius: 10px;
-  border-color: rgb(232, 232, 232);
+  border-radius: 8px;
+  border: none;
   background-color: rgb(232, 232, 232);
-  font-size: 20px;
-  color: gray;
-  font-size: 20px;
-}
-
-.passInput:hover {
-  cursor: pointer;
+  font-size: 14px;
+  padding: 12px 18px;
+  margin-bottom: 10px;
+  width: 93%;
 }
 
 .passPopButton {
   font-size: 18px;
-  border: 1px solid black;
-  border-radius: 20px;
-  padding: 5px 20px;
-  margin: 5px;
+  border: 1.5px solid #9b9b9b;
+  border-radius: 40px;
+  padding: 12px 55px;
   cursor: pointer;
+  text-align: center;
+  font-weight: 500;
+}
+
+.passPopCancelButton {
+  font-size: 18px;
+  border: 1.5px solid #9b9b9b;
+  border-radius: 40px;
+  padding: 12px 55px;
+  cursor: pointer;
+  text-align: center;
+  font-weight: 500;
+}
+
+.passPopCancelButton:hover {
+  background-color: #9b9b9b;
+  color: #fff;
+  transition-duration: 300ms;
 }
 
 .enabled {
-  background-color: black;
+  background-color: #0d0d0d;
   color: white;
+  border-color: #0d0d0d;
 }
 
 .disabled {
-  background-color: rgb(218, 217, 217);
-  border-color: rgb(218, 217, 217);
-  color: gray;
-  cursor: auto;
+  background-color: #e2e2e2;
+  border-color: #e2e2e2;
+  color: #cbcbcb;
+}
+
+.disabled:hover {
+  cursor: pointer;
 }
 
 .done {
   font-size: 18px;
   border: 1px solid black;
-  border-radius: 20px;
-  padding: 5px 20px;
-  margin: 5px;
-  background-color: black;
+  border-radius: 40px;
+  padding: 12px 55px;
+  background-color: #0d0d0d;
   color: white;
   cursor: pointer;
-  width: 100px;
   text-align: center;
+  margin: 0 auto;
 }
 
 .modal {
@@ -369,7 +456,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  z-index: 1000; 
+  z-index: 1000;
 }
 
 .modalContent {
@@ -377,7 +464,7 @@
   padding: 50px;
   border-radius: 10px;
   text-align: center;
-  z-index: 1001; 
+  z-index: 1001;
 }
 
 .buttons {
@@ -403,4 +490,29 @@
   border: none;
   border-radius: 5px;
   cursor: pointer;
+}
+
+.logout_btn {
+  border: 1.5px solid #9b9b9b;
+  font-family: 'Instrument Sans';
+  background-color: #fff;
+  color: #1d1d1d;
+  margin-top: 10px;
+  width: 140px;
+  height: 35px;
+  font-size: 16px;
+  font-weight: 500;
+  border-radius: 40px;
+  padding: 12px 32px;
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.logout_btn:hover {
+  cursor: pointer;
+  background-color: #9b9b9b;
+  color: #fff;
+  transition-duration: 500ms;
 }

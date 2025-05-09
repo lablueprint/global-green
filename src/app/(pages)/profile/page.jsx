@@ -1,11 +1,14 @@
+/* eslint-disable jsx-a11y/no-static-element-interactions */
+/* eslint-disable jsx-a11y/click-events-have-key-events */
+
 'use client';
 
 // Profile.jsx
 import React, { useEffect, useState } from 'react';
 import Image from 'next/image';
 import { useSession, signOut } from 'next-auth/react';
+import defaultProfilePic from './default_profilepic.jpg';
 import styles from './page.module.css';
-import defaultProfilePic from './profilepic.jpg';
 import PdfForm from './PdfForm';
 import ProgressBar from './progressBar';
 import ProfilePopup from './profilePopup';
@@ -28,7 +31,7 @@ function Profile() {
   const [visitProfileBadge, setVisitProfileBadge] = useState(false);
   const [showDeletePopup, setShowDeletePopup] = useState(false);
 
-  const { data: session } = useSession();
+  const { data: session, status, update } = useSession();
 
   const handleLogout = async () => {
     await signOut();
@@ -46,6 +49,12 @@ function Profile() {
     });
 
     const data = await response.json();
+
+    if (data.message == 'User not found!') {
+      handleLogout();
+      return;
+    }
+
     setData(data.user);
     setEditedName(data.user.userName);
     setCertData(data.user.certificates);
@@ -53,7 +62,9 @@ function Profile() {
     setCourseProgress(data.user.courses);
 
     if (data.user.badges) {
-      const badge = data.user.badges.find((badge) => badge.key === 'personalizer');
+      const badge = data.user.badges.find(
+        (badge) => badge.key === 'personalizer'
+      );
       if (!badge) {
         const response = await fetch('/api/users/me/add-badge', {
           method: 'PATCH',
@@ -90,14 +101,47 @@ function Profile() {
   };
 
   useEffect(() => {
-    if (session) getUserDetails(session.user.id);
+    if (status !== 'authenticated') {
+      console.log('profile session not authenticated yet');
+      return;
+    }
+
+    console.log('profile session authenticated, checking for ID');
+    if (session?.user?.id) {
+      console.log('profile ID found immediately');
+      getUserDetails(session.user.id);
+      fetchCoursesData();
+      return;
+    }
+
+    console.log('no ID found, forcing session update');
+    update().then(() => {
+      console.log('session update, checking for id again');
+      if (session?.user?.id) {
+        getCoursesInfo(session.user.id);
+      } else {
+        console.log('still no id after update, giving up');
+      }
+    }, [status, session]);
+
+    // if (session?.user?.id) {
+    //   getUserDetails(session.user.id);
+    // } else {
+    //   update().then(() => {
+    //     if (session?.user?.id) {
+    //       getUserDetails(session.user.id);
+    //     } else {
+    //       console.log('no id after update in profiles');
+    //     }
+    //   });
+    // }
 
     async function fetchCoursesData() {
       const response = await fetch('/api/courses');
       const data = await response.json();
       setCourseData(data.res);
     }
-    fetchCoursesData();
+    // fetchCoursesData();
   }, [session]);
 
   const updateUserDataPic = (data, newpic) => {
@@ -238,9 +282,9 @@ function Profile() {
           <Image
             src={profileImage}
             alt="Profile"
-            width={120}
-            height={120}
-            style={{ borderRadius: '50%' }}
+            width={110}
+            height={110}
+            style={{ borderRadius: '50%', cursor: 'pointer' }}
             onClick={handleChangeProfileImage}
           />
           <div className={styles.name}>
@@ -261,48 +305,56 @@ function Profile() {
           </div>
         </div>
         <div className={styles.certificateSection}>
-          <div className={styles.sectionHeader}> Certificates </div>
-          <div className={styles.row}>
-            {displayedCertificates.map((certificate, index) => (
-              <div
-                key={index}
-                onClick={PdfForm.generatePdf}
-                className={styles.certificateItem}
-                style={{
-                  backgroundImage: 'url("/certificate.jpg")',
-                  borderRadius: '10px',
-                  backgroundSize: 'cover',
-                }}
-              >
-                {userData && (
-                  <PdfForm
-                    templatePdf="/certificate.pdf"
-                    userName={userData.userName}
-                    course={certificate.key}
-                    date={certificate.date}
-                  />
-                )}
+          {displayedCertificates.length === 0 ? (
+            ''
+          ) : (
+            <div className={styles.certificateSection}>
+              <div className={styles.sectionHeader}>Certificates</div>
+              <div className={styles.row}>
+                {displayedCertificates.map((certificate, index) => (
+                  <div
+                    key={index}
+                    onClick={PdfForm.generatePdf}
+                    className={styles.certificateItem}
+                    style={{
+                      backgroundImage: 'url("/certificate.jpg")',
+                      borderRadius: '10px',
+                      backgroundSize: 'cover',
+                    }}
+                  >
+                    {userData && (
+                      <PdfForm
+                        templatePdf="/certificate.pdf"
+                        userName={`${userData.firstName} ${userData.lastName}`}
+                        course={certificate.key}
+                        date={certificate.date}
+                      />
+                    )}
+                  </div>
+                ))}
               </div>
-            ))}
-          </div>
-          <div className={styles.paginationDots}>
-            {Array.from({ length: totalPages }, (_, i) => (
-              <span
-                key={i}
-                className={`${styles.dot} ${i === currentPage ? styles.activeDot : ''}`}
-                onClick={() => handlePageChange(i)}
-              >
-                .
-              </span>
-            ))}
-          </div>
+              <div className={styles.paginationDots}>
+                {Array.from({ length: totalPages }, (_, i) => (
+                  <span
+                    key={i}
+                    className={`${styles.dot} ${
+                      i === currentPage ? styles.activeDot : ''
+                    }`}
+                    onClick={() => handlePageChange(i)}
+                  >
+                    .
+                  </span>
+                ))}
+              </div>
+            </div>
+          )}
         </div>
-        <div className={styles.coursesSection}>
+        <div>
           <div className={styles.sectionHeader}>Course Progress</div>
           <div className={styles.row}>
-            {courseData
-              && courseProgress
-              && courseData.map((course) => (
+            {courseData &&
+              courseProgress &&
+              courseData.map((course) => (
                 <div key={course.key} className={styles.courseItem}>
                   <div className={styles.courseName}>{course.label}</div>
                   <ProgressBar
@@ -310,10 +362,10 @@ function Profile() {
                     value={
                       courseProgress.find((item) => item.key === course.key)
                         ? courseProgress.find((item) => item.key === course.key)
-                          .currStage
+                            .currStage
                         : 0
                     }
-                    maxValue={6}
+                    maxValue={7}
                     color="green"
                     isPopupDisplayed={profilePopup || passwordPopup}
                   />
@@ -324,37 +376,51 @@ function Profile() {
         <div className={styles.accountSection}>
           <div className={styles.sectionHeader}> Account </div>
           <div className={styles.accountRow}>
-            <div className={styles.accountCol}>
-              <div className={styles.sectionText}>Change Password</div>
-              <div className={styles.subText}>
-                Set a different password to login to your account
+            <div className={styles.accountClick}>
+              <div className={styles.accountCol}>
+                <div className={styles.sectionText}>Change Password</div>
+                <div className={styles.subText}>
+                  Set a different password to login to your account
+                </div>
               </div>
-            </div>
-            <div className={styles.accountCol}>
               <div className={styles.arrow} onClick={handleChangePassword}>
-                {'>'}
+                <Image
+                  src="/profile/profile_arrow.svg"
+                  alt="Profile"
+                  width={20}
+                  height={20}
+                />
               </div>
             </div>
           </div>
           <div className={styles.accountRow}>
-            <div className={styles.accountCol}>
-              <div className={styles.sectionText} style={{ color: 'red' }}>
-                Delete Account
+            <div className={styles.accountClick}>
+              <div className={styles.accountCol}>
+                <div className={styles.sectionText} style={{ color: 'red' }}>
+                  Delete Account
+                </div>
+                <div className={styles.subText}>
+                  Permanently delete the account and remove access from all
+                  resources
+                </div>
               </div>
-              <div className={styles.subText}>
-                Permanently delete the account and remove access from all
-                resources
-              </div>
-            </div>
-            <div className={styles.accountCol}>
               <div className={styles.arrow} onClick={handleDeleteClick}>
-                {'>'}
+                <Image
+                  src="/profile/profile_arrow.svg"
+                  alt="Profile"
+                  width={20}
+                  height={20}
+                />
               </div>
             </div>
           </div>
         </div>
-        <button type="button" onClick={handleLogout}>
-          Logout
+        <button
+          className={styles.logout_btn}
+          type="button"
+          onClick={handleLogout}
+        >
+          Log Out
         </button>
       </div>
     </>

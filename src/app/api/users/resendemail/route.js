@@ -9,17 +9,20 @@ export async function POST(request) {
   try {
     const reqBody = await request.json();
     const { email } = reqBody;
-    const user = await User
-      .findOne(
-        { email },
-      );
+    const user = await User.findOne({ email });
 
     if (!user) {
-      return NextResponse.json({ error: 'User does not exist' }, { status: 400 });
+      return NextResponse.json(
+        { error: 'User does not exist' },
+        { status: 400 }
+      );
     }
 
     if (user.verified) {
-      return NextResponse.json({ error: 'User already verified' }, { status: 400 });
+      return NextResponse.json(
+        { error: 'User already verified' },
+        { status: 400 }
+      );
     }
     console.log(user);
 

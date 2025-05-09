@@ -14,7 +14,7 @@ function PdfForm({
     day: 'numeric',
   });
 
-  const formattedCourse = 'Climate Change';
+  const formattedCourse = `${course} course`;
 
   const generatePdf = async () => {
     try {
@@ -33,46 +33,41 @@ function PdfForm({
 
       // Modify the PDF document by replacing the placeholder text with the desired name
       const name = `${userName}`;
-      const dateText = `Completed on: ${formattedDate}`;
+      const dateText = `${formattedDate}`;
 
       const firstPage = pages[0];
       const { width, height } = firstPage.getSize();
 
       // inserts name - adjustable name pos
 
-      const nameWidth = helveticaFont.widthOfTextAtSize(name, 50);
-      const nameX = (width - nameWidth) / 2;
-
       firstPage.drawText(name, {
-        x: nameX,
-        y: height / 2 + 20,
-        size: 50,
+        x: 35,
+        y: height / 2 - 40,
+        size: 44,
         font: helveticaFont,
-        color: rgb(0, 0.1, 0),
+        color: rgb(0.3176, 0.5843, 0.2745),
       });
 
       // inserts course - adjustable course name pos
-      const courseWidth = helveticaFont.widthOfTextAtSize(course, 30);
-      const courseX = (width - courseWidth) / 2;
 
       firstPage.drawText(formattedCourse, {
-        x: courseX,
-        y: height / 2 - 110,
-        size: 30,
+        x: 35,
+        y: height / 2 - 105,
+        size: 18,
         font: helveticaFont,
-        color: rgb(0, 0.1, 0),
+        color: rgb(0.3176, 0.5843, 0.2745),
       });
 
       // inserts date
       const dateWidth = helveticaFont.widthOfTextAtSize(dateText, 20);
-      const dateX = (width - dateWidth) / 2;
+      const dateX = (width - dateWidth) / 2 + 225;
 
       firstPage.drawText(dateText, {
         x: dateX,
-        y: height / 2 - 290,
+        y: 450,
         size: 20,
         font: helveticaFont,
-        color: rgb(0, 0.1, 0),
+        color: rgb(0.3176, 0.5843, 0.2745),
       });
 
       // Generate the modified PDF
@@ -94,17 +89,9 @@ function PdfForm({
   return (
     <div>
       <div className={styles.certificateBox} onClick={generatePdf}>
-        <div className={styles.certificateHeader}> Certificate </div>
+        <div className={styles.certificateInfo}>{formattedDate}</div>
+        <div className={styles.certificateHeader}>{userName}</div>
         <div className={styles.certificateName}>{formattedCourse}</div>
-        <div className={styles.certificateInfo}>
-          <div>
-            {' '}
-            Completed on:
-            {' '}
-            {' '}
-            {formattedDate}
-          </div>
-        </div>
       </div>
     </div>
   );

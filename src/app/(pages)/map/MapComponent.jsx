@@ -19,12 +19,14 @@ function MapComponent() {
     if (mapRef.current) {
       mapRef.current.flyTo({
         center: marker._lngLat,
-        zoom: 12,
+        zoom: 8,
+        duration: 2000,
+        essential: true,
       });
     }
     setSelectedMarker(marker);
   }
-  
+
   function CloseAllPopups() {
     mapArray.map((marker) => {
       if (marker.ref.getPopup().isOpen()) {
@@ -57,11 +59,12 @@ function MapComponent() {
 
     if (mapArray.length) {
       // Display Map
+      console.log('HERES THE STARTING', mapArray);
       const map = new mapboxgl.Map({
         container: mapContainerRef.current,
         style: 'mapbox://styles/mapbox/streets-v11',
-        center: mapArray[0].longlat, // starting position
-        zoom: 9, // starting zoom
+        center: [-90, 40], // starting position
+        zoom: 2, // starting zoom
       });
 
       // Hook up mapRef to the map
@@ -72,11 +75,17 @@ function MapComponent() {
 
       // Display Markers on Map
       const mapmarkers = mapArray.map((marker) => {
-        const markerpopup = new mapboxgl.Popup().setHTML(
+        const markerpopup = new mapboxgl.Popup({
+          maxWidth: '200px', // Fix popup width
+        }).setHTML(
           `
             <div class=${styles.markerModal}>
               <h3>${marker.markername}</h3>
-              <p class=${marker.tag === 'Sustainability Lab' ? styles.markerModalTagSustainabilityLab : styles.markerModalTagResort}>${marker.tag}</p>
+              <p class=${
+                marker.tag === 'Sustainability Lab'
+                  ? styles.markerModalTagSustainabilityLab
+                  : styles.markerModalTagResort
+              }>${marker.tag}</p>
               <p>${marker.description}</p>
               <a class=${styles.markerModalLink} href=${marker.link}>
                 Learn More
@@ -86,7 +95,7 @@ function MapComponent() {
                 </svg>
               </a>
             </div>
-          `,
+          `
         );
         const newMarker = new mapboxgl.Marker({ color: 'black' })
           .setLngLat(marker.longlat)
@@ -105,13 +114,13 @@ function MapComponent() {
   const [resortIsActive, setResortIsActive] = useState(false);
   const [labIsActive, setLabIsActive] = useState(false);
 
-  function labToggleButton() {
-    setLabIsActive(!labIsActive);
-  }
+  // function labToggleButton() {
+  //   setLabIsActive(!labIsActive);
+  // }
 
-  function resortToggleButton() {
-    setResortIsActive(!resortIsActive);
-  }
+  // function resortToggleButton() {
+  //   setResortIsActive(!resortIsActive);
+  // }
 
   // ref = {mapContainerRef} is callback reference for the div that contains the map
   return (
@@ -123,13 +132,17 @@ function MapComponent() {
             (!resortIsActive && !labIsActive) ||
             (resortIsActive && marker.tag === 'Resort') ||
             (labIsActive && marker.tag === 'Sustainability Lab') ||
-            (labIsActive && resortIsActive && (marker.tag === 'Sustainability Lab' || marker.tag === 'Resort'))
+            (labIsActive &&
+              resortIsActive &&
+              (marker.tag === 'Sustainability Lab' || marker.tag === 'Resort'))
           ) {
             return (
               <div
-              className={`${styles.sideBarItem} ${
-                selectedMarker === marker.ref ? styles.sideBarItemSelected : ''
-              }`}
+                className={`${styles.sideBarItem} ${
+                  selectedMarker === marker.ref
+                    ? styles.sideBarItemSelected
+                    : ''
+                }`}
                 key={marker.markername}
                 onClick={() => {
                   CloseAllPopups();

@@ -4,6 +4,7 @@ import React, { useEffect, useState } from 'react';
 import { useSession, signOut, signIn } from 'next-auth/react';
 import styles from './page.module.css';
 import Image from 'next/image';
+import SignInLogo from '@/app/components/logos/signInLogo';
 
 function VerifyEmail() {
   const [token, setToken] = useState('');
@@ -21,16 +22,13 @@ function VerifyEmail() {
 
   async function fetchUpdatedUserDetails(id) {
     if (!id) return;
-    const response = await fetch(
-      '/api/users/me',
-      {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ id }),
+    const response = await fetch('/api/users/me', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
       },
-    );
+      body: JSON.stringify({ id }),
+    });
     const data = await response.json();
     if (data.error) {
       setError(data.error);
@@ -42,7 +40,10 @@ function VerifyEmail() {
       // Stop all intervals
       if (intervalRef.current) clearInterval(intervalRef.current);
       // Relogin to get updated session
-      await signIn('credentials', { username: data.user.userName, password: data.user.password });
+      await signIn('credentials', {
+        username: data.user.userName,
+        password: data.user.password,
+      });
       // Redirect to profile page
       window.location.href = '/profile';
     }
@@ -78,7 +79,9 @@ function VerifyEmail() {
     } else {
       if (session.user.verified) {
         console.log('verified at handlelogut', verified);
-        alert('Your account has been verified. You can now access your profile.');
+        alert(
+          'Your account has been verified. You can now access your profile.'
+        );
         window.location.href = '/profile';
         return;
       }
@@ -103,16 +106,13 @@ function VerifyEmail() {
 
   async function getUserDetails(id) {
     if (!id) return;
-    const response = await fetch(
-      '/api/users/me',
-      {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ id }),
+    const response = await fetch('/api/users/me', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
       },
-    );
+      body: JSON.stringify({ id }),
+    });
     const data = await response.json();
     if (data.error) {
       setError(data.error);
@@ -163,29 +163,27 @@ function VerifyEmail() {
     }
   }
 
-  useEffect(
-    () => {
-      console.log('session', session);
+  useEffect(() => {
+    console.log('session', session);
 
-      // If no user logged in, redirect to login page
-      if (!session) {
-        window.location.href = '/login';
-      }
-      if (session?.user?.verified) {
-        console.log('verified at useeffect', session.user.verified);
-        window.location.href = '/profile';
-      }
-      if (session?.user?.id) getUserDetails(session.user.id);
+    // If no user logged in, redirect to signup page
+    if (!session) {
+      console.log('reload');
+      window.location.href = '/login';
+    }
+    if (session?.user?.verified) {
+      console.log('verified at useeffect', session.user.verified);
+      window.location.href = '/profile';
+    }
+    if (session?.user?.id) getUserDetails(session.user.id);
 
-      // Make sure only one interval is running at a time
-      if (intervalRef.current) {
-        clearInterval(intervalRef.current);
-      }
-      intervalRef.current = startResendCooldown();
-      return () => clearInterval(intervalRef.current);
-    },
-    [session],
-  );
+    // Make sure only one interval is running at a time
+    if (intervalRef.current) {
+      clearInterval(intervalRef.current);
+    }
+    intervalRef.current = startResendCooldown();
+    return () => clearInterval(intervalRef.current);
+  }, [session]);
 
   useEffect(() => {
     if (expiresAt) {
@@ -201,15 +199,16 @@ function VerifyEmail() {
         <div className={styles.contentContainer}>
           <h3 className={styles.verificationTitle}>Enter Verification Code</h3>
           <p className={styles.accountDeletionNotice}>
-            We have sent a code to <strong>{userName}</strong><br/>
-            Please verify your account within 48 hours <br/>
+            We have sent a code to <strong>{userName}</strong>
+            <br />
+            Please verify your account within 48 hours <br />
             Enter received code to continue.
           </p>
           <div className={styles.tokenInputContainer}>
             {Array.from({ length: 6 }).map((_, index) => (
               <input
                 key={index}
-                type="text" 
+                type="text"
                 maxLength="1"
                 value={token[index] || ''} // set value to the corresponding char from the token
                 onChange={(e) => {
@@ -220,7 +219,7 @@ function VerifyEmail() {
                 className={styles.tokenInput}
                 autoFocus={index === 0}
                 onKeyDown={(e) => {
-                  if (e.key === "Backspace" && !token[index] && index > 0) {
+                  if (e.key === 'Backspace' && !token[index] && index > 0) {
                     e.preventDefault(); // preventing default backspace option
                     const prevInput = e.target.previousElementSibling;
                     if (prevInput) {
@@ -238,20 +237,27 @@ function VerifyEmail() {
               />
             ))}
           </div>
-  
-          <div style={{ textAlign: 'center', marginTop: '20px'}}>
-            <p style={{ display: 'inline'}}>Didn't receive a code?</p>
-            <span 
-              onClick={!resendDisabled ? resendVerificationEmail : undefined} 
-              className={resendDisabled ? styles.resendTextDisabled : styles.resendText}
-              style={{ cursor: resendDisabled ? 'default' : 'pointer', marginLeft: '10px' }}
+
+          <div style={{ textAlign: 'center', marginTop: '20px' }}>
+            <p style={{ display: 'inline' }}>Didn't receive a code?</p>
+            <span
+              onClick={!resendDisabled ? resendVerificationEmail : undefined}
+              className={
+                resendDisabled ? styles.resendTextDisabled : styles.resendText
+              }
+              style={{
+                cursor: resendDisabled ? 'default' : 'pointer',
+                marginLeft: '10px',
+              }}
             >
-              {resendDisabled ? `Resend in ${cooldown} seconds` : 'Click to resend'}
+              {resendDisabled
+                ? `Resend in ${cooldown} seconds`
+                : 'Click to resend'}
             </span>
           </div>
-  
-          <button 
-            type="button" 
+
+          <button
+            type="button"
             onClick={handleVerifyEmail}
             className={styles.verifyButton}
           >
@@ -265,15 +271,16 @@ function VerifyEmail() {
         <div className={styles.contentContainer}>
           <h3 className={styles.verificationTitle}>Enter Verification Code</h3>
           <p className={styles.accountDeletionNotice}>
-            We have sent a code to <strong>{userName}</strong><br/>
-            Please verify your account within 48 hours <br/>
+            We have sent a code to <strong>{userName}</strong>
+            <br />
+            Please verify your account within 48 hours <br />
             Enter received code to continue.
           </p>
           <div className={styles.tokenInputContainer}>
             {Array.from({ length: 6 }).map((_, index) => (
               <input
                 key={index}
-                type="text" 
+                type="text"
                 maxLength="1"
                 value={token[index] || ''} // set value to the corresponding char from the token
                 onChange={(e) => {
@@ -284,7 +291,7 @@ function VerifyEmail() {
                 className={styles.tokenInput}
                 autoFocus={index === 0}
                 onKeyDown={(e) => {
-                  if (e.key === "Backspace" && !token[index] && index > 0) {
+                  if (e.key === 'Backspace' && !token[index] && index > 0) {
                     e.preventDefault(); // preventing default backspace option
                     const prevInput = e.target.previousElementSibling;
                     if (prevInput) {
@@ -302,20 +309,27 @@ function VerifyEmail() {
               />
             ))}
           </div>
-  
-          <div style={{ textAlign: 'center', marginTop: '20px'}}>
-            <p style={{ display: 'inline'}}>Didn't receive a code?</p>
-            <span 
-              onClick={!resendDisabled ? resendVerificationEmail : undefined} 
-              className={resendDisabled ? styles.resendTextDisabled : styles.resendText}
-              style={{ cursor: resendDisabled ? 'default' : 'pointer', marginLeft: '10px' }}
+
+          <div style={{ textAlign: 'center', marginTop: '20px' }}>
+            <p style={{ display: 'inline' }}>Didn't receive a code?</p>
+            <span
+              onClick={!resendDisabled ? resendVerificationEmail : undefined}
+              className={
+                resendDisabled ? styles.resendTextDisabled : styles.resendText
+              }
+              style={{
+                cursor: resendDisabled ? 'default' : 'pointer',
+                marginLeft: '10px',
+              }}
             >
-              {resendDisabled ? `Resend in ${cooldown} seconds` : 'Click to resend'}
+              {resendDisabled
+                ? `Resend in ${cooldown} seconds`
+                : 'Click to resend'}
             </span>
           </div>
-          
-          <button 
-            type="button" 
+
+          <button
+            type="button"
             onClick={handleVerifyEmail}
             className={styles.verifyButton}
           >
@@ -326,12 +340,11 @@ function VerifyEmail() {
     }
     return <p>Your verification time has expired. Please sign up again.</p>;
   }
-    
+
   return (
-    <div>
+    <div className={styles.verifyContainer}>
       <div className={styles.topLeft}>
-        <Image src="/logo.svg" width={50} height={50} />
-        <span>Global Green Scholar</span>
+        <SignInLogo />
       </div>
       {renderIndicator()}
       {message && <p>{message}</p>}

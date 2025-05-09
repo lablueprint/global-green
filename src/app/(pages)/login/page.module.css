@@ -1,13 +1,19 @@
+.pageContent {
+  width: 100%;
+  justify-content: center;
+  align-items: center;
+  position: fixed;
+  left: 0;
+}
+
 .mainContainer {
   display: flex;
-  font-family: "Arial", sans-serif;
-  max-width: 100%;
-  margin: 0 auto;
+  width: 100%;
   font-size: 14px;
-  color: #ccc;
+  justify-content: center;
   align-items: center;
   flex-direction: column;
-  margin-left: 33%;
+  padding: 30px 0px;
 }
 
 .userForm {
@@ -17,114 +23,129 @@
 }
 
 .mainTitle {
-    color: black;
-    text-align: center;
-    font-family: "Arial";
-    font-size: 30px;
-    margin: 0 auto;
-    font-weight: 510;
-    margin-top: 120px;
-    padding: 20px;
-   
+  color: #1d1d1d;
+  text-align: center;
+  font-size: 40px;
+  margin: 0 auto;
+  font-weight: 600;
+  padding: 20px;
 }
-  
-  .userLabel {
-    margin-bottom: 5px; 
-    color: #d3d3d3;
-  }
-  
-  .userInput {
-    margin: 0 0 20px 0; 
-    border: 1px solid #ddd; 
-    border-radius: 5px; 
-    padding: 8px 10px; 
-    font-size: 16px; 
-    background-color: #f2f2f2;
-  }
-  
-  .forgotPassword {
-    font-size: 14px;
-    color: green; 
-    margin-bottom: 20px; 
-    text-decoration: none;
-  }
-  
-  .submitButton {
-    background-color: #519546;
-    color: white;
-    padding: 12px 24px;
-    border: none;
-    border-radius: 40px;
-    cursor: pointer;
-    font-size: 20px;
-    margin: 0 0 20px 0; 
-    width: 180px;
-    margin: 20px auto;
-  }
-  
-  .submitButton:hover {
-    background-color: #45a049;
-  }
-  
-  .signUpPrompt {
-    text-align: center;
-    color: #d3d3d3; 
-    margin-bottom: 20px;
-  }
-  
-  .signUpLink {
-    color: green;
-    text-decoration: underline;
-  }
-  
-  .googleButton {
-    background-color: white;
-    color: black;
-    padding: 14px 20px;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    font-size: 16px; 
-    width: 480px; 
-    border: 1px solid #ddd; 
-    border-radius: 100px;
-  }
-  
-  .googleButton:hover {
-    background-color: #f2f2f2;
-  }
 
-  .topLeft {
-    color: var(--Green-100, #519546);
-    font-family: "Arial", sans-serif;
-    font-size: 16px;
-    font-style: normal;
-    font-weight: 600;
-    line-height: 100%;
-    padding-top: 30px;
-    padding-left: 30px;
-    display: flex;
-    align-items: center;
-  }
-  
-  .topLeft span {
-    margin-top: -5px;
-  }
+.userLabel {
+  margin-top: 20px;
+  margin-bottom: 5px;
+  color: #9b9b9b;
+  font-size: 14px;
+  font-weight: 500;
+}
 
-  .passwordContainer {
-    position: relative;
-    width: 95%;
-  }
-  
-  .passwordContainer input {
-    width: 100%;
-  }
-  
-  .passwordIcon {
-    position: absolute;
-    right: -8px;
-    top: 35%;
-    transform: translateY(-50%);
-    cursor: pointer;
-    color: #aaa;
-  }
+.userInput {
+  border: 1px none #ddd;
+  border-radius: 8px;
+  padding: 12px 18px;
+  font-size: 16px;
+  background-color: #e2e2e2;
+}
+
+.userInput:focus {
+  outline: none;
+}
+
+.forgotPassword {
+  font-size: 14px;
+  font-weight: 500;
+  color: green;
+  margin-top: 20px;
+  margin-bottom: 10px;
+  text-decoration: none;
+}
+
+.submitButton {
+  background-color: #519546;
+  color: white;
+  padding: 12px 24px;
+  border: none;
+  border-radius: 40px;
+  cursor: pointer;
+  font-size: 20px;
+  margin: 0 0 20px 0;
+  width: 180px;
+  margin: 15px auto;
+}
+
+.submitButton:hover {
+  background-color: #45a049;
+}
+
+.signUpPrompt {
+  text-align: center;
+  color: rgba(13, 13, 13, 0.4);
+  font-size: 12px;
+  font-weight: 500;
+}
+
+.signUpLink {
+  color: green;
+  text-decoration: underline;
+}
+
+.divider {
+  width: 480px;
+  height: 1px;
+  background: rgba(13, 13, 13, 0.2);
+  border: none;
+  margin-bottom: 22px;
+}
+
+.googleButton {
+  background-color: white;
+  color: black;
+  padding: 4px 0px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 16px;
+  width: 480px;
+  border: 1px solid rgba(13, 13, 13, 0.2);
+  border-radius: 100px;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+}
+
+.googleButton:hover {
+  background-color: #f2f2f2;
+}
+
+.topLeft {
+  color: var(--Green-100, #519546);
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: 100%;
+  padding-top: 30px;
+  padding-left: 30px;
+  display: flex;
+  align-items: center;
+}
+
+.topLeft span {
+  margin-top: -5px;
+}
+
+.passwordContainer {
+  position: relative;
+}
+
+.passwordContainer input {
+  width: 364px;
+}
+
+.passwordIcon {
+  position: absolute;
+  right: 15px;
+  top: 35%;
+  cursor: pointer;
+  color: #aaa;
+}

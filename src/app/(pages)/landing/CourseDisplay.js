@@ -4,6 +4,7 @@ import React, { useState, useEffect } from 'react';
 import { useSession } from 'next-auth/react';
 import CourseCard from './CourseCard';
 import styles from './page.module.css';
+
 // course display: seeing all courses, incomplete, complete courses
 function CourseDisplay() {
   const [courseData, setCourseData] = useState([]);
@@ -11,40 +12,46 @@ function CourseDisplay() {
   const [filter, setFilter] = useState('all');
   const { data: session } = useSession();
   const [filteredData, setFilteredData] = useState([]);
+
   async function fetchCoursesData() {
     const response = await fetch('/api/courses');
     const data = await response.json();
     console.log('api courses', data);
     setCourseData(data.res);
   }
+
   const filterData = (filterX) => {
     console.log('filterX', filterX);
     console.log('courseData', courseData);
     if (!courseData) {
       return;
     }
-    const tempFilteredData = courseData.map((course) => {
-      const progress = courseProgress.find((c) => c.key === course.key);
-      if (progress) {
+    const tempFilteredData = courseData
+      .map((course) => {
+        const progress = courseProgress.find((c) => c.key === course.key);
+        if (progress) {
+          return {
+            ...course,
+            progress: progress.currStage,
+          };
+        }
         return {
           ...course,
-          progress: progress.currStage,
+          progress: 0,
         };
-      }
-      return {
-        ...course,
-        progress: 0,
-      };
-    }).filter((course) => {
-      if (filterX === 'completed') {
-        return course.complete;
-      } if (filterX === 'incomplete') {
-        return !course.complete;
-      }
-      return true;
-    });
+      })
+      .filter((course) => {
+        if (filterX === 'completed') {
+          return course.complete;
+        }
+        if (filterX === 'incomplete') {
+          return !course.complete;
+        }
+        return true;
+      });
     setFilteredData(tempFilteredData);
   };
+
   const getUserDetails = async (id) => {
     console.log('id', id);
     if (!id) return;
@@ -56,23 +63,32 @@ function CourseDisplay() {
       body: JSON.stringify({ id }),
     });
     const data = await response.json();
-    setCourseProgress(data.user.courses);
-    filterData('all');
-    console.log('filteredData', filteredData);
+    if (data?.user?.courses) {
+      setCourseProgress(data.user.courses);
+    }
   };
-  useEffect(
-    () => {
-      console.log('session', session);
-      if (session) getUserDetails(session.user.id);
-      if (courseData.length === 0) fetchCoursesData();
-    },
-    [session, courseData],
-  );
+
+  useEffect(() => {
+    console.log('session', session);
+    if (session) {
+      getUserDetails(session.user.id);
+      fetchCoursesData();
+    }
+  }, [session]);
+
+  useEffect(() => {
+    if (courseData.length > 0) {
+      filterData('all');
+    }
+  }, [courseData, courseProgress]);
+
   return (
     <div className={styles.courseContainer}>
       <div className={styles.courseToggle}>
         <div
-          className={filter === 'all' ? styles.active : ''}
+          className={
+            filter === 'all' ? styles.active : styles.courseToggleButton
+          }
           onClick={() => {
             setFilter('all');
             filterData('all');
@@ -82,7 +98,9 @@ function CourseDisplay() {
         </div>
 
         <div
-          className={filter === 'completed' ? styles.active : ''}
+          className={
+            filter === 'completed' ? styles.active : styles.courseToggleButton
+          }
           onClick={() => {
             setFilter('completed');
             filterData('completed');
@@ -91,7 +109,9 @@ function CourseDisplay() {
           Complete
         </div>
         <div
-          className={filter === 'incomplete' ? styles.active : ''}
+          className={
+            filter === 'incomplete' ? styles.active : styles.courseToggleButton
+          }
           onClick={() => {
             setFilter('incomplete');
             filterData('incomplete');

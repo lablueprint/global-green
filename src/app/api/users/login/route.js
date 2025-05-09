@@ -18,7 +18,10 @@ export async function POST(request) {
     });
 
     if (!user) {
-      return NextResponse.json({ error: 'User does not exist' }, { status: 400 });
+      return NextResponse.json(
+        { error: 'User does not exist' },
+        { status: 400 }
+      );
     }
     // eslint-disable-next-line no-console
     console.log('user exists');
@@ -40,7 +43,9 @@ export async function POST(request) {
       points: user.points,
     };
     // create token, this is the payload and the secret key. The token is valid for 1 day
-    const token = jwt.sign(tokenData, process.env.JWT_SECRET, { expiresIn: '1d' });
+    const token = jwt.sign(tokenData, process.env.JWT_SECRET, {
+      expiresIn: '1d',
+    });
 
     const response = NextResponse.json({
       message: 'Login successful',

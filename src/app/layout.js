@@ -17,7 +17,10 @@ export default async function RootLayout({ children }) {
 
   return (
     <html lang="en">
-      <body style={{ margin: 0, padding: 0 }}>
+      <head>
+        <meta name="viewport" content="width=1200, initial-scale=1" />
+      </head>
+      <body>
         <SessionProvider session={session}>
           <div className={styles.wrapper}>
             <NavBar />

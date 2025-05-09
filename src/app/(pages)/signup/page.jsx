@@ -158,13 +158,13 @@ function SignUp() {
       if (!session.user.verified) {
         window.location.href = '/verifyemail';
       } else {
-        window.location.href = '/profile';
+        window.location.href = '/landing';
       }
     }
   }, [session]);
 
   return (
-    <>
+    <div className={styles.signupContainer}>
       <div className={styles.topLeft}>
         <SignInLogo />
       </div>
@@ -176,6 +176,7 @@ function SignUp() {
             width={600}
             height={600}
             className={styles.alignImage}
+            priority
           />
           <div className={styles.imageCaption}>
             Learn about sustainability with <br />{' '}
@@ -298,7 +299,7 @@ function SignUp() {
           </div>
         </form>
       </div>
-    </>
+    </div>
   );
 }
 

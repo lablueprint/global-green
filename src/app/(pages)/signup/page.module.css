@@ -1,12 +1,36 @@
+.signupContainer {
+  position: fixed;
+  left: 0;
+  width: 100%;
+}
+
 .pageContent {
   display: flex;
   align-items: center;
   justify-content: center;
-  max-width: 1300px;
-  margin: 0 auto;
+  width: 100%;
+  /* margin: 0 auto; */
   background-color: white;
   gap: 124px;
 }
+
+.topLeft {
+  color: var(--Green-100, #519546);
+  font-family: 'Arial', sans-serif;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: 100%;
+  padding-top: 30px;
+  padding-left: 30px;
+  display: flex;
+  align-items: center;
+}
+
+.topLeft span {
+  margin-top: -5px;
+}
+
 .ImageContainer {
   background-color: white;
 }
@@ -117,23 +141,6 @@
   color: #519546;
   text-decoration: underline;
   font-weight: 600;
-}
-
-.topLeft {
-  color: var(--Green-100, #519546);
-  font-family: 'Arial', sans-serif;
-  font-size: 16px;
-  font-style: normal;
-  font-weight: 600;
-  line-height: 100%;
-  padding-top: 30px;
-  padding-left: 30px;
-  display: flex;
-  align-items: center;
-}
-
-.topLeft span {
-  margin-top: -5px;
 }
 
 .passwordContainer {

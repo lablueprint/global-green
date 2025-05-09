@@ -500,16 +500,19 @@
   box-shadow: 0 0 0 2px rgba(0, 0, 0, 0.1);
 }
 
+.overallResults {
+  width: 100%;
+}
+
 .resultsContainer {
   background: white;
   display: flex;
   flex-direction: column;
   justify-content: center;
-  margin-top: 100px;
-  margin-left: 100px;
-  max-width: 1000px;
-  margin-top: 150px;
-  margin-left: 100px;
+  margin: 3rem 6.25rem;
+  /* margin-top: 100px; */
+  /* margin-left: 100px; */
+  /* max-width: 1000px; */
   /* height: 100vh;
   width: 80vw; */
 }
@@ -525,26 +528,25 @@
   background-color: white;
   display: flex;
   flex-direction: row;
+  width: 100%;
 }
 
-/* Add this to your CSS file */
 .scoreContainer {
+  box-sizing: border-box;
+  width: 50%;
   display: flex;
-  flex-direction: row;
   align-items: center;
   justify-content: space-between;
   background: var(--Grey-4, rgba(13, 13, 13, 0.04));
   border-radius: 10px;
-  margin: 20px;
-  margin-left: 0px;
-  padding: 20px;
+  padding: 32px;
 }
 
 .summaryDetails {
   display: flex;
   flex-direction: column;
   justify-content: center;
-  margin-right: 50px; /* Adjust as necessary */
+  /* margin-right: 50px; Adjust as necessary */
 }
 
 .circularProgressContainer {
@@ -557,6 +559,10 @@
   height: 8px;
   background-size: cover;
   border-radius: 0 0 10px 10px; /* Match the border radius of .scoreContainer if any */
+}
+
+.flowerContainer {
+  width: 50%;
 }
 
 .inputWrapper {

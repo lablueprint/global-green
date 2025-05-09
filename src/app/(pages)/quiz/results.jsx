@@ -60,34 +60,29 @@ CircularWithLabel.propTypes = {
   value: PropTypes.number.isRequired,
 };
 
-function Results({
-  skips, usedHint, points, totalQuestions, questionResults,
-}) {
+function Results({ skips, usedHint, points, totalQuestions, questionResults }) {
   const percentage = ((points / totalQuestions) * 100).toFixed(0);
 
   // Function to render the question details. You can further customize it based on your needs.
-  const renderQuestionDetails = (results, correct) => results
-    .filter((result) => result.isCorrect === correct)
-    .map((result, index) => (
-      <div key={index} className={styles.questionBox}>
-        <p className={styles.questionNumber}>
-          {`Question ${
-            result.questionId + 1
-          }: `}
-        </p>
+  const renderQuestionDetails = (results, correct) =>
+    results
+      .filter((result) => result.isCorrect === correct)
+      .map((result, index) => (
+        <div key={index} className={styles.questionBox}>
+          <p className={styles.questionNumber}>
+            {`Question ${result.questionId + 1}: `}
+          </p>
 
-        <p className={styles.questionDetail}>
-          {' '}
-          {result.questionText}
-        </p>
-      </div>
-    ));
+          <p className={styles.questionDetail}> {result.questionText}</p>
+        </div>
+      ));
 
   const router = useRouter();
   const { data: session } = useSession();
   const [complete3LessonsBadge, setComplete3LessonsBadge] = useState(false);
   const [complete5LessonsBadge, setComplete5LessonsBadge] = useState(false);
-  const [completeFirstCourseBadge, setCompleteFirstCourseBadge] = useState(false);
+  const [completeFirstCourseBadge, setCompleteFirstCourseBadge] =
+    useState(false);
   const [completeAllCoursesBadge, setCompleteAllCoursesBadge] = useState(false);
   const [highAchieverBadge, setHighAchieverBadge] = useState(false);
   const [noSkipsBadge, setNoSkipsBadge] = useState(false);
@@ -189,7 +184,9 @@ function Results({
 
         if (currStage === 6) {
           newStage = 6;
-          const finishedCourses = courseProgress.filter((course) => course.complete);
+          const finishedCourses = courseProgress.filter(
+            (course) => course.complete
+          );
 
           if (finishedCourses.length === 0) {
             setCompleteFirstCourseBadge(true);
@@ -239,7 +236,7 @@ function Results({
   }, [session]);
 
   const handleContinue = () => {
-  // router.push(`/quiz?courseKey=${courseKey}&stage=${currStage + 1}`);
+    // router.push(`/quiz?courseKey=${courseKey}&stage=${currStage + 1}`);
     router.push(`/roadmap/course?courseKey=${courseKey}`);
     if (percentage >= 60) {
       const newStage = currStage + 1;
@@ -247,17 +244,17 @@ function Results({
       changeProgress(session.user.id, newStage, complete);
       console.log('good');
       console.log(newStage);
-    // update the backend
-    // userid = user id
-    // course key = coursekey
-    // currStage = currStage
-    // complete is true if currStage = 7
+      // update the backend
+      // userid = user id
+      // course key = coursekey
+      // currStage = currStage
+      // complete is true if currStage = 7
     }
     console.log('k');
   };
 
   return (
-    <>
+    <div className={styles.overallResults}>
       <ChallengeBadge
         challengeName="Complete 3 lessons"
         challengePointValue="20"
@@ -311,27 +308,25 @@ function Results({
               fontSize: '12px',
               color: '#454545',
             }}
-            onClick={() => router.push(`/roadmap/course?courseKey=${courseKey}`)}
+            onClick={() =>
+              router.push(`/roadmap/course?courseKey=${courseKey}`)
+            }
           >
             &#10005;
           </div>
-          <LinearWithValueLabel
-            value={100}
-            x={10}
-            y={10}
-          />
+          <LinearWithValueLabel value={100} x={10} y={10} />
         </div>
         <div className={styles.x}>
           <div
             style={{
               textAlign: 'left',
-              fontWeight: 'bold',
+              fontWeight: '600',
               fontSize: '40px',
-              marginBottom: '15px',
-              marginTop: '60px',
+              marginBottom: '50px',
+              marginTop: '80px',
             }}
           >
-            Here's how you did...
+            Here&apos;s how you did...
           </div>
           <div className={styles.row1}>
             <div className={styles.scoreContainer}>
@@ -345,21 +340,13 @@ function Results({
                   }}
                 >
                   {' '}
-                  Summary
-                  {' '}
+                  Summary{' '}
+                </div>
+                <div style={{ fontSize: '20px' }}>{`${points} Correct`} </div>
+                <div style={{ fontSize: '20px' }}>
+                  {`${totalQuestions - points} Incorrect`}
                 </div>
                 <div style={{ fontSize: '20px' }}>
-                  {`${points} Correct`}
-                  {' '}
-                </div>
-                <div style={{ fontSize: '20px' }}>
-                  {`${
-                    totalQuestions - points
-                  } Incorrect`}
-                </div>
-                <div
-                  style={{ fontSize: '20px' }}
-                >
                   {`${points} Points Earned`}
                 </div>
               </div>
@@ -368,7 +355,13 @@ function Results({
                 <div className={styles.stripedBorder} />
               </div>
             </div>
-            <Image src="/results_flower.svg" width={400} height={300} />
+            <Image
+              src="/results_flower.svg"
+              width={400}
+              height={320}
+              className={styles.flowerContainer}
+              alt="the flower according to course level"
+            />
           </div>
           <Button
             variant="contained"
@@ -403,11 +396,7 @@ function Results({
               }}
             >
               {' '}
-              Incorrectly Answered
-              {' '}
-              {totalQuestions - points}
-              /
-              {totalQuestions}
+              Incorrectly Answered {totalQuestions - points}/{totalQuestions}
             </div>
 
             {renderQuestionDetails(questionResults, false)}
@@ -419,17 +408,13 @@ function Results({
               }}
             >
               {' '}
-              Correctly Answered
-              {' '}
-              {points}
-              /
-              {totalQuestions}
+              Correctly Answered {points}/{totalQuestions}
             </div>
             {renderQuestionDetails(questionResults, true)}
           </div>
         </div>
       </div>
-    </>
+    </div>
   );
 }
 
@@ -443,7 +428,7 @@ Results.propTypes = {
       selectedAnswer: PropTypes.string.isRequired,
       questionText: PropTypes.string.isRequired,
       // Include other properties you may need, like correctAnswer, questionText, etc.
-    }),
+    })
   ).isRequired,
 };
 

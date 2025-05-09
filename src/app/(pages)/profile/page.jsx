@@ -31,7 +31,7 @@ function Profile() {
   const [visitProfileBadge, setVisitProfileBadge] = useState(false);
   const [showDeletePopup, setShowDeletePopup] = useState(false);
 
-  const { data: session } = useSession();
+  const { data: session, status, update } = useSession();
 
   const handleLogout = async () => {
     await signOut();
@@ -49,6 +49,12 @@ function Profile() {
     });
 
     const data = await response.json();
+
+    if (data.message == 'User not found!') {
+      handleLogout();
+      return;
+    }
+
     setData(data.user);
     setEditedName(data.user.userName);
     setCertData(data.user.certificates);
@@ -94,14 +100,47 @@ function Profile() {
   };
 
   useEffect(() => {
-    if (session) getUserDetails(session.user.id);
+    if (status !== 'authenticated') {
+      console.log('profile session not authenticated yet');
+      return;
+    }
+
+    console.log('profile session authenticated, checking for ID');
+    if (session?.user?.id) {
+      console.log('profile ID found immediately');
+      getUserDetails(session.user.id);
+      fetchCoursesData();
+      return;
+    }
+
+    console.log('no ID found, forcing session update');
+    update().then(() => {
+      console.log('session update, checking for id again');
+      if (session?.user?.id) {
+        getCoursesInfo(session.user.id);
+      } else {
+        console.log('still no id after update, giving up');
+      }
+    }, [status, session]);
+
+    // if (session?.user?.id) {
+    //   getUserDetails(session.user.id);
+    // } else {
+    //   update().then(() => {
+    //     if (session?.user?.id) {
+    //       getUserDetails(session.user.id);
+    //     } else {
+    //       console.log('no id after update in profiles');
+    //     }
+    //   });
+    // }
 
     async function fetchCoursesData() {
       const response = await fetch('/api/courses');
       const data = await response.json();
       setCourseData(data.res);
     }
-    fetchCoursesData();
+    // fetchCoursesData();
   }, [session]);
 
   const updateUserDataPic = (data, newpic) => {

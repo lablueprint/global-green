@@ -22,7 +22,12 @@ export default function Loading() {
         }}
         transition={{ ease: 'linear', duration: 5, repeat: Infinity }}
       >
-        <Image width="425" height="300" src={convertToURL('earth.png')} />
+        <Image
+          width="425"
+          height="300"
+          src={convertToURL('earth.png')}
+          alt="spinning globe to indicate loading"
+        />
       </motion.div>
       {/* Loading
       <Image width="1000" height="500" src={convertToURL("earth.png")} /> */}

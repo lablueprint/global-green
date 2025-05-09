@@ -360,6 +360,7 @@ function Results({ skips, usedHint, points, totalQuestions, questionResults }) {
               width={400}
               height={320}
               className={styles.flowerContainer}
+              alt="the flower according to course level"
             />
           </div>
           <Button

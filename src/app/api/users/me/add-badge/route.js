@@ -6,7 +6,7 @@ export async function PATCH(request) {
   await connectMongoDB();
   try {
     const reqBody = await request.json();
-    const { userId, badge } = reqBody;
+    const { userId, badge, seeds } = reqBody;
 
     if (!badge) {
       return NextResponse.json({ error: 'Badge is required' }, { status: 400 });
@@ -23,7 +23,7 @@ export async function PATCH(request) {
       { _id: userId, 'badges.key': { $ne: badge } },
       {
         $addToSet: { badges: badgeObj },
-        $inc: { seeds: 20 },
+        $inc: { seeds },
       },
       { new: true },
     ).select('-password');

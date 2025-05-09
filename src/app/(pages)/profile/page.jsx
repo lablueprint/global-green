@@ -63,7 +63,7 @@ function Profile() {
 
     if (data.user.badges) {
       const badge = data.user.badges.find(
-        (badge) => badge.key === 'visitProfile'
+        (badge) => badge.key === 'personalizer'
       );
       if (!badge) {
         const response = await fetch('/api/users/me/add-badge', {
@@ -73,7 +73,8 @@ function Profile() {
           },
           body: JSON.stringify({
             userId: data.user._id,
-            badge: 'visitProfile',
+            badge: 'personalizer',
+            seeds: 10,
           }),
         });
         const res = await response.json();
@@ -249,8 +250,8 @@ function Profile() {
   return userData ? (
     <>
       <ChallengeBadge
-        challengeName="Visit the profile"
-        challengePointValue="20"
+        challengeName="Personalizer"
+        challengePointValue="10"
         open={visitProfileBadge}
         handleClose={() => setVisitProfileBadge(false)}
       />

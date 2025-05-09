@@ -29,7 +29,7 @@ export default function Page() {
     console.log('data', data);
 
     if (data.user.badges) {
-      const badge = data.user.badges.find((badge) => badge.key === 'visitMap');
+      const badge = data.user.badges.find((badge) => badge.key === 'EcoExplorer');
       if (!badge) {
         const response = await fetch('/api/users/me/add-badge', {
           method: 'PATCH',
@@ -38,7 +38,7 @@ export default function Page() {
           },
           body: JSON.stringify({
             userId: data.user._id,
-            badge: 'visitMap',
+            badge: 'EcoExplorer',
           }),
         });
         const res = await response.json();
@@ -51,8 +51,8 @@ export default function Page() {
   return (
     <>
       <ChallengeBadge
-        challengeName="Visit the map"
-        challengePointValue="20"
+        challengeName="Eco Explorer"
+        challengePointValue="10"
         open={visitMapBadge}
         handleClose={() => setVisitMapBadge(false)}
       />

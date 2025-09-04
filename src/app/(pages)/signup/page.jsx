@@ -281,14 +281,14 @@ function SignUp() {
             <hr className={styles.divider} />
 
             <div className={styles.contentEnd}>
-              <button
+              {/* <button
                 type="button"
                 className={styles.googleButton}
                 onClick={() => login('google')}
               >
                 <GoogleLogo />
                 <span>Sign in with Google</span>
-              </button>
+              </button> */}
 
               <p className={styles.termsFont}>
                 By continuing, you acknowledge that you have read and

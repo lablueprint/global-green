@@ -2,7 +2,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import Image from 'next/image';
 import { signIn, useSession } from 'next-auth/react';
-import ReCAPTCHA from 'react-google-recaptcha';
+// import ReCAPTCHA from 'react-google-recaptcha';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEye, faEyeSlash } from '@fortawesome/free-solid-svg-icons';
 import styles from './page.module.css';
@@ -21,15 +21,16 @@ function SignUp() {
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const { data: session } = useSession();
   const router = useRouter();
-  // Captcha Related
-  const recaptcha = useRef(null);
-  const [captchaToken, setCaptchaToken] = useState('');
-  const onCaptchaChange = (token) => {
-    // Set the captcha token when the user completes the reCAPTCHA
-    if (token) {
-      setCaptchaToken(token);
-    }
-  };
+
+  // // Captcha Related
+  // const recaptcha = useRef(null);
+  // const [captchaToken, setCaptchaToken] = useState('');
+  // const onCaptchaChange = (token) => {
+  //   // Set the captcha token when the user completes the reCAPTCHA
+  //   if (token) {
+  //     setCaptchaToken(token);
+  //   }
+  // };
 
   const OnSignup = async () => {
     // signup function. This will call upon /api/users/signup
@@ -47,7 +48,7 @@ function SignUp() {
           firstName,
           lastName,
           email,
-          captchaToken,
+          // captchaToken,
         }),
       });
       const data = await response.json();
@@ -63,11 +64,11 @@ function SignUp() {
           callbackUrl: '/verifyemail',
         });
         console.log('Signup success', response.data);
-        recaptcha?.current?.reset();
+        // recaptcha?.current?.reset();
       }
       // eslint-disable-next-line no-console
       console.log('Signup success', response.data);
-      recaptcha?.current?.reset();
+      // recaptcha?.current?.reset();
     } catch (error) {
       // eslint-disable-next-line no-console
       console.log('Signup failed', error.message);
@@ -255,14 +256,14 @@ function SignUp() {
           </div>
           <div className={styles.center}>
             <div className={styles.centerCaptcha}>
-              <div>
+              {/* <div>
                 <ReCAPTCHA
                   size="normal"
                   sitekey={process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY}
                   onChange={onCaptchaChange}
                   style={{ transform: 'scale(0.85)' }}
                 />
-              </div>
+              </div> */}
             </div>
             <input
               type="submit"

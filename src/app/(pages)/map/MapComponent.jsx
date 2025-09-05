@@ -36,14 +36,14 @@ function MapComponent() {
   }
 
   async function fetchData() {
-    if (localStorage.getItem('mapMarkers')) {
-      setMapArray(JSON.parse(localStorage.getItem('mapMarkers')));
-    } else {
-      const res = await fetch('/api/markers');
-      const data = await res.json();
-      setMapArray(data);
-      localStorage.setItem('mapMarkers', JSON.stringify(data));
-    }
+    // if (localStorage.getItem('mapMarkers')) {
+    //   setMapArray(JSON.parse(localStorage.getItem('mapMarkers')));
+    // } else {
+    const res = await fetch('/api/markers');
+    const data = await res.json();
+    setMapArray(data);
+    // localStorage.setItem('mapMarkers', JSON.stringify(data));
+    // }
   }
 
   useEffect(() => {

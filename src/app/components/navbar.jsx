@@ -212,17 +212,15 @@ export default function NavBar() {
               href="/landing"
               icon={
                 <Image
-                  width={47}
+                  width={160}
                   height={47}
                   alt="gg Logo"
-                  src="https://global-green-2.s3.us-west-1.amazonaws.com/globalgreenlogo.png"
+                  src="https://global-green-2.s3.us-west-1.amazonaws.com/new_gg_logo2.png"
                 />
               }
               isActive={currentPath === '/'}
               setCurrentPath={setCurrentPath}
-            >
-              Global Green Scholar
-            </NavLink>
+            ></NavLink>
           </div>
           {navlinks.map((link) => (
             <NavLink

@@ -34,7 +34,8 @@ function VerifyEmail() {
       setError(data.error);
     }
     setExpiresAt(new Date(data.user.verifyExpires));
-    setVerified(data.user.verified);
+    setVerified(true);
+    // setVerified(data.user.verified);
     console.log('data at verifyemail', data);
     if (data.user.verified) {
       // Stop all intervals
@@ -45,46 +46,115 @@ function VerifyEmail() {
         password: data.user.password,
       });
       // Redirect to profile page
-      window.location.href = '/profile';
+      window.location.href = '/landing';
     }
   }
 
+  // const handleVerifyEmail = async () => {
+  //   try {
+  //     const res = await fetch('/api/users/verifyemail', {
+  //       method: 'POST',
+  //       headers: {
+  //         'Content-Type': 'application/json',
+  //       },
+  //       body: JSON.stringify({ token }),
+  //     });
+  //     const data = await res.json();
+  //     if (data.error) {
+  //       setError(data.error);
+  //     } else {
+  //       setMessage(data.message);
+  //       await fetchUpdatedUserDetails(session.user.id);
+  //     }
+  //   } catch (err) {
+  //     setError(err.message);
+  //   }
+  // };
   const handleVerifyEmail = async () => {
     try {
-      const res = await fetch('/api/users/verifyemail', {
-        method: 'POST',
+      // First, update the MongoDB document
+      const res = await fetch('/api/users/me', {
+        method: 'PATCH',
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ token }),
+        body: JSON.stringify({
+          userId: session.user.id,
+          update: {
+            $set: {
+              verified: true,
+              verifyExpires: null, // Clear the expiration
+            },
+          },
+        }),
       });
+
       const data = await res.json();
       if (data.error) {
         setError(data.error);
-      } else {
-        setMessage(data.message);
-        await fetchUpdatedUserDetails(session.user.id);
+        return;
       }
+
+      // Update local state
+      setMessage('Account verified successfully!');
+      setVerified(true);
+
+      // Update the session
+      await update({
+        ...session,
+        user: {
+          ...session.user,
+          verified: true,
+        },
+      });
+
+      // Clear any existing intervals
+      if (intervalRef.current) {
+        clearInterval(intervalRef.current);
+      }
+
+      // Force refresh the session to ensure it's updated
+      await fetchUpdatedUserDetails(session.user.id);
+
+      // Redirect after a short delay
+      setTimeout(() => {
+        window.location.href = '/landing';
+      }, 1500);
     } catch (err) {
+      console.error('Verification error:', err);
       setError(err.message);
     }
   };
 
+  // const handleLogout = async () => {
+  //   if (intervalRef.current) clearInterval(intervalRef.current);
+  //   if (verified || session.user.verified) {
+  //     console.log('verified at handlelogut', verified);
+  //     window.location.href = '/landing';
+  //     return;
+  //   } else {
+  //     if (session.user.verified) {
+  //       console.log('verified at handlelogut', verified);
+  //       alert(
+  //         'Your account has been verified. You can now access your profile.'
+  //       );
+  //       window.location.href = '/profile';
+  //       return;
+  //     }
+  //     alert('Your verification time has expired. Please sign up again.');
+  //     await signOut();
+  //   }
+  // };
+
   const handleLogout = async () => {
-    if (intervalRef.current) clearInterval(intervalRef.current);
-    if (verified || session.user.verified) {
-      console.log('verified at handlelogut', verified);
-      window.location.href = '/profile';
+    if (intervalRef.current) {
+      clearInterval(intervalRef.current);
+    }
+    if (verified || session?.user?.verified) {
+      window.location.href = '/landing';
       return;
-    } else {
-      if (session.user.verified) {
-        console.log('verified at handlelogut', verified);
-        alert(
-          'Your account has been verified. You can now access your profile.'
-        );
-        window.location.href = '/profile';
-        return;
-      }
+    }
+    if (!verified && !session?.user?.verified && timeLeft <= 0) {
       alert('Your verification time has expired. Please sign up again.');
       await signOut();
     }
@@ -173,7 +243,7 @@ function VerifyEmail() {
     }
     if (session?.user?.verified) {
       console.log('verified at useeffect', session.user.verified);
-      window.location.href = '/profile';
+      window.location.href = '/landing';
     }
     if (session?.user?.id) getUserDetails(session.user.id);
 
@@ -197,7 +267,7 @@ function VerifyEmail() {
     if (timeLeft === null) {
       return (
         <div className={styles.contentContainer}>
-          <h3 className={styles.verificationTitle}>Enter Verification Code</h3>
+          {/* <h3 className={styles.verificationTitle}>Enter Verification Code</h3>
           <p className={styles.accountDeletionNotice}>
             We have sent a code to <strong>{userName}</strong>
             <br />
@@ -254,7 +324,9 @@ function VerifyEmail() {
                 ? `Resend in ${cooldown} seconds`
                 : 'Click to resend'}
             </span>
-          </div>
+          </div> */}
+
+          <h3 className={styles.verificationTitle}>Verification</h3>
 
           <button
             type="button"
@@ -269,7 +341,7 @@ function VerifyEmail() {
     if (timeLeft > 0) {
       return (
         <div className={styles.contentContainer}>
-          <h3 className={styles.verificationTitle}>Enter Verification Code</h3>
+          {/* <h3 className={styles.verificationTitle}>Enter Verification Code</h3>
           <p className={styles.accountDeletionNotice}>
             We have sent a code to <strong>{userName}</strong>
             <br />
@@ -326,7 +398,9 @@ function VerifyEmail() {
                 ? `Resend in ${cooldown} seconds`
                 : 'Click to resend'}
             </span>
-          </div>
+          </div> */}
+
+          <h3 className={styles.verificationTitle}>Verification</h3>
 
           <button
             type="button"

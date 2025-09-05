@@ -120,14 +120,14 @@ function Example() {
 
         <hr className={styles.divider} />
 
-        <button
+        {/* <button
           type="button"
           className={styles.googleButton}
           onClick={() => login('google')}
         >
           <GoogleLogo />
           <span>Sign in with Google</span>
-        </button>
+        </button> */}
       </div>
     </section>
   );

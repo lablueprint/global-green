@@ -61,7 +61,7 @@ function SignUp() {
         signIn('credentials', {
           username: email,
           password,
-          callbackUrl: '/verifyemail',
+          callbackUrl: '/landing', // change this back to /verifyemail once we get email verification api key
         });
         console.log('Signup success', response.data);
         // recaptcha?.current?.reset();

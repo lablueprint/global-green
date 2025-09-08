@@ -56,11 +56,20 @@ export async function POST(request) {
       userName,
       email,
       password: hashedPassword,
-      verified: false,
-      verifyExpires: new Date(Date.now() + 3600000),
+
+      /**
+       * temporarily measures until we get GG resend api keys
+       */
+      // verified: false,
+      // verifyExpires: new Date(Date.now() + 3600000),
+      verified: true,
+      verifyExpires: null,
+      verifyToken: null,
     });
     const savedUser = await newUser.save();
 
+    // Email verification code (commented out for temporary auto-verify)
+    /*
     // Generate a verification token
     const hashedToken = (
       await bcryptjs.hash(savedUser.id.toString(), 10)
@@ -71,6 +80,7 @@ export async function POST(request) {
 
     // send email to user to verify email
     await sendEmail({ email, emailType: 'VERIFY', user: savedUser });
+    */
 
     return NextResponse.json({
       message: 'User created successfully',

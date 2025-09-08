@@ -43,7 +43,7 @@ function Example() {
       signIn('credentials', {
         username: userName,
         password,
-        callbackUrl: '/profile',
+        callbackUrl: '/landing',
       }).catch((error) => {
         alert(error.error);
         console.error('Login error', error);

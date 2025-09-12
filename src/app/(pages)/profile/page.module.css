@@ -516,3 +516,15 @@
   color: #fff;
   transition-duration: 500ms;
 }
+
+.deleteButton {
+  background: red;
+  color: white;
+  font-size: 18px;
+  border-radius: 40px;
+  border: none;
+  padding: 12px 55px;
+  cursor: pointer;
+  text-align: center;
+  font-weight: 500;
+}
